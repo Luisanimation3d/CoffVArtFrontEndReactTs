@@ -1,0 +1,65 @@
+import { useState } from 'react';
+
+type methodOptions = 'GET' | 'POST' | 'PUT' | 'DELETE';
+
+interface dataOptions {
+    permissions: {
+        count: number;
+        rows: Array<any>;
+    };
+    options: {
+        page: number;
+        limit: number;
+        paginate: number;
+        order: Array<string>;
+    };
+}
+
+export const useFetch = (baseUrl: string) => {
+    const [data, setData] = useState<dataOptions>();
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<any>(false);
+
+	const fetchData = async (
+		url: string,
+		method: methodOptions,
+		body: any = null
+	) => {
+		try {
+			setLoading(true);
+			setError(null);
+
+			const config = {
+				method,
+				url: `${baseUrl}${url}`,
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				data: body,
+			};
+
+			const response = await fetch(config.url, config);
+			const json: dataOptions = await response.json();
+			setData(json);
+		} catch (error) {
+			setError(error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const get = (url: string) => fetchData(url, 'GET');
+	const post = (url: string, body: any) => fetchData(url, 'POST', body);
+	const put = (url: string, body: any) => fetchData(url, 'PUT', body);
+	const del = (url: string) => fetchData(url, 'DELETE');
+
+	return {
+		data,
+		loading,
+		error,
+		get,
+		post,
+		put,
+		del,
+	};
+};

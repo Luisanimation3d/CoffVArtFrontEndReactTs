@@ -1,0 +1,128 @@
+/* Styles for the table */
+.table__container{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.table__container .table__header{
+    background-color: #f2f2f2;
+    color: #000;
+    font-weight: bold;
+    border: 1px solid #ddd;
+}
+
+.table__container .table__header tr{
+    border-radius: 8px 8px 0 0;
+}
+
+.table__container .table__header .table__cell{
+    padding: 10px;
+    font-weight: bold;
+    background: #9f212f;
+    color: #fff;
+}
+
+.table__container .table__row{
+    background-color: #fff;
+    color: #000;
+    transition: .3s ease;
+}
+
+.table__container .table__row:nth-child(even){
+    background-color: #e5ddd4;
+}
+
+.table__container .table__row .table__cell--row{
+    padding: 10px;
+    text-align: center;
+    position: relative;
+}
+
+.table__container .table__row .table__cell--row:last-child{
+    width: 100px;
+}
+
+.table__container .table__row .table__cell--row:first-child{
+    width: 100px;
+}
+
+.table__container .table__row .table__cell--row .table__optionsButton{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.table__container .table__row .table__cell--row .table__dropdown{
+    position: absolute;
+    right: 50%;
+    transform: translateX(50%);
+    background-color: #fff;
+    border: 1px solid #9f212f;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 10;
+}
+
+.table__container .table__row .table__cell--row .table__dropdown::after{
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 50%;
+    transform: translateX(50%);
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #9f212f;
+}
+
+.table__container .table__row .table__cell--row .table__dropdown::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+    width: 100%;
+    height: 1px;
+    background-color: #a48a8c;
+}
+
+.table__container .table__body .table__row:hover{
+    background-color: #D6CAB0;
+}
+
+.table__dropdown--item{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: #000;
+    font-weight: bold;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    height: auto;
+    width: 100%;
+    padding: 1rem;
+}
+
+.table__dropdown--item:hover{
+    background-color: #9f212f;
+    color: #fff;
+}

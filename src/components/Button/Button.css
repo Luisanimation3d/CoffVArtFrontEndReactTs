@@ -1,0 +1,123 @@
+/* Button Filled */
+
+.btn--filled {
+	display: block;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 1rem;
+	font-weight: bold;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	background: #9f212f;
+	text-transform: uppercase;
+	transition: all .3s ease-in-out;
+	position: relative;
+    overflow: hidden;
+}
+
+.btn--filled:hover {
+    background: #7f212f;
+}
+
+/* Button Outlined */
+
+.btn--outline {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    color: #9f212f;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #9f212f;
+    outline: none;
+    cursor: pointer;
+    background: transparent;
+    text-transform: uppercase;
+    transition: all .3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn--outline:hover {
+    background: #9f212f;
+    color: #fff;
+}
+
+.btn--auto {
+    width: auto;
+}
+
+.btn--fixed {
+    width: 100%;
+}
+
+.btn--disabled {
+    /* pointer-events: none; */
+    cursor: not-allowed;
+    opacity: .5;
+}
+
+.btn--filled.btn--disabled {
+    display: block;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 1rem;
+	font-weight: bold;
+	border: none;
+	outline: none;
+	background: #9f212f;
+	text-transform: uppercase;
+	transition: all .3s ease-in-out;
+	position: relative;
+    overflow: hidden;
+}
+
+.btn--filled.btn--disabled:active {
+    pointer-events: none;
+}
+
+.btn--outline.btn--disabled {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    color: #9f212f;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #9f212f;
+    outline: none;
+    background: transparent;
+    text-transform: uppercase;
+    transition: all .3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn--outline.btn--disabled:active {
+    pointer-events: none;
+}
+
+/* Circle Animation */
+.circle {
+    position: absolute;
+    background-color: #fff;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    border-radius: 50%;
+    animation: animateCircle .5s linear infinite;
+}
+
+@keyframes animateCircle {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: .25;
+    }
+    100% {
+        width: 500px;
+        height: 500px;
+        opacity: 0;
+    }
+}
