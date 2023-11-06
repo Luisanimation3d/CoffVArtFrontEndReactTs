@@ -14,11 +14,11 @@ export const Roles = () => {
         },
         {
             key: 'name',
-            header: 'Name',
+            header: 'Nombre',
         },
         {
             key: 'description',
-            header: 'Description',
+            header: 'Descripción',
         }
     ]
 
