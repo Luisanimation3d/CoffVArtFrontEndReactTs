@@ -1,0 +1,41 @@
+h1.titles__title{
+    font-size: 3rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #9F212F;
+}
+
+h2.titles__title{
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #9F212F;
+}
+
+h3.titles__title{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #9F212F;
+}
+
+h4.titles__title{
+    font-size: 1.2rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #9F212F;
+}
+
+h5.titles__title{
+    font-size: 1rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #9F212F;
+}
+
+h6.titles__title{
+    font-size: 0.8rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #9F212F;
+}
