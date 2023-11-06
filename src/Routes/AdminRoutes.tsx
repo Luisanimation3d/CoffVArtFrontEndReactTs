@@ -1,5 +1,5 @@
 import {SideBarMenuItemProps} from "../types/MenuBar";
-import {FiHexagon, FiHome, FiUser} from "react-icons/fi";
+import {FiHexagon, FiHome, FiUser, FiBriefcase, FiTruck, FiPackage} from "react-icons/fi";
 
 export const AdminRoutes: SideBarMenuItemProps[] = [
     {
@@ -11,8 +11,7 @@ export const AdminRoutes: SideBarMenuItemProps[] = [
         title: 'Roles',
         link: 'Roles',
         icon: <FiHexagon/>
-    },
-    {
+    },{
         title: 'Clientes',
         link: 'Coustomers',
         icon: <FiUser/>
@@ -22,5 +21,19 @@ export const AdminRoutes: SideBarMenuItemProps[] = [
         link: 'Sales',
         icon: <FiHexagon/>
     },
-    
+    {
+        title: 'Compañias',
+        link: 'Companys',
+        icon: <FiBriefcase/>
+    },
+    {
+        title: 'Proveedores',
+        link: 'Suppliers',
+        icon: <FiTruck/>
+    },
+    {
+        title: 'Ordenes de Producción',
+        link: 'ProductionOrders',
+        icon: <FiPackage/>
+    },
 ]

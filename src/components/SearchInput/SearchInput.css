@@ -41,6 +41,7 @@
     transition: all 0.3s ease;
     color: #D6CAB0;
     background-color: #fff;
+    width: max-content;
 }
 
 .inputContainer label.active {
