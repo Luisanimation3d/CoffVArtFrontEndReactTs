@@ -115,8 +115,6 @@ const optionButtons: OptionButton[] = [
 ```
 ---
 
-# Props of Components
-
 > ## Component **Form**
 
 Renders a form in the interface and accepts the following properties:
@@ -251,4 +249,53 @@ Example code:
 >
   {/* Content to be displayed in the modal */}
 </Modal>
+```
+---
+
+> ## Component **SideBarMenu**
+
+Renders a sidebar menu and accepts the following properties:
+
+| Prop name | Type                                | Description                                                                                        | Mandatory | Default   |
+| --------- | ----------------------------------- | -------------------------------------------------------------------------------------------------- | --------- | --------- |
+| items     | SideBarMenuItemProps[]              | An array of menu items to be displayed in the sidebar.                                           | required  | undefined |
+
+Example code:
+
+```tsx
+<SideBarMenu items={sideBarMenuItems} />
+```
+> ### Type **SideBarMenuItemProps**
+
+Represents an object that holds error messages for form fields.
+
+| Property  | Type           | Description                                            | Mandatory | Default   |
+| --------- |----------------|--------------------------------------------------------|-----------| --------- |
+| icon      | JSX.Element    | The icon to be displayed alongside the title.| required  | undefined |
+| title     | string         | The title of the menu item.   | required  | undefined |
+|link | string | The URL link for the menu item. | required  | undefined |
+```tsx
+<SideBarMenuItem
+    title="Dashboard"
+    link="/dashboard"
+    icon={<FiHome />}
+/>
+```
+> ### Modify **Admin Routes**
+
+To modify the routes of the admin panel, you must modify the file `src/components/Routes/AdminRoutes.tsx`. This file contains the routes of the admin panel and is exported as a component. The routes are defined as follows:
+
+```tsx
+const adminRoutes: SideBarMenuItemProps[] = [
+  {
+    title: 'Dashboard',
+    link: '/',
+    icon: <FiHome />,
+  },
+  {
+    title: 'Roles',
+    link: '/Roles',
+    icon: <FiHexagon />,
+  },
+];
 ```
