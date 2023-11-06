@@ -14,6 +14,6 @@ export  interface TableProps {
     data: any[];
     onRowClick: (row: any) => void;
     optionButtons?: OptionButton[];
-    editableAction: OptionButton;
-    deleteAction: OptionButton;
+    editableAction?: OptionButton;
+    deleteAction?: OptionButton;
 }
