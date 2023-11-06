@@ -299,3 +299,60 @@ const adminRoutes: SideBarMenuItemProps[] = [
   },
 ];
 ```
+---
+> ## Component **SearchInput**
+
+Renders a search input field and accepts the following properties:
+
+| Prop name | Type                                | Description                                                                                        | Mandatory | Default   |
+| --------- | ----------------------------------- | -------------------------------------------------------------------------------------------------- | --------- | --------- |
+| label     | string                              | The label for the search input.                                                                   | required  | undefined |
+| value     | string                              | The current value of the input.                                                                  | required  | undefined |
+| onChange  | (e: React.ChangeEvent<HTMLInputElement>) => void | A function to handle input changes.                                           | required  | undefined |
+| idSearch  | string                              | The HTML `id` attribute for the input element.                                                    | required  | undefined |
+
+Example code:
+
+```tsx
+<SearchInput
+  label="Search"
+  value={searchValue}
+  onChange={(e) => setSearchValue(e.target.value)}
+  idSearch="searchInput"
+/>
+```
+---
+# Props of Components
+
+> ## Component **Container**
+
+Renders a container for holding content and accepts the following properties:
+
+| Prop name | Type      | Description                        | Mandatory | Default   |
+| --------- | --------- | ---------------------------------- | --------- | --------- |
+| children  | ReactNode | The content to be displayed inside the container. | required  | undefined |
+
+Example code:
+
+```tsx
+<Container>
+  {/* Content goes here */}
+</Container>
+```
+---
+# Props of Components
+
+> ## Component **Titles**
+
+Renders a title with a specified level and accepts the following properties:
+
+| Prop name | Type   | Description                                      | Mandatory | Default |
+| --------- | ------ | ------------------------------------------------ | --------- | ------- |
+| title     | String | The text to be displayed as the title.           | required  | -       |
+| level     | Number | The heading level (1 to 6) for the title.        | Optional  | 1       |
+
+Example code:
+
+```tsx
+<Titles title="Example Title" level={2} />
+```

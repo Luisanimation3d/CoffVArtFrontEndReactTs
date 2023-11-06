@@ -39,10 +39,10 @@ export const Table: FC<TableProps> = ({
             </tr>
             </thead>
             <tbody className={`table__body`}>
-            {data.map((row, index) => (
-                <tr key={index} onClick={() => onRowClick(row)} className={`table__row`}>
+            {data.map((row, globalIndex) => (
+                <tr key={globalIndex} onClick={() => onRowClick(row)} className={`table__row`}>
                     {columns.map((column, index) => (
-                        <td key={index} className={`table__cell--row`}>{row[column.key]}</td>
+                        <td key={index} className={`table__cell--row`}>{column.key === 'id' ? globalIndex + 1 : (row[column.key])}</td>
                     ))}
                     <td className={`table__cell--row`}>
                         <button onClick={(e) => {
