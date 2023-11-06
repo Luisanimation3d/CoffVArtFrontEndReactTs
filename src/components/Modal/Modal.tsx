@@ -23,7 +23,8 @@ export const Modal: FC<ModalProps> = ({ title, children, showModal, ...props }) 
         <div className='modal' onClick={(e) => e.stopPropagation()}>
             <button
                 className='modal__close'
-                onClick={() => showModal(false)}
+                onClick={() => {
+                    showModal(false)}}
             >
                 <MdClose />
             </button>
