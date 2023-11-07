@@ -1,6 +1,6 @@
 import {HashRouter, Routes, Route} from "react-router-dom";
 import {AdminLayout} from "./Layout/AdminLayout/AdminLayout.tsx";
-import {Roles} from "./Pages/Roles/Roles..tsx";
+import {Roles} from "./Pages/Roles/Roles";
 import { Coustomers } from "./Pages/Coustomers/CoustomersList.tsx";
 import { Sales } from "./Pages/Sales/SalesList.tsx";
 import {UserLayout} from "./Layout/UserLayout/UserLayout.tsx";
