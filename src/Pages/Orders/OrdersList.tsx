@@ -7,18 +7,18 @@ import {Container} from "../../components/Container/Container.tsx";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 
-export const Sales = () => {
+export const Orders = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const columnsSales: Column[] = [
+    const columnsOrders: Column[] = [
         {
             key: "id",
             header: "ID",
         },
         {
-            key: "factura",
-            header: "Factura",
+            key: "code",
+            header: "Código",
         },
         {
             key: "idCliente",
@@ -34,49 +34,49 @@ export const Sales = () => {
         },
     ];
 
-    const dataSales = [
+    const dataOrders = [
         {
             id: 1,
-            factura: "45-Doe",
+            code: "45-Doe",
             idCliente: 1,
             total: 30,
             estado: "true",
         },
         {
             id: 2,
-            factura: "48-Doe",
+            code: "48-Doe",
             idCliente: 1,
             total: 30,
             estado: "true",
         },
     ];
 
-    let dataSalesFiltered: any;
+    let dataOrdersFiltered: any;
 
     if (search.length > 0) {
-        dataSalesFiltered = dataSales.filter(
-            (sales) =>
-                sales.factura.toLowerCase().includes(search.toLowerCase()) ||
-                sales.estado.toLowerCase().includes(search.toLowerCase())
+        dataOrdersFiltered = dataOrders.filter(
+            (order) =>
+                order.code.toLowerCase().includes(search.toLowerCase()) ||
+                order.estado.toLowerCase().includes(search.toLowerCase())
         );
     } else {
-        dataSalesFiltered = dataSales;
+        dataOrdersFiltered = dataOrders;
     }
 
     return (
         <>
             <Container>
-                <Titles title={"Ventas"} level={1}/>
+                <Titles title={"Pedidos"} level={1}/>
                 <div className="roles__table">
                     <SearchInput
-                        label={"Buscar Ventas"}
+                        label={"Buscar Pedido"}
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
                         idSearch={"SalesSearch"}
                     />
                     <Table
-                        columns={columnsSales}
-                        data={dataSalesFiltered}
+                        columns={columnsOrders}
+                        data={dataOrdersFiltered}
                         onRowClick={() => setIsModalOpen(true)}
                         editableAction={{
                             onClick: () => null,
@@ -91,7 +91,7 @@ export const Sales = () => {
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
                         <Modal
-                            title="Detalle de Ventas"
+                            title="Detalle de Pedido"
                             showModal={setIsModalOpen}
                         >
                             <Table
