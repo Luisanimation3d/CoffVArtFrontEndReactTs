@@ -30,6 +30,7 @@
 .table__container .table__row{
     background-color: #fff;
     color: #000;
+    cursor: pointer;
     transition: .3s ease;
 }
 
