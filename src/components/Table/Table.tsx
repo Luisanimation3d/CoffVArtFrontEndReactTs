@@ -35,7 +35,11 @@ export const Table: FC<TableProps> = ({
                 {columns.map((column, index) => (
                     <th key={index} className={`table__cell`}>{column.header}</th>
                 ))}
-                <th className={`table__cell`}>Acciones</th>
+                {
+                    (editableAction || deleteAction || optionButtons) && (
+                        <th className={`table__cell`}>Acciones</th>
+                    )
+                }
             </tr>
             </thead>
             <tbody className={`table__body`}>
@@ -44,39 +48,45 @@ export const Table: FC<TableProps> = ({
                     {columns.map((column, index) => (
                         <td key={index} className={`table__cell--row`}>{column.key === 'id' ? globalIndex + 1 : (row[column.key])}</td>
                     ))}
-                    <td className={`table__cell--row`}>
-                        <button onClick={(e) => {
-                            e.stopPropagation()
-                            handleExpandRow(row)
-                        }}
-                                className={`table__optionsButton`}
-                        ><FiMoreVertical/></button>
-                        {
-                            expandedRow.id === row.id &&
-                            <div className={`table__dropdown`}>
-                                {
-                                    optionButtons?.map((button, index) => (
-                                        <button key={index} className={`table__dropdown--item`}
-                                                onClick={() => button.onClick(row)}>{button.icon && button.icon} {button.label}</button>
-                                    ))
-                                }
-                                {
-                                    editableAction && (
-                                        <button className={`table__dropdown--item`}
-                                                onClick={() => handleEditRow(row)}>{editableAction.icon ? editableAction.icon : (
-                                            <FiEdit2/>)} {editableAction.label ? editableAction.label : 'Editar'}</button>
-                                    )
-                                }
-                                {
-                                    deleteAction && (
-                                        <button className={`table__dropdown--item`}
-                                                onClick={() => handleDeleteRow(row)}>{deleteAction.icon ? deleteAction.icon : (
-                                            <FiTrash2/>)} {deleteAction.label ? deleteAction.label : 'Eliminar'}</button>
-                                    )
-                                }
-                            </div>
-                        }
-                    </td>
+                    {
+                        (editableAction || deleteAction || optionButtons) && (
+                            <>
+                                <td className={`table__cell--row`}>
+                                    <button onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleExpandRow(row)
+                                    }}
+                                            className={`table__optionsButton`}
+                                    ><FiMoreVertical/></button>
+                                    {
+                                        expandedRow.id === row.id &&
+                                        <div className={`table__dropdown`}>
+                                            {
+                                                optionButtons?.map((button, index) => (
+                                                    <button key={index} className={`table__dropdown--item`}
+                                                            onClick={() => button.onClick(row)}>{button.icon && button.icon} {button.label}</button>
+                                                ))
+                                            }
+                                            {
+                                                editableAction && (
+                                                    <button className={`table__dropdown--item`}
+                                                            onClick={() => handleEditRow(row)}>{editableAction.icon ? editableAction.icon : (
+                                                        <FiEdit2/>)} {editableAction.label ? editableAction.label : 'Editar'}</button>
+                                                )
+                                            }
+                                            {
+                                                deleteAction && (
+                                                    <button className={`table__dropdown--item`}
+                                                            onClick={() => handleDeleteRow(row)}>{deleteAction.icon ? deleteAction.icon : (
+                                                        <FiTrash2/>)} {deleteAction.label ? deleteAction.label : 'Eliminar'}</button>
+                                                )
+                                            }
+                                        </div>
+                                    }
+                                </td>
+                            </>
+                        )
+                    }
                 </tr>
             ))}
             </tbody>
