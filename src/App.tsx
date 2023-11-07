@@ -9,6 +9,7 @@ import {UserLayout} from "./Layout/UserLayout/UserLayout.tsx";
 import {Companys} from "./Pages/Companys/Companys.tsx";
 import {Suppliers} from "./Pages/Suppliers/Suppliers.tsx";
 import {ProductionOrders} from "./Pages/ProductionOrders/ProductionOrders.tsx";
+import {Home} from "./Pages/Home/Home.tsx";
 import { Orders } from "./Pages/Orders/OrdersList.tsx";
 
 export default function App() {
@@ -29,7 +30,10 @@ export default function App() {
                     <Route path={'Orders'} element={<Orders/>}/>
                 </Route>
                 <Route path={'*'} element={<div>error</div>}/>
-                <Route path={'/'} element={<UserLayout/>}/>
+                <Route path={'/'} element={<UserLayout/>}>
+                    <Route path={'home'} element={<Home/>   }/>
+                    <Route path={'*'} element={<div>error</div>}/>
+                </Route>
             </Routes>
         </HashRouter>
     )
