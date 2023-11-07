@@ -8,7 +8,6 @@ export const AdminLayout = () => {
         <>
             <SideBarMenu items={AdminRoutes}/>
             <div className="adminLayout__mainContent">
-
                 <Outlet/>
             </div>
         </>
