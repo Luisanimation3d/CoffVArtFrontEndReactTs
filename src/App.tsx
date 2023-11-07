@@ -1,6 +1,8 @@
 import {HashRouter, Routes, Route} from "react-router-dom";
 import {AdminLayout} from "./Layout/AdminLayout/AdminLayout.tsx";
 import {Roles} from "./Pages/Roles/Roles";
+import {Supplys} from "./Pages/Supplies/Supplies.tsx";
+import { Products } from "./Pages/Products/Products.tsx";
 import { Coustomers } from "./Pages/Coustomers/CoustomersList.tsx";
 import { Sales } from "./Pages/Sales/SalesList.tsx";
 import {UserLayout} from "./Layout/UserLayout/UserLayout.tsx";
@@ -16,6 +18,8 @@ export default function App() {
                     <Route path={'*'} element={<div>error</div>}/>
                     <Route path={'dashboard'} element={<div>Dashboard</div>}/>
                     <Route path={'Roles'} element={<Roles/>}/>
+                    <Route path={'Supplys'} element={<Supplys/>}/>
+                    <Route path={'Products'} element={<Products/>}/>
                     <Route path={'Companys'} element={<Companys/>}/>
                     <Route path={'Suppliers'} element={<Suppliers/>}/>
                     <Route path={'ProductionOrders'} element={<ProductionOrders/>}/>
