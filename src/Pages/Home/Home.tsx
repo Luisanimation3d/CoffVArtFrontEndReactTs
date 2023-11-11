@@ -4,7 +4,7 @@ import ProductImage from '../../assets/product.jpg';
 import {SliderBanner} from "../../components/SliderBanner/SliderBanner.tsx";
 
 import './Home.css';
-import {ProductCard} from "../../components/ProductCart/ProductCard.tsx";
+import {ProductCard} from "../../components/ProductCard/ProductCard.tsx";
 
 export const Home = () => {
     const images = [BannerBurdeo1, BannerBurdeo2];
