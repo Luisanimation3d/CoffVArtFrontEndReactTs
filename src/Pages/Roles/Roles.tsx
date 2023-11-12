@@ -7,6 +7,7 @@ import {SearchInput} from "../../components/SearchInput/SearchInput";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useFetch} from "../../hooks/useFetch";
 import {createPortal} from "react-dom";
+import {API_KEY} from "../../constantes";
 
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
@@ -15,7 +16,7 @@ export const Roles = () => {
     const [nameRol, setNameRol] = useState<string>('')
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     useEffect(() => {
-        get('roles?apikey=8b9c63adc6a049c291fb09ad35c3f14b')
+        get(`roles?apikey=${API_KEY}`)
     }, []);
     const columnsRoles: Column[] = [
         {
@@ -97,7 +98,7 @@ export const Roles = () => {
                                        onClick: () => null,
                                    }}
                                    deleteAction={{
-                                        onClick: handleDelete,
+                                       onClick: handleDelete,
                                    }}
                             />)
                     }
