@@ -60,7 +60,9 @@ export const Table: FC<TableProps> = ({
                                     ><FiMoreVertical/></button>
                                     {
                                         expandedRow.id === row.id &&
-                                        <div className={`table__dropdown`}>
+                                        <div className={`table__dropdown`} onClick={e => {
+                                            e.stopPropagation()
+                                        }}>
                                             {
                                                 optionButtons?.map((button, index) => (
                                                     <button key={index} className={`table__dropdown--item`}
