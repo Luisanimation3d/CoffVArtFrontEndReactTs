@@ -59,7 +59,7 @@ export const Roles = () => {
     console.log(dataRoles)
 
     const handleDelete = (row: any) => {
-        del(`roles/${row.id}?apikey=8b9c63adc6a049c291fb09ad35c3f14b`)
+        del(`roles/${row.id}?apikey=${API_KEY}`)
         setTimeout(() => {
             get(`roles?apikey=${API_KEY}`)
         }, 500)
