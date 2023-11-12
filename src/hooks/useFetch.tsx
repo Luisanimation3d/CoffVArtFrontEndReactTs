@@ -2,19 +2,6 @@ import { useState } from 'react';
 
 type methodOptions = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-// interface dataOptions {
-//     permissions: {
-//         count: number;
-//         rows: Array<any>;
-//     };
-//     options: {
-//         page: number;
-//         limit: number;
-//         paginate: number;
-//         order: Array<string>;
-//     };
-// }
-
 export const useFetch = (baseUrl: string) => {
     const [data, setData] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);

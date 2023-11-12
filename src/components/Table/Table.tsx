@@ -10,7 +10,7 @@ export const Table: FC<TableProps> = ({
                                           onRowClick,
                                           optionButtons,
                                           editableAction,
-                                          deleteAction
+                                          deleteAction,
                                       }: TableProps) => {
 
     const [expandedRow, setExpandedRow] = useState<any>([])

@@ -17,7 +17,7 @@ export const Roles = () => {
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
-    }, []);
+    },  []);
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -46,8 +46,8 @@ export const Roles = () => {
     //     },
     // ]
 
-    const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
-
+    // const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
+    const dataRoles = data?.roles?.rows || []
     let dataRolesFiltered: any;
 
     if (search.length > 0) {
@@ -56,8 +56,13 @@ export const Roles = () => {
         dataRolesFiltered = dataRoles
     }
 
+    console.log(dataRoles)
+
     const handleDelete = (row: any) => {
         del(`roles/${row.id}?apikey=8b9c63adc6a049c291fb09ad35c3f14b`)
+        setTimeout(() => {
+            get(`roles?apikey=${API_KEY}`)
+        }, 500)
     }
 
     const handleRowClick = (row: any) => {
@@ -98,6 +103,7 @@ export const Roles = () => {
                                        onClick: () => null,
                                    }}
                                    deleteAction={{
+                                       label: 'Cambiar estado',
                                        onClick: handleDelete,
                                    }}
                             />)
