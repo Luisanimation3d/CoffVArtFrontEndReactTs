@@ -106,7 +106,7 @@ Represents a column definition for the table.
 
 Example usage:
 
-```typescript
+```tsx
 const optionButtons: OptionButton[] = [
   {
     icon: <YourIconComponent />,
@@ -391,8 +391,6 @@ Example usage:
 
 It is an interface that defines the structure of the product object and accepts the following properties:
 
-
-
 | Prop Name   | Type      | Description                       | Required | Default Value |
 | ----------- | --------- | --------------------------------- | -------- | ------------- |
 | id          | `Number`  | Unique identifier of the product. | Required | Undefined     |
@@ -446,8 +444,6 @@ This component represents a product card in the cart and accepts the following p
 | product   | Object `MiniCartProductCardInfoProps` | Represents the information of the product in the cart. | Required | Undefined     |
 
 Example usage:
-
-
 
 ```tsx
 <CartProductCard product={{ id: 1, name: 'Premium Coffee', price: 15.99, image: 'image.png', description: 'Coffee description...', category: 'Coffee', discount: 10, new: true, quantity: 2 }} />
@@ -522,8 +518,6 @@ The `SliderBanner` component accepts the following properties:
 - Dots at the bottom of the slider indicate the number of images and the currently displayed image.
 - Clicking on a dot navigates to the corresponding image.
 
-
-
 ### Examples
 
 #### Basic Slider
@@ -555,3 +549,70 @@ The `SliderBanner` component accepts the following properties:
 ```tsx
 <SliderBanner images={['image-url-1.jpg', 'image-url-2.jpg', 'image-url-3.jpg']} showDots={false} />
 ```
+
+---
+
+---
+
+# Custom Hooks
+
+> ## useFetch
+
+The `useFetch` is a custom hook that simplifies making HTTP requests using the React hooks pattern. This hook utilizes `fetch` to make requests to a server and manages the state of the request result, including the data, loading state (`loading`), and any potential errors.
+
+#### Usage
+
+```tsx
+import { useFetch } from 'path-to-your-hook';
+
+const MyComponent = () => {
+  const baseUrl = 'https://api.example.com';
+  const { data, loading, error, get, post, put, del } = useFetch(baseUrl);
+
+  useEffect(() => {
+    // Get data
+    get('/endpoint');
+
+    // Send data via POST
+    const newData = { key: 'value' };
+    post('/endpoint', newData);
+
+    // Update data via PUT
+    const updatedData = { key: 'updatedValue' };
+    put('/endpoint/1', updatedData);
+
+    // Delete data via DELETE
+    del('/endpoint/1');
+  }, []);
+
+  // Render based on hook state
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
+
+  return (
+    <div>
+      <h1>Data from API</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+};
+
+
+```
+
+#### Hook Properties
+
+| Property                             | Type      | Description                                                                                                      |
+| ------------------------------------ | --------- | ---------------------------------------------------------------------------------------------------------------- |
+| `data`                               | `any`     | The data obtained from the request. Can be of any type depending on the server response.                         |
+| `loading`                            | `boolean` | Indicates whether the request is in progress. `true` while the request is ongoing and `false` when it completes. |
+| `error`                              | `any`     | Contains any error that occurs during the request. If no error, it will be `null`.                               |
+| `get(url: string): void`             | Function  | Performs a GET request to the specified URL.                                                                     |
+| `post(url: string, body: any): void` | Function  | Performs a POST request to the specified URL with the provided body.                                             |
+| `put(url: string, body: any): void`  | Function  | Performs a PUT request to the specified URL with the provided body.                                              |
+| `del(url: string): void`             | Function  | Performs a DELETE request to the specified URL.                                                                  |
