@@ -3,6 +3,7 @@ h1.titles__title{
     font-weight: bolder;
     text-align: center;
     color: #9F212F;
+    text-transform: uppercase;
 }
 
 h2.titles__title{

@@ -1,5 +1,7 @@
 export type ContainerProps = {
     children: React.ReactNode;
+    align?: TOP | CENTER | BOTTOM;
+    justify?: LEFT | CENTER | RIGHT;
 }
 
 export type SearchInputProps = {

@@ -85,9 +85,13 @@ export const Roles = () => {
 
     return (
         <>
-            <Container>
+            <Container align={'CENTER'} justify={'TOP'}>
                 <Titles title={'Roles'} level={1}/>
-                <div className="roles__table">
+                <div className="roles__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
                     <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
