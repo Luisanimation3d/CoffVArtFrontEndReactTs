@@ -1,0 +1,62 @@
+.permisosContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    width: 70%;
+}
+
+.permisos {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.permisoName {
+    color: #000;
+    text-align: center;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.privilegios {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    list-style: none;
+}
+
+.privilegioName {
+    display: flex;
+    align-items: center;
+    gap : .5rem;
+    color: #9F212F;
+    text-align: center;
+    font-size: .7rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    background: #D6CAB0;
+    padding: 2px .5rem;
+}
+
+.deletePrivilege{
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.deletePrivilege:hover{
+    color: #9F212F;
+}
