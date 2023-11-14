@@ -5,12 +5,16 @@ import {Container} from "../../components/Container/Container.tsx";
 import {useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 
-export const ProductionOrders = () => {
+export const ProductionRequest = () => {
     const [search, setSearch] = useState<string>('')
-    const columnsProductionOrders: Column[] = [
+    const columnsProductionRequest: Column[] = [
         {
             key:'orderNumber',
             header:'Número de Orden',
+        },
+        {
+            key: 'dateOfDispatch',
+            header: 'Fecha de Envio',
         },
         {
             key: 'quantity',
@@ -22,48 +26,48 @@ export const ProductionOrders = () => {
         },
     ]
 
-    const dataProductionOrders= [
+    const dataProductionRequest= [
         {
             id: 1,
             orderNumber: '1',
+            dateOfDispatch: '10-12-2023',
             quantity: 200,
-            process: 'Desgacificacion',
+            process: 'Enviado',
         },
         {
             id: 2,
             orderNumber: '2',
-            quantity: 200,
-            process: 'Desgacificacion',
+            dateOfDispatch: '10-02-2023',
+            quantity: 100,
+            process: 'En proceso',
         },
         {
             id: 3,
             orderNumber: '3',
+            dateOfDispatch: '10-12-2023',
             quantity: 200,
-            process: 'Finalizado',
+            process: 'Tostado',
         },
     ]
-    let dataProductionOrdersFiltered: any;
+    let dataProductionRequestFiltered: any;
 
     if(search.length > 0){
-        dataProductionOrdersFiltered = dataProductionOrders.filter(productionOrder=> productionOrder.orderNumber.toLowerCase().includes(search.toLowerCase()) 
+        dataProductionRequestFiltered = dataProductionRequest.filter(productionOrder=> productionOrder.orderNumber.toLowerCase().includes(search.toLowerCase()) 
+        || productionOrder.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
         || productionOrder.quantity
         || productionOrder.process.toLowerCase().includes(search.toLowerCase())
         )
     }else{
-        dataProductionOrdersFiltered = dataProductionOrders
+        dataProductionRequestFiltered = dataProductionRequest
     }
 
     return(
         <>
         <Container>
-            <Titles title={'Ordenes de Producción'} level={1}/>
-            <div className="productionOrders__table">
-                <SearchInput 
-                label={'Buscar Ordenes'} 
-                onChange={e=> setSearch(e.target.value)} 
-                value={search} 
-                idSearch={'productionOrderSearch'} />
-                <Table columns={columnsProductionOrders} data={dataProductionOrdersFiltered} onRowClick={()=> null} editableAction={{
+            <Titles title={'Solicitudes de Producción'} level={1}/>
+            <div className="productionRequest__table">
+                <SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestearch'} />
+                <Table columns={columnsProductionRequest} data={dataProductionRequestFiltered} onRowClick={()=> null} editableAction={{
                     onClick: () => null,
                 }}
                 deleteAction={{
