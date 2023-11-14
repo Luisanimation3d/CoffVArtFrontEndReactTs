@@ -35,7 +35,8 @@ const RolesCreateStepOne = ({ changeStep }: { changeStep: (value: any) => void }
             label: 'Nombre del rol',
             type: 'text',
             value: valueNameRol,
-            onChange: setValueNameRol
+            onChange: setValueNameRol,
+            size: 'large'
         },
         {
             name: 'descriptionRol',
