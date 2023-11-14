@@ -1,10 +1,22 @@
+type TextAreaInputProps = {
+    type: 'textarea';
+    value: string;
+    onChange: (value: string) => void;
+    label: string;
+    name: string;
+    size?: number | 'medium' | 'large';
+    placeholder?: string;
+    options?: SelectOption[];
+    multiple?: false;
+}
+
 export type InputProps = {
     value: string;
     onChange: (value: string) => void;
     placeholder?: string;
     label: string;
     name: string;
-    type?: 'text' | 'password' | 'email' | 'number' | 'date';
+    type?: 'text' | 'password' | 'email' | 'number' | 'date' | 'textarea';
     size?: 'medium' | 'large';
     options?: SelectOption[],
     multiple?: false;
@@ -37,7 +49,7 @@ export type SelectProps = {
     size?: 'medium' | 'large';
 } & (MultipleSelectProps | SingleSelectProps)
 
-export type FormField = & (InputProps | SelectProps)
+export type FormField = & (InputProps | SelectProps | TextAreaInputProps)
 
 type Errors = {
     [key: string]: string;

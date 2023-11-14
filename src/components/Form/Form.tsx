@@ -7,6 +7,7 @@ import {Button} from "../Button/Button";
 import {FormField, FormProps} from "../../types/Form";
 import {Input} from "../GeneralInput/GeneralInput.tsx";
 import {Select} from "../SelectInput/SelectInput.tsx";
+import {TextAreaInput} from "../TextAreaInput/TextAreaInput.tsx";
 
 export const Form: FC<FormProps> = ({
                                         title,
@@ -54,6 +55,11 @@ export const Form: FC<FormProps> = ({
                                             <Select type={type} options={options} onChange={onChange} value={value} placeholder={placeholder}/>
                                         )
 
+                        }
+                        case "textarea": {
+                            return (
+                                <TextAreaInput type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size}/>
+                            )
                         }
                         default: {
                             return (
