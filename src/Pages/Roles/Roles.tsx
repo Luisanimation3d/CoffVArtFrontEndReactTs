@@ -12,7 +12,7 @@ import {API_KEY} from "../../constantes";
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [dataModal, setDataModal] = useState<any>({})
+    const [dataModal, setDataModal] = useState<unknown>({})
     const [nameRol, setNameRol] = useState<string>('')
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     useEffect(() => {
@@ -48,7 +48,7 @@ export const Roles = () => {
 
     // const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
     const dataRoles = data?.roles?.rows || []
-    let dataRolesFiltered: any;
+    let dataRolesFiltered: unknown[];
 
     if (search.length > 0) {
         dataRolesFiltered = dataRoles.filter((role: any) => role.name.toLowerCase().includes(search.toLowerCase()) || role.description.toLowerCase().includes(search.toLowerCase()))
