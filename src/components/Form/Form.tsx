@@ -22,7 +22,9 @@ export const Form: FC<FormProps> = ({
 
     return (
         <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} style={{
+                minWidth: '100%'
+            }}>
                 {title && <h1>{title}</h1>}
                 {fields?.map((
                     {
