@@ -4,6 +4,7 @@ import {Roles} from "./Pages/Roles/Roles";
 import {Supplys} from "./Pages/Supplies/Supplies.tsx";
 import { Products } from "./Pages/Products/Products.tsx";
 import { Coustomers } from "./Pages/Coustomers/CoustomersList.tsx";
+import { CoustomersCreate } from "./Pages/Coustomers/CoustomersCreate.tsx";
 import { Sales } from "./Pages/Sales/SalesList.tsx";
 import {UserLayout} from "./Layout/UserLayout/UserLayout.tsx";
 import {Companys} from "./Pages/Companys/Companys.tsx";
@@ -26,6 +27,7 @@ export default function App() {
                     <Route path={'Suppliers'} element={<Suppliers/>}/>
                     <Route path={'ProductionOrders'} element={<ProductionOrders/>}/>
                     <Route path={'Coustomers'} element={<Coustomers/>}/>
+                    <Route path={'Coustomer/create'} element={<CoustomersCreate/>}/>
                     <Route path={'Sales'} element={<Sales/>}/>
                     <Route path={'Orders'} element={<Orders/>}/>
                 </Route>
