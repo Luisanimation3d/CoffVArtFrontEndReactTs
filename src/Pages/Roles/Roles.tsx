@@ -8,6 +8,8 @@ import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useFetch} from "../../hooks/useFetch";
 import {createPortal} from "react-dom";
 import {API_KEY} from "../../constantes";
+import {Button} from "../../components/Button/Button.tsx";
+import {useNavigate} from "react-router-dom";
 
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
@@ -15,9 +17,10 @@ export const Roles = () => {
     const [dataModal, setDataModal] = useState<unknown>({})
     const [nameRol, setNameRol] = useState<string>('')
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const navigate = useNavigate()
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
-    },  []);
+    }, []);
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -85,8 +88,17 @@ export const Roles = () => {
             <Container>
                 <Titles title={'Roles'} level={1}/>
                 <div className="roles__table">
-                    <SearchInput label={'Buscar Roles'} onChange={e => setSearch(e.target.value)} value={search}
-                                 idSearch={'roleSearch'}/>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+
+                    }}>
+                        <SearchInput label={'Buscar Roles'} onChange={e => setSearch(e.target.value)} value={search}
+                                     idSearch={'roleSearch'}/>
+                        <Button text={'Crear Rol'} onClick={() => navigate('/admin/roles/create')} fill={false}/>
+                    </div>
                     {
                         loading && <p>Cargando...</p>
                     }
