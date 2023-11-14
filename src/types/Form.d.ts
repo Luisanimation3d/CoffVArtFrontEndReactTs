@@ -4,7 +4,7 @@ type TextAreaInputProps = {
     onChange: (value: string) => void;
     label: string;
     name: string;
-    size?: number | 'medium' | 'large';
+    size: number;
     placeholder?: string;
     options?: SelectOption[];
     multiple?: false;

@@ -14,7 +14,7 @@ import {useNavigate} from "react-router-dom";
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [dataModal, setDataModal] = useState<unknown>({})
+    const [dataModal, setDataModal] = useState<any>({})
     const [nameRol, setNameRol] = useState<string>('')
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate()
@@ -51,7 +51,7 @@ export const Roles = () => {
 
     // const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
     const dataRoles = data?.roles?.rows || []
-    let dataRolesFiltered: unknown[];
+    let dataRolesFiltered: any[];
 
     if (search.length > 0) {
         dataRolesFiltered = dataRoles.filter((role: any) => role.name.toLowerCase().includes(search.toLowerCase()) || role.description.toLowerCase().includes(search.toLowerCase()))

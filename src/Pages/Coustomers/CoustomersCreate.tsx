@@ -1,4 +1,3 @@
-import react from 'react'
 import {useState} from 'react'
 import { FormField, SelectOption } from '../../types/Form'
 import { Button } from '../../components/Button/Button'
@@ -108,7 +107,7 @@ return (
 <Form
 title='Crear Cliente'
 fields={CoustomerFields}
-onSubmit={onClick => (null)}
+onSubmit={() => (null)}
 button={<Button text='Crear Cliente' onClick={() => null} fill={true} />}
 />
 )
