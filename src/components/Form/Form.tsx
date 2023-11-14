@@ -1,166 +1,67 @@
-import React, {FC, useEffect, useState} from "react";
+import {FC} from "react";
 
 import {useNavigate} from "react-router-dom";
 
 import "./Form.css";
 import {Button} from "../Button/Button";
-import {FormProps} from "../../types/Form";
+import {FormField, FormProps} from "../../types/Form";
+import {Input} from "../GeneralInput/GeneralInput.tsx";
+import {Select} from "../SelectInput/SelectInput.tsx";
+import {TextAreaInput} from "../TextAreaInput/TextAreaInput.tsx";
 
 export const Form: FC<FormProps> = ({
                                         title,
                                         fields,
                                         onSubmit,
                                         button,
-                                        editable,
-                                        errors,
                                         cancelButton = true,
-                                        extraElements,
                                     }) => {
-    const [selectedOption, setSelectedOption] = useState(false);
-    const [formEdit, setFormEdit] = useState<{ name: string; value: string }[]>(
-        []
-    );
+
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (editable && fields) {
-            const values = fields.map(({name, value}) => ({
-                name,
-                value: value ?? "",
-            }));
-            setFormEdit(values);
-            setSelectedOption(values.some((field) => field.value !== ""));
-        }
-    }, [editable, fields]);
-
-    function handleChange(
-        name: string,
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) {
-        const updatedFormEdit = formEdit.map((f) => {
-            if (f.name === name) {
-                return {...f, value: e.target.value};
-            }
-            return f;
-        });
-        setFormEdit(updatedFormEdit);
-    }
 
     return (
         <>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={onSubmit} style={{
+                minWidth: '100%'
+            }}>
                 {title && <h1>{title}</h1>}
-                {fields?.map(({name, type, label, placeholder, value, options}) => {
+                {fields?.map((
+                    {
+                        type,
+                        value,
+                        placeholder,
+                        onChange,
+                        label,
+                        name,
+                        size,
+                        options,
+                        multiple,
+                    }: FormField
+                ) => {
                     switch (type) {
-                        case "hidden": {
-                            return (
-                                <input
-                                    type={type}
-                                    name={name}
-                                    id={name}
-                                    value={value}
-                                    key={name}
-                                />
-                            );
-                        }
                         case "text":
                         case "password":
                         case "email":
-                        case "number": {
+                        case "number":
+                        case 'date': {
                             return (
-                                <div className={`inputControl`} key={name}>
-                                    <input
-                                        type={type}
-                                        name={name}
-                                        id={name}
-                                        value={formEdit.find((f) => f.name === name)?.value}
-                                        onChange={(e) => handleChange(name, e)}
-                                        placeholder={placeholder ? placeholder : label}
-                                        autoComplete="false"
-                                    />
-                                    {errors && errors[name] && (
-                                        <span className={`error`}>{errors[name]}</span>
-                                    )}
-                                    <label htmlFor={name}>{label}</label>
-                                </div>
+                                <Input value={value} onChange={onChange} label={label} name={name} size={size}/>
                             );
                         }
                         case "select": {
-                            return (
-                                <div
-                                    className={`selectControl${selectedOption ? " active" : ""}`}
-                                    key={name}
-                                >
-                                    <select
-                                        name={name}
-                                        id={name}
-                                        value={
-                                            selectedOption
-                                                ? formEdit.find((f) => f.name === name)?.value
-                                                : ""
-                                        }
-                                        onChange={(e) => {
-                                            const hasSelectedOption = e.target.value !== "";
-                                            setSelectedOption(hasSelectedOption);
-                                            handleChange(name, e);
-                                        }}
-                                    >
-                                        <option value=""></option>
-                                        {options?.map(({value, label}) => (
-                                            <option key={value} value={value}>
-                                                {label}
-                                            </option>
-                                        ))}
-                                    </select>
-                                    <label htmlFor={name}>{label}</label>
-                                </div>
-                            );
+                            return multiple ? (
+                                            <Select type={type} options={options} onChange={onChange} value={value} placeholder={placeholder} multiple/>
+                                        )
+                                        : (
+                                            <Select type={type} options={options} onChange={onChange} value={value} placeholder={placeholder}/>
+                                        )
+
                         }
-                        case "date": {
+                        case "textarea": {
                             return (
-                                <div className={`inputControl`} key={name}>
-                                    <input
-                                        type={type}
-                                        name={name}
-                                        id={name}
-                                        value={formEdit.find((f) => f.name === name)?.value}
-                                        onChange={(e) => handleChange(name, e)}
-                                        placeholder={placeholder ? placeholder : label}
-                                        autoComplete="false"
-                                    />
-                                    {errors && errors[name] && (
-                                        <span className={`error`}>{errors[name]}</span>
-                                    )}
-                                    <label htmlFor={name}>{label}</label>
-                                </div>
-                            );
-                        }
-                        case "radio": {
-                            return (
-                                <>
-                                    {options?.map(({value, label}) => (
-                                        <div className="inputRadio" key={value}>
-                                            <input
-                                                type="radio"
-                                                id={value}
-                                                value={value}
-                                                name={name}
-                                            />
-                                            <label htmlFor={value}>{label}</label>
-                                        </div>
-                                    ))}
-                                </>
-                            );
-                        }
-                        case "checkbox": {
-                            return (
-                                <>
-                                    <div className="inputCheckbox">
-                                        <input type="checkbox" id={name} name={name}/>
-                                        <label htmlFor={name}>{label}</label>
-                                    </div>
-                                </>
-                            );
+                                <TextAreaInput type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size}/>
+                            )
                         }
                         default: {
                             return (
@@ -171,7 +72,6 @@ export const Form: FC<FormProps> = ({
                         }
                     }
                 })}
-                {extraElements && extraElements}
                 {button}
                 {cancelButton && (
                     <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false}/>

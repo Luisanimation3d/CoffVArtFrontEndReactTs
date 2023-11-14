@@ -1,0 +1,182 @@
+.sideBarMenu__container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background: #fff;
+    padding: 0.4rem 0.8rem;
+    box-shadow: 8px 0 21px -3px rgba(159, 33, 47, .5);
+    transition: all 0.5s ease-in-out;
+    z-index: 100;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active{
+    width: 250px;
+}
+
+.sideBarMenu__container .sideBarMenu__toggleMenu{
+    position: absolute;
+    color: #9F212F;
+    background: none;
+    border: none;
+    top: .4rem;
+    left: 50%;
+    font-size: 1.2rem;
+    line-height: 50px;
+    transform: translateX(-50%);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.5s ease-in-out;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__toggleMenu{
+    left: 90%;
+}
+
+.sideBarMenu__container .sideBarMenu__top .sideBarMenu__logo{
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__top .sideBarMenu__logo{
+    opacity: 1;
+}
+
+.sideBarMenu__container .sideBarMenu__top .sideBarMenu__logo img{
+    height: 100%;
+    width: auto;
+}
+
+.sideBarMenu__container .sideBarMenu__user{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.sideBarMenu__container .sideBarMenu__user .sideBarMenu__user-image{
+    width: 50px;
+    border-radius: 100%;
+    border: 1px solid #ccc;
+}
+
+.sideBarMenu__container .sideBarMenu__user .sideBarMenu__user-info{
+    margin-left: 1rem;
+    opacity: 0;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__user .sideBarMenu__user-info{
+    transition: .3s ease-in-out all .3s;
+    opacity: 1;
+}
+
+.sideBarMenu__container .sideBarMenu__user .sideBarMenu__user-info .sideBarMenu__user-name{
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #9F212F;
+}
+
+.sideBarMenu__container .sideBarMenu__user .sideBarMenu__user-info .sideBarMenu__user-role{
+    font-size: 0.8rem;
+    color: #964f56;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem,
+.sideBarMenu__container .sideBarMenu__logout{
+    position: relative;
+    list-style: none;
+    height: 50px;
+    width: 90%;
+    margin: .8rem auto;
+    line-height: 20px;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-link,
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-button{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #121212;
+    border-radius: .8rem;
+    height: 50px;
+    cursor: pointer;
+}
+
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-button{
+    background-color: transparent;
+    width: 100%;
+    outline: none;
+    transition: all .2s ease-in-out;
+    border: none;
+}
+
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-button:hover{
+    background: #9F212F;
+    color: #fff;
+    box-shadow: 0 0 10px 4px rgba(255,255,255,0.75) inset;
+    -webkit-box-shadow: 0 0 10px 4px rgba(255,255,255,0.75) inset;
+    -moz-box-shadow: 0 0 10px 4px rgba(255,255,255,0.75) inset;
+}
+
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-button:active{
+    box-shadow: 10px 10px 18px -7px rgba(0,0,0,0.5) inset;
+    -webkit-box-shadow: 10px 10px 18px -7px rgba(0,0,0,0.5) inset;
+    -moz-box-shadow: 10px 10px 18px -7px rgba(0,0,0,0.5) inset;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-link:hover{
+    background-color: #D6CAB0;
+    color: #12171e;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-link svg,
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-button svg{
+    min-width: 50px;
+    text-align: center;
+    border-radius: 12px;
+    line-height: 50px;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-link .sideBarMenu__menuItem-name,
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-button .sideBarMenu__logout-name{
+    opacity: 0;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-link .sideBarMenu__menuItem-name,
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__logout .sideBarMenu__logout-button .sideBarMenu__logout-name{
+    opacity: 1;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-link.active{
+    background-color: #9F212F;
+    color: #fff;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-tooltip,
+.sideBarMenu__container .sideBarMenu__logout .sideBarMenu__logout-tooltip{
+    position: absolute;
+    left: 150px;
+    top: 50%;
+    transform: translate(-75px, -50%);
+    box-shadow: 0 .5rem .8rem rgba(0,0,0,.2);
+    border-radius: .6rem;
+    padding: .4rem 1.2rem;
+    line-height: 1.8rem;
+    z-index: 120;
+    opacity: 0;
+    transition: .3s ease-in-out all;
+}
+
+.sideBarMenu__container .sideBarMenu__menu .sideBarMenu__menuItem:hover .sideBarMenu__menuItem-tooltip,
+.sideBarMenu__container .sideBarMenu__logout:hover .sideBarMenu__logout-tooltip{
+    opacity: 1;
+}
+
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__menu .sideBarMenu__menuItem .sideBarMenu__menuItem-tooltip,
+.sideBarMenu__container.sideBarMenu__container--active .sideBarMenu__logout .sideBarMenu__logout-tooltip{
+    display: none;
+}

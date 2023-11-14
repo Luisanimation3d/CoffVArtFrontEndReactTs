@@ -1,19 +1,55 @@
-import React from "react";
-
-type OptionField = {
+type TextAreaInputProps = {
+    type: 'textarea';
     value: string;
+    onChange: (value: string) => void;
     label: string;
+    name: string;
+    size?: number | 'medium' | 'large';
+    placeholder?: string;
+    options?: SelectOption[];
+    multiple?: false;
 }
 
-export type FormField = {
-    name: string;
-    type: string;
-    label: string;
+export type InputProps = {
+    value: string;
+    onChange: (value: string) => void;
     placeholder?: string;
-    value?: string;
-    options?: OptionField[];
-    selected?: string;
+    label: string;
+    name: string;
+    type?: 'text' | 'password' | 'email' | 'number' | 'date' | 'textarea';
+    size?: 'medium' | 'large';
+    options?: SelectOption[],
+    multiple?: false;
 }
+
+export type SelectOption = {
+    value: string | number
+    label: string;
+
+}
+
+type MultipleSelectProps = {
+    multiple: true;
+    value: SelectOption[];
+    onChange: (value: SelectOption[]) => void;
+}
+
+type SingleSelectProps = {
+    multiple?: false;
+    value?: SelectOption;
+    onChange: (value: SelectOption | undefined) => void;
+}
+
+export type SelectProps = {
+    options: SelectOption[]
+    placeholder?: string;
+    type: 'select';
+    label?: string;
+    name?: string;
+    size?: 'medium' | 'large';
+} & (MultipleSelectProps | SingleSelectProps)
+
+export type FormField = & (InputProps | SelectProps | TextAreaInputProps)
 
 type Errors = {
     [key: string]: string;
@@ -24,8 +60,6 @@ export interface FormProps {
     fields: FormField[];
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     button: JSX.Element | JSX.Element[] | string;
-    editable?: boolean;
     errors?: Errors;
     cancelButton?: boolean;
-    extraElements?: JSX.Element | JSX.Element[];
 }

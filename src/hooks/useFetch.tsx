@@ -2,21 +2,8 @@ import { useState } from 'react';
 
 type methodOptions = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
-interface dataOptions {
-    permissions: {
-        count: number;
-        rows: Array<any>;
-    };
-    options: {
-        page: number;
-        limit: number;
-        paginate: number;
-        order: Array<string>;
-    };
-}
-
 export const useFetch = (baseUrl: string) => {
-    const [data, setData] = useState<dataOptions>();
+    const [data, setData] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<any>(false);
 
@@ -39,7 +26,7 @@ export const useFetch = (baseUrl: string) => {
 			};
 
 			const response = await fetch(config.url, config);
-			const json: dataOptions = await response.json();
+			const json: any[] = await response.json();
 			setData(json);
 		} catch (error) {
 			setError(error);
