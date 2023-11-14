@@ -1,0 +1,186 @@
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 3rem;
+    border: .05rem solid #D6CAB0;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem;
+    border-radius: .25rem;
+    outline: none;
+    transition: border-color .3s ease-in-out;
+}
+
+.container:focus {
+    border-color: #9F212F;
+}
+
+.value {
+    flex-grow: 1;
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.clear-button {
+    background: none;
+    color: #D6CAB0;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.25rem;
+    height: 1.25rem;
+    transition: color .3s ease-in-out;
+    animation: ClearButtonFadeIn .5s ease;
+}
+
+@keyframes ClearButtonFadeIn {
+    from {
+        rotate: 360deg;
+    }
+    to {
+        rotate: 0deg;
+    }
+}
+
+.clear-button:focus,
+.clear-button:hover {
+    color: #9F212F;
+}
+
+.divider {
+    background: #D6CAB0;
+    align-self: stretch;
+    width: .05rem;
+    transition: background .3s ease-in-out;
+}
+
+.container:focus .divider {
+    background: #9F212F;
+}
+
+.caret {
+    color: #D6CAB0;
+    transition: color .5s ease-in-out;
+    animation: RotateChevronInactive .5s ease forwards;
+}
+
+.caret.caret--active {
+    color: #9F212F;
+    animation: RotateChevronActive .5s ease forwards;
+}
+
+@keyframes RotateChevronActive {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes RotateChevronInactive {
+    from {
+        transform: rotate(-180deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.options {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    max-height: 15rem;
+    overflow-y: auto;
+    border: .05rem solid #9F212F;
+    border-radius: .25rem;
+    width: 100%;
+    left: 0;
+    top: calc(100% + .25rem);
+    background: #fff;
+    z-index: 100;
+}
+
+.options.show {
+    display: block;
+}
+
+.option {
+    padding: .25rem .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.option.highlighted {
+    background: #D6CAB0;
+    color: #9F212F;
+}
+
+.option.selected {
+    background: #9F212F;
+    color: #fff;
+}
+
+.option-badge {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: .15rem .5rem;
+    gap: .5rem;
+    cursor: pointer;
+    background: #D6CAB0;
+    outline: none;
+    border-radius: 50px;
+    color: #9F212F;
+    font-weight: bold;
+    transition: .3s ease-in-out;
+}
+
+.option-badge:hover,
+.option-badge:focus {
+    background: #fff;
+    border: .05rem solid #9F212F;
+}
+
+.option-badge:hover > .remove-button,
+.option-badge:focus > .remove-button {
+    color: #9F212F;
+}
+
+.option-badge > .remove-button {
+    font-size: 1.25rem;
+    background: none;
+    height: 1.25rem;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.label {
+    position: absolute;
+    font-size: 1rem;
+    background: #fff;
+    transition: .3s ease-in-out;
+    color: #D6CAB0;
+    top: 50%;
+    padding: 0 .2rem;
+    transform: translate(0, -50%);
+    pointer-events: none;
+}
+
+.container:focus .label {
+    top: -.1rem;
+    font-size: .8rem;
+    color: #9F212F
+}
+
+.label.label--active {
+    top: -.1rem;
+    font-size: .8rem;
+    color: #D6CAB0;
+}

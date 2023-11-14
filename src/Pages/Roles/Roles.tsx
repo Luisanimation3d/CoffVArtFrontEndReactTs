@@ -12,12 +12,12 @@ import {API_KEY} from "../../constantes";
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const [dataModal, setDataModal] = useState<any>({})
+    const [dataModal, setDataModal] = useState<unknown>({})
     const [nameRol, setNameRol] = useState<string>('')
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
-    }, []);
+    },  []);
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -46,9 +46,9 @@ export const Roles = () => {
     //     },
     // ]
 
-    const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
-
-    let dataRolesFiltered: any;
+    // const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
+    const dataRoles = data?.roles?.rows || []
+    let dataRolesFiltered: unknown[];
 
     if (search.length > 0) {
         dataRolesFiltered = dataRoles.filter((role: any) => role.name.toLowerCase().includes(search.toLowerCase()) || role.description.toLowerCase().includes(search.toLowerCase()))
@@ -56,8 +56,13 @@ export const Roles = () => {
         dataRolesFiltered = dataRoles
     }
 
+    console.log(dataRoles)
+
     const handleDelete = (row: any) => {
-        del(`roles/${row.id}?apikey=8b9c63adc6a049c291fb09ad35c3f14b`)
+        del(`roles/${row.id}?apikey=${API_KEY}`)
+        setTimeout(() => {
+            get(`roles?apikey=${API_KEY}`)
+        }, 500)
     }
 
     const handleRowClick = (row: any) => {
@@ -98,6 +103,7 @@ export const Roles = () => {
                                        onClick: () => null,
                                    }}
                                    deleteAction={{
+                                       label: 'Cambiar estado',
                                        onClick: handleDelete,
                                    }}
                             />)
