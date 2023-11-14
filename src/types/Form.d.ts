@@ -17,7 +17,7 @@ export type InputProps = {
     label: string;
     name: string;
     type?: 'text' | 'password' | 'email' | 'number' | 'date' | 'textarea';
-    size?: 'medium' | 'large';
+    size: 'medium' | 'large';
     options?: SelectOption[],
     multiple?: false;
 }

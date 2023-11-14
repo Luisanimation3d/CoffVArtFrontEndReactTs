@@ -60,7 +60,7 @@ export const Form: FC<FormProps> = ({
                         }
                         case "textarea": {
                             return (
-                                <TextAreaInput type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size}/>
+                                <TextAreaInput type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size as number}/>
                             )
                         }
                         default: {
