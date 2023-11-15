@@ -11,6 +11,7 @@ import {Companys} from "./Pages/Companys/Companys.tsx";
 import {Suppliers} from "./Pages/Suppliers/Suppliers.tsx";
 import {ProductionOrders} from "./Pages/ProductionOrders/ProductionOrders.tsx";
 import {Home} from "./Pages/Home/Home.tsx";
+import { TiendaUser } from "./Pages/Catalogue/TiendaUser.tsx";
 import { Orders } from "./Pages/Orders/OrdersList.tsx";
 import {RolesCreate} from "./Pages/Roles/RolesCreate.tsx";
 
@@ -36,6 +37,7 @@ export default function App() {
                 <Route path={'*'} element={<div>error</div>}/>
                 <Route path={'/'} element={<UserLayout/>}>
                     <Route path={'home'} element={<Home/>   }/>
+                    <Route path={'tiendaUser'} element={<TiendaUser/>   }/>
                     <Route path={'*'} element={<div>error</div>}/>
                 </Route>
             </Routes>
