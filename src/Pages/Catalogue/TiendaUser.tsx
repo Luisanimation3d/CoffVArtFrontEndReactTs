@@ -3,8 +3,7 @@ import BannerBurdeo2 from '../../assets/BannerBurdeo2.png';
 import ProductImage from '../../assets/product.jpg';
 import {SliderBanner} from "../../components/SliderBanner/SliderBanner.tsx";
 import { Product, ProductCard } from '../../components/ProductCard/ProductCard.tsx';
-import './TiendaUser.cssgit add .
-';
+import './TiendaUser.css';
 
 export const TiendaUser = () => {
     const images = [BannerBurdeo1, BannerBurdeo2];
