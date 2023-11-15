@@ -4,9 +4,12 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/Button/Button.tsx";
 
 export const ProductionRequest = () => {
     const [search, setSearch] = useState<string>('')
+    const navigate = useNavigate()
     const columnsProductionRequest: Column[] = [
         {
             key:'orderNumber',
@@ -66,6 +69,7 @@ export const ProductionRequest = () => {
         <Container>
             <Titles title={'Solicitudes de Producción'} level={1}/>
             <div className="productionRequest__table">
+            <Button text={'Crear Solicitud'} onClick={() => navigate('/admin/ProductionRequest/create')} fill={false}/>
                 <SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestearch'} />
                 <Table columns={columnsProductionRequest} data={dataProductionRequestFiltered} onRowClick={()=> null} editableAction={{
                     onClick: () => null,

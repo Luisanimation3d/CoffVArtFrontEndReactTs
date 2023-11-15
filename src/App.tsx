@@ -13,6 +13,8 @@ import {ProductionOrders} from "./Pages/ProductionOrders/ProductionOrders.tsx";
 import {Home} from "./Pages/Home/Home.tsx";
 import { Orders } from "./Pages/Orders/OrdersList.tsx";
 import {RolesCreate} from "./Pages/Roles/RolesCreate.tsx";
+import { ProductionRequest } from "./Pages/ProductionRequest/ProductionRequest.tsx";
+import { CompanysCreate } from "./Pages/Companys/CompanysCreate.tsx";
 
 export default function App() {
     return (
@@ -26,8 +28,10 @@ export default function App() {
                     <Route path={'Supplys'} element={<Supplys/>}/>
                     <Route path={'Products'} element={<Products/>}/>
                     <Route path={'Companys'} element={<Companys/>}/>
+                    <Route path={'Companys/create'} element={<CompanysCreate/>}/>
                     <Route path={'Suppliers'} element={<Suppliers/>}/>
                     <Route path={'ProductionOrders'} element={<ProductionOrders/>}/>
+                    <Route path={'ProductionRequest'} element={<ProductionRequest/>}/>
                     <Route path={'Coustomers'} element={<Coustomers/>}/>
                     <Route path={'Coustomer/create'} element={<CoustomersCreate/>}/>
                     <Route path={'Sales'} element={<Sales/>}/>

@@ -4,9 +4,12 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/Button/Button.tsx";
 
 export const Suppliers = () => {
     const [search, setSearch] = useState<string>('')
+    const navigate = useNavigate()
     const columnsSuppliers: Column[] = [
         {
             key: 'id',
@@ -74,6 +77,15 @@ export const Suppliers = () => {
             <Container>
                 <Titles title={'Proveedores'} level={1}/>
                 <div className="supplier__table">
+                <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+
+                    }}>
+                        <Button text={'Crear Proveedor'} onClick={() => navigate('/admin/Suppliers/create')} fill={false}/>
+                    </div>
                     <SearchInput label={'Buscar Proveedores'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'supplierSearch'} />
                     <Table columns={columnsSuppliers} data={dataSuppliersFiltered} onRowClick={()=> null} editableAction={{
                         onClick: () => null,

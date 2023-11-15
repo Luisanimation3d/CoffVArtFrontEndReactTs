@@ -38,14 +38,19 @@ export const AdminRoutes: SideBarMenuItemProps[] = [
         icon: <FiCoffee/>
     },
     {
+        title: 'Proveedores',
+        link: 'Suppliers',
+        icon: <FiTruck/>
+    },
+    {
         title: 'Compañias',
         link: 'Companys',
         icon: <FiBriefcase/>
     },
     {
-        title: 'Proveedores',
-        link: 'Suppliers',
-        icon: <FiTruck/>
+        title: 'Solicitudes de Producción',
+        link: 'ProductionRequest',
+        icon: <FiPackage/>
     },
     {
         title: 'Ordenes de Producción',
