@@ -7,9 +7,24 @@ import { FC } from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
-import { ProductCardProps, MiniCartProductCardProps } from '../../types/ProductCard'
+import { MiniCartProductCardProps } from '../../types/ProductCard'
 
 import './ProductCard.css';
+
+export interface Product {
+	id: number;
+	name: string;
+	price: number;
+	image: string;
+	description: string;
+	category: string;
+	discount?: number;
+	new?: boolean;
+}
+
+interface ProductCardProps {
+	product: Product;
+}
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
     // const { addToCart } = useGlobalState();

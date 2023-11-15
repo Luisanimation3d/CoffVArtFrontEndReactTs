@@ -17,7 +17,7 @@ export const HeaderMenu = () => {
                         <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
                                                                     href="/nosotros">Nosotros</a></li>
                         <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
-                                                                    href="/productos">Productos</a></li>
+                                                                    href="/#/productos">Productos</a></li>
                         <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
                                                                     href="/contacto">Contacto</a></li>
                     </ul>
