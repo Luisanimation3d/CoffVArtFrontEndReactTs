@@ -1,4 +1,5 @@
 import { Button } from '../Button/Button';
+import {useNavigate} from "react-router-dom";
 
 // import { useGlobalState } from '../../Context/GlobalState';
 
@@ -20,6 +21,7 @@ export interface Product {
 	category: string;
 	discount?: number;
 	new?: boolean;
+    link: string;
 }
 
 interface ProductCardProps {
@@ -36,8 +38,10 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
     //     buttonCart?.click();
     // }
 
+    const navigate = useNavigate();
+
     return (
-        <div className={`productCard`}>
+        <div className={`productCard`} onClick={() => navigate(`${product.link}`)}>
             <div className='productCard--info-top'>
                 {product.new && (
                     <div className='productCard__new'>
