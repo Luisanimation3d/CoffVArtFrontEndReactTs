@@ -1,0 +1,36 @@
+.labelView__label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 999;
+    background: rgba(0,0,0,0.7);
+    padding: 1rem;
+    border-radius: 50px;
+    pointer-events: none;
+    opacity: .5;
+    width: 100%;
+    min-width: 290px;
+    max-width: 300px;
+    transition: all .3s ease-in-out;
+}
+
+.labelView__label__text{
+    color: #fff;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+@media screen and (max-width: 768px){
+    .labelView__label{
+        bottom: 0.5rem;
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+
+
