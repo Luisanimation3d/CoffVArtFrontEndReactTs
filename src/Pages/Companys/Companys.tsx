@@ -4,9 +4,12 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
+import { Button } from "../../components/Button/Button.tsx";
+import {useNavigate} from "react-router-dom";
 
 export const Companys = () => {
     const [search, setSearch] = useState<string>('')
+    const navigate = useNavigate()
     const columnsCompanys: Column[] = [
         {
             key:'id',
@@ -63,6 +66,15 @@ export const Companys = () => {
         <Container>
             <Titles title={'Compañias'} level={1}/>
             <div className="companys__table">
+            <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+
+                    }}>
+                        <Button text={'Crear Compañia'} onClick={() => navigate('/admin/Companys/create')} fill={false}/>
+                    </div>
                 <SearchInput label={'Buscar Compañias'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'companySearch'} />
                 <Table columns={columnsCompanys} data={dataCompanysFiltered} onRowClick={()=> null} editableAction={{
                     onClick: () => null,
