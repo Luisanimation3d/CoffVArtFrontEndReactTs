@@ -4,9 +4,12 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
+import { Button } from "../../components/Button/Button.tsx";
+import {useNavigate} from "react-router-dom";
 
 export const Coustomers = () => {
     const [search, setSearch] = useState<string>('')
+    const navigate = useNavigate()
     const columnsCoustumers: Column[] = [
         {
             key: 'id',
@@ -64,6 +67,14 @@ export const Coustomers = () => {
             <Container>
                 <Titles title={'Clientes'} level={1}/>
                 <div className="roles__table">
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+                    }}>
+                    <Button text={'Crear cliente'} onClick={()=> navigate('/admin/Coustomer/create')} fill= {false} />
+                    </div>                    
                     <SearchInput label={'Buscar clientes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'CoustomerSearch'} />
                     <Table columns={columnsCoustumers} data={dataCoustomersFiltered} onRowClick={()=> null} editableAction={{
                         onClick: () => null,

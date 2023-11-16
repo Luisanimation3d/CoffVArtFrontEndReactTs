@@ -6,10 +6,14 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
+import { Button } from "../../components/Button/Button.tsx";
+import { useNavigate } from "react-router-dom";
 
 export const Orders = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate()
+
 
     const columnsOrders: Column[] = [
         {
@@ -68,6 +72,14 @@ export const Orders = () => {
             <Container>
                 <Titles title={"Pedidos"} level={1}/>
                 <div className="roles__table">
+                <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+                    }}>
+                    <Button text={'Crear Pedido'} onClick={()=> navigate('/admin/')} fill= {false} />
+                    </div>
                     <SearchInput
                         label={"Buscar Pedido"}
                         onChange={(e) => setSearch(e.target.value)}

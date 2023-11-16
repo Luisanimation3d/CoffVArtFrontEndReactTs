@@ -57,4 +57,9 @@ export const AdminRoutes: SideBarMenuItemProps[] = [
         link: 'ProductionOrders',
         icon: <FiPackage/>
     },
+    {
+        title: 'Ejemplo',
+        link: 'ejemplo',
+        icon: <FiBriefcase/>
+    }
 ]

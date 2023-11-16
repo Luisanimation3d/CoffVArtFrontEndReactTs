@@ -40,6 +40,7 @@ export default function App() {
                     <Route path={'ProductionRequest'} element={<ProductionRequest/>}/>
                     <Route path={'Coustomers'} element={<Coustomers/>}/>
                     <Route path={'Coustomer/create'} element={<CoustomersCreate/>}/>
+                    <Route path= {'ejemplo'} element= {<EjemploVistaConDetalle/>}/>
                     <Route path={'Sales'} element={<Sales/>}/>
                     <Route path={'Orders'} element={<Orders/>}/>
                 </Route>
