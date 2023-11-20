@@ -8,7 +8,8 @@ export function Button({
 	onClick,
 	autosize = true,
 	disabled,
-	fill = true
+	fill = true,
+	type = 'button',
 }: ButtonProps): JSX.Element {
 	const btnUseRef = useRef<HTMLButtonElement>(null);
 
@@ -48,6 +49,7 @@ export function Button({
 				autosize ? 'auto' : 'fixed'
 			} ${disabled && 'btn--disabled'}`}
 			ref={btnUseRef}
+			type={type}
 		>
 			{text}
 		</button>
