@@ -23,7 +23,6 @@ export const useFetch = (baseUrl: string) => {
 		try {
 			setLoading(true);
 			setError(null);
-			console.log(body)
 			const config: FetchProps = {
 				method,
 				url: `${baseUrl}${url}`,
@@ -34,7 +33,10 @@ export const useFetch = (baseUrl: string) => {
 				body: JSON.stringify(body),
 			};
 
-			const response = await fetch(config.url, {
+			const response = config.method === 'GET' ? await fetch(config.url, {
+				method: config.method,
+				headers: config.headers,
+			}) : await fetch(config.url, {
 				method: config.method,
 				headers: config.headers,
 				body: config.body,
