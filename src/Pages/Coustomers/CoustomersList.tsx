@@ -26,7 +26,7 @@ export const Coustomers = () => {
         { key: 'phone', header: 'Telefono' },
         { key: 'email', header: 'Email' },
         { key: 'address', header: 'Dirección' },
-        { key: 'state', header: 'Estado' }
+        { key: 'isActive', header: 'Estado' }
     ];
 
     const dataCoustumers = data?.coustumers?.rows || [];
@@ -34,8 +34,8 @@ export const Coustomers = () => {
 
     if (search.length > 0) {
         dataCoustumersFiltered = dataCoustumers.filter((coustumer: any) =>
-            coustumer.nombre.toLowerCase().includes(search.toLowerCase()) ||
-            coustumer.documento.toLowerCase().includes(search.toLowerCase())
+            coustumer.name.toLowerCase().includes(search.toLowerCase()) ||
+            coustumer.document.toString().includes(search)
         );
     } else {
         dataCoustumersFiltered = dataCoustumers;
