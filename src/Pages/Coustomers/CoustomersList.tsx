@@ -26,7 +26,7 @@ export const Coustomers = () => {
         { key: 'phone', header: 'Telefono' },
         { key: 'email', header: 'Email' },
         { key: 'address', header: 'Dirección' },
-        { key: 'isActive', header: 'Estado' }
+        { key: 'state', header: 'Estado' }
     ];
 
     const dataCoustumers = data?.coustumers?.rows || [];
