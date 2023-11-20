@@ -15,6 +15,7 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			link: '/producto/1'
 		},
 		{
 			id: 2,
@@ -23,6 +24,7 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			link: '/producto/2'
 		},
 		{
 			id: 3,

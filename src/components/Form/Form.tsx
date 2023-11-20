@@ -10,21 +10,17 @@ import {Select} from "../SelectInput/SelectInput.tsx";
 import {TextAreaInput} from "../TextAreaInput/TextAreaInput.tsx";
 
 export const Form: FC<FormProps> = ({
-                                        title,
-                                        fields,
-                                        onSubmit,
-                                        button,
-                                        cancelButton = true,
-                                    }) => {
-
+    title,
+    fields,
+    onSubmit,
+    button,
+    cancelButton = true,
+}) => {
     const navigate = useNavigate();
-
 
     return (
         <>
-            <form onSubmit={onSubmit} style={{
-                minWidth: '100%'
-            }}>
+            <form onSubmit={onSubmit} style={{ minWidth: '100%' }}>
                 {title && <h1>{title}</h1>}
                 {fields?.map((
                     {
@@ -37,7 +33,8 @@ export const Form: FC<FormProps> = ({
                         size,
                         options,
                         multiple,
-                    }: FormField
+                    }: FormField,
+                    index: number // Agregar el índice como parámetro
                 ) => {
                     switch (type) {
                         case "text":
@@ -46,26 +43,24 @@ export const Form: FC<FormProps> = ({
                         case "number":
                         case 'date': {
                             return (
-                                <Input value={value} onChange={onChange} label={label} name={name} size={size}/>
+                                <Input key={index} value={value} onChange={onChange} label={label} name={name} size={size} />
                             );
                         }
                         case "select": {
                             return multiple ? (
-                                            <Select type={type} options={options} onChange={onChange} value={value} placeholder={placeholder} multiple/>
-                                        )
-                                        : (
-                                            <Select type={type} options={options} onChange={onChange} value={value} placeholder={placeholder}/>
-                                        )
-
+                                <Select key={index} type={type} options={options} onChange={onChange} value={value} placeholder={placeholder} multiple />
+                            ) : (
+                                <Select key={index} type={type} options={options} onChange={onChange} value={value} placeholder={placeholder} />
+                            );
                         }
                         case "textarea": {
                             return (
-                                <TextAreaInput type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size as number}/>
-                            )
+                                <TextAreaInput key={index} type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size as number} />
+                            );
                         }
                         default: {
                             return (
-                                <div>
+                                <div key={index}>
                                     Tipo {type} desconocido en el input {name}
                                 </div>
                             );
@@ -74,7 +69,7 @@ export const Form: FC<FormProps> = ({
                 })}
                 {button}
                 {cancelButton && (
-                    <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false}/>
+                    <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false} />
                 )}
             </form>
         </>

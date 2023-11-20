@@ -128,14 +128,18 @@ const RolesCreateStepTwo = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '5rem'
+            gap: '5rem',
+            flexWrap: 'wrap',
+            transition: 'all .3s ease-in-out'
         }}>
             <div style={
                 {
-                    width: '45%',
+                    width: '100%',
+                    maxWidth: '600px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '2rem'
+                    gap: '2rem',
+                    transition: 'all .3s ease-in-out'
                 }
             }>
                 <Form fields={fields} onSubmit={e => {

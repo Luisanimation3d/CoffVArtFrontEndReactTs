@@ -4,9 +4,12 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
+import { useNavigate } from "react-router-dom";
+import { Button } from "../../components/Button/Button.tsx";
 
 export const ProductionOrders = () => {
     const [search, setSearch] = useState<string>('')
+    const navigate = useNavigate()
     const columnsProductionOrders: Column[] = [
         {
             key:'orderNumber',
@@ -57,6 +60,7 @@ export const ProductionOrders = () => {
         <>
         <Container>
             <Titles title={'Ordenes de Producción'} level={1}/>
+            <Button text={'Crear Orden'} onClick={() => navigate('/admin/ProductionOrders/create')} fill={false}/>
             <div className="productionOrders__table">
                 <SearchInput 
                 label={'Buscar Ordenes'} 

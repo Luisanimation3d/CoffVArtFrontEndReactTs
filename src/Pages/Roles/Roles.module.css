@@ -3,13 +3,16 @@
     flex-direction: column;
     gap: 1.5rem;
     margin-top: 1rem;
-    width: 70%;
+    width: 100%;
+    max-width: 600px;
+    flex-wrap: wrap;
 }
 
 .permisos {
     display: flex;
     gap: .5rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .permisoName {
@@ -28,6 +31,8 @@
     gap: .5rem;
     align-items: center;
     list-style: none;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 .privilegioName {
@@ -59,4 +64,14 @@
 
 .deletePrivilege:hover{
     color: #9F212F;
+}
+
+@media screen and (max-width: 768px){
+    .permisoName{
+        width: 100%;
+    }
+    .privilegios{
+        width: 100%;
+        justify-content: center;
+    }
 }
