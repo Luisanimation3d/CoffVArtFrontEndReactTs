@@ -21,6 +21,8 @@ export const Roles = () => {
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
     }, []);
+    console.log(data)
+    console.log(error)
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -35,21 +37,6 @@ export const Roles = () => {
             header: 'Descripción',
         }
     ]
-
-    // const dataRoles = [
-    //     {
-    //         id: 1,
-    //         name: 'Admin',
-    //         description: 'this is the admin role',
-    //     },
-    //     {
-    //         id: 2,
-    //         name: 'Usuario',
-    //         description: 'this is the user role',
-    //     },
-    // ]
-
-    // const dataRoles = data?.roles?.rows?.filter((role: any) => role.state) || []
     const dataRoles = data?.roles?.rows || []
     let dataRolesFiltered: any[];
 
@@ -58,8 +45,6 @@ export const Roles = () => {
     } else {
         dataRolesFiltered = dataRoles
     }
-
-    console.log(dataRoles)
 
     const handleDelete = (row: any) => {
         del(`roles/${row.id}?apikey=${API_KEY}`)
