@@ -117,14 +117,30 @@ export const CustomersCreate = () => {
                 email: formValues.email,
                 address: formValues.address,
             };
+    
             console.log('Datos del formulario:', requestBody);
-            await post(`coustumers?apikey=${API_KEY}`, requestBody);
+    
+            const response = await fetch(`https://coffvart-backend.onrender.com/api/coustumers?apikey=${API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+    
+            if (!response.ok) {
+                console.error('Error al crear el cliente:', response.statusText);
+                // Puedes agregar más detalles de la respuesta si es necesario: response.json(), response.text(), etc.
+                return;
+            }
+    
             console.log('Cliente creado con éxito');
-
+    
         } catch (error) {
             console.error('Error al crear el cliente', error);
         }
     };
+    
 
     return (
         <Form
