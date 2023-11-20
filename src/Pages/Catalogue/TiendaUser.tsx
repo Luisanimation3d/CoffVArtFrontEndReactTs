@@ -3,7 +3,7 @@ import BannerBurdeo2 from '../../assets/BannerBurdeo2.png';
 import ProductImage from '../../assets/product.jpg';
 import {SliderBanner} from "../../components/SliderBanner/SliderBanner.tsx";
 import { Product, ProductCard } from '../../components/ProductCard/ProductCard.tsx';
-import './TiendaUser.css';
+import '../Catalogue/TiendaUser.css';
 
 export const TiendaUser = () => {
     const images = [BannerBurdeo1, BannerBurdeo2];
@@ -28,13 +28,15 @@ export const TiendaUser = () => {
 		},
 		{
 			id: 3,
-			name: 'Burdeo Coffee',
-			price: 25000,
-			image: ProductImage,
-			description: 'Some',
-			category: 'Cafe',
-			discount: 50,
-			new: true,
+  			name: 'Burdeo Coffee',
+  			price: 25000,
+  			image: ProductImage,
+  			description: 'Some',
+  			category: 'Cafe',
+  			discount: 50,
+  			new: true,
+  			link: '/some-link',
+			
 		},
 		{
 			id: 4,
@@ -43,6 +45,9 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			discount: 50,
+  			new: true,
+  			link: '/some-link',
 		},
 		{
 			id: 5,
@@ -51,6 +56,9 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			discount: 50,
+  			new: true,
+  			link: '/some-link',
 		},
 		{
 			id: 6,
@@ -59,6 +67,9 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			discount: 50,
+  			new: true,
+  			link: '/some-link',
 		},
 		{
 			id: 7,
@@ -67,6 +78,9 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			discount: 50,
+  			new: true,
+  			link: '/some-link',
 		},
 		{
 			id: 8,
@@ -75,6 +89,9 @@ export const TiendaUser = () => {
 			image: ProductImage,
 			description: 'Some',
 			category: 'Cafe',
+			discount: 50,
+  			new: true,
+  			link: '/some-link',
 		},
 	];
 

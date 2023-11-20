@@ -28,14 +28,15 @@ export const Coustomers = () => {
         { key: 'address', header: 'Dirección' },
         { key: 'state', header: 'Estado' }
     ];
-
+    
     const dataCoustumers = data?.coustumers?.rows || [];
     let dataCoustumersFiltered: any[];
+    
 
     if (search.length > 0) {
         dataCoustumersFiltered = dataCoustumers.filter((coustumer: any) =>
-            coustumer.nombre.toLowerCase().includes(search.toLowerCase()) ||
-            coustumer.documento.toLowerCase().includes(search.toLowerCase())
+            coustumer.name.toLowerCase().includes(search.toLowerCase()) ||
+            coustumer.document.toString().includes(search)
         );
     } else {
         dataCoustumersFiltered = dataCoustumers;
