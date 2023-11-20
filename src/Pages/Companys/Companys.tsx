@@ -2,14 +2,22 @@ import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
+import { API_KEY } from "../../constantes.ts";
+import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Companys = () => {
-    const [search, setSearch] = useState<string>('')
-    const navigate = useNavigate()
+    const [search, setSearch] = useState<string>('');
+    const {data,loading,error,get,del} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        get(`companys?apikey=${API_KEY}`);
+    },[]);
+    
     const columnsCompanys: Column[] = [
         {
             key:'id',
@@ -37,30 +45,27 @@ export const Companys = () => {
         }
     ]
 
-    const dataCompanys = [
-        {
-            id: 1,
-            name: 'Moledora S.A',
-            nit: '2131042',
-            email: 'Moledora@molino.com',
-            address: 'Cra 25 # 33 - 31',
-            phone: '3004447631',
-        }
-    ]
-
-    let dataCompanysFiltered: any;
+    const dataCompanys = data?.companys?.rows || [];
+    let dataCompanysFiltered: any[];
 
     if(search.length > 0){
-        dataCompanysFiltered = dataCompanys.filter(company=> company.name.toLowerCase().includes(search.toLowerCase()) 
+        dataCompanysFiltered = dataCompanys.filter((company:any) =>
+           company.name.toLowerCase().includes(search.toLowerCase()) 
         || company.address.toLowerCase().includes(search.toLowerCase())
         || company.nit.toLowerCase().includes(search.toLowerCase())
         || company.phone.toLowerCase().includes(search.toLowerCase())
         || company.email.toLowerCase().includes(search.toLowerCase())
-        )
+        );
     }else{
         dataCompanysFiltered = dataCompanys
     }
-
+    
+    const handleDelete = (row: any) => {
+        del(`companys/${row.id}?apikey=${API_KEY}`);
+        setTimeout(() => {
+            get(`companys?apikey=${API_KEY}`);
+        }, 500);
+    };
     return(
         <>
         <Container>
@@ -73,16 +78,30 @@ export const Companys = () => {
                         marginBottom: '1rem',
 
                     }}>
+                        <SearchInput label={'Buscar Compañias'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'companySearch'} />
                         <Button text={'Crear Compañia'} onClick={() => navigate('/admin/Companys/create')} fill={false}/>
                     </div>
-                <SearchInput label={'Buscar Compañias'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'companySearch'} />
+                    
+                    {
+                        loading && <p>Cargando...</p>
+                    }
+                    {
+                        error && <p>Ha ocurrido un error</p>
+                    }
+                    {
+                        !loading && !error && dataCompanysFiltered.length === 0 && <p>No hay datos</p>
+                    }
+                    {
+                        !loading && !error && dataCompanysFiltered.length > 0 && (
+                
                 <Table columns={columnsCompanys} data={dataCompanysFiltered} onRowClick={()=> null} editableAction={{
                     onClick: () => null,
                 }}
                 deleteAction={{
-                    onClick: () => null,
+                    onClick: () => handleDelete,
                 }}
-                />
+                />)
+                 }
             </div>
         </Container>
     </>
