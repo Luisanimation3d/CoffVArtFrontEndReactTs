@@ -66,11 +66,24 @@ export const ProductionRequest = () => {
 
     return(
         <>
-        <Container>
+        <Container align={'CENTER'} justify={'TOP'}>
             <Titles title={'Solicitudes de Producción'} level={1}/>
-            <div className="productionRequest__table">
-            <Button text={'Crear Solicitud'} onClick={() => navigate('/admin/ProductionRequest/create')} fill={false}/>
-                <SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestearch'} />
+            <div className="productionRequest__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+
+                    }}><SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestearch'} />
+                    <Button text={'Crear Solicitud'} onClick={() => navigate('/admin/ProductionRequest/create')} fill={false}/>
+                
+                </div>
+            
                 <Table columns={columnsProductionRequest} data={dataProductionRequestFiltered} onRowClick={()=> null} editableAction={{
                     onClick: () => null,
                 }}

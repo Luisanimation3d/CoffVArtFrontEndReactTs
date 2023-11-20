@@ -58,15 +58,27 @@ export const ProductionOrders = () => {
 
     return(
         <>
-        <Container>
+        <Container align={'CENTER'} justify={'TOP'}>
             <Titles title={'Ordenes de Producción'} level={1}/>
-            <Button text={'Crear Orden'} onClick={() => navigate('/admin/ProductionOrders/create')} fill={false}/>
-            <div className="productionOrders__table">
-                <SearchInput 
+            
+            <div className="productionOrders__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
+                    <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        marginBottom: '1rem',
+
+                    }}><SearchInput 
                 label={'Buscar Ordenes'} 
                 onChange={e=> setSearch(e.target.value)} 
                 value={search} 
                 idSearch={'productionOrderSearch'} />
+                <Button text={'Crear Orden'} onClick={() => navigate('/admin/ProductionOrders/create')} fill={false}/></div>
+                
                 <Table columns={columnsProductionOrders} data={dataProductionOrdersFiltered} onRowClick={()=> null} editableAction={{
                     onClick: () => null,
                 }}

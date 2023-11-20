@@ -74,19 +74,23 @@ export const Suppliers = () => {
 
     return (
         <>
-            <Container>
+            <Container align={'CENTER'} justify={'TOP'}>
                 <Titles title={'Proveedores'} level={1}/>
-                <div className="supplier__table">
+                <div className="supplier__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
                 <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         marginBottom: '1rem',
 
-                    }}>
+                    }}><SearchInput label={'Buscar Proveedores'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'supplierSearch'} />
                         <Button text={'Crear Proveedor'} onClick={() => navigate('/admin/Suppliers/create')} fill={false}/>
                     </div>
-                    <SearchInput label={'Buscar Proveedores'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'supplierSearch'} />
+                    
                     <Table columns={columnsSuppliers} data={dataSuppliersFiltered} onRowClick={()=> null} editableAction={{
                         onClick: () => null,
                     }}

@@ -68,9 +68,13 @@ export const Companys = () => {
     };
     return(
         <>
-        <Container>
+        <Container align={'CENTER'} justify={'TOP'}>
             <Titles title={'Compañias'} level={1}/>
-            <div className="companys__table">
+            <div className="companys__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
             <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
