@@ -4,4 +4,5 @@ export interface ButtonProps {
     fill?: boolean;
     autosize?: boolean;
     disabled?: boolean;
+    type?: BUTTON | SUBMIT;
 }

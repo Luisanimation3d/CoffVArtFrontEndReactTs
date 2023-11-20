@@ -66,6 +66,56 @@
     color: #9F212F;
 }
 
+.permissionsContainerCards{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 3rem;
+    gap: 1rem;
+}
+
+.permissionCard{
+    display: flex;
+    border: 2px solid #9F212F;
+    border-radius: 10px;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.permissionCard:hover{
+    background: #D6CAB0;
+}
+
+.permissionCardName{
+    color: #000;
+    text-align: center;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+}
+
+.permissionCardPrivilege{
+    display: flex;
+    align-items: center;
+    gap : .5rem;
+    color: #9F212F;
+    text-align: center;
+    font-size: .7rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 1.12px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    background: #b9b9b9;
+    padding: 2px 1rem;
+}
+
 @media screen and (max-width: 768px){
     .permisoName{
         width: 100%;
