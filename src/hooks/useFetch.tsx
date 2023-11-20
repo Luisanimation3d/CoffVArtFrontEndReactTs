@@ -2,6 +2,14 @@ import { useState } from 'react';
 
 type methodOptions = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
+interface FetchProps {
+	method: methodOptions;
+	url: string;
+	body?: any;
+	mode?: RequestMode | undefined;
+	headers?: HeadersInit;
+}
+
 export const useFetch = (baseUrl: string) => {
     const [data, setData] = useState<any>([]);
 	const [loading, setLoading] = useState<boolean>(true);
@@ -15,17 +23,22 @@ export const useFetch = (baseUrl: string) => {
 		try {
 			setLoading(true);
 			setError(null);
-
-			const config = {
+			console.log(body)
+			const config: FetchProps = {
 				method,
 				url: `${baseUrl}${url}`,
+				mode: "no-cors",
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				data: body,
+				body: JSON.stringify(body),
 			};
 
-			const response = await fetch(config.url, config);
+			const response = await fetch(config.url, {
+				method: config.method,
+				headers: config.headers,
+				body: config.body,
+			});
 			const json: any[] = await response.json();
 			setData(json);
 		} catch (error) {
