@@ -1,9 +1,10 @@
-import React, { ChangeEvent, useState } from 'react';
+import  { useState } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { FormField, SelectOption } from '../../types/Form';
 import { Button } from '../../components/Button/Button';
 import { Form } from '../../components/Form/Form';
 import { API_KEY } from '../../constantes';
+import React from 'react';
 
 
 export const CustomersCreate = () => {
@@ -18,7 +19,7 @@ export const CustomersCreate = () => {
         }
     ];
 
-    const optionsState: SelectOption[] = [
+    /*const optionsState: SelectOption[] = [
         {
             value: 'Activo',
             label: 'Activo',
@@ -27,9 +28,8 @@ export const CustomersCreate = () => {
             value: 'Inactivo',
             label: 'Inactivo',
         }
-    ];
+    ];*/
 
-    const [state, setState] = useState<SelectOption | undefined>();
     const [tipo, setTipo] = useState<SelectOption | undefined>();
     const [formValues, setFormValues] = useState<Record<string, string  | number>>({
         name: '',
@@ -38,7 +38,6 @@ export const CustomersCreate = () => {
         phone: '',
         email: '',
         address: '',
-        state: '',
     })
 
     const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
@@ -75,7 +74,7 @@ export const CustomersCreate = () => {
         },
         {
             name: 'phone',
-            type: 'number',
+            type: 'text',
             label: 'Telefono',
             placeholder: 'Telefono',
             value: formValues['phone'] !== undefined ? String(formValues['phone']): '',
@@ -100,16 +99,6 @@ export const CustomersCreate = () => {
             onChange: (value) => handleInputChange('address', value),
             size: 'large'
         },
-        {
-            name: 'state',
-            type: 'select',
-            label: 'Estado',
-            placeholder: 'Estado',
-            value: state,
-            onChange: (o) => setState(o),
-            options: optionsState,
-            size: 'medium'
-        }
     ];
     const handleInputChange = (name: string, value: string | number) => {
         setFormValues(prevValues => ({
@@ -117,9 +106,9 @@ export const CustomersCreate = () => {
             [name]: value
         }));
     };
-    const handleSubmit = async () => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         try {
-            const isActivo = state?.value === 'Activo';
             const requestBody = {
                 name: formValues.name,
                 documentType: tipo?.value,
@@ -127,9 +116,8 @@ export const CustomersCreate = () => {
                 phone: formValues.phone,
                 email: formValues.email,
                 address: formValues.address,
-                state: isActivo
             };
-
+            console.log('Datos del formulario:', requestBody);
             await post(`coustumers?apikey=${API_KEY}`, requestBody);
             console.log('Cliente creado con éxito');
 
