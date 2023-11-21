@@ -20,7 +20,7 @@ export const Roles = () => {
     const navigate = useNavigate()
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
-    });
+    }, []);
     console.log(data)
     console.log(error)
     const columnsRoles: Column[] = [
