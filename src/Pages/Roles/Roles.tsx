@@ -20,7 +20,7 @@ export const Roles = () => {
     const navigate = useNavigate()
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
-    }, []);
+    });
     console.log(data)
     console.log(error)
     const columnsRoles: Column[] = [
@@ -60,8 +60,8 @@ export const Roles = () => {
             const nameRol = rol.permission.name.split(' ')
             return {
                 id: rol.id,
-                permission: nameRol[1] === 'Users' && 'Usuarios',
-                privilege: nameRol[0] === 'Get' && 'Listar',
+                permission: nameRol[1],
+                privilege: nameRol[0],
             }
         })
         setDataModal(dataModalRol)
