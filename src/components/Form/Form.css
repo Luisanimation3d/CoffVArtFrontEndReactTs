@@ -163,3 +163,16 @@ form .selectControl.active select:not(:focus) ~ label {
     font-size: 0.8rem;
     color: #d6cab0;
 }
+
+.formControllerContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.formController__error{
+    color: #9f212f;
+    font-size: 0.8rem;
+    font-weight: lighter;
+}

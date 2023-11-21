@@ -39,6 +39,7 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
 }) => {
     const [valueNameRol, setValueNameRol] = useState<string>(valueForm?.name || '')
     const [valueDescriptionRol, setValueDescriptionRol] = useState<string>(valueForm?.description || '')
+    const [error, setError] = useState<{}>({})
     const fields: FormField[] = [
         {
             name: 'nameRol',
@@ -58,8 +59,20 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
         }
     ]
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault()
+        setError({})
+        let mensajeError = {...error}
+        if (!valueNameRol) {
+            mensajeError = {...mensajeError, nameRol: 'El nombre del rol es requerido'}
+        }
+        if (!valueDescriptionRol) {
+            mensajeError = {...mensajeError, descriptionRol: 'La descripción del rol es requerida'}
+        }
+        if (Object.keys(mensajeError).length > 0) {
+            setError(mensajeError)
+            return
+        }
         const newValues = {
             ...valueForm,
             name: valueNameRol,
@@ -74,6 +87,7 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
         }}>
             <Form fields={fields} onSubmit={handleSubmit}
                   button={<Button text={'Continuar'} onClick={() => null} type={'SUBMIT'} autosize={false}/>}
+                  errors={error}
             />
         </div>
     )
@@ -144,8 +158,6 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
                 },
                 []
             )
-
-            console.log(newPermissionsPrevileges, 'newPermissionsPrevileges')
             setPermissionsPrivileges(newPermissionsPrevileges)
 
         }
@@ -157,7 +169,6 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
             ...valueForm,
             permissions: selectedPrivileges.map((selectedPrivilege: any) => selectedPrivilege?.privilege?.id)
         }
-        console.log(newValues, 'newValues')
         setValueForm(newValues)
         post(`roles?apikey=${API_KEY}`, newValues)
     }
@@ -191,7 +202,7 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
             </div>
             <Container align={'CENTER'} justify={'CENTER'} direction={'ROW'}>
                 <Button text={'Atrás'} onClick={() => changeStep(1)} type={'BUTTON'} autosize={true} fill={false}/>
-                <Button text={'Registrar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true}/>
+                <Button text={'Registrar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true} disabled={selectedPrivileges?.length === 0}/>
             </Container>
         </>
     )
