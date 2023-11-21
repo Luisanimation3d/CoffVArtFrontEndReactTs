@@ -7,14 +7,13 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import './Home.css';
 import {ProductCard} from "../../components/ProductCard/ProductCard.tsx";
-import { useEffect } from 'react';
 
 gsap.registerPlugin(ScrollTrigger);
 const boxDOMEL= document.createElement("div");
 boxDOMEL.classList.add("box");
-const {body} = document;
+const contenedor = document.querySelector(".userLayout__mainContent");
 
-body.appendChild(boxDOMEL);
+contenedor?.appendChild(boxDOMEL);
 
 gsap.to(boxDOMEL,{
     background:"#ffcc00",
