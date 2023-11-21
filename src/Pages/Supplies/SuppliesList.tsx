@@ -9,50 +9,48 @@ import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { API_KEY } from "../../constantes";
 
-export const Coustomers = () => {
+export const Supplies = () => {
     const [search, setSearch] = useState<string>('');
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
 
     useEffect(() => {
-        get(`coustumers?apikey=${API_KEY}`);
+        get(`supplies?apikey=${API_KEY}`);
     }, []);
 
-    const columnsCoustumers: Column[] = [
+    const columnsSupplies: Column[] = [
         { key: 'id', header: 'ID' },
         { key: 'name', header: 'Nombre' },
-        { key: 'documentType', header: 'Tipo de documento' },
-        { key: 'document', header: 'Documento' },
-        { key: 'phone', header: 'Teléfono' },
-        { key: 'email', header: 'Email' },
-        { key: 'address', header: 'Dirección' },
+        { key: 'amount', header: 'Cantidad' },
+        { key: 'unitPrice', header: 'Precio Únitario' },
+        { key: 'description', header: 'Descripción' },
         { key: 'state', header: 'Estado' }
     ];
     
-    const dataCoustumers = data?.coustumers?.rows || [];
-    let dataCoustumersFiltered: any[];
+    const dataSupplies = data?.supplies?.rows || [];
+    let dataSuppliesFiltered: any[];
     
 
     if (search.length > 0) {
-        dataCoustumersFiltered = dataCoustumers.filter((coustumer: any) =>
-            coustumer.name.toLowerCase().includes(search.toLowerCase()) ||
-            coustumer.document.toString().includes(search)
+        dataSuppliesFiltered = dataSupplies.filter((supply: any) =>
+            supply.name.toLowerCase().includes(search.toLowerCase()) ||
+            supply.unitPrice.toString().includes(search)
         );
     } else {
-        dataCoustumersFiltered = dataCoustumers;
+        dataSuppliesFiltered = dataSupplies;
     }
 
     const handleDelete = (row: any) => {
-        del(`coustumers/${row.id}?apikey=${API_KEY}`);
+        del(`supplies/${row.id}?apikey=${API_KEY}`);
         setTimeout(() => {
-            get(`coustumers?apikey=${API_KEY}`);
+            get(`supplies?apikey=${API_KEY}`);
         }, 500);
     };
 
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={'Clientes'} level={1} />
+                <Titles title={'Insumos'} level={1} />
                 <div className="roles__table" style={
                     {
                         width: '100%',
@@ -64,9 +62,9 @@ export const Coustomers = () => {
                             alignItems: 'center',
                             marginBottom: '1rem',
                         }}>
-                    <SearchInput label={'Buscar clientes'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'CoustomerSearch'} />
+                    <SearchInput label={'Buscar Insumo'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'SuppliesSearch'} />
 
-                    <Button text={'Crear cliente'} onClick={() => navigate('/admin/Coustomer/create')} fill={false} />
+                    <Button text={'Crear Insumo'} onClick={() => navigate('/admin/Supplies/create')} fill={false} />
                     </div>
                     
                     {
@@ -76,13 +74,13 @@ export const Coustomers = () => {
                         error && <p>Ha ocurrido un error</p>
                     }
                     {
-                        !loading && !error && dataCoustumersFiltered.length === 0 && <p>No hay datos</p>
+                        !loading && !error && dataSuppliesFiltered.length === 0 && <p>No hay datos</p>
                     }
                     {
-                        !loading && !error && dataCoustumersFiltered.length > 0 && (
+                        !loading && !error && dataSuppliesFiltered.length > 0 && (
                     <Table
-                        columns={columnsCoustumers}
-                        data={dataCoustumersFiltered}
+                        columns={columnsSupplies}
+                        data={dataSuppliesFiltered}
                         onRowClick={() => null}
                         editableAction={{ onClick: () => null }}
                         deleteAction={{ onClick: handleDelete }}
