@@ -11,7 +11,7 @@ export const TextAreaInput = ({value, onChange, label, name, size = 1}: TextArea
                 name={name}
                 id={name}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange(e.target.value, name)}
                 className={styles.textArea}
                 placeholder={label}
             />

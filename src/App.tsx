@@ -20,6 +20,7 @@ import {EjemploVistaConDetalle} from "./Pages/EjemploVistaConDetalle/EjemploVist
 import {ProductDetailPage} from "./components/ProductDetailPage/ProductDetailPage.tsx";
 import {LabelView} from "./components/LabelView/LabelView.tsx";
 import { Dashboard } from "./Pages/Dashboard/Dashboard.tsx";
+import { RolesEdit } from "./Pages/Roles/RolesEdit.tsx";
 
 export default function App() {
     return (
@@ -32,6 +33,7 @@ export default function App() {
                     <Route path={'dashboard'} element={<Dashboard/>}/>
                     <Route path={'Roles'} element={<Roles/>}/>
                     <Route path={'roles/create'} element={<RolesCreate/>}/>
+                    <Route path={'roles/edit/:id'} element={<RolesEdit/>}/>
                     <Route path={'Supplys'} element={<Supplies/>}/>
                     <Route path={'Products'} element={<Products/>}/>
                     <Route path={'Companys'} element={<Companys/>}/>

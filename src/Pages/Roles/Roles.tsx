@@ -21,8 +21,6 @@ export const Roles = () => {
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
     }, []);
-    console.log(data)
-    console.log(error)
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -101,7 +99,7 @@ export const Roles = () => {
                         !loading && !error && dataRolesFiltered.length > 0 && (
                             <Table columns={columnsRoles} data={dataRolesFiltered} onRowClick={handleRowClick}
                                    editableAction={{
-                                       onClick: () => null,
+                                       onClick: (row) => navigate(`/admin/roles/edit/${row.id}`),
                                    }}
                                    deleteAction={{
                                        label: 'Cambiar estado',
