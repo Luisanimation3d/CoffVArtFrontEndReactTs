@@ -61,8 +61,7 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
 
     const handleSubmit = (e: any) => {
         e.preventDefault()
-        setError({})
-        let mensajeError = {...error}
+        let mensajeError = {}
         if (!valueNameRol) {
             mensajeError = {...mensajeError, nameRol: 'El nombre del rol es requerido'}
         }
@@ -71,6 +70,7 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
         }
         if (Object.keys(mensajeError).length > 0) {
             setError(mensajeError)
+            console.log('On')
             return
         }
         const newValues = {
