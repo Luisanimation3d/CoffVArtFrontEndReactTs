@@ -46,7 +46,7 @@ export const Form: FC<FormProps> = ({
                             return (
                                 <div className="formControllerContainer" style={{
                                     width: size === 'large' ? '100%' : '50%'
-                                }} key={name}>
+                                }} key={index}>
                                     <Input key={index} value={value} onChange={onChange} label={label} name={name} size={size} />
                                     {errors && errors[name] && (
                                         <span className="formController__error">{errors[name]}</span>
@@ -65,8 +65,8 @@ export const Form: FC<FormProps> = ({
                             return (
                                 <div className="formControllerContainer" style={{
                                     width: '100%'
-                                }} key={name}>
-                                    <TextAreaInput key={index} type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size as number} />
+                                }} key={index}>
+                                    <TextAreaInput key={index} type={type} value={value} onChange={onChange} label={label} name={name} placeholder={placeholder} size={size as number} />
                                     {errors && errors[name] && (
                                         <span className="formController__error">{errors[name]}</span>
                                     )}
