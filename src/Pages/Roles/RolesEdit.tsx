@@ -18,7 +18,7 @@ export const RolesEdit = () => {
         descriptionRol?: string,
         permissions?: number[]
     }>({})
-    const {data, loading, get, put} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {data, loading, get} = useFetch('https://coffvart-backend.onrender.com/api/')
 
     useEffect(() => {
         get(`roles/${id}?apikey=${API_KEY}`)
@@ -34,7 +34,7 @@ export const RolesEdit = () => {
             console.log(newValues)
             setValueForm(newValues)
         }
-    }, [data]);
+    }, [data, loading]);
 
     return (
         <Container align={'CENTER'} justify={'CENTER'}>
@@ -57,7 +57,7 @@ const RolesEditStepOne = ({changeStep, valueForm, setValueForm}: {
     valueForm: { name?: string, description?: string, permissions?: number[] },
     setValueForm: (value: any) => void
 }) => {
-    const [error, setError] = useState<{}>({})
+    const [error, setError] = useState<{[key: string]: string}>({})
 
     const handleChange = (value: string, name: string) => {
         console.log(value, name)
@@ -289,8 +289,9 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
             </div>
             <Container align={'CENTER'} justify={'CENTER'} direction={'ROW'}>
                 <Button text={'Atrás'} onClick={() => changeStep(1)} type={'BUTTON'} autosize={true} fill={false}/>
-                <Button text={'Registrar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true}
+                <Button text={'Editar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true}
                         disabled={selectedPrivileges?.length === 0}/>
+                <Button text={'Cancelar'} onClick={() => navigate(-1)} type={'BUTTON'} autosize={true} fill={false}/>
             </Container>
         </>
     )
