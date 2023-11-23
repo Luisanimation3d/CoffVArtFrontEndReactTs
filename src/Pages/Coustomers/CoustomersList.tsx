@@ -84,7 +84,7 @@ export const Coustomers = () => {
                         columns={columnsCoustumers}
                         data={dataCoustumersFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: () => null }}
+                        editableAction={{ onClick: (row) => navigate(`/admin/Coustomer/edit/${row.id}`) }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }
