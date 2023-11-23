@@ -223,24 +223,19 @@ const RolesEditStepTwo = ({ changeStep, valueForm, setValueForm }: {
         //     }
         // })
 
-        const permissionsAlreadySelectedReduced = permissionsAlreadySelected?.reduce((acc: any, permission: any) => {
-            const index = acc.findIndex((permissionPrivileges: any) => permissionPrivileges.name === permission?.name?.split(' ')[1])
-            if (index !== -1) {
-                return acc
-            }
-            return [...acc, {
-                id: permission?.id,
-                name: permission?.name?.split(' ')[1],
-                privileges: data?.permissions?.rows?.map((privilege: any) => privilege?.name?.split(' ')[1] === permission?.name?.split(' ')[1] ? {
-                    id: privilege?.id,
-                    name: privilege?.name.split(' ')[0]
-                } : null).filter((privilege: any) => privilege !== null)
-            }]
-        },
-            []
-        )
-        console.log(permissionsAlreadySelected)
-        console.log(permissionsAlreadySelectedReduced)
+        const permissionsAlreadySelectedReduced = permissionsAlreadySelected?.map((permission: any) => {
+            const permissionSelected = {id: permission?.id, name: permission?.name}
+            const privilegePermission = [...permission?.privileges]
+            console.log(permission, 'permission')
+            console.log(privilegePermission, 'privilegePermission')
+
+            // return {
+            //     // privilege,
+            //     // permission: permissionSelected
+            // }
+        })
+        console.log(permissionsAlreadySelected, 'permissionsAlreadySelected')
+        console.log(permissionsAlreadySelectedReduced, 'permissionsAlreadySelectedReduced')
         // setSelectedPrivileges(newPermissionsAlreadySelected || [])
 
     }, [data])
@@ -265,8 +260,9 @@ const RolesEditStepTwo = ({ changeStep, valueForm, setValueForm }: {
                             <h3 className={styles.permissionCardName}>{permissionPrivilege.name}</h3>
                             <div className={styles.permissionCardPrivilegesContainer}>
                                 {
-                                    permissionPrivilege.privileges?.map((privilege: any) => {
+                                    permissionPrivilege.privileges?.map((privilege: any, indexPrivilege: number) => {
                                         return <span
+                                            key={indexPrivilege}
                                             className={`${styles.permissionCardPrivilege} ${verifySelectedPrivileges(privilege, {
                                                 id: permissionPrivilege?.id,
                                                 name: permissionPrivilege?.name
