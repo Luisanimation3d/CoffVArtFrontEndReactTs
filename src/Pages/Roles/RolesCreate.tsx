@@ -8,6 +8,7 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 
 import styles from './Roles.module.css'
 import {API_KEY} from "../../constantes.ts";
+import {useNavigate} from "react-router-dom";
 
 export const RolesCreate = () => {
     const [step, setStep] = useState<number>(1)
@@ -98,9 +99,10 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
     valueForm: { name?: string, description?: string, permissions?: number[] },
     setValueForm: (value: any) => void
 }) => {
-    const {data, loading, get, post} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {data, loading, error, get, post} = useFetch('https://coffvart-backend.onrender.com/api/')
     const [permissionsPrivileges, setPermissionsPrivileges] = useState<any[]>([])
     const [selectedPrivileges, setSelectedPrivileges] = useState<any[]>([])
+    const navigate = useNavigate()
 
     const verifySelectedPrivileges = (privilege: any, permission: any) => {
         if (selectedPrivileges.length === 0) {
@@ -129,10 +131,20 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
         if (index !== -1) {
             const newPrivileges = [...selectedPrivileges]
             newPrivileges.splice(index, 1)
+            const newValues = {
+                ...valueForm,
+                permissions: newPrivileges.map((selectedPrivilege: any) => selectedPrivilege?.privilege?.id)
+            }
+            setValueForm(newValues)
             setSelectedPrivileges(newPrivileges)
             return
         }
         const newPrivileges = [...selectedPrivileges, {privilege, permission}]
+        const newValues = {
+            ...valueForm,
+            permissions: newPrivileges.map((selectedPrivilege: any) => selectedPrivilege?.privilege?.id)
+        }
+        setValueForm(newValues)
         setSelectedPrivileges(newPrivileges)
     }
 
@@ -163,6 +175,30 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
         }
     }, [data]);
 
+    useEffect(() => {
+        const permissionsAlreadySelected = valueForm?.permissions?.map((permission: any) => {
+            return permissionsPrivileges?.find((permissionPrivilege: any) => {
+                return permissionPrivilege?.privileges?.find((privilege: any) => {
+                    return privilege?.id === permission
+                })
+            })
+        })
+
+        const permissionsAlreadySelectedReduced = permissionsAlreadySelected?.map((permission: any, index: number) => {
+            const permissionSelected = {id: permission?.id, name: permission?.name}
+            const privilegePermission = permission?.privileges && [...permission.privileges]
+            const valueFormPermissions = valueForm?.permissions ? [...valueForm.permissions] : []
+            const privilege = privilegePermission?.find((privilege: any) => {
+                return privilege?.id === valueFormPermissions[index]
+            })
+            return {
+                privilege,
+                permission: permissionSelected
+            }
+        })
+        setSelectedPrivileges(permissionsAlreadySelectedReduced || [])
+    }, [data])
+
     const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         const newValues = {
@@ -171,6 +207,12 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
         }
         setValueForm(newValues)
         post(`roles?apikey=${API_KEY}`, newValues)
+            console.log(loading, error)
+        if (!loading && !error) {
+            setTimeout(() => {
+                navigate(-1)
+            }, 500)
+        }
     }
 
     return (
@@ -183,8 +225,9 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
                             <h3 className={styles.permissionCardName}>{permissionPrivilege.name}</h3>
                             <div className={styles.permissionCardPrivilegesContainer}>
                                 {
-                                    permissionPrivilege.privileges?.map((privilege: any) => {
+                                    permissionPrivilege.privileges?.map((privilege: any, indexPrivilege: number) => {
                                         return <span
+                                            key={indexPrivilege}
                                             className={`${styles.permissionCardPrivilege} ${verifySelectedPrivileges(privilege, {
                                                 id: permissionPrivilege?.id,
                                                 name: permissionPrivilege?.name
