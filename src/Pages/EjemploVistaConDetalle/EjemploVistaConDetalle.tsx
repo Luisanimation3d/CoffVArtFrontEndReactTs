@@ -7,8 +7,12 @@ import {Table} from "../../components/Table/Table.tsx";
 import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
+import {useFetch} from "../../hooks/useFetch.tsx";
+import {API_KEY} from "../../constantes.ts";
 
 export const EjemploVistaConDetalle = () => {
+    const {data, loading, error, get} = useFetch('https://coffvart-backend.onrender.com/api/')
+    // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
     const [detalles, setDetalles] = useState<any[]>([]);
     const [factura, setFactura] = useState<string>('');
     const [select, setSelect] = useState<SelectOption | undefined>(undefined);
@@ -17,6 +21,7 @@ export const EjemploVistaConDetalle = () => {
     const [subTotal, setSubTotal] = useState(0);
     const [iva, setIva] = useState(0);
     const [precio, setPrecio] = useState(0);
+    const [options, setOptions] = useState<SelectOption[]>([]);
 
     const headers: Column[] = [
         {
@@ -37,9 +42,8 @@ export const EjemploVistaConDetalle = () => {
         setSelect(option)
         setNombre(option?.label || '')
         const data: any[] = []
-        const index = data?.findIndex((item: any) => item.id === option?.value)
-        const precio = data[index]?.price || 5
-        setNombre(precio)
+
+        setNombre(option?.value || '')
     }
 
     const fields: FormField[] = [
@@ -47,20 +51,7 @@ export const EjemploVistaConDetalle = () => {
             name: 'select',
             placeholder: 'Select',
             type: 'select',
-            options: [
-                {
-                    value: '1',
-                    label: 'Uno'
-                },
-                {
-                    value: '2',
-                    label: 'Dos'
-                },
-                {
-                    value: '3',
-                    label: 'Tres'
-                },
-            ],
+            options: options,
             value: select,
             onChange: (option) => handleSelect(option),
         },
@@ -113,6 +104,20 @@ export const EjemploVistaConDetalle = () => {
         setFactura(newId)
     }, []);
 
+    useEffect(() => {
+        get(`permissions?apikey=${API_KEY}`)
+    }, []);
+
+    useEffect(() => {
+        if(!loading && !error) {
+            console.log(data?.permissions?.rows)
+            const optionToSelect: SelectOption[] = data?.permissions?.rows?.map((item: any) => ({
+                value: item.id,
+                label: item.name,
+            }))
+            setOptions(optionToSelect)
+        }
+    }, [data]);
 
     return (
         <Container align={'CENTER'}>
