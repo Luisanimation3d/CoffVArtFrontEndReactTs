@@ -14,7 +14,7 @@ export const ProductionOrdersCreate= ()=>{
 
     const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
 
-    const companyFields: FormField[] = [
+    const productionOrderFields: FormField[] = [
     {
         name: 'orderNumber',
         type: 'text',
@@ -71,7 +71,7 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
 return (
     <Form
         title='Crear orden de producción'
-        fields={companyFields}
+        fields={productionOrderFields}
         onSubmit={handleSubmit}
         button={<Button text='Crear orden de producción' onClick={() => handleSubmit} fill={true} />}
     />

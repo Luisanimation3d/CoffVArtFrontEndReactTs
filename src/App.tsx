@@ -9,14 +9,21 @@ import {CustomersEdit} from "./Pages/Coustomers/CoustomersEdit.tsx";
 import {Sales} from "./Pages/Sales/SalesList.tsx";
 import {UserLayout} from "./Layout/UserLayout/UserLayout.tsx";
 import {Companys} from "./Pages/Companys/Companys.tsx";
+import {CompanysCreate} from "./Pages/Companys/CompanysCreate.tsx";
+import {CompanysEdit} from "./Pages/Companys/CompanysEdit.tsx";
 import {Suppliers} from "./Pages/Suppliers/Suppliers.tsx";
+import {SuppliersCreate} from "./Pages/Suppliers/SuppliersCreate.tsx";
+import {SuppliersEdit} from "./Pages/Suppliers/SuppliersEdit.tsx";
 import {ProductionOrders} from "./Pages/ProductionOrders/ProductionOrders.tsx";
+import {ProductionOrdersCreate} from "./Pages/ProductionOrders/ProductionOrdersCreate.tsx";
+import {ProductionOrdersEdit} from "./Pages/ProductionOrders/ProductionOrdersEdit.tsx";
 import {Home} from "./Pages/Home/Home.tsx";
 import {TiendaUser} from "./Pages/Catalogue/TiendaUser.tsx";
 import {Orders} from "./Pages/Orders/OrdersList.tsx";
 import {RolesCreate} from "./Pages/Roles/RolesCreate.tsx";
 import { ProductionRequest } from "./Pages/ProductionRequest/ProductionRequest.tsx";
-import { CompanysCreate } from "./Pages/Companys/CompanysCreate.tsx";
+import { ProductionRequestCreate } from "./Pages/ProductionRequest/ProductionRequestCreate.tsx";
+import { ProductionRequestEdit } from "./Pages/ProductionRequest/ProductionRequestEdit.tsx";
 import {EjemploVistaConDetalle} from "./Pages/EjemploVistaConDetalle/EjemploVistaConDetalle.tsx";
 import {ProductDetailPage} from "./components/ProductDetailPage/ProductDetailPage.tsx";
 import {LabelView} from "./components/LabelView/LabelView.tsx";
@@ -39,9 +46,16 @@ export default function App() {
                     <Route path={'Products'} element={<Products/>}/>
                     <Route path={'Companys'} element={<Companys/>}/>
                     <Route path={'Companys/create'} element={<CompanysCreate/>}/>
+                    <Route path={'Companys/edit/:id'} element={<CompanysEdit/>}/>
                     <Route path={'Suppliers'} element={<Suppliers/>}/>
+                    <Route path={'Suppliers/create'} element={<SuppliersCreate/>}/>
+                    <Route path={'Suppliers/edit/:id'} element={<SuppliersEdit/>}/>
                     <Route path={'ProductionOrders'} element={<ProductionOrders/>}/>
+                    <Route path={'ProductionOrders/create'} element={<ProductionOrdersCreate/>}/>
+                    <Route path={'ProductionOrders/edit/:id'} element={<ProductionOrdersEdit/>}/>
                     <Route path={'ProductionRequest'} element={<ProductionRequest/>}/>
+                    <Route path={'ProductionRequest/create'} element={<ProductionRequestCreate/>}/>
+                    <Route path={'ProductionRequest/edit/:id'} element={<ProductionRequestEdit/>}/>
                     <Route path={'Coustomers'} element={<Coustomers/>}/>
                     <Route path={'Coustomer/create'} element={<CustomersCreate/>}/>
                     <Route path={'Coustomer/edit/:id'} element={<CustomersEdit/>}/>
