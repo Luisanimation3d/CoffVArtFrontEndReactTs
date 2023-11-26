@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {createPortal} from "react-dom";
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
@@ -8,37 +8,32 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
+import { API_KEY } from "../../constantes.ts";
+import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Orders = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate()
+
+    useEffect(() => {
+        get(`orders?apikey=${API_KEY}`);
+    }, []);
 
 
     const columnsOrders: Column[] = [
-        {
-            key: "id",
-            header: "ID",
-        },
-        {
-            key: "code",
-            header: "Código",
-        },
-        {
-            key: "idCliente",
-            header: "Cliente",
-        },
-        {
-            key: "total",
-            header: "Total",
-        },
-        {
-            key: "estado",
-            header: "Estado",
-        },
+        { key: 'id', header: 'ID' },
+        { key: 'code', header: 'Codigo' },
+        { key: 'total', header: 'Total' },
+        { key: 'coustumerId', header: 'Cliente' },
+        { key: 'state', header: 'Estado' },
     ];
+    
+    const dataOrders = data?.orders?.rows || [];
+    let dataOrdersFiltered: any[];
 
-    const dataOrders = [
+    /* const dataOrders = [
         {
             id: 1,
             code: "45-Doe",
@@ -53,50 +48,72 @@ export const Orders = () => {
             total: 30,
             estado: "true",
         },
-    ];
+    ];*/
 
-    let dataOrdersFiltered: any;
 
     if (search.length > 0) {
-        dataOrdersFiltered = dataOrders.filter(
-            (order) =>
-                order.code.toLowerCase().includes(search.toLowerCase()) ||
-                order.estado.toLowerCase().includes(search.toLowerCase())
+        dataOrdersFiltered = dataOrders.filter((order:any) =>
+                order.code.toLowerCase().includes(search) ||
+                order.state.toLowerCase().includes(search.toLowerCase())
         );
     } else {
         dataOrdersFiltered = dataOrders;
     }
 
+    const handleDelete = (row: any) => {
+        del(`orders/${row.id}?apikey=${API_KEY}`);
+        setTimeout(() => {
+            get(`orders?apikey=${API_KEY}`);
+        }, 500);
+    }; 
+
     return (
         <>
-            <Container>
+            <Container align={'CENTER'} justify={'TOP'}>
                 <Titles title={"Pedidos"} level={1}/>
-                <div className="roles__table">
+                <div className="roles__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
                 <div style={{
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         marginBottom: '1rem',
                     }}>
-                    <Button text={'Crear Pedido'} onClick={()=> navigate('/admin/')} fill= {false} />
-                    </div>
-                    <SearchInput
+                        <SearchInput
                         label={"Buscar Pedido"}
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
                         idSearch={"SalesSearch"}
                     />
-                    <Table
-                        columns={columnsOrders}
-                        data={dataOrdersFiltered}
-                        onRowClick={() => setIsModalOpen(true)}
-                        editableAction={{
-                            onClick: () => null,
-                        }}
-                        deleteAction={{
-                            onClick: () => null,
-                        }}
-                    />
+                    <Button text={'Crear Pedido'} onClick={()=> navigate('/admin/')} fill= {false} />
+                    </div>
+                    {
+                        loading && <p>Cargando...</p>
+                    }
+                    {
+                        error && <p>Ha ocurrido un error</p>
+                    }
+                    {
+                        !loading && !error && dataOrdersFiltered.length === 0 && <p>No hay datos</p>
+                    }
+                    {
+                        !loading && !error && dataOrdersFiltered.length > 0 && (
+                            <Table
+                                columns={columnsOrders}
+                                data={dataOrdersFiltered}
+                                onRowClick={() => setIsModalOpen(true)}
+                                editableAction={{
+                                    onClick: (row) => navigate(`/admin/Orders/edit/${row.id}`),
+                                }}
+                                deleteAction={{
+                                    onClick: handleDelete,
+                                }}
+                            />
+                        )
+                    }
                 </div>
             </Container>
             {
