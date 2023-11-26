@@ -98,8 +98,10 @@ export const Companys = () => {
                     {
                         !loading && !error && dataCompanysFiltered.length > 0 && (
                 
-                <Table columns={columnsCompanys} data={dataCompanysFiltered} onRowClick={()=> null} editableAction={{
-                    onClick: () => null,
+                <Table columns={columnsCompanys}
+                    data={dataCompanysFiltered}
+                    onRowClick={()=> null}
+                    editableAction={{ onClick: (row) => navigate(`/admin/Company/edit/${row.id}`)
                 }}
                 deleteAction={{
                     onClick: () => handleDelete,

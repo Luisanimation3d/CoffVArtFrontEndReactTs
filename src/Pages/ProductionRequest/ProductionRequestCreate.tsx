@@ -15,7 +15,7 @@ export const ProductionRequestCreate= ()=>{
 
     const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
 
-    const companyFields: FormField[] = [
+    const productionRequestFields: FormField[] = [
     {
         name: 'requestNumber',
         type: 'text',
@@ -82,7 +82,7 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
 return (
     <Form
         title='Crear solicitud de producción'
-        fields={companyFields}
+        fields={productionRequestFields}
         onSubmit={handleSubmit}
         button={<Button text='Crear solicitud de producción' onClick={() => handleSubmit} fill={true} />}
     />

@@ -19,7 +19,7 @@ export const SuppliersCreate= ()=>{
 
     const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
 
-    const companyFields: FormField[] = [
+    const supplierFields: FormField[] = [
     {
         name: 'name',
         type: 'text',
@@ -103,7 +103,7 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             unitCost: formValues.unitCost,
         }; console.log('Datos del formulario:', requestBody);
 
-        const response = await fetch(`https://coffvart-backend.onrender.com/api/Suppliers?apikey=${API_KEY}`, {
+        const response = await fetch(`https://coffvart-backend.onrender.com/api/suppliers?apikey=${API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -126,7 +126,7 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
 return (
     <Form
         title='Crear proveedor'
-        fields={companyFields}
+        fields={supplierFields}
         onSubmit={handleSubmit}
         button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} />}
     />

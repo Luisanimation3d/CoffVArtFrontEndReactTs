@@ -2,14 +2,20 @@ import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
+import { API_KEY } from "../../constantes.ts";
+import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Suppliers = () => {
-    const [search, setSearch] = useState<string>('')
-    const navigate = useNavigate()
+    const [search, setSearch] = useState<string>('');
+    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const navigate = useNavigate();
+    useEffect(() => {
+        get(`suppliers?apikey=${API_KEY}`);
+    }, []);
     const columnsSuppliers: Column[] = [
         {
             key: 'id',
@@ -43,34 +49,29 @@ export const Suppliers = () => {
             key: 'unitCost',
             header: 'Costo Unitario',
         }
-    ]
+    ];
     
-    const dataSuppliers =[
-        {
-            id: 1,
-            name: 'Finca mi abuela',
-            nit: '2130412',
-            coffeType: 'pergamino',
-            address: 'Calle 30 # 100-20',
-            phone: '3005664123',
-            quality: 'Premiun',
-            unitCost: 50000,
-        },
-    ]
+    const dataSuppliers = data?.suppliers?.rows || [];
 
     let dataSuppliersFiltered: any;
 
     if(search.length > 0){
-        dataSuppliersFiltered = dataSuppliers.filter(supplier => supplier.name.toLowerCase().includes(search.toLowerCase() )
-        || supplier.nit.toLowerCase().includes(search.toLowerCase() )
+        dataSuppliersFiltered = dataSuppliers.filter((supplier:any )=>
+        supplier.nit.toLowerCase().includes(search.toLowerCase() )
         || supplier.coffeType.toLowerCase().includes(search.toLowerCase() )
         || supplier.address.toLowerCase().includes(search.toLowerCase() )
         || supplier.phone.toLowerCase().includes(search.toLowerCase() )
         || supplier.quality.toLowerCase().includes(search.toLowerCase() )
         )
     }else{
-        dataSuppliersFiltered = dataSuppliers
+        dataSuppliersFiltered = dataSuppliers;
     }
+    const handleDelete = (row: any) => {
+        del(`suppliers/${row.id}?apikey=${API_KEY}`);
+        setTimeout(() => {
+            get(`suppliers?apikey=${API_KEY}`);
+        }, 500);
+    };
 
     return (
         <>
@@ -90,14 +91,25 @@ export const Suppliers = () => {
                     }}><SearchInput label={'Buscar Proveedores'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'supplierSearch'} />
                         <Button text={'Crear Proveedor'} onClick={() => navigate('/admin/Suppliers/create')} fill={false}/>
                     </div>
-                    
-                    <Table columns={columnsSuppliers} data={dataSuppliersFiltered} onRowClick={()=> null} editableAction={{
-                        onClick: () => null,
-                    }}
-                    deleteAction={{
-                        onClick: () => null,
-                    }}
-                    />
+                    {
+                        loading && <p>Cargando...</p>
+                    }
+                    {
+                        error && <p>Ha ocurrido un error</p>
+                    }
+                    {
+                        !loading && !error && dataSuppliersFiltered.length === 0 && <p>No hay datos</p>
+                    }
+                    {
+                        !loading && !error && dataSuppliersFiltered.length > 0 && (
+                    <Table
+                        columns={columnsSuppliers}
+                        data={dataSuppliersFiltered}
+                        onRowClick={() => null}
+                        editableAction={{ onClick: (row) => navigate(`/admin/supplier/edit/${row.id}`) }}
+                        deleteAction={{ onClick: handleDelete }}
+                    />)
+                    }
                 </div>
             </Container>
         </>
