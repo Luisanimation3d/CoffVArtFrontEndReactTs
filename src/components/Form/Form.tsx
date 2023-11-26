@@ -15,6 +15,7 @@ export const Form: FC<FormProps> = ({
     onSubmit,
     button,
     cancelButton = true,
+    errors
 }) => {
     const navigate = useNavigate();
 
@@ -43,7 +44,14 @@ export const Form: FC<FormProps> = ({
                         case "number":
                         case 'date': {
                             return (
-                                <Input key={index} value={value} onChange={onChange} label={label} name={name} size={size} />
+                                <div className="formControllerContainer" style={{
+                                    width: size === 'large' ? '100%' : '50%'
+                                }} key={index}>
+                                    <Input key={index} value={value} onChange={onChange} label={label} name={name} size={size} />
+                                    {errors && errors[name] && (
+                                        <span className="formController__error">{errors[name]}</span>
+                                    )}
+                                </div>
                             );
                         }
                         case "select": {
@@ -55,7 +63,14 @@ export const Form: FC<FormProps> = ({
                         }
                         case "textarea": {
                             return (
-                                <TextAreaInput key={index} type={type} value={value} onChange={onChange} label={label} name={label} placeholder={placeholder} size={size as number} />
+                                <div className="formControllerContainer" style={{
+                                    width: '100%'
+                                }} key={index}>
+                                    <TextAreaInput key={index} type={type} value={value} onChange={onChange} label={label} name={name} placeholder={placeholder} size={size as number} />
+                                    {errors && errors[name] && (
+                                        <span className="formController__error">{errors[name]}</span>
+                                    )}
+                                </div>
                             );
                         }
                         default: {

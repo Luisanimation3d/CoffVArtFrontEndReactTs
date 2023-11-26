@@ -5,57 +5,93 @@ import {Form} from "../../components/Form/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
+import {useParams, useNavigate} from "react-router-dom";
 
 import styles from './Roles.module.css'
 import {API_KEY} from "../../constantes.ts";
-import {useNavigate} from "react-router-dom";
 
-export const RolesCreate = () => {
+export const RolesEdit = () => {
+    const {id} = useParams<{ id: string }>()
     const [step, setStep] = useState<number>(1)
     const [valueForm, setValueForm] = useState<{
         nameRol?: string,
         descriptionRol?: string,
         permissions?: number[]
     }>({})
+    const {data, loading, get} = useFetch('https://coffvart-backend.onrender.com/api/')
+
+    useEffect(() => {
+        get(`roles/${id}?apikey=${API_KEY}`)
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            const newValues = {
+                name: data?.role?.name,
+                description: data?.role?.description,
+                permissions: data?.role?.rol_details?.map((rol: any) => rol.permission.id)
+            }
+            console.log(newValues)
+            setValueForm(newValues)
+        }
+    }, [data, loading]);
+
     return (
         <Container align={'CENTER'} justify={'CENTER'}>
-            <Titles title={'Crear rol'} level={2} transform={'UPPERCASE'}/>
+            <Titles title={'Editar rol'} level={2} transform={'UPPERCASE'}/>
             <Titles title={`Paso ${step} de 2`} level={5} transform={'UPPERCASE'}/>
             {
                 step === 1 &&
-                <RolesCreateStepOne changeStep={setStep} valueForm={valueForm} setValueForm={setValueForm}/>
+                <RolesEditStepOne changeStep={setStep} valueForm={valueForm} setValueForm={setValueForm}/>
             }
             {
                 step === 2 &&
-                <RolesCreateStepTwo changeStep={setStep} valueForm={valueForm} setValueForm={setValueForm}/>
+                <RolesEditStepTwo changeStep={setStep} valueForm={valueForm} setValueForm={setValueForm}/>
             }
         </Container>
     )
 }
 
-const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
+const RolesEditStepOne = ({changeStep, valueForm, setValueForm}: {
     changeStep: (value: any) => void;
     valueForm: { name?: string, description?: string, permissions?: number[] },
     setValueForm: (value: any) => void
 }) => {
-    const [valueNameRol, setValueNameRol] = useState<string>(valueForm?.name || '')
-    const [valueDescriptionRol, setValueDescriptionRol] = useState<string>(valueForm?.description || '')
-    const [error, setError] = useState<{}>({})
+    const [error, setError] = useState<{[key: string]: string}>({})
+
+    const handleChange = (value: string, name: string) => {
+        console.log(value, name)
+        if (name == 'nameRol') {
+            setValueForm({
+                ...valueForm,
+                name: value
+            })
+            return
+        }
+        if (name == 'descriptionRol') {
+            setValueForm({
+                ...valueForm,
+                description: value
+            })
+            return
+        }
+    }
+
     const fields: FormField[] = [
         {
             name: 'nameRol',
             label: 'Nombre del rol',
             type: 'text',
-            value: valueNameRol,
-            onChange: setValueNameRol,
+            value: valueForm?.name || '',
+            onChange: handleChange,
             size: 'large'
         },
         {
             name: 'descriptionRol',
             label: 'Descripción del rol',
             type: 'textarea',
-            value: valueDescriptionRol,
-            onChange: setValueDescriptionRol,
+            value: valueForm?.description || '',
+            onChange: handleChange,
             size: 4
         }
     ]
@@ -63,10 +99,10 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
     const handleSubmit = (e: any) => {
         e.preventDefault()
         let mensajeError = {}
-        if (!valueNameRol) {
+        if (!valueForm?.name) {
             mensajeError = {...mensajeError, nameRol: 'El nombre del rol es requerido'}
         }
-        if (!valueDescriptionRol) {
+        if (!valueForm?.description) {
             mensajeError = {...mensajeError, descriptionRol: 'La descripción del rol es requerida'}
         }
         if (Object.keys(mensajeError).length > 0) {
@@ -76,8 +112,8 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
         }
         const newValues = {
             ...valueForm,
-            name: valueNameRol,
-            description: valueDescriptionRol
+            name: valueForm?.name,
+            description: valueForm?.description
         }
         setValueForm(newValues)
         changeStep(2)
@@ -94,15 +130,18 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
     )
 }
 
-const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
+const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
     changeStep: (value: any) => void;
     valueForm: { name?: string, description?: string, permissions?: number[] },
     setValueForm: (value: any) => void
 }) => {
-    const {data, loading, error, get, post} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {id} = useParams<{ id: string }>()
+    const {data, loading, error, get, put} = useFetch('https://coffvart-backend.onrender.com/api/')
     const [permissionsPrivileges, setPermissionsPrivileges] = useState<any[]>([])
     const [selectedPrivileges, setSelectedPrivileges] = useState<any[]>([])
     const navigate = useNavigate()
+
+    console.log(valueForm, 'valueForm')
 
     const verifySelectedPrivileges = (privilege: any, permission: any) => {
         if (selectedPrivileges.length === 0) {
@@ -140,17 +179,23 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
             return
         }
         const newPrivileges = [...selectedPrivileges, {privilege, permission}]
+
         const newValues = {
             ...valueForm,
             permissions: newPrivileges.map((selectedPrivilege: any) => selectedPrivilege?.privilege?.id)
         }
         setValueForm(newValues)
+
+
         setSelectedPrivileges(newPrivileges)
+
+
     }
+
 
     useEffect(() => {
         get(`permissions?apikey=${API_KEY}`)
-    });
+    }, []);
 
     useEffect(() => {
         if (!loading) {
@@ -206,8 +251,7 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
             permissions: selectedPrivileges.map((selectedPrivilege: any) => selectedPrivilege?.privilege?.id)
         }
         setValueForm(newValues)
-        post(`roles?apikey=${API_KEY}`, newValues)
-            console.log(loading, error)
+        put(`roles/${id}?apikey=${API_KEY}`, newValues)
         if (!loading && !error) {
             setTimeout(() => {
                 navigate(-1)
@@ -245,7 +289,9 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
             </div>
             <Container align={'CENTER'} justify={'CENTER'} direction={'ROW'}>
                 <Button text={'Atrás'} onClick={() => changeStep(1)} type={'BUTTON'} autosize={true} fill={false}/>
-                <Button text={'Registrar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true} disabled={selectedPrivileges?.length === 0}/>
+                <Button text={'Editar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true}
+                        disabled={selectedPrivileges?.length === 0}/>
+                <Button text={'Cancelar'} onClick={() => navigate(-1)} type={'BUTTON'} autosize={true} fill={false}/>
             </Container>
         </>
     )

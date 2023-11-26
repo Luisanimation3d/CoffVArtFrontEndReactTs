@@ -1,7 +1,7 @@
 type TextAreaInputProps = {
     type: 'textarea';
     value: string;
-    onChange: (value: string) => void;
+    onChange: (value: string, name?) => void;
     label: string;
     name: string;
     size: number;
@@ -12,7 +12,7 @@ type TextAreaInputProps = {
 
 export type InputProps = {
     value: string;
-    onChange: (value: string) => void;
+    onChange: (value: string, name?) => void;
     placeholder?: string;
     label: string;
     name: string;

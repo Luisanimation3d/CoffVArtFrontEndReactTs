@@ -17,7 +17,7 @@ export const Input = ({value, onChange, label, name, placeholder, size = 'large'
             size === 'medium' ? styles.medium : size === 'large' ? styles.large : ''
         }`}>
             <input className={styles.input} type={type} name={name} id={name} value={value}
-                   onChange={e => onChange(e.target.value)} placeholder={placeholder || label} autoComplete={'off'}
+                   onChange={e => onChange(e.target.value, e.target.name)} placeholder={placeholder || label} autoComplete={'off'}
                    ref={inputRef}
             />
             <label htmlFor={name} className={styles.label}>{label}</label>

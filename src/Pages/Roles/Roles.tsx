@@ -21,8 +21,6 @@ export const Roles = () => {
     useEffect(() => {
         get(`roles?apikey=${API_KEY}`)
     }, []);
-    console.log(data)
-    console.log(error)
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -60,8 +58,8 @@ export const Roles = () => {
             const nameRol = rol.permission.name.split(' ')
             return {
                 id: rol.id,
-                permission: nameRol[1] === 'Users' && 'Usuarios',
-                privilege: nameRol[0] === 'Get' && 'Listar',
+                permission: nameRol[1],
+                privilege: nameRol[0],
             }
         })
         setDataModal(dataModalRol)
@@ -101,7 +99,7 @@ export const Roles = () => {
                         !loading && !error && dataRolesFiltered.length > 0 && (
                             <Table columns={columnsRoles} data={dataRolesFiltered} onRowClick={handleRowClick}
                                    editableAction={{
-                                       onClick: () => null,
+                                       onClick: (row) => navigate(`/admin/roles/edit/${row.id}`),
                                    }}
                                    deleteAction={{
                                        label: 'Cambiar estado',

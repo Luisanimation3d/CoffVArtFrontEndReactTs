@@ -39,9 +39,17 @@ export const CustomersCreate = () => {
         email: '',
         address: '',
     })
+    const [valueForm, setValueForm] = useState<{
+        name?: string,
+        documentType?: string,
+        document?: number[],
+        phone?: string,
+        email?: string,
+        address?: string,
+    }>({})
 
     const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
-
+    const [error, setError] = useState<{}>({})
 
     const customerFields: FormField[] = [
         {
@@ -108,6 +116,30 @@ export const CustomersCreate = () => {
     };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        let mensajeError = {}
+        if (!formValues.name) {
+            mensajeError = {...mensajeError, name: 'El nombre del cliente es requerido'}
+        }
+        if (!formValues.tipo) {
+            mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
+        }
+        if (!formValues.document) {
+            mensajeError = {...mensajeError, document: 'El documento del cliente es requerido'}
+        }
+        if (!formValues.phone) {
+            mensajeError = {...mensajeError, phone: 'El telefono del cliente es requerido'}
+        }
+        if (!formValues.email) {
+            mensajeError = {...mensajeError, email: 'El email del cliente es requerido'}
+        }
+        if (!formValues.address) {
+            mensajeError = {...mensajeError, address: 'La dirección del cliente es requerida'}
+        }
+        if (Object.keys(mensajeError).length > 0) {
+            setError(mensajeError)
+            console.log('On')
+            return
+        }
         try {
             const requestBody = {
                 name: formValues.name,
@@ -130,7 +162,6 @@ export const CustomersCreate = () => {
     
             if (!response.ok) {
                 console.error('Error al crear el cliente:', response.statusText);
-                // Puedes agregar más detalles de la respuesta si es necesario: response.json(), response.text(), etc.
                 return;
             }
     
@@ -148,6 +179,7 @@ export const CustomersCreate = () => {
             fields={customerFields}
             onSubmit={handleSubmit}
             button={<Button text='Crear Cliente' onClick={handleSubmit} fill={true} />}
+            errors={error}
         />
     );
 };
