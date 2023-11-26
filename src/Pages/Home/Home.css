@@ -40,3 +40,13 @@
     gap: 1rem;
     flex-wrap: wrap;
 }
+.cup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cup img {
+    width: 400px;
+    height: auto; 
+  }
