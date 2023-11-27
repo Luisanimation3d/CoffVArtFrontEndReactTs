@@ -48,7 +48,7 @@ export const CustomersCreate = () => {
         address?: string,
     }>({})
 
-    const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { post } = useFetch(' ');
     const [error, setError] = useState<{}>({})
 
     const customerFields: FormField[] = [

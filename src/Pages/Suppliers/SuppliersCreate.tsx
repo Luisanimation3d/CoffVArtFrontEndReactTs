@@ -103,7 +103,7 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             unitCost: formValues.unitCost,
         }; console.log('Datos del formulario:', requestBody);
 
-        const response = await fetch(`https://coffvart-backend.onrender.com/api/Suppliers?apikey=${API_KEY}`, {
+        const response = await fetch(`https://coffvart-backend.onrender.com/api/suppliers?apikey=${API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
