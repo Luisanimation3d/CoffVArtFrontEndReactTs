@@ -162,7 +162,6 @@ export const CustomersCreate = () => {
     
             if (!response.ok) {
                 console.error('Error al crear el cliente:', response.statusText);
-                // Puedes agregar más detalles de la respuesta si es necesario: response.json(), response.text(), etc.
                 return;
             }
     
