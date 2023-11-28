@@ -5,6 +5,7 @@ import { API_KEY } from '../../constantes';
 import { useFetch } from '../../hooks/useFetch';
 import { useState } from 'react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const ProductionOrdersCreate= ()=>{
     const [formValues, setFormValues] = useState<Record<string, string  | number>>({
@@ -12,8 +13,8 @@ export const ProductionOrdersCreate= ()=>{
         quantity: '',
     })
 
-    const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
-
+    const { post,loading,error } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const navigate = useNavigate()
     const productionOrderFields: FormField[] = [
     {
         name: 'orderNumber',
@@ -48,21 +49,12 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             quantity: formValues.quantity,
         }; console.log('Datos del formulario:', requestBody);
 
-        const response = await fetch(`https://coffvart-backend.onrender.com/api/ProductionOrders?apikey=${API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) {
-            console.error('Error al crear la orden de producción:', response.statusText);
-            // Puedes agregar más detalles de la respuesta si es necesario: response.json(), response.text(), etc.
-            return;
-        }
-
+        post(`productionOrders?apikey=${API_KEY}`, requestBody)
+        console.log(loading, error)
         console.log('orden de producción creada con éxito');
+        navigate(-1);
+
+        
 
     } catch (error) {
         console.error('Error al crear la orden de producción', error);
@@ -73,7 +65,7 @@ return (
         title='Crear orden de producción'
         fields={productionOrderFields}
         onSubmit={handleSubmit}
-        button={<Button text='Crear orden de producción' onClick={() => handleSubmit} fill={true} />}
+        button={<Button text='Crear orden de producción' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
     />
 );
 

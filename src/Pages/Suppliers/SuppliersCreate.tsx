@@ -105,14 +105,10 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         }; console.log('Datos del formulario:', requestBody);
 
         post(`suppliers?apikey=${API_KEY}`, requestBody)
-            console.log(loading, error)
-        if (!loading && !error) {
-            setTimeout(() => {
-                navigate(-1)
-            }, 500)
-        }
-
+        console.log(loading, error)
         console.log('proveedor creado con éxito');
+        navigate(-1);
+        
 
     } catch (error) {
         console.error('Error al crear el proveedor', error);

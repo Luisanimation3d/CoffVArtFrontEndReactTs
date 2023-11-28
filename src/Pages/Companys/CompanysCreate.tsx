@@ -5,6 +5,7 @@ import { API_KEY } from '../../constantes';
 import { useFetch } from '../../hooks/useFetch';
 import { useState } from 'react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const CompanysCreate= ()=>{
     const [formValues, setFormValues] = useState<Record<string, string  | number>>({
@@ -15,8 +16,8 @@ export const CompanysCreate= ()=>{
         phone: '',
     })
 
-    const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
-
+    const { post,loading, error } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const navigate = useNavigate()
     const companyFields: FormField[] = [
     {
         name: 'name',
@@ -81,21 +82,12 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             phone: formValues.phone,
         }; console.log('Datos del formulario:', requestBody);
 
-        const response = await fetch(`https://coffvart-backend.onrender.com/api/companys?apikey=${API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) {
-            console.error('Error al crear la compañia:', response.statusText);
-            // Puedes agregar más detalles de la respuesta si es necesario: response.json(), response.text(), etc.
-            return;
-        }
-
+        post(`companys?apikey=${API_KEY}`, requestBody)
+        console.log(loading, error);
         console.log('compañia creada con éxito');
+        navigate(-1);
+
+        
 
     } catch (error) {
         console.error('Error al crear la compañia', error);
@@ -106,7 +98,7 @@ return (
         title='Crear Compañia'
         fields={companyFields}
         onSubmit={handleSubmit}
-        button={<Button text='Crear Compañia' onClick={() => handleSubmit} fill={true} />}
+        button={<Button text='Crear Compañia' onClick={() => handleSubmit} fill={true} type={'SUBMIT'} />}
     />
 );
 
