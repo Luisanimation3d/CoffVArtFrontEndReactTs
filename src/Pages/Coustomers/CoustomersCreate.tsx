@@ -178,7 +178,7 @@ export const CustomersCreate = () => {
             title='Crear Cliente'
             fields={customerFields}
             onSubmit={handleSubmit}
-            button={<Button text='Crear Cliente' onClick={handleSubmit} fill={true} />}
+            button={<Button text='Crear Cliente' onClick={handleSubmit} fill={true} type={'SUBMIT'}/>}
             errors={error}
         />
     );

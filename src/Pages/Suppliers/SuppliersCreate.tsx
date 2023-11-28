@@ -5,6 +5,7 @@ import { API_KEY } from '../../constantes';
 import { useFetch } from '../../hooks/useFetch';
 import { useState } from 'react';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const SuppliersCreate= ()=>{
     const [formValues, setFormValues] = useState<Record<string, string  | number>>({
@@ -17,8 +18,8 @@ export const SuppliersCreate= ()=>{
         unitCost:'',
     })
 
-    const { post } = useFetch('https://coffvart-backend.onrender.com/api/');
-
+    const { post,loading,error } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const navigate = useNavigate()
     const supplierFields: FormField[] = [
     {
         name: 'name',
@@ -103,21 +104,11 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             unitCost: formValues.unitCost,
         }; console.log('Datos del formulario:', requestBody);
 
-        const response = await fetch(`https://coffvart-backend.onrender.com/api/suppliers?apikey=${API_KEY}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestBody),
-        });
-
-        if (!response.ok) {
-            console.error('Error al crear el proveedor:', response.statusText);
-            // Puedes agregar más detalles de la respuesta si es necesario: response.json(), response.text(), etc.
-            return;
-        }
-
+        post(`suppliers?apikey=${API_KEY}`, requestBody)
+        console.log(loading, error)
         console.log('proveedor creado con éxito');
+        navigate(-1);
+        
 
     } catch (error) {
         console.error('Error al crear el proveedor', error);
@@ -128,7 +119,7 @@ return (
         title='Crear proveedor'
         fields={supplierFields}
         onSubmit={handleSubmit}
-        button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} />}
+        button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
     />
 );
 
