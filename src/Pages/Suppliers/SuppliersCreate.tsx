@@ -104,28 +104,24 @@ export const SuppliersCreate = () => {
                 unitCost: formValues.unitCost,
             }; console.log('Datos del formulario:', requestBody);
 
-            post(`suppliers?apikey=${API_KEY}`, requestBody)
-            console.log(loading, error)
-            if (!loading && !error) {
-                setTimeout(() => {
-                    navigate(-1)
-                }, 500)
-            }
+        post(`suppliers?apikey=${API_KEY}`, requestBody)
+        console.log(loading, error)
+        console.log('proveedor creado con éxito');
+        navigate(-1);
+        
 
-            console.log('proveedor creado con éxito');
-
-        } catch (error) {
-            console.error('Error al crear el proveedor', error);
-        }
-    };
-    return (
-        <Form
-            title='Crear proveedor'
-            fields={supplierFields}
-            onSubmit={handleSubmit}
-            button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} type={'SUBMIT'} />}
-        />
-    );
+    } catch (error) {
+        console.error('Error al crear el proveedor', error);
+    }
+};
+return (
+    <Form
+        title='Crear proveedor'
+        fields={supplierFields}
+        onSubmit={handleSubmit}
+        button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
+    />
+);
 
 }
 
