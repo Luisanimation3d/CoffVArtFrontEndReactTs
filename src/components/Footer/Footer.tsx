@@ -15,12 +15,12 @@ export const UserFooter = () => {
                     <h4>Síguenos</h4>
                     <ul className="userFooter__socialMedia">
                         <li>
-                            <a href="https://www.facebook.com" target="_blank">
+                            <a href="https://www.facebook.com" rel="noopener" target="_blank">
                                 <FaFacebookF/>
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.instagram.com" target="_blank">
+                            <a href="https://www.instagram.com" rel="noopener" target="_blank">
                                 <FaInstagram/>
                             </a>
                         </li>
