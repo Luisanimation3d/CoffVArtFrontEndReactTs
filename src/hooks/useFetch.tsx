@@ -33,7 +33,7 @@ export const useFetch = (baseUrl: string) => {
 				body: JSON.stringify(body),
 			};
 
-			const response = config.method === 'GET' ? await fetch(config.url, {
+			const response = config.method === 'GET' || config.method === 'DELETE' ? await fetch(config.url, {
 				method: config.method,
 				headers: config.headers,
 			}) : await fetch(config.url, {
