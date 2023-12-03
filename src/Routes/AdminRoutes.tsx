@@ -49,7 +49,7 @@ export const AdminRoutes: SideBarMenuItemProps[] = [
     },
     {
         title: 'Solicitudes de Producción',
-        link: 'ProductionRequest',
+        link: 'ProductionRequests',
         icon: <FiPackage/>
     },
     {

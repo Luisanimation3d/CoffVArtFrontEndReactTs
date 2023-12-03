@@ -9,7 +9,7 @@ import { Button } from "../../components/Button/Button.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { API_KEY } from "../../constantes.ts";
 
-export const ProductionRequest = () => {
+export const ProductionRequests = () => {
     const [search, setSearch] = useState<string>('');
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate()
@@ -18,8 +18,8 @@ export const ProductionRequest = () => {
     }, []);
     const columnsProductionRequest: Column[] = [
         {
-            key:'orderNumber',
-            header:'Número de Orden',
+            key:'requestNumber',
+            header:'Número de Solicitud',
         },
         {
             key: 'dateOfDispatch',
@@ -35,18 +35,18 @@ export const ProductionRequest = () => {
         },
     ]
 
-    const dataProductionRequest= data?.productionRequests?.rows|| [];
-    let dataProductionRequestFiltered: any;
+    const dataProductionRequests= data?.productionRequests?.rows|| [];
+    let dataProductionRequestsFiltered: any;
 
     if(search.length > 0){
-        dataProductionRequestFiltered = dataProductionRequest.filter((productionRequest:any )=>  
-           productionRequest.orderNumber.toLowerCase().includes(search.toLowerCase()) 
+        dataProductionRequestsFiltered = dataProductionRequests.filter((productionRequest:any )=>  
+           productionRequest.requestNumber.toLowerCase().includes(search.toLowerCase()) 
         || productionRequest.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
         || productionRequest.quantity
         || productionRequest.process.toLowerCase().includes(search.toLowerCase())
         )
     }else{
-        dataProductionRequestFiltered = dataProductionRequest
+        dataProductionRequestsFiltered = dataProductionRequests
     }
     const handleDelete = (row: any) => {
         del(`productionRequests/${row.id}?apikey=${API_KEY}`);
@@ -71,8 +71,8 @@ export const ProductionRequest = () => {
                         alignItems: 'center',
                         marginBottom: '1rem',
 
-                    }}><SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestearch'} />
-                    <Button text={'Crear Solicitud'} onClick={() => navigate('/admin/ProductionRequest/create')} fill={false}/>
+                    }}><SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestSearch'} />
+                    <Button text={'Crear Solicitud'} onClick={() => navigate('/admin/ProductionRequests/create')} fill={false}/>
                     </div>
                     {
                         loading && <p>Cargando...</p>
@@ -81,14 +81,14 @@ export const ProductionRequest = () => {
                         error && <p>Ha ocurrido un error</p>
                     }
                     {
-                        !loading && !error && dataProductionRequestFiltered.length === 0 && <p>No hay datos</p>
+                        !loading && !error && dataProductionRequestsFiltered.length === 0 && <p>No hay datos</p>
                     }
                     {
                 
-                    !loading && !error && dataProductionRequestFiltered.length > 0 && (
+                    !loading && !error && dataProductionRequestsFiltered.length > 0 && (
                         <Table
                         columns={columnsProductionRequest}
-                        data={dataProductionRequestFiltered}
+                        data={dataProductionRequestsFiltered}
                         onRowClick={() => null}
                         editableAction={{ onClick: (row) => navigate(`/admin/productionRequest/edit/${row.id}`) }}
                         deleteAction={{ onClick: handleDelete }}

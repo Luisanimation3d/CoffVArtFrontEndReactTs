@@ -7,7 +7,7 @@ import { useState } from 'react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const ProductionRequestCreate= ()=>{
+export const ProductionRequestsCreate= ()=>{
     const [formValues, setFormValues] = useState<Record<string, string  | number>>({
         requestNumber: '',
         dateOfDispatch: '',
