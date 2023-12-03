@@ -16,6 +16,7 @@ export const ProductionRequests = () => {
     useEffect(() => {
         get(`productionRequests?apikey=${API_KEY}`);
     }, []);
+
     const columnsProductionRequest: Column[] = [
         {
             key:'requestNumber',
@@ -35,7 +36,7 @@ export const ProductionRequests = () => {
         },
     ]
 
-    const dataProductionRequests= data?.productionRequests?.rows|| [];
+    const dataProductionRequests= data?.ProductionRequests?.rows|| [];
     let dataProductionRequestsFiltered: any;
 
     if(search.length > 0){
