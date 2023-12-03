@@ -21,9 +21,9 @@ import {Home} from "./Pages/Home/Home.tsx";
 import {TiendaUser} from "./Pages/Catalogue/TiendaUser.tsx";
 import {Orders} from "./Pages/Orders/OrdersList.tsx";
 import {RolesCreate} from "./Pages/Roles/RolesCreate.tsx";
-import { ProductionRequest } from "./Pages/ProductionRequest/ProductionRequest.tsx";
-import { ProductionRequestCreate } from "./Pages/ProductionRequest/ProductionRequestCreate.tsx";
-import { ProductionRequestEdit } from "./Pages/ProductionRequest/ProductionRequestEdit.tsx";
+import { ProductionRequests } from "./Pages/ProductionRequests/ProductionRequests.tsx";
+import { ProductionRequestsCreate } from "./Pages/ProductionRequests/ProductionRequestsCreate.tsx";
+import {ProductionRequestsEdit } from "./Pages/ProductionRequests/ProductionRequestsEdit.tsx";
 import {EjemploVistaConDetalle} from "./Pages/EjemploVistaConDetalle/EjemploVistaConDetalle.tsx";
 import {ProductDetailPage} from "./components/ProductDetailPage/ProductDetailPage.tsx";
 import {LabelView} from "./components/LabelView/LabelView.tsx";
@@ -53,9 +53,9 @@ export default function App() {
                     <Route path={'ProductionOrders'} element={<ProductionOrders/>}/>
                     <Route path={'ProductionOrders/create'} element={<ProductionOrdersCreate/>}/>
                     <Route path={'ProductionOrders/edit/:id'} element={<ProductionOrdersEdit/>}/>
-                    <Route path={'ProductionRequest'} element={<ProductionRequest/>}/>
-                    <Route path={'ProductionRequest/create'} element={<ProductionRequestCreate/>}/>
-                    <Route path={'ProductionRequest/edit/:id'} element={<ProductionRequestEdit/>}/>
+                    <Route path={'ProductionRequests'} element={<ProductionRequests/>}/>
+                    <Route path={'ProductionRequests/create'} element={<ProductionRequestsCreate/>}/>
+                    <Route path={'ProductionRequests/edit/:id'} element={<ProductionRequestsEdit/>}/>
                     <Route path={'Coustomers'} element={<Coustomers/>}/>
                     <Route path={'Coustomer/create'} element={<CustomersCreate/>}/>
                     <Route path={'Coustomer/edit/:id'} element={<CustomersEdit/>}/>
