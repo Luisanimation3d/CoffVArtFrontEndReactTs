@@ -51,8 +51,8 @@ export const useFetch = (baseUrl: string) => {
 	};
 
 	const get = (url: string) => fetchData(url, 'GET');
-	const post = (url: string, body: any) => fetchData(url, 'POST', body);
-	const put = (url: string, body: any) => fetchData(url, 'PUT', body);
+	const post = (url: string, body: any) => fetchData(url, 'POST', JSON.stringify(body));
+	const put = (url: string, body: any) => fetchData(url, 'PUT', JSON.stringify(body));
 	const del = (url: string) => fetchData(url, 'DELETE');
 
 	return {

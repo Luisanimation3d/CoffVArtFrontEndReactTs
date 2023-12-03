@@ -1,0 +1,22 @@
+.NotFoundContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.NotFoundContainer .NotFoundImage{
+    width: 500px;
+    height: 500px;
+}
+
+.NotFoundContainer .NotFoundTitle{
+    font-size: 5rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #9F212F 0%, #D6CAB0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: absolute;
+    bottom: -1rem;
+}

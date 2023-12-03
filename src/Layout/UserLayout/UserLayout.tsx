@@ -12,8 +12,8 @@ export const UserLayout = () => {
                 overflow: 'auto',
             }}>
                 <Outlet/>
+                <UserFooter/>
             </div>
-            <UserFooter/>
         </>
     )
 }
