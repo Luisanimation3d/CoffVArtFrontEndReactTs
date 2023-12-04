@@ -38,10 +38,6 @@ export const Sales = () => {
             key: "total",
             header: "Total",
         },
-        {
-            key: "state",
-            header: "Estado",
-        },
     ];
     const dataSales = data?.sales?.rows || [];
     let dataSalesFiltered: any;
@@ -64,7 +60,7 @@ export const Sales = () => {
     const [salesDetails, setSalesDetails] = useState<any[]>([]);
 
     const getSalesDetails = (sale: any) => {
-        console.log(sale, "esta es la orden");
+        console.log(sale, "esta es la venta");
         const salesDetails= sale?.salesdetails?.map((salesDetail: any) => ({
             id: salesDetail.id,
             saleId: salesDetail.saleId,
@@ -152,7 +148,7 @@ export const Sales = () => {
                                         header: "Total",
                                     },
                                 ]}
-                                data={[salesDetails]}
+                                data={salesDetails}
                                 onRowClick={() => null}
                             />
                         </Modal>
