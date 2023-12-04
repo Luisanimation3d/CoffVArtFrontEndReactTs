@@ -1,9 +1,3 @@
-/*.linksContainer{*/
-/*    display: flex;*/
-/*    flex-direction: column;*/
-/*    gap: .5rem;*/
-/*}*/
-
 .linksStyle{
     color: #9f212f;
     cursor: pointer;
@@ -25,12 +19,13 @@
     }
 }
 
-.LoginModal {
+.RegisterModal {
+    max-width: 900px !important;
     align-items: center;
     border-radius: 1.5rem;
 }
 
-.LoginModal .imageContainer {
+.RegisterModal .imageContainer {
     width: 50%;
     height: 100%;
     display: flex;
@@ -39,28 +34,28 @@
     overflow: hidden;
 }
 
-.LoginModal .imageContainer img {
+.RegisterModal .imageContainer img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.LoginModal .formContainer {
+.RegisterModal .formContainer {
     width: 50%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 2rem;
+    padding: 1rem;
     gap: 1rem;
 }
 
 @media (max-width: 800px){
-    .LoginModal .imageContainer{
+    .RegisterModal .imageContainer{
         display: none;
     }
-    .LoginModal .formContainer{
+    .RegisterModal .formContainer{
         width: 100%;
     }
 }

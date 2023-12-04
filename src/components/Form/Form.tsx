@@ -23,65 +23,72 @@ export const Form: FC<FormProps> = ({
         <>
             <form onSubmit={onSubmit} style={{ minWidth: '100%' }}>
                 {title && <h1>{title}</h1>}
-                {fields?.map((
-                    {
-                        type,
-                        value,
-                        placeholder,
-                        onChange,
-                        label,
-                        name,
-                        size,
-                        options,
-                        multiple,
-                    }: FormField,
-                    index: number // Agregar el índice como parámetro
-                ) => {
-                    switch (type) {
-                        case "text":
-                        case "password":
-                        case "email":
-                        case "number":
-                        case 'date': {
-                            return (
-                                <div className="formControllerContainer" style={{
-                                    width: size === 'large' ? '100%' : '50%'
-                                }} key={index}>
-                                    <Input key={index} value={value} onChange={onChange} label={label} name={name} size={size} />
-                                    {errors && errors[name] && (
-                                        <span className="formController__error">{errors[name]}</span>
-                                    )}
-                                </div>
-                            );
+                <div className="formInputContainer">
+                    {fields?.map((
+                        {
+                            type,
+                            value,
+                            placeholder,
+                            onChange,
+                            label,
+                            name,
+                            size,
+                            options,
+                            multiple,
+                        }: FormField,
+                        index: number // Agregar el índice como parámetro
+                    ) => {
+                        switch (type) {
+                            case "text":
+                            case "password":
+                            case "email":
+                            case "number":
+                            case 'date': {
+                                return (
+                                    <div className="formControllerContainer" style={{
+                                        width: size === 'large' ? '100%' : 'calc(50% - 8px)'
+                                    }} key={index}>
+                                        <Input key={index} value={value} onChange={onChange} label={label} name={name}
+                                               size={size} type={type}/>
+                                        {errors && errors[name] && (
+                                            <span className="formController__error">{errors[name]}</span>
+                                        )}
+                                    </div>
+                                );
+                            }
+                            case "select": {
+                                return multiple ? (
+                                    <Select key={index} type={type} options={options} onChange={onChange} value={value}
+                                            placeholder={placeholder} multiple/>
+                                ) : (
+                                    <Select key={index} type={type} options={options} onChange={onChange} value={value}
+                                            placeholder={placeholder}/>
+                                );
+                            }
+                            case "textarea": {
+                                return (
+                                    <div className="formControllerContainer" style={{
+                                        width: '100%'
+                                    }} key={index}>
+                                        <TextAreaInput key={index} type={type} value={value} onChange={onChange}
+                                                       label={label} name={name} placeholder={placeholder}
+                                                       size={size as number}/>
+                                        {errors && errors[name] && (
+                                            <span className="formController__error">{errors[name]}</span>
+                                        )}
+                                    </div>
+                                );
+                            }
+                            default: {
+                                return (
+                                    <div key={index}>
+                                        Tipo {type} desconocido en el input {name}
+                                    </div>
+                                );
+                            }
                         }
-                        case "select": {
-                            return multiple ? (
-                                <Select key={index} type={type} options={options} onChange={onChange} value={value} placeholder={placeholder} multiple />
-                            ) : (
-                                <Select key={index} type={type} options={options} onChange={onChange} value={value} placeholder={placeholder} />
-                            );
-                        }
-                        case "textarea": {
-                            return (
-                                <div className="formControllerContainer" style={{
-                                    width: '100%'
-                                }} key={index}>
-                                    <TextAreaInput key={index} type={type} value={value} onChange={onChange} label={label} name={name} placeholder={placeholder} size={size as number} />
-                                    {errors && errors[name] && (
-                                        <span className="formController__error">{errors[name]}</span>
-                                    )}
-                                </div>
-                            );
-                        }
-                        default: {
-                            return (
-                                <div key={index}>
-                                    Tipo {type} desconocido en el input {name}
-                                </div>
-                            );
-                        }
-                    }
-                })}
+                    })}
+                </div>
                 {button}
                 {cancelButton && (
                     <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false} />
