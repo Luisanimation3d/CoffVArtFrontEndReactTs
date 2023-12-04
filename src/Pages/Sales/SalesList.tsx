@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {createPortal} from "react-dom";
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
@@ -8,11 +8,18 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
+import { API_KEY } from "../../constantes.ts";
+import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Sales = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate();
+
+    useEffect(() => {
+        get(`sales?apikey=${API_KEY}`);
+    }, []);
 
     const columnsSales: Column[] = [
         {
@@ -20,11 +27,11 @@ export const Sales = () => {
             header: "ID",
         },
         {
-            key: "factura",
+            key: "invoice",
             header: "Factura",
         },
         {
-            key: "idCliente",
+            key: "coustumerId",
             header: "Cliente",
         },
         {
@@ -32,70 +39,91 @@ export const Sales = () => {
             header: "Total",
         },
         {
-            key: "estado",
+            key: "state",
             header: "Estado",
         },
     ];
-
-    const dataSales = [
-        {
-            id: 1,
-            factura: "45-Doe",
-            idCliente: 1,
-            total: 30,
-            estado: "true",
-        },
-        {
-            id: 2,
-            factura: "48-Doe",
-            idCliente: 1,
-            total: 30,
-            estado: "true",
-        },
-    ];
-
+    const dataSales = data?.sales?.rows || [];
     let dataSalesFiltered: any;
 
     if (search.length > 0) {
-        dataSalesFiltered = dataSales.filter(
-            (sales) =>
-                sales.factura.toLowerCase().includes(search.toLowerCase()) ||
+        dataSalesFiltered = dataSales.filter((sales: any) =>
+                sales.invoice.toLowerCase().includes(search.toLowerCase()) ||
                 sales.estado.toLowerCase().includes(search.toLowerCase())
         );
     } else {
         dataSalesFiltered = dataSales;
     }
 
+    const handleDelete = (row: any) => {
+        del(`sales/${row.id}?apikey=${API_KEY}`);
+        setTimeout(() => {
+            get(`sales?apikey=${API_KEY}`);
+        }, 500);
+    };
+    const [salesDetails, setSalesDetails] = useState<any[]>([]);
+
+    const getSalesDetails = (sale: any) => {
+        console.log(sale, "esta es la orden");
+        const salesDetails= sale?.salesdetails?.map((salesDetail: any) => ({
+            id: salesDetail.id,
+            saleId: salesDetail.saleId,
+            product: salesDetail.product.name,
+            quantity: salesDetail.quantity,
+            value: salesDetail.value,
+            total: salesDetail.quantity*salesDetail.value,
+        }));
+        setSalesDetails(salesDetails);
+        setIsModalOpen(true);
+    };
+
     return (
         <>
-            <Container>
+            <Container align={'CENTER'} justify={'TOP'}>
                 <Titles title={"Ventas"} level={1}/>
-                <div className="roles__table">
+                <div className="roles__table" style={
+                    {
+                        width: '100%',
+                    }
+                }>
                 <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-                    }}>
-                    <Button text={'Crear Venta'} onClick={()=> navigate('/admin/')} fill= {false} />
-                    </div>
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    width: '100%',
+                    marginBottom: '20px',
+                }}>
                     <SearchInput
                         label={"Buscar Ventas"}
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
                         idSearch={"SalesSearch"}
-                    />
+                />
+                <Button text={'Crear Venta'} onClick={()=> navigate('/admin/')} fill= {false} />
+                </div>
+                {
+                        loading && <p>Cargando...</p>
+                    }
+                    {
+                        error && <p>Ha ocurrido un error</p>
+                    }
+                    {
+                        !loading && !error && dataSalesFiltered.length === 0 && <p>No hay datos</p>
+                    }
+                    {
+                        !loading && !error && dataSalesFiltered.length > 0 && (
                     <Table
                         columns={columnsSales}
                         data={dataSalesFiltered}
-                        onRowClick={() => setIsModalOpen(true)}
+                        onRowClick={getSalesDetails}
                         editableAction={{
                             onClick: () => null,
                         }}
                         deleteAction={{
-                            onClick: () => null,
+                            onClick: handleDelete,
                         }}
                     />
+                        )
+                    }
                 </div>
             </Container>
             {
@@ -108,15 +136,15 @@ export const Sales = () => {
                             <Table
                                 columns={[
                                     {
-                                        key: "producto",
+                                        key: "product",
                                         header: "Producto",
                                     },
                                     {
-                                        key: "cantidad",
+                                        key: "quantity",
                                         header: "Cantidad",
                                     },
                                     {
-                                        key: "valorUnitario",
+                                        key: "value",
                                         header: "Valor Unitario",
                                     },
                                     {
@@ -124,20 +152,7 @@ export const Sales = () => {
                                         header: "Total",
                                     },
                                 ]}
-                                data={[
-                                    {
-                                        producto: "Producto 1",
-                                        cantidad: 5,
-                                        valorUnitario: 10,
-                                        total: 50,
-                                    },
-                                    {
-                                        producto: "Producto 2",
-                                        cantidad: 3,
-                                        valorUnitario: 15,
-                                        total: 45,
-                                    },
-                                ]}
+                                data={[salesDetails]}
                                 onRowClick={() => null}
                             />
                         </Modal>
