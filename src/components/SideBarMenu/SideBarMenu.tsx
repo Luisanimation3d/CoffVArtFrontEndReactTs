@@ -3,19 +3,35 @@ import {FC, useEffect, useState} from "react";
 import {FiLogOut, FiMenu} from "react-icons/fi";
 import BurdeoLogo from "../../assets/burdeoLogo.png";
 import UserImage from "../../assets/userImage.png";
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {SideBarMenuItemProps, SideBarMenuProps} from "../../types/MenuBar";
+import {useAuth} from "../../context/AuthContext.tsx";
 
 
 import "./SideBarMenu.css";
+import {useFetch} from "../../hooks/useFetch.tsx";
+import {API_KEY, API_URL} from "../../constantes.ts";
 
 export const SideBarMenu: FC<SideBarMenuProps> = ({
                                                       items
                                                   }) => {
+    const {logout} = useAuth();
+    const navigate = useNavigate();
+    const {get: logoutGet} = useFetch(API_URL);
     const [toggleMenu, setToggleMenu] = useState(false);
     const handleToggleMenu = () => {
         setToggleMenu(!toggleMenu);
     }
+
+    const handleLogout = () => {
+        logoutGet(`login/logout?apikey=${API_KEY}`)
+        logout();
+        setTimeout(() => {
+            navigate('/home')
+        }
+            , 500);
+    }
+
     useEffect(() => {
         const width = window.innerWidth;
         if (width > 768) {
@@ -70,7 +86,7 @@ export const SideBarMenu: FC<SideBarMenuProps> = ({
             </ul>
 
             <div className="sideBarMenu__logout">
-                <button className="sideBarMenu__logout-button">
+                <button className="sideBarMenu__logout-button" onClick={handleLogout}>
                     <FiLogOut/>
                     <span className={`sideBarMenu__logout-name`}>
                         Logout

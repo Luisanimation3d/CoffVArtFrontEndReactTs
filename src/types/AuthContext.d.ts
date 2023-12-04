@@ -3,7 +3,7 @@ export type AuthContextProps = {
     token: string | null;
     loading: boolean;
     error: string | null;
-    login: (email: string, password: string) => void;
+    login: (user: string, token: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
 }

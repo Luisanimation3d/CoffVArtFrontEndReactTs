@@ -6,6 +6,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {createPortal} from "react-dom";
 import {LoginModal} from "../../Modales/LoginModal/LoginModal.tsx";
+import {RegisterModal} from "../../Modales/RegisterModal/RegisterModal.tsx";
 
 export const HeaderMenu = () => {
     const location = useLocation()
@@ -62,7 +63,7 @@ export const HeaderMenu = () => {
                         <LoginModal showModal={setShowModal}/>
                     ) : search.includes('register') ? (
                         // <Register showModal={setShowModal}/>
-                        'Algo'
+                        <RegisterModal showModal={setShowModal}/>
                     ) : null,
                     document.querySelector('#modal') as HTMLElement
                 )}

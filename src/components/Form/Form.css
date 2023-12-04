@@ -6,7 +6,6 @@ form {
     justify-content: center;
     width: 100%;
     max-width: 500px;
-    padding: 15px;
     background: #fff;
     gap: 1rem;
 }
@@ -17,6 +16,13 @@ form h2 {
     text-transform: capitalize;
     color: #9f212f;
     margin-bottom: 1rem;
+}
+
+.formInputContainer{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 /* General Inputs */
