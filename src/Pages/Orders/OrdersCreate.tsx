@@ -13,6 +13,7 @@ import {API_KEY} from "../../constantes.ts";
 export const OrdersCreate = () => {
     const {data: dataProductos, loading: loadingProductos, error: errorProductos, get: getProductos} = useFetch('https://coffvart-backend.onrender.com/api/')
     const {data: dataClientes, loading: loadingClientes, error: errorClientess, get: getClientes} = useFetch('https://coffvart-backend.onrender.com/api/')
+    // const { POST } = useFetch ('https://coffvart-backend.onrender.com/api/')
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
     const [detalles, setDetalles] = useState<any[]>([]);
@@ -60,7 +61,7 @@ export const OrdersCreate = () => {
     const fields: FormField[] = [
         {
             name: 'selectProduct',
-            placeholder: 'Select',
+            placeholder: 'Producto',
             type: 'select',
             options: productos,
             value: selectProducto,
@@ -68,6 +69,7 @@ export const OrdersCreate = () => {
         },
         {
             name: 'selectCoustomer',
+            placeholder: 'Cliente',
             label: 'Select',
             type: 'select',
             options: clientes,
@@ -88,12 +90,12 @@ export const OrdersCreate = () => {
     const handleAddDetail = (e: any) => {
         e.preventDefault();
         console.log('Esta entrando')
-        // traeme el precio unitario de cada producto del modelo de productos y multiplicalo por la cantidad
         const selectedProduct = dataProductos?.products?.rows?.find((product: any) => product.id === selectProducto?.value)
         const totalPrice = parseInt(cantidad || '0') * selectedProduct?.unitPrice
         const newDetail = {
-            id: detalles.length,
+            id: detalles.length +1,
             producto: selectProducto?.label,
+            idProducto: selectProducto?.value,
             cliente: selectCliente?.label,
             cantidad: cantidad,
             precioTotal: totalPrice,
@@ -153,17 +155,27 @@ export const OrdersCreate = () => {
     }, [dataClientes])
 
     //crea una funcion que elimine el pedido agregado al detalle y se reste en valor total del pedido segun el que se borre
-    const handleDeleteProduct = (id: string) => {
-        const updatedDetalles = detalles.filter((detalle) => detalle.id !== id);
-        setDetalles(updatedDetalles);
+    const handleDeleteProduct = (id: any) => {
+        console.log('Esta entrando')
+        console.log(id, 'Estoy aqui')
+        const productoItem = dataProductos?.products?.rows?.find((product: any) => product.id == id.idProducto)
 
-        // Restar el valor del pedido según el detalle eliminado
-        const detalleToDelete = detalles.find((detalle) => detalle.id === id);
-        if (detalleToDelete) {
-            const subtotal = subTotal - detalleToDelete.valor;
-            setSubTotal(subtotal);
-        }
-    };
+        const NuevoDetalle= detalles.filter(detalle=> detalle.id !== id.id);
+        const newSubtotal= NuevoDetalle?.reduce((sum, item) => {
+            return parseFloat(sum)+ (parseFloat(productoItem.unitPrice) * parseInt(item.cantidad))
+        }, 0)
+
+        console.log(newSubtotal, 'nuevo Subtotal')
+
+        const newIva= newSubtotal * 0.08; 
+
+        setDetalles(NuevoDetalle)
+        setSubTotal(newSubtotal)
+        setIva(newIva);
+        setPrecio(newSubtotal + newIva)
+        console.log('el id eliminado es', id)
+    }
+    
     
     
     
@@ -177,7 +189,7 @@ export const OrdersCreate = () => {
                     <Titles title={`factura N°${factura}`} level={2} transform={'UPPERCASE'}/>
                     <Form fields={fields} onSubmit={handleAddDetail}
                           button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'}/>}
-                        cancelButton={false}
+                          cancelButton={false}
                     />
                 </div>
                 <div style={{
@@ -186,7 +198,7 @@ export const OrdersCreate = () => {
                     flexDirection: 'column',
                     alignItems: 'flex-end',
                 }}>
-                    <Table columns={headers} data={detalles} onRowClick={() => null} deleteAction={{onClick: handleDeleteProduct}}/>
+                    <Table columns={headers} data={detalles} onRowClick={() => null} deleteAction={{onClick: handleDeleteProduct}} />
                     <p>subtotal | {subTotal} </p>
                     <p>iva | {iva} </p>
                     <p>Total | {precio} </p>
