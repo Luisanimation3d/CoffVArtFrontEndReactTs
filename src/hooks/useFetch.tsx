@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import {useAuth} from "../context/AuthContext.tsx";
 
 type methodOptions = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
@@ -15,6 +16,8 @@ export const useFetch = (baseUrl: string) => {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<any>(false);
 
+	const {token, isAuthenticated} = useAuth();
+
 	const fetchData = async (
 		url: string,
 		method: methodOptions,
@@ -23,15 +26,24 @@ export const useFetch = (baseUrl: string) => {
 		try {
 			setLoading(true);
 			setError(null);
-			const config: FetchProps = {
+			const config: FetchProps = isAuthenticated ? {
+				method,
+				url: `${baseUrl}${url}`,
+				mode: "no-cors",
+				headers: {
+					'Authorization': `Bearer ${token}`,
+					'Content-Type': 'application/json',
+				},
+				body: body,
+			} : {
 				method,
 				url: `${baseUrl}${url}`,
 				mode: "no-cors",
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(body),
-			};
+				body: body,
+			}
 
 			const response = config.method === 'GET' || config.method === 'DELETE' ? await fetch(config.url, {
 				method: config.method,
@@ -41,10 +53,14 @@ export const useFetch = (baseUrl: string) => {
 				headers: config.headers,
 				body: config.body,
 			});
-			const json: any[] = await response.json();
+			if (!response.ok) {
+				const errorCatched = await response.json();
+				throw new Error(errorCatched.msg || errorCatched.error);
+			}
+			const json: any = await response.json();
 			setData(json);
-		} catch (error) {
-			setError(error);
+		} catch (errorCatched: any) {
+			setError(errorCatched.message)
 		} finally {
 			setLoading(false);
 		}

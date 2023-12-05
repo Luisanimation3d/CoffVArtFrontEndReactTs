@@ -8,7 +8,7 @@ const initialState: AuthState = {
     token: null,
     loading: true,
     error: null,
-    isAuthenticated: true,
+    isAuthenticated: false,
 };
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -18,7 +18,7 @@ export const AuthContext = createContext<AuthContextProps>({
     error: null,
     login: (user: any, token: any) => {},
     logout: () => {},
-    isAuthenticated: true,
+    isAuthenticated: false,
 })
 
 export const useAuth = () => {
@@ -45,8 +45,8 @@ export const AuthProvider = ({children}: any) => {
     }
 
     const logout = () => {
-        localStorage.removeItem("auth");
         dispatch({type: AuthActionValues.LOGOUT, payload: null});
+        localStorage.removeItem("auth");
     }
 
     return (

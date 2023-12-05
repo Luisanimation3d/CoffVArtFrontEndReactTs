@@ -26,7 +26,9 @@ export const Modal: FC<ModalProps> = ({ title, children, showModal, ...props }) 
                 onClick={() => {
                     showModal(false)}}
             >
-                <MdClose />
+                <MdClose style={{
+                    fill: props?.xColor ? props.xColor : '#fff',
+                }}/>
             </button>
             {title && (
                 <div className='modal__header'>

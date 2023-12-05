@@ -13,7 +13,7 @@
 }
 
 .container.medium{
-    width: calc(50% - .5rem);
+    width: 100%;
 }
 
 .container.large{

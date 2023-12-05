@@ -1,17 +1,21 @@
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useState} from "react";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
 import {FormField} from "../../types/Form";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import ImageLogin from '../../assets/LoginImage.png'
+import {useAuth} from '../../context/AuthContext.tsx'
 
 import styles from './LoginModal.module.css';
+import {useFetch} from "../../hooks/useFetch.tsx";
+import {API_KEY, API_URL} from "../../constantes.ts";
 
 export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => {
     const location = useLocation();
     const {pathname} = location;
     const navigate = useNavigate();
+    const {login} = useAuth();
 
     const handleClick = () => {
         navigate({
@@ -19,6 +23,8 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
             search: 'register'
         })
     }
+
+    const {data, loading, error: errorLogin, post} = useFetch(API_URL)
 
     const [error, setError] = useState<{ [key: string]: string }>({});
 
@@ -30,11 +36,11 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     const formFieldsLogin: FormField[] = [
         {
             name: 'email',
-            type: 'email',
+            type: 'text',
             label: 'Email',
             placeholder: 'Enter your email',
             value: loginForm.email,
-            onChange: (e: any) => setLoginForm({...loginForm, email: e.target.value}),
+            onChange: (value: string) => setLoginForm({...loginForm, email: value}),
             size: 'large',
         },
         {
@@ -43,28 +49,76 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
             label: 'Password',
             placeholder: 'Enter your password',
             value: loginForm.password,
-            onChange: (e: any) => setLoginForm({...loginForm, password: e.target.value}),
+            onChange: (value: string) => setLoginForm({...loginForm, password: value}),
             size: 'large',
         },
     ]
 
+    const validate = (values: any) => {
+        console.log(values);
+        const errors: any = {};
+        if (!values.email) {
+            errors.email = 'El correo Electrónico es requerido'
+        } else if (!/\S+@\S+\.\S+/.test(values.email)) {
+            errors.email = 'El correo electrónico es inválido'
+        }
+        if (!values.password) {
+            errors.password = 'La contraseña es requerida'
+        }
+        return errors;
+    }
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setError({})
+        const errors = validate(loginForm);
+        if (Object.keys(errors).length === 0) {
+            post(`login?apikey=${API_KEY}`, {
+                email: loginForm.email,
+                password: loginForm.password,
+            })
+        } else {
+            setError(errors);
+        }
+    }
+
+    useEffect(() => {
+        // extract the error from the response
+        if (errorLogin) {
+            const newError: any = {
+                email: errorLogin || '',
+                password: errorLogin || '',
+            }
+            setError(newError);
+        }
+    }, [errorLogin])
+
+    useEffect(() => {
+        if(data?.token) {
+            login(loginForm.email, data.token);
+            alert('Login exitoso');
+            showModal(false);
+        }
+    }, [data])
+
     return (
         <>
             <ModalContainer ShowModal={showModal}>
-                <Modal showModal={showModal} className={`${styles.LoginModal}`}>
+                <Modal showModal={showModal} className={`${styles.LoginModal}`} xColor={'#9f212f'}>
                     <div className={`${styles.imageContainer}`}>
                         <img src={ImageLogin} alt="Login Image"/>
                     </div>
                     <div className={`${styles.formContainer}`}>
                         <Form fields={formFieldsLogin}
-                              button={<Button text={'Iniciar Sesión'} type={'SUBMIT'} fill={false} autosize={false}/>} errors={error}
-                              onSubmit={() => null} title={'Iniciar Sesión'}
+                              button={<Button text={'Iniciar Sesión'} type={'SUBMIT'} fill={false} autosize={false}/>}
+                              errors={error}
+                              onSubmit={handleSubmit} title={'Iniciar Sesión'}
                               cancelButton={false}
                         />
-                        <span className={`${styles.linksContainer}`}>
-                            ¿Aún no tienes una cuenta?
+                        <p className={`${styles.linksContainer}`}>
+                            ¿Aún no tienes una cuenta? &nbsp;
                             <a
-                                onClick={e=> {
+                                onClick={e => {
                                     e.preventDefault();
                                     handleClick();
                                 }}
@@ -72,7 +126,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
                             >
                                 ¡Regístrate aquí!
                             </a>
-                        </span>
+                        </p>
                     </div>
                 </Modal>
             </ModalContainer>
