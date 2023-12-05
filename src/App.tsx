@@ -20,6 +20,7 @@ import {ProductionOrdersEdit} from "./Pages/ProductionOrders/ProductionOrdersEdi
 import {Home} from "./Pages/Home/Home.tsx";
 import {TiendaUser} from "./Pages/Catalogue/TiendaUser.tsx";
 import {Orders} from "./Pages/Orders/OrdersList.tsx";
+import { OrdersCreate } from "./Pages/Orders/OrdersCreate.tsx";
 import {RolesCreate} from "./Pages/Roles/RolesCreate.tsx";
 import {ProductionRequests} from "./Pages/ProductionRequests/ProductionRequests.tsx";
 import {ProductionRequestsCreate} from "./Pages/ProductionRequests/ProductionRequestsCreate.tsx";
@@ -66,6 +67,7 @@ export default function App() {
                                 <Route path={'ejemplo'} element={<EjemploVistaConDetalle/>}/>
                                 <Route path={'Sales'} element={<Sales/>}/>
                                 <Route path={'Orders'} element={<Orders/>}/>
+                                <Route path={'Orders/create'} element={<OrdersCreate/>}/>
                             </Route>
                         </Route>
                         <Route path={'*'} element={<div>error</div>}/>
