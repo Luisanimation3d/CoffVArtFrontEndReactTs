@@ -138,7 +138,7 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
         setError({})
         const errors = validateForm();
         if (Object.keys(errors).length === 0) {
-            post(`users?apikey=${API_KEY}`, {...registerForm, roleId: 1})
+            post(`users?apikey=${API_KEY}`, {...registerForm, roleId: 2})
         } else {
             console.log('Formulario inválido');
             setError(errors);

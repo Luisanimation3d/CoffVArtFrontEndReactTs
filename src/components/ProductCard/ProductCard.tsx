@@ -1,8 +1,6 @@
 import { Button } from '../Button/Button';
 import {useNavigate} from "react-router-dom";
 
-// import { useGlobalState } from '../../Context/GlobalState';
-
 import { FC } from 'react';
 
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
@@ -11,6 +9,7 @@ import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import { MiniCartProductCardProps } from '../../types/ProductCard'
 
 import './ProductCard.css';
+import {useCart} from "../../context/CartContext.tsx";
 
 export interface Product {
 	id: number;
@@ -29,14 +28,15 @@ interface ProductCardProps {
 }
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
-    // const { addToCart } = useGlobalState();
-    // function handleAddToCart() {
-    //     addToCart({ ...product, quantity: 1 });
-    //     const buttonCart = document.querySelector(
-    //         '#cartButton'
-    //     ) as HTMLButtonElement;
-    //     buttonCart?.click();
-    // }
+    const { addToCart } = useCart();
+    function handleAddToCart() {
+        console.log('add to cart')
+        addToCart({ ...product, quantity: 1 });
+        const buttonCart = document.querySelector(
+            '#cartButton'
+        ) as HTMLButtonElement;
+        buttonCart?.click();
+    }
 
     const navigate = useNavigate();
 
@@ -84,7 +84,10 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
                 )}
                 <div className='product__actions'>
                     <Button
-                        // onClick={handleAddToCart}
+                        onClick={e => {
+                            e.stopPropagation()
+                            handleAddToCart()
+                        }}
                         text={'Añadir al carrito'}
                         fill={false}
                         autosize={false}
@@ -98,23 +101,23 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
 export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
                                                                       product,
                                                                   }) => {
-    // const { removeFromCart, addQuantity, removeQuantity } = useGlobalState();
-    // function handleRemoveFromCart() {
-    //     removeFromCart(product.id);
-    // }
-    //
-    // function handleAddQuantity() {
-    //     if (product.quantity >= 10) {
-    //         return;
-    //     }
-    //     addQuantity(product.id);
-    // }
-    //
-    // function handleRemoveQuantity() {
-    //     if (product.quantity > 1) {
-    //         removeQuantity(product.id);
-    //     }
-    // }
+    const { removeFromCart, addQuantity, removeQuantity } = useCart();
+    function handleRemoveFromCart() {
+        removeFromCart(product.id);
+    }
+
+    function handleAddQuantity() {
+        if (product.quantity >= 10) {
+            return;
+        }
+        addQuantity(product.id);
+    }
+
+    function handleRemoveQuantity() {
+        if (product.quantity > 1) {
+            removeQuantity(product.id);
+        }
+    }
 
     return (
         <div className={`miniCartProductCard--container`}>
@@ -130,14 +133,14 @@ export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
                             product.quantity === 1 &&
                             'miniCartProductCard--buttonQuantity--disabled'
                         }`}
-                        // onClick={handleRemoveQuantity}
+                        onClick={handleRemoveQuantity}
                     >
                         <FaMinus />
                     </button>
                     <p className='miniCartProductCard--quantity'>{product.quantity}</p>
                     <button
                         className={`miniCartProductCard--buttonQuantity ${product.quantity ===	 10 && 'miniCartProductCard--buttonQuantity--disabled'}`}
-                        // onClick={handleAddQuantity}
+                        onClick={handleAddQuantity}
                     >
                         <FaPlus />
                     </button>
@@ -176,7 +179,7 @@ export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
             <div className='miniCartProductCard--actions'>
                 <button
                     className='miniCartProductCard--remove'
-                    // onClick={handleRemoveFromCart}
+                    onClick={handleRemoveFromCart}
                 >
                     <FaTrash />
                 </button>
@@ -186,21 +189,21 @@ export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
 };
 
 export const CartProductCard: FC<MiniCartProductCardProps> = ({ product }) => {
-    // const { removeFromCart, addQuantity, removeQuantity } = useGlobalState();
-    // function handleRemoveFromCart() {
-    //     removeFromCart(product.id);
-    // }
-    // function handleAddQuantity() {
-    //     if (product.quantity >= 10) {
-    //         return;
-    //     }
-    //     addQuantity(product.id);
-    // }
-    // function handleRemoveQuantity() {
-    //     if (product.quantity > 1) {
-    //         removeQuantity(product.id);
-    //     }
-    // }
+    const { removeFromCart, addQuantity, removeQuantity } = useCart();
+    function handleRemoveFromCart() {
+        removeFromCart(product.id);
+    }
+    function handleAddQuantity() {
+        if (product.quantity >= 10) {
+            return;
+        }
+        addQuantity(product.id);
+    }
+    function handleRemoveQuantity() {
+        if (product.quantity > 1) {
+            removeQuantity(product.id);
+        }
+    }
 
     return (
         <div className={`cartProductCard--container`}>
@@ -217,13 +220,13 @@ export const CartProductCard: FC<MiniCartProductCardProps> = ({ product }) => {
 
                 <div className='cartProductCard--quantityInfo'>
                     <button className={`cartProductCard--buttonQuantity ${product.quantity === 1 && 'cartProductCard--buttonQuantity--disabled'}`}
-                            // onClick={handleRemoveQuantity}
+                            onClick={handleRemoveQuantity}
                     >
                         <FaMinus />
                     </button>
                     <p className='cartProductCard--quantity'>{product.quantity}</p>
                     <button className={`cartProductCard--buttonQuantity ${product.quantity === 10 && 'cartProductCard--buttonQuantity--disabled'}`}
-                            // onClick={handleAddQuantity}
+                            onClick={handleAddQuantity}
                     >
                         <FaPlus />
                     </button>
@@ -261,7 +264,7 @@ export const CartProductCard: FC<MiniCartProductCardProps> = ({ product }) => {
             </div>
             <div className='cartProductCard--actions'>
                 <button className='cartProductCard--remove'
-                        // onClick={handleRemoveFromCart}
+                        onClick={handleRemoveFromCart}
                 >
                     <FaTrash />
                 </button>

@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { SliderProps } from '../../types/SliderBanner';
 
 import './SliderBanner.css';
+import React from 'react';
 
 export const SliderBanner: FC<SliderProps> = ({
                                             images,
@@ -86,7 +87,7 @@ export const SliderBanner: FC<SliderProps> = ({
                 (images?.length > 1 && !autoPlay)) && (
                 <div className='slider__dots'>
                     {images.map((image, index) => (
-                        <>
+                        <React.Fragment key={index}>
                             {false ? image : ''}
                             <button
 
@@ -99,7 +100,7 @@ export const SliderBanner: FC<SliderProps> = ({
                                     handleImageChange(index - 1, images);
                                 }}
                             ></button>
-                        </>
+                        </React.Fragment>
                     ))}
                 </div>
             )}

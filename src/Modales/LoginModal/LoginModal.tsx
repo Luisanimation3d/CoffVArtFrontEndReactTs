@@ -15,7 +15,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     const location = useLocation();
     const {pathname} = location;
     const navigate = useNavigate();
-    const {login} = useAuth();
+    const {login, isAuthenticated, updateUser} = useAuth();
 
     const handleClick = () => {
         navigate({
@@ -24,7 +24,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         })
     }
 
-    const {data, loading, error: errorLogin, post} = useFetch(API_URL)
+    const {data, loading, error: errorLogin, post, get} = useFetch(API_URL)
 
     const [error, setError] = useState<{ [key: string]: string }>({});
 
@@ -97,10 +97,22 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         if(data?.token) {
             login(loginForm.email, data.token);
             alert('Login exitoso');
-            showModal(false);
+            // showModal(false);
         }
     }, [data])
 
+    useEffect(() => {
+        if(isAuthenticated){
+            get(`login/getTokenData?apikey=${API_KEY}`)
+        }
+    }, [isAuthenticated])
+
+    useEffect(() => {
+        if(data?.user) {
+            updateUser(data.user);
+        }
+    }, [data]);
+    
     return (
         <>
             <ModalContainer ShowModal={showModal}>

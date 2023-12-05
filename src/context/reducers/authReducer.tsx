@@ -1,4 +1,4 @@
-import { AuthActionValues, AuthState } from "../../types/AuthContext.d";
+import {AuthActionValues, AuthState} from "../../types/AuthContext.d";
 
 export const authReducer = (state: AuthState, action: { type: AuthActionValues; payload: any }) => {
     switch (action.type) {
@@ -25,6 +25,13 @@ export const authReducer = (state: AuthState, action: { type: AuthActionValues; 
                 ...state,
                 error: action.payload.error,
                 loading: false,
+            };
+        case AuthActionValues.UPDATE_USER:
+            return {
+                ...state,
+                user: action.payload,
+                loading: false,
+                error: null,
             };
         default:
             return state;

@@ -15,7 +15,7 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 export const SideBarMenu: FC<SideBarMenuProps> = ({
                                                       items
                                                   }) => {
-    const {logout} = useAuth();
+    const {logout, user} = useAuth();
     const navigate = useNavigate();
     const {get: logoutGet} = useFetch(API_URL);
     const [toggleMenu, setToggleMenu] = useState(false);
@@ -23,6 +23,10 @@ export const SideBarMenu: FC<SideBarMenuProps> = ({
         setToggleMenu(!toggleMenu);
     }
 
+
+    const handleNavigate = () => {
+        console.log('ingresa aqui')
+    }
     const handleLogout = () => {
         logoutGet(`login/logout?apikey=${API_KEY}`)
         logout();
@@ -61,18 +65,20 @@ export const SideBarMenu: FC<SideBarMenuProps> = ({
     return (
         <div className={`sideBarMenu__container ${toggleMenu && 'sideBarMenu__container--active'}`}>
             <div className="sideBarMenu__top">
-                <div className="sideBarMenu__logo">
+                <div className="sideBarMenu__logo" onClick={handleNavigate}>
                     <img src={BurdeoLogo} alt=""/>
                 </div>
                 <button className="sideBarMenu__toggleMenu" onClick={handleToggleMenu}>
                     <FiMenu/>
                 </button>
             </div>
-            <div className="sideBarMenu__user">
+            <div className="sideBarMenu__user" onClick={()=> {
+                navigate('/admin/my-profile')
+            }}>
                 <img src={UserImage} alt="" className={`sideBarMenu__user-image`}/>
                 <div className="sideBarMenu__user-info">
-                    <h4 className={`sideBarMenu__user-name`}>John Doe</h4>
-                    <p className={`sideBarMenu__user-role`}>Administrator</p>
+                    <h4 className={`sideBarMenu__user-name`}>{user?.name}</h4>
+                    <p className={`sideBarMenu__user-role`}>{user?.role}</p>
                 </div>
             </div>
             <ul className="sideBarMenu__menu">
