@@ -26,7 +26,7 @@ export const ProductionOrders = () => {
             header: 'Cantidad',
         },
         {
-            key: 'process',
+            key: 'processId',
             header: 'Proceso',
         },
     ]
