@@ -1,3 +1,4 @@
+
 import {useEffect, useState} from "react";
 
 import {Container} from "../../components/Container/Container.tsx";
@@ -49,7 +50,6 @@ export const OrdersCreate = () => {
             header: 'cantidad',
         }
     ]
-
     const handleSelectProducto = (option: SelectOption | undefined) => {
         setSelectProducto(option);
       };
@@ -90,6 +90,8 @@ export const OrdersCreate = () => {
     const handleAddDetail = (e: any) => {
         e.preventDefault();
         console.log('Esta entrando')
+
+
         const selectedProduct = dataProductos?.products?.rows?.find((product: any) => product.id === selectProducto?.value)
         const totalPrice = parseInt(cantidad || '0') * selectedProduct?.unitPrice
         const newDetail = {
@@ -181,29 +183,76 @@ export const OrdersCreate = () => {
     
     return (
         <Container align={'CENTER'}>
-            <Titles title={'CREAR PEDIDO'}/>
-            <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
-                <div style={{
-                    width: '50%',
-                }}>
-                    <Titles title={`factura N°${factura}`} level={2} transform={'UPPERCASE'}/>
-                    <Form fields={fields} onSubmit={handleAddDetail}
-                          button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'}/>}
-                          cancelButton={false}
-                    />
-                </div>
-                <div style={{
-                    width: '50%',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                }}>
-                    <Table columns={headers} data={detalles} onRowClick={() => null} deleteAction={{onClick: handleDeleteProduct}} />
-                    <p>subtotal | {subTotal} </p>
-                    <p>iva | {iva} </p>
-                    <p>Total | {precio} </p>
-                </div>
-            </Container>
+          <Titles title={'CREAR PEDIDO'}/>
+          <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
+            <div style={{ width: '50%' }}>
+              <Titles title={`factura N°${factura}`} level={2} transform={'UPPERCASE'}/>
+              <Form
+                fields={fields}
+                onSubmit={handleAddDetail}
+                button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false} />}
+                cancelButton={false}
+              />
+            </div>
+            <div style={{ width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+              <Titles title={'Detalle del pedido'} level={2} transform={'UPPERCASE'}/>
+              <Table columns={headers} data={detalles} onRowClick={() => null} deleteAction={{ onClick: handleDeleteProduct }}/>
+              <style>
+                {`
+                  .info {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    margin-top: 2rem;
+                  }
+                  .info p {
+                    font-size: 1.2rem;
+                    font-weight: bold;
+                  }
+                  .totals-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 1rem;
+                  }
+                  .totals-table th,
+                  .totals-table td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: right;
+                  }
+                  .totals-table th {
+                    background-color: #f2f2f2;
+                  }
+                `}
+              </style>
+              <div className="info">
+                <table className="totals-table">
+                  <thead>
+                    <tr>
+                      <th>Concepto</th>
+                      <th>Monto</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Subtotal</td>
+                      <td>{subTotal}</td>
+                    </tr>
+                    <tr>
+                      <td>IVA</td>
+                      <td>{iva}</td>
+                    </tr>
+                    <tr>
+                      <td>Total</td>
+                      <td>{precio}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <Button text={'Crear pedido'} onClick={() => null} fill={false} />
+              </div>
+            </div>
+          </Container>
         </Container>
-    )
-}
+      );
+    }
