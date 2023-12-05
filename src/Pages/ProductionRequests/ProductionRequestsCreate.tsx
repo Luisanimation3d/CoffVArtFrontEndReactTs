@@ -12,9 +12,11 @@ export const ProductionRequestsCreate= ()=>{
         dateOfDispatch: '',
         quantity: '',
         supplieId: undefined,
-        companyId: undefined
+        companyId: undefined,
+        process: undefined,
     })
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
+    const [process, setprocess] = useState<SelectOption[]>([]);
     const [company, setcompany] = useState<SelectOption[]>([]);
     const { post, loading, error } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
@@ -30,6 +32,18 @@ export const ProductionRequestsCreate= ()=>{
         }))
         setsupplie(supplieOptions)
     },[datasupplie]);
+
+    const {data:dataprocess,get:getProcesses} = useFetch('https://coffvart-backend.onrender.com/api/');
+    useEffect(()=>{
+        getProcesses('processes?apikey='+API_KEY)
+    },[]);
+    useEffect(()=>{
+        const processOptions = dataprocess?.processes?.rows?.map((item: any)=>({
+            value: item?.id,
+            label: item?.name
+        }))
+        setprocess(processOptions)
+    },[dataprocess]);
 
     const {data:datacompany,get:getCompanys} = useFetch('https://coffvart-backend.onrender.com/api/');
 
@@ -92,6 +106,15 @@ export const ProductionRequestsCreate= ()=>{
         options: company,
         value: formValues.companyId as SelectOption|undefined,
         onChange: (value) => setFormValues(prev=> ({...prev,companyId:value})),
+        size:'medium',
+    },
+    {
+        name: 'processId',
+        type: 'select',
+        label: 'Proceso',
+        options: process,
+        value: formValues.processId as SelectOption|undefined,
+        onChange: (value) => setFormValues(prev=> ({...prev,processId:value})),
         size:'medium',
     }
 ];
