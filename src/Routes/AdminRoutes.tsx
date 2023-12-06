@@ -23,6 +23,11 @@ export const AdminRoutes: SideBarMenuItemProps[] = [
         icon: <FiHexagon/>
     },
     {
+        title: 'Compras',
+        link: 'Shops',
+        icon: <FiHexagon/>
+    },
+    {
         title: 'Pedidos',
         link: 'Orders',
         icon: <FiHexagon/>
