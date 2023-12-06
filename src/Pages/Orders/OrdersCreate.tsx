@@ -51,11 +51,19 @@ export const OrdersCreate = () => {
         }
     ]
     const handleSelectProducto = (option: SelectOption | undefined) => {
-        setSelectProducto(option);
+        if (selectCliente) {
+            setSelectProducto(option);
+          } else {
+            alert('Debe seleccionar un cliente antes de agregar productos');
+          }
       };
     
       const handleSelectCliente = (option: SelectOption | undefined) => {
-        setSelectCliente(option);
+        if (detalles.length == 0) {
+            setSelectCliente(option);
+          } else {
+            alert('Ya hay detalles en la factura. Debes eliminar los detalles actuales antes de seleccionar otro cliente.');
+          }
       };
 
     const fields: FormField[] = [
@@ -90,8 +98,14 @@ export const OrdersCreate = () => {
     const handleAddDetail = (e: any) => {
         e.preventDefault();
         console.log('Esta entrando')
-
-
+        if (!selectCliente) {
+            alert('Debe seleccionar un cliente antes de agregar productos');
+            return;
+          }
+        if(!selectProducto){
+            alert('Debe seleccionar un producto antes de agregar productos');
+            return;
+        }
         const selectedProduct = dataProductos?.products?.rows?.find((product: any) => product.id === selectProducto?.value)
         const totalPrice = parseInt(cantidad || '0') * selectedProduct?.unitPrice
         const newDetail = {
@@ -102,6 +116,7 @@ export const OrdersCreate = () => {
             cantidad: cantidad,
             precioTotal: totalPrice,
         }
+
         const newSubtotal = subTotal + totalPrice
         const newIva = newSubtotal * 0.08
         setDetalles([...detalles, newDetail])
@@ -175,12 +190,59 @@ export const OrdersCreate = () => {
         setSubTotal(newSubtotal)
         setIva(newIva);
         setPrecio(newSubtotal + newIva)
+        setSelectCliente(undefined);
         console.log('el id eliminado es', id)
     }
-    
-    
-    
-    
+
+    const handleCreateOrder = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log('Entre')
+      
+        // Check if all required fields are filled
+        if (!selectCliente || !detalles.length) {
+          alert('Debe seleccionar un cliente y agregar al menos un producto para crear un pedido');
+          return;
+        }
+      
+        // Prepare the request body
+        const requestBody = {
+          cliente: selectCliente?.value,
+          detalles: detalles.map((detalle) => ({
+            producto: detalle.producto,
+            cantidad: detalle.cantidad,
+          })),
+        };
+      
+        // Send the POST request to the API
+        try {
+            const response = await fetch(`https://coffvart-backend.onrender.com/api/orders?apikey=${API_KEY}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestBody),
+          });
+      
+          if (!response.ok) {
+            alert('Error al crear el pedido');
+            console.error('Error al crear el pedido:', response.statusText);
+            return;
+          }
+      
+          setSelectCliente(undefined);
+          setDetalles([]);
+          setSubTotal(0);
+          setIva(0);
+          setPrecio(0);
+          setProductos([]);
+          setClientes([]);
+      
+          alert('Pedido creado con éxito');
+        } catch (error) {
+          console.error('Error al crear el pedido:', error);
+          alert('Error al crear el pedido');
+        }
+      };
     return (
         <Container align={'CENTER'}>
           <Titles title={'CREAR PEDIDO'}/>
@@ -249,7 +311,7 @@ export const OrdersCreate = () => {
                     </tr>
                   </tbody>
                 </table>
-                <Button text={'Crear pedido'} onClick={() => null} fill={false} />
+                <Button text={'Crear pedido'} onClick={() => handleCreateOrder} fill={false} type={'SUBMIT'}/>
               </div>
             </div>
           </Container>
