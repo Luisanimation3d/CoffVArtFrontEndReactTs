@@ -90,15 +90,6 @@ export const CustomersCreate = () => {
             size: 'large'
         },
         {
-            name: 'email',
-            type: 'email',
-            label: 'Email',
-            placeholder: 'Email',
-            value: formValues['email'] !== undefined ? String(formValues['email']): '',
-            onChange: (value) => handleInputChange('email', value),
-            size: 'large'
-        },
-        {
             name: 'address',
             type: 'text',
             label: 'Dirección',
@@ -129,9 +120,6 @@ export const CustomersCreate = () => {
         if (!formValues.phone) {
             mensajeError = {...mensajeError, phone: 'El telefono del cliente es requerido'}
         }
-        if (!formValues.email) {
-            mensajeError = {...mensajeError, email: 'El email del cliente es requerido'}
-        }
         if (!formValues.address) {
             mensajeError = {...mensajeError, address: 'La dirección del cliente es requerida'}
         }
@@ -146,7 +134,6 @@ export const CustomersCreate = () => {
                 documentType: tipo?.value,
                 document: formValues.document,
                 phone: formValues.phone,
-                email: formValues.email,
                 address: formValues.address,
             };
     
