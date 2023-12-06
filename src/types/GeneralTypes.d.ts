@@ -4,6 +4,7 @@ export type ContainerProps = {
     justify?: LEFT | CENTER | RIGHT;
     direction?: ROW | COLUMN;
     gap?: number;
+    className?: string;
 }
 
 export type SearchInputProps = {

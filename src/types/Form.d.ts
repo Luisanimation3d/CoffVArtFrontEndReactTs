@@ -60,6 +60,7 @@ export interface FormProps {
     fields: FormField[];
     onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
     button: JSX.Element | JSX.Element[] | string;
+    extra?: JSX.Element | JSX.Element[] | string;
     errors?: Errors;
     cancelButton?: boolean;
 }

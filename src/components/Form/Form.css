@@ -182,3 +182,17 @@ form .selectControl.active select:not(:focus) ~ label {
     font-size: 0.8rem;
     font-weight: lighter;
 }
+
+.formControllerContainer--large{
+    width: 100%
+}
+
+.formControllerContainer--medium {
+    width: calc(50% - 8px);
+}
+
+@media (max-width: 768px) {
+    .formControllerContainer--medium {
+        width: 100%;
+    }
+}

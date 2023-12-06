@@ -45,9 +45,9 @@ export function Button({
 	return (
 		<button
 			onClick={onClick}
-			className={`btn--${fill ? 'filled' : 'outline'} btn--${
+			className={`btn btn--${fill ? 'filled' : 'outline'} btn--${
 				autosize ? 'auto' : 'fixed'
-			} ${disabled && 'btn--disabled'}`}
+			} ${disabled ? 'btn--disabled' : ''}`}
 			ref={btnUseRef}
 			type={type}
 		>

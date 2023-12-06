@@ -2,19 +2,30 @@ import LogoBurdeo from '../../assets/burdeoLogo.png';
 import {FiCompass, FiShoppingCart, FiUser} from 'react-icons/fi';
 
 import './HeaderMenu.css';
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {createPortal} from "react-dom";
 import {LoginModal} from "../../Modales/LoginModal/LoginModal.tsx";
 import {RegisterModal} from "../../Modales/RegisterModal/RegisterModal.tsx";
+import {MiniCart} from "../MiniCart/MiniCart.tsx";
+import {useCart} from "../../context/CartContext.tsx";
+import {useAuth} from "../../context/AuthContext.tsx";
 
 export const HeaderMenu = () => {
+    const {cart} = useCart()
+    const {isAuthenticated} = useAuth()
+    const countProducts = cart?.length
+    const [showMiniCart, setShowMiniCart] = useState<boolean>(false)
     const location = useLocation()
     const {search, pathname} = location
     const navigate = useNavigate()
     const [showModal, setShowModal] = useState<boolean>(false)
 
     const handleClick = () => {
+        if (isAuthenticated) {
+            navigate('/admin/my-profile')
+            return
+        }
         setShowModal(true)
         navigate({
             pathname,
@@ -30,14 +41,18 @@ export const HeaderMenu = () => {
                 </div>
                 <nav className={`headerMenu__menu`}>
                     <ul className={`headerMenu__menu--container`}>
-                        <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
-                                                                    href="/">Inicio</a></li>
-                        <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
-                                                                    href="/nosotros">Nosotros</a></li>
-                        <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
-                                                                    href="/#/tiendaUser">Productos</a></li>
-                        <li className={`headerMenu__menu--item`}><a className={`headerMenu__menu--link`}
-                                                                    href="/contacto">Contacto</a></li>
+                        <li className="headerMenu__menu--item">
+                            <Link to={'/home'} className={`headerMenu__menu--link`}>Inicio</Link>
+                        </li>
+                        <li className={`headerMenu__menu--item`}>
+                            <Link to={'/nosotros'} className={`headerMenu__menu--link`}>Nosotros</Link>
+                        </li>
+                        <li className={`headerMenu__menu--item`}>
+                            <Link to={'/tiendaUser'} className={`headerMenu__menu--link`}>Tienda</Link>
+                        </li>
+                        <li className={`headerMenu__menu--item`}>
+                            <Link to={'/blog'} className={`headerMenu__menu--link`}>Contacto</Link>
+                        </li>
                     </ul>
                 </nav>
                 <div className="headerMenu__options">
@@ -45,17 +60,32 @@ export const HeaderMenu = () => {
                         <FiCompass className={`headerMenu__options--icon`}/>
                     </div>
                     <div className="headerMenu__options--item headerMenu__options--item--user"
-                        onClick={handleClick}
+                         onClick={handleClick}
                     >
                         <FiUser className={`headerMenu__options--icon`}/>
                     </div>
-                    <div className="headerMenu__options--item headerMenu__options--cart">
+                    <div className="headerMenu__options--item headerMenu__options--cart" onClick={() => setShowMiniCart(true)}>
                         <FiShoppingCart className={`headerMenu__cart--icon`}/>
-                        <span className={`headerMenu__cart--counter`}>0</span>
+                        {
+                            countProducts > 0 && countProducts < 10 ? (
+                                <span className={`headerMenu__cart--counter`}>{countProducts}</span>
+                            ) : (
+                                countProducts > 9 && (
+                                    <span className={`headerMenu__cart--counter`}>9+</span>
+                                )
+                            )
+                        }
                     </div>
 
                 </div>
             </div>
+
+            {showMiniCart &&
+                createPortal(
+                    <MiniCart setShowMiniCart={setShowMiniCart}/>,
+                    document.querySelector('#modal') as HTMLElement
+                )
+            }
 
             {showModal &&
                 createPortal(

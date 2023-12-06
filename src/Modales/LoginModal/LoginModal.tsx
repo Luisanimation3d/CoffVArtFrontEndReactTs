@@ -15,7 +15,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     const location = useLocation();
     const {pathname} = location;
     const navigate = useNavigate();
-    const {login} = useAuth();
+    const {login, isAuthenticated, updateUser} = useAuth();
 
     const handleClick = () => {
         navigate({
@@ -24,7 +24,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         })
     }
 
-    const {data, loading, error: errorLogin, post} = useFetch(API_URL)
+    const {data, loading, error: errorLogin, post, get} = useFetch(API_URL)
 
     const [error, setError] = useState<{ [key: string]: string }>({});
 
@@ -94,12 +94,24 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     }, [errorLogin])
 
     useEffect(() => {
-        if(data?.token) {
-            login(loginForm.email, data.token);
+        if (data?.token) {
+            login(null, data.token);
             alert('Login exitoso');
-            showModal(false);
+            // showModal(false);
         }
     }, [data])
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            get(`login/getTokenData?apikey=${API_KEY}`)
+        }
+    }, [isAuthenticated])
+
+    useEffect(() => {
+        if (data?.user) {
+            updateUser(data.user);
+        }
+    }, [data]);
 
     return (
         <>
@@ -114,6 +126,21 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
                               errors={error}
                               onSubmit={handleSubmit} title={'Iniciar Sesión'}
                               cancelButton={false}
+                              extra={
+                                  <a
+                                      onClick={e => {
+                                          e.preventDefault();
+                                          navigate('/user/sendRecoveryPassword')
+                                      }}
+                                      className={`${styles.linksStyle}`}
+                                      style={{
+                                          width: '100%',
+                                          textAlign: 'left',
+                                      }}
+                                  >
+                                      Olvidé mi contraseña
+                                  </a>
+                              }
                         />
                         <p className={`${styles.linksContainer}`}>
                             ¿Aún no tienes una cuenta? &nbsp;

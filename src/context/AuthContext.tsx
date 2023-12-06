@@ -1,7 +1,6 @@
 import {createContext, useContext, useEffect, useReducer} from "react";
-import {AuthContextProps, AuthState, AuthActionValues} from "../types/AuthContext.d";
+import {AuthContextProps, AuthState, AuthActionValues, User} from "../types/AuthContext.d";
 import {authReducer} from "./reducers/authReducer";
-
 
 const initialState: AuthState = {
     user: null,
@@ -9,6 +8,7 @@ const initialState: AuthState = {
     loading: true,
     error: null,
     isAuthenticated: false,
+    updateUser: () => {},
 };
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -16,9 +16,10 @@ export const AuthContext = createContext<AuthContextProps>({
     token: null,
     loading: true,
     error: null,
-    login: (user: any, token: any) => {},
+    login: () => {},
     logout: () => {},
     isAuthenticated: false,
+    updateUser: () => {},
 })
 
 export const useAuth = () => {
@@ -35,7 +36,7 @@ export const AuthProvider = ({children}: any) => {
         localStorage.setItem("auth", JSON.stringify(state));
     }, [state]);
 
-    const login = (user: any, token: any) => {
+    const login = (user: User | null, token: string) => {
         const payload = {
             user,
             token,
@@ -49,6 +50,15 @@ export const AuthProvider = ({children}: any) => {
         localStorage.removeItem("auth");
     }
 
+    const updateUser = (user: {
+        email: string,
+        name: string,
+        role: string,
+        permissions: string[],
+    }) => {
+        dispatch({type: AuthActionValues.UPDATE_USER, payload: user});
+    }
+
     return (
         <AuthContext.Provider value={{
             user: state.user,
@@ -58,6 +68,7 @@ export const AuthProvider = ({children}: any) => {
             login,
             logout,
             isAuthenticated: state.isAuthenticated,
+            updateUser,
         }}>
             {children}
         </AuthContext.Provider>

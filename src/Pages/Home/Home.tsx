@@ -9,6 +9,9 @@ import './Home.css';
 import { ProductCard } from "../../components/ProductCard/ProductCard.tsx";
 import { useEffect, useRef, useState } from 'react';
 import { SectionBanner } from '../../components/SectionBanner/SectionBanner.tsx';
+import {API_KEY, API_URL} from "../../constantes.ts";
+import {useFetch} from "../../hooks/useFetch.tsx";
+import {Product} from "../../types/ProductCard";
 
 gsap.registerPlugin(ScrollTrigger);
 const boxDOMEL = document.createElement("div");
@@ -26,48 +29,50 @@ gsap.to(boxDOMEL, {
   xPercent: "+=100"
 })
 export const Home = () => {
+  const {data, loading, error, get } = useFetch(API_URL);
+  const [products, setProducts] = useState<Product[]>([]);
   const cupRef = useRef(null);
   const homeContentRef = useRef(null);
   const [isCupAnimationComplete, setIsCupAnimationComplete] = useState(false);
 
 
   const images = [BannerBurdeo1, BannerBurdeo2];
-  const productosHome = [
-    {
-      id: 1,
-      name: "Burdeo Coffee",
-      price: 25000,
-      image: ProductImage,
-      description: "Some",
-      category: "Cafe",
-    },
-    {
-      id: 2,
-      name: "Burdeo Coffee",
-      price: 25000,
-      image: ProductImage,
-      description: "Some",
-      category: "Cafe",
-    },
-    {
-      id: 3,
-      name: "Burdeo Coffee",
-      price: 25000,
-      image: ProductImage,
-      description: "Some",
-      category: "Cafe",
-      discount: 50,
-      new: true
-    },
-    {
-      id: 4,
-      name: "Burdeo Coffee",
-      price: 25000,
-      image: ProductImage,
-      description: "Some",
-      category: "Cafe",
-    },
-  ];
+  // const productosHome = [
+  //   {
+  //     id: 1,
+  //     name: "Burdeo Coffee",
+  //     price: 25000,
+  //     image: ProductImage,
+  //     description: "Some",
+  //     category: "Cafe",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Burdeo Coffee",
+  //     price: 25000,
+  //     image: ProductImage,
+  //     description: "Some",
+  //     category: "Cafe",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Burdeo Coffee",
+  //     price: 25000,
+  //     image: ProductImage,
+  //     description: "Some",
+  //     category: "Cafe",
+  //     discount: 50,
+  //     new: true
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Burdeo Coffee",
+  //     price: 25000,
+  //     image: ProductImage,
+  //     description: "Some",
+  //     category: "Cafe",
+  //   },
+  // ];
   useEffect(() => {
     const timeline = gsap.timeline({
       onComplete: () => {
@@ -92,6 +97,26 @@ export const Home = () => {
       });
     }
   }, [isCupAnimationComplete]);
+
+  useEffect(() => {
+    get(`products?apikey=${API_KEY}&limit=4`);
+  }, []);
+
+  useEffect(() => {
+    if (data?.products) {
+      const productsArray: Product[] = data?.products?.rows.map((product: any) => ({
+        id: product.id,
+        name: product.name,
+        price: product.unitPrice,
+        image: ProductImage,
+        description: product.description,
+        link: `/producto/${product.id}`,
+        new: new Date(product.createdAt) > new Date(new Date().setDate(new Date().getDate() - 7)),
+      }))
+      setProducts(productsArray)
+    }
+  }, [data]);
+
   return (
     <div className="home__container">
       {!isCupAnimationComplete && (
@@ -109,8 +134,8 @@ export const Home = () => {
           <div className="home__productsContainer">
             <h2>Burdeo</h2>
             <div className="home__productsCards">
-              {productosHome?.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {products?.map((producto) => (
+                <ProductCard key={producto.id} product={producto} />
               ))}
             </div>
           </div>

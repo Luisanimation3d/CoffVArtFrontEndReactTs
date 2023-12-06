@@ -3,9 +3,17 @@ export type AuthContextProps = {
     token: string | null;
     loading: boolean;
     error: string | null;
-    login: (user: string, token: string) => void;
+    login: (user: User | null, token: string) => void;
     logout: () => void;
     isAuthenticated: boolean;
+    updateUser: (user: User) => void;
+}
+
+export type User = {
+    email: string;
+    name: string;
+    role: string;
+    permissions: string[];
 }
 
 export type AuthState = {
@@ -14,6 +22,7 @@ export type AuthState = {
     loading: boolean;
     error: string | null;
     isAuthenticated: boolean;
+    updateUser: (user: User) => void;
 }
 
 export type AuthAction = {
@@ -25,4 +34,5 @@ export enum AuthActionValues {
     LOGIN,
     LOGOUT,
     ERROR,
+    UPDATE_USER,
 }

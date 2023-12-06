@@ -15,7 +15,8 @@ export const Form: FC<FormProps> = ({
     onSubmit,
     button,
     cancelButton = true,
-    errors
+    errors,
+    extra
 }) => {
     const navigate = useNavigate();
 
@@ -45,9 +46,7 @@ export const Form: FC<FormProps> = ({
                             case "number":
                             case 'date': {
                                 return (
-                                    <div className="formControllerContainer" style={{
-                                        width: size === 'large' ? '100%' : 'calc(50% - 8px)'
-                                    }} key={index}>
+                                    <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`} key={index}>
                                         <Input key={index} value={value} onChange={onChange} label={label} name={name}
                                                size={size} type={type}/>
                                         {errors && errors[name] && (
@@ -89,6 +88,9 @@ export const Form: FC<FormProps> = ({
                         }
                     })}
                 </div>
+                {
+                    extra && extra
+                }
                 {button}
                 {cancelButton && (
                     <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false} />
