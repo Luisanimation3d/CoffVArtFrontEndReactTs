@@ -8,9 +8,12 @@ import { Button } from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { API_KEY } from "../../constantes";
+import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
+import { createPortal } from "react-dom";
 
 export const Coustomers = () => {
     const [search, setSearch] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
 
@@ -65,7 +68,7 @@ export const Coustomers = () => {
                             marginBottom: '1rem',
                         }}>
                     <SearchInput label={'Buscar clientes'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'CoustomerSearch'} />
-
+                    <Button text={'Crear Cliente'} onClick={() => setIsModalOpen(true)} fill={false}/>
                     </div>
                     
                     {
@@ -87,6 +90,14 @@ export const Coustomers = () => {
                     />)
                     }
                 </div>
+                {
+                    isModalOpen && createPortal(
+                        <>
+                            <CreateUserModal setIsModalOpen={setIsModalOpen} title="Crear Cliente"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
             </Container>
         </>
     );

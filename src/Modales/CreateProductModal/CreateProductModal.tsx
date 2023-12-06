@@ -6,7 +6,7 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 
-export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
+export const CreateProductModal = ({setIsModalOpen}: { setIsModalOpen: (value: boolean) => void }) => {
     const {data, get, post, error: errorRegister} = useFetch(API_URL)
     const [options, setOptions] = useState<SelectOption[]>([])
     const [error, setError] = useState<{ [key: string]: string }>({})
@@ -243,12 +243,12 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
 
     return (
         <ModalContainer ShowModal={setIsModalOpen}>
-            <Modal showModal={setIsModalOpen} title={title}>
+            <Modal showModal={setIsModalOpen} title={`Crear Usuario`}>
                 <div style={{
                     width: '100%',
                     padding: '1rem 2rem',
                 }}>
-                    <Form fields={formFieldsRegister} button={<Button text={title} type={'Submit'}/>}
+                    <Form fields={formFieldsRegister} button={<Button text={'Crear usuario'} type={'Submit'}/>}
                           onSubmit={handleSubmit}
                           cancelButton={false}
                           errors={error}
