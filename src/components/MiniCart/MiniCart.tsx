@@ -4,9 +4,11 @@ import {FiX, FiShoppingCart} from "react-icons/fi";
 import {MiniCartProductCard} from "../ProductCard/ProductCard.tsx";
 import {Button} from "../Button/Button.tsx";
 import {useCart} from "../../context/CartContext.tsx";
+import {useState} from "react";
 
 export const MiniCart = ({setShowMiniCart}: { setShowMiniCart: (showMiniCart: boolean) => void; }) => {
     const {cart} = useCart();
+    const [closeCart, setCloseCart] = useState(false);
     const descuento = cart.reduce(
         (acc, product) =>
             product.discount
@@ -20,11 +22,17 @@ export const MiniCart = ({setShowMiniCart}: { setShowMiniCart: (showMiniCart: bo
     const total = subtotal - descuento;
     const navigate = useNavigate()
     return (
-        <div className={styles['miniCart--overlay']} onClick={() => setShowMiniCart(false)}>
-            <div className={styles['miniCart--container']} onClick={e => e.stopPropagation()}>
+        <div className={`${styles['miniCart--overlay']}`} onClick={() => {
+            setCloseCart(true)
+            setTimeout(() => setShowMiniCart(false), 500)
+        }}>
+            <div className={`${styles['miniCart--container']} ${closeCart ? styles['miniCart--container-close'] : ''}`} onClick={e => e.stopPropagation()}>
                 <div className={styles['miniCart--header']}>
                     <h3 className={styles['miniCart-Title']}>Carrito</h3>
-                    <button className={styles['miniCart--close']} onClick={() => setShowMiniCart(false)}>
+                    <button className={styles['miniCart--close']} onClick={() => {
+                        setCloseCart(true)
+                        setTimeout(() => setShowMiniCart(false), 500)
+                    }}>
                         <FiX/>
                     </button>
                 </div>

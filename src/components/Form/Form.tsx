@@ -15,7 +15,8 @@ export const Form: FC<FormProps> = ({
     onSubmit,
     button,
     cancelButton = true,
-    errors
+    errors,
+    extra
 }) => {
     const navigate = useNavigate();
 
@@ -87,6 +88,9 @@ export const Form: FC<FormProps> = ({
                         }
                     })}
                 </div>
+                {
+                    extra && extra
+                }
                 {button}
                 {cancelButton && (
                     <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false} />

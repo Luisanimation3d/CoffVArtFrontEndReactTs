@@ -38,6 +38,11 @@ import {AuthProvider} from "./context/AuthContext.tsx";
 import {ProtectedRoutes} from "./Routes/ProtectedRoutes.tsx";
 import {MyProfile} from "./Pages/MyProfile/MyProfile.tsx";
 import {CartProvider} from "./context/CartContext.tsx";
+import {SimpleLayout} from "./Layout/SimpleLayout/SimpleLayout.tsx";
+import {ResetPassword, SendEmail} from "./Pages/RecoveryPassword/RecoveryPassword.tsx";
+import {Login} from "./Pages/Login/Login.tsx";
+import {Register} from "./Pages/Register/Register.tsx";
+import {User} from "./Pages/Users/Users.tsx";
 
 export default function App() {
     return (
@@ -79,6 +84,7 @@ export default function App() {
                                     <Route path={'Shops/create'} element={<ShopsCreate/>}/>
                                     <Route path={'Orders'} element={<Orders/>}/>
                                     <Route path={'Orders/create'} element={<OrdersCreate/>}/>
+                                    <Route path={'users'} element={<User/>}/>
                                     <Route path={'my-profile'} element={<MyProfile/>}/>
                                 </Route>
                             </Route>
@@ -88,6 +94,12 @@ export default function App() {
                                 <Route path={'tiendaUser'} element={<TiendaUser/>}/>
                                 <Route path={'producto/:id'} element={<ProductDetailPage/>}/>
                                 <Route path={'*'} element={<div>error</div>}/>
+                            </Route>
+                            <Route path={'/user/'} element={<SimpleLayout/>}>
+                                <Route path={'sendRecoveryPassword'} element={<SendEmail/>}/>
+                                <Route path={'reset-password/:token'} element={<ResetPassword/>}/>
+                                <Route path={'login'} element={<Login/>}/>
+                                <Route path={'register'} element={<Register/>}/>
                             </Route>
                         </Routes>
                     </HashRouter>

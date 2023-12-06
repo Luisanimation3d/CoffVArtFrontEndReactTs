@@ -1,0 +1,38 @@
+.linksStyle{
+    color: #9f212f;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    &::after{
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: #9f212f;
+        transition: width .3s;
+    }
+    &:hover::after{
+        width: 100%;
+    }
+}
+
+.formContainer {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .formContainer {
+        width: 100%;
+    }
+
+}

@@ -86,6 +86,6 @@ export const useRutasAdmin = () => {
     })
 
     return {
-        AdminRoutes
+        AdminRoutes: adminToCompare
     }
 }

@@ -1,18 +1,14 @@
-import {FormField, SelectOption} from "../../types/Form";
-import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
-import {Form} from "../../components/Form/Form.tsx";
-import {Button} from "../../components/Button/Button.tsx";
-import {useEffect, useState} from "react";
-import styles from './RegisterModal.module.css';
-import {useLocation, useNavigate} from "react-router-dom";
-
-import ImageRegister from '../../assets/RegisterImage.png'
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import {useEffect, useState} from "react";
+import {FormField, SelectOption} from "../../types/Form";
+import styles from './Register.module.css';
+import {Form} from "../../components/Form/Form.tsx";
+import {Button} from "../../components/Button/Button.tsx";
+import {Container} from "../../components/Container/Container.tsx";
+import {useNavigate} from "react-router-dom";
 
-export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) => {
-    const location = useLocation();
-    const { pathname } = location;
+export const Register = () => {
     const navigate = useNavigate();
     const {data, post, error: errorRegister} = useFetch(API_URL)
     const [registerForm, setRegisterForm] = useState<{
@@ -139,11 +135,8 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
     ]
 
     const handleClick = () => {
-        navigate({
-            pathname: pathname,
-            search: `login`,
-        });
-    };
+        navigate('/user/Login');
+    }
 
     const validateForm = () => {
         const errors: { [key: string]: string } = {};
@@ -200,41 +193,35 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
     useEffect(() => {
         if (data?.newUser && !errorRegister) {
             alert('Usuario creado correctamente')
+            console.log(data)
             navigate('/user/Login');
         }
     }, [data]);
 
     return (
-        <>
-            <ModalContainer ShowModal={showModal}>
-                <Modal showModal={showModal} xColor={'#9f212f'} className={`${styles.RegisterModal}`}>
-                    <div className={`${styles.formContainer}`}>
-                        <Form
-                            fields={formFieldsRegister}
-                            button={<Button text={'Crear una cuenta'} type={'SUBMIT'} fill={false} autosize={false}/>}
-                            onSubmit={handleSubmit}
-                            errors={error}
-                            title={'Registrarse'}
-                            cancelButton={false}
-                        />
-                        <p className={`${styles.linksContainer}`}>
-                            ¿Ya tienes una cuenta? &nbsp;
-                            <a
-                                onClick={e => {
-                                    e.preventDefault();
-                                    handleClick();
-                                }}
-                                className={`${styles.linksStyle}`}
-                            >
-                                ¡Inicia sesión ahora!
-                            </a>
-                        </p>
-                    </div>
-                    <div className={`${styles.imageContainer}`}>
-                        <img src={ImageRegister} alt="Register Image"/>
-                    </div>
-                </Modal>
-            </ModalContainer>
-        </>
+        <Container align={'CENTER'} justify={'CENTER'}>
+            <div className={`${styles.formContainer}`}>
+                <Form
+                    fields={formFieldsRegister}
+                    button={<Button text={'Crear una cuenta'} type={'SUBMIT'} fill={false} autosize={false}/>}
+                    onSubmit={handleSubmit}
+                    errors={error}
+                    title={'Registrarse'}
+                    cancelButton={false}
+                />
+                <p className={`${styles.linksContainer}`}>
+                    ¿Ya tienes una cuenta? &nbsp;
+                    <a
+                        onClick={e => {
+                            e.preventDefault();
+                            handleClick();
+                        }}
+                        className={`${styles.linksStyle}`}
+                    >
+                        ¡Inicia sesión ahora!
+                    </a>
+                </p>
+            </div>
+        </Container>
     )
 }
