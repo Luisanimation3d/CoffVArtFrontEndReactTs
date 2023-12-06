@@ -11,17 +11,17 @@ import { useNavigate } from "react-router-dom";
 import { API_KEY } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 
-export const Sales = () => {
+export const Shops = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate();
 
     useEffect(() => {
-        get(`sales?apikey=${API_KEY}`);
+        get(`shops?apikey=${API_KEY}`);
     }, []);
 
-    const columnsSales: Column[] = [
+    const columnsShops: Column[] = [
         {
             key: "id",
             header: "ID",
@@ -31,52 +31,56 @@ export const Sales = () => {
             header: "Factura",
         },
         {
-            key: "coustumerId",
-            header: "Cliente",
+            key: "supplierId",
+            header: "Proveedor",
         },
         {
             key: "total",
             header: "Total",
         },
+        {
+            key: "date",
+            header: "Fecha de Compra",
+        }
     ];
-    const dataSales = data?.sales?.rows || [];
-    let dataSalesFiltered: any;
+    const dataShops = data?.shops?.rows || [];
+    let dataShopsFiltered: any;
 
     if (search.length > 0) {
-        dataSalesFiltered = dataSales.filter((sales: any) =>
-                sales.invoice.toLowerCase().includes(search.toLowerCase()) ||
-                sales.estado.toLowerCase().includes(search.toLowerCase())
+        dataShopsFiltered = dataShops.filter((shops: any) =>
+                shops.invoice.toLowerCase().includes(search.toLowerCase()) ||
+                shops.estado.toLowerCase().includes(search.toLowerCase())
         );
     } else {
-        dataSalesFiltered = dataSales;
+        dataShopsFiltered = dataShops;
     }
 
     const handleDelete = (row: any) => {
-        del(`sales/${row.id}?apikey=${API_KEY}`);
+        del(`shops/${row.id}?apikey=${API_KEY}`);
         setTimeout(() => {
-            get(`sales?apikey=${API_KEY}`);
+            get(`shops?apikey=${API_KEY}`);
         }, 500);
     };
-    const [salesDetails, setSalesDetails] = useState<any[]>([]);
+    const [shopsDetails, setShopsDetails] = useState<any[]>([]);
 
-    const getSalesDetails = (sale: any) => {
-        console.log(sale, "esta es la venta");
-        const salesDetails= sale?.salesdetails?.map((salesDetail: any) => ({
-            id: salesDetail.id,
-            saleId: salesDetail.saleId,
-            product: salesDetail.product.name,
-            quantity: salesDetail.quantity,
-            value: salesDetail.value,
-            total: salesDetail.quantity*salesDetail.value,
+    const getShopsDetails = (shop: any) => {
+        console.log(shop, "esta es la compra");
+        const shopsDetails= shop?.shopdetails?.map((shopsDetail: any) => ({
+            id: shopsDetail.id,
+            shopId: shopsDetail.shopId,
+            supply: shopsDetail.supply.name,
+            quantity: shopsDetail.quantity,
+            value: shopsDetail.value,
+            total: shopsDetail.quantity*shopsDetail.value,
         }));
-        setSalesDetails(salesDetails);
+        setShopsDetails(shopsDetails);
         setIsModalOpen(true);
     };
 
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={"Ventas"} level={1}/>
+                <Titles title={"Compras"} level={1}/>
                 <div className="roles__table" style={
                     {
                         width: '100%',
@@ -89,12 +93,12 @@ export const Sales = () => {
                     marginBottom: '20px',
                 }}>
                     <SearchInput
-                        label={"Buscar Ventas"}
+                        label={"Buscar Compra"}
                         onChange={(e) => setSearch(e.target.value)}
                         value={search}
-                        idSearch={"SalesSearch"}
+                        idSearch={"ShopsSearch"}
                 />
-                <Button text={'Crear Venta'} onClick={()=> navigate('/admin/')} fill= {false} />
+                <Button text={'Crear Compra'} onClick={()=> navigate('/admin/Shops/Create')} fill= {false} />
                 </div>
                 {
                         loading && <p>Cargando...</p>
@@ -103,14 +107,14 @@ export const Sales = () => {
                         error && <p>Ha ocurrido un error</p>
                     }
                     {
-                        !loading && !error && dataSalesFiltered.length === 0 && <p>No hay datos</p>
+                        !loading && !error && dataShopsFiltered.length === 0 && <p>No hay datos</p>
                     }
                     {
-                        !loading && !error && dataSalesFiltered.length > 0 && (
+                        !loading && !error && dataShopsFiltered.length > 0 && (
                     <Table
-                        columns={columnsSales}
-                        data={dataSalesFiltered}
-                        onRowClick={getSalesDetails}
+                        columns={columnsShops}
+                        data={dataShopsFiltered}
+                        onRowClick={getShopsDetails}
                         editableAction={{
                             onClick: () => null,
                         }}
@@ -126,14 +130,14 @@ export const Sales = () => {
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
                         <Modal
-                            title="Detalle de Ventas"
+                            title="Detalle de Compra"
                             showModal={setIsModalOpen}
                         >
                             <Table
                                 columns={[
                                     {
-                                        key: "product",
-                                        header: "Producto",
+                                        key: "supply",
+                                        header: "Insumo",
                                     },
                                     {
                                         key: "quantity",
@@ -148,7 +152,7 @@ export const Sales = () => {
                                         header: "Total",
                                     },
                                 ]}
-                                data={salesDetails}
+                                data={shopsDetails}
                                 onRowClick={() => null}
                             />
                         </Modal>

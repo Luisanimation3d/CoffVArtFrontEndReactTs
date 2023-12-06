@@ -66,7 +66,6 @@ export const Coustomers = () => {
                         }}>
                     <SearchInput label={'Buscar clientes'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'CoustomerSearch'} />
 
-                    <Button text={'Crear cliente'} onClick={() => navigate('/admin/Coustomer/create')} fill={false} />
                     </div>
                     
                     {
@@ -84,7 +83,6 @@ export const Coustomers = () => {
                         columns={columnsCoustumers}
                         data={dataCoustumersFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: (row) => navigate(`/admin/Coustomer/edit/${row.id}`) }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }

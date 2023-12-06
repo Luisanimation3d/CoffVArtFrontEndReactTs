@@ -90,15 +90,6 @@ export const CustomersCreate = () => {
             size: 'large'
         },
         {
-            name: 'email',
-            type: 'email',
-            label: 'Email',
-            placeholder: 'Email',
-            value: formValues['email'] !== undefined ? String(formValues['email']): '',
-            onChange: (value) => handleInputChange('email', value),
-            size: 'large'
-        },
-        {
             name: 'address',
             type: 'text',
             label: 'Dirección',
@@ -120,7 +111,7 @@ export const CustomersCreate = () => {
         if (!formValues.name) {
             mensajeError = {...mensajeError, name: 'El nombre del cliente es requerido'}
         }
-        if (!formValues.tipo) {
+        if (!tipo) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
         if (!formValues.document) {
@@ -128,9 +119,6 @@ export const CustomersCreate = () => {
         }
         if (!formValues.phone) {
             mensajeError = {...mensajeError, phone: 'El telefono del cliente es requerido'}
-        }
-        if (!formValues.email) {
-            mensajeError = {...mensajeError, email: 'El email del cliente es requerido'}
         }
         if (!formValues.address) {
             mensajeError = {...mensajeError, address: 'La dirección del cliente es requerida'}
@@ -146,7 +134,6 @@ export const CustomersCreate = () => {
                 documentType: tipo?.value,
                 document: formValues.document,
                 phone: formValues.phone,
-                email: formValues.email,
                 address: formValues.address,
             };
     
@@ -159,6 +146,7 @@ export const CustomersCreate = () => {
                 },
                 body: JSON.stringify(requestBody),
             });
+            console.log("Respuesta del servidor:", response)
     
             if (!response.ok) {
                 console.error('Error al crear el cliente:', response.statusText);
@@ -178,7 +166,7 @@ export const CustomersCreate = () => {
             title='Crear Cliente'
             fields={customerFields}
             onSubmit={handleSubmit}
-            button={<Button text='Crear Cliente' onClick={handleSubmit} fill={true} type={'SUBMIT'}/>}
+            button={<Button text='Crear Cliente' onClick={()=> null} fill={true} type={'SUBMIT'}/>}
             errors={error}
         />
     );

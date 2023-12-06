@@ -106,7 +106,7 @@ console.log(data)
                         value={search}
                         idSearch={"SalesSearch"}
                     />
-                    <Button text={'Crear Pedido'} onClick={()=> navigate('/admin/')} fill= {false} />
+                    <Button text={'Crear Pedido'} onClick={()=> navigate('/admin/Orders/create')} fill= {false} />
                     </div>
                     {
                         loading && <p>Cargando...</p>
