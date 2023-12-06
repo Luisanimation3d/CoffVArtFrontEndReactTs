@@ -194,26 +194,31 @@ export const OrdersCreate = () => {
         console.log('el id eliminado es', id)
     }
 
-    const handleCreateOrder = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+    const handleCreateOrder = async () => {
         console.log('Entre')
       
-        // Check if all required fields are filled
         if (!selectCliente || !detalles.length) {
           alert('Debe seleccionar un cliente y agregar al menos un producto para crear un pedido');
           return;
         }
-      
-        // Prepare the request body
+        let id = detalles[0]
+        const productoItem = dataProductos?.products?.rows?.find((product: any) => product.id == id.idProducto)
+
         const requestBody = {
-          cliente: selectCliente?.value,
-          detalles: detalles.map((detalle) => ({
-            producto: detalle.producto,
-            cantidad: detalle.cantidad,
+          code: factura,
+          coustumerId: selectCliente?.value,
+          state: 'pendiente',
+          total: subTotal + iva,
+          Productdetails: detalles.map((detalle) => ({
+            orderId: detalle.id,
+            productId: detalle.idProducto,
+            quantity: detalle.cantidad,
+            value: productoItem.unitPrice,
+            subtotal: subTotal 
           })),
         };
+        console.log("esto estoy mandando" , requestBody)
       
-        // Send the POST request to the API
         try {
             const response = await fetch(`https://coffvart-backend.onrender.com/api/orders?apikey=${API_KEY}`, {
             method: 'POST',
@@ -243,6 +248,7 @@ export const OrdersCreate = () => {
           alert('Error al crear el pedido');
         }
       };
+
     return (
         <Container align={'CENTER'}>
           <Titles title={'CREAR PEDIDO'}/>
@@ -311,7 +317,7 @@ export const OrdersCreate = () => {
                     </tr>
                   </tbody>
                 </table>
-                <Button text={'Crear pedido'} onClick={() => handleCreateOrder} fill={false} type={'SUBMIT'}/>
+                <Button text={'Crear pedido'} onClick={()=>handleCreateOrder()} fill={false} type={'SUBMIT'}/>
               </div>
             </div>
           </Container>
