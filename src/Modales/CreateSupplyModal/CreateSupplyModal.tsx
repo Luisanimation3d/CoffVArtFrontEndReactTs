@@ -6,21 +6,17 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 
-export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
+export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const {data, post, error: errorRegister} = useFetch(API_URL)
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [registerForm, setRegisterForm] = useState<{
         name: string,
         amount: string,
-        stockMin: string,
-        stockMax: string,
         unitPrice: string,
         description: string,
     }>({
         name: '',
         amount: '',
-        stockMin: '',
-        stockMax: '',
         unitPrice: '',
         description: '',
     })
@@ -47,30 +43,6 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
                 amount: validateIfNumber(value) ? value : prev.amount
             })),
             size: 'medium',
-        },
-        {
-            name: 'stockMin',
-            type: 'number',
-            label: 'Stock Minimo',
-            placeholder: 'Ingrese el Stock Minimo del producto',
-            value: registerForm.stockMin,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                stockMin: validateIfNumber(value) ? value : prev.stockMin
-            })),
-            size: 'large',
-        },
-        {
-            name: 'stockMax',
-            type: 'number',
-            label: 'Stock Máximo',
-            placeholder: 'Ingrese el Stock Máximo del producto',
-            value: registerForm.stockMax,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                stockMax: validateIfNumber(value) ? value : prev.stockMax
-            })),
-            size: 'large',
         },
         {
             name: 'unitPrice',
@@ -110,12 +82,6 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
         if (registerForm.amount.length === 0) {
             errors.amount = 'La cantidad es requerida'
         }
-        if (registerForm.stockMin.length === 0) {
-            errors.stockMin = 'El stock minimo es requerido'
-        }
-        if (registerForm.stockMax.length === 0) {
-            errors.stockMax = 'El stock maximo es requerido'
-        }
         if (registerForm.unitPrice.length === 0) {
             errors.unitPrice = 'El precio unitario es requerido'
         }
@@ -136,18 +102,16 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
         const dataToSend = {
             name: registerForm.name,
             amount: registerForm.amount,
-            stockMin: registerForm.stockMin,
-            stockMax: registerForm.stockMax,
             unitPrice: registerForm.unitPrice,
             description: registerForm.description,
         }
 
-        post(`products?apikey=${API_KEY}`, dataToSend)
+        post(`supplies?apikey=${API_KEY}`, dataToSend)
     }
 
     useEffect(() => {
         if (data?.newProduct && !errorRegister) {
-            alert('Producto creado correctamente')
+            alert('Insumo creado correctamente')
             setIsModalOpen(false)
         }
     }, [data]);

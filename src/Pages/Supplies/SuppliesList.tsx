@@ -5,12 +5,15 @@ import { Container } from "../../components/Container/Container";
 import { useState, useEffect } from "react";
 import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { Button } from "../../components/Button/Button";
+import { CreateSupplyModal } from "../../Modales/CreateSupplyModal/CreateSupplyModal";
+import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { API_KEY } from "../../constantes";
 
 export const Supplies = () => {
     const [search, setSearch] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
 
@@ -40,6 +43,7 @@ export const Supplies = () => {
         dataSuppliesFiltered = dataSupplies;
     }
 
+
     const handleDelete = (row: any) => {
         del(`supplies/${row.id}?apikey=${API_KEY}`);
         setTimeout(() => {
@@ -64,7 +68,7 @@ export const Supplies = () => {
                         }}>
                     <SearchInput label={'Buscar Insumo'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'SuppliesSearch'} />
 
-                    <Button text={'Crear Insumo'} onClick={() => navigate('/admin/Supplies/create')} fill={false} />
+                    <Button text={'Crear Insumo'} onClick={() => setIsModalOpen(true)} fill={false}/>
                     </div>
                     
                     {
@@ -87,6 +91,14 @@ export const Supplies = () => {
                     />)
                     }
                 </div>
+                {
+                    isModalOpen && createPortal(
+                        <>
+                            <CreateSupplyModal setIsModalOpen={setIsModalOpen} title="Crear Insumo"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
             </Container>
         </>
     );

@@ -8,9 +8,12 @@ import { Button } from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { API_KEY } from "../../constantes";
+import { CreateProductModal } from "../../Modales/CreateProductModal/CreateProductModal";
+import { createPortal } from "react-dom";
 
 export const Products = () => {
     const [search, setSearch] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
 
@@ -66,7 +69,7 @@ export const Products = () => {
                         }}>
                     <SearchInput label={'Buscar Producto'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'ProductsSearch'} />
 
-                    <Button text={'Crear Producto'} onClick={() => navigate('/admin/Products/create')} fill={false} />
+                    <Button text={'Crear Producto'} onClick={() => setIsModalOpen(true)} fill={false}/>
                     </div>
                     
                     {
@@ -89,6 +92,14 @@ export const Products = () => {
                     />)
                     }
                 </div>
+                {
+                    isModalOpen && createPortal(
+                        <>
+                            <CreateProductModal setIsModalOpen={setIsModalOpen} title="Crear Producto"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
             </Container>
         </>
     );
