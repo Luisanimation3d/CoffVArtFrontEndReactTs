@@ -51,11 +51,10 @@ export const OrdersCreate = () => {
         }
     ]
     const handleSelectProducto = (option: SelectOption | undefined) => {
-        if (selectCliente) {
+       
             setSelectProducto(option);
-          } else {
-            alert('Debe seleccionar un cliente antes de agregar productos');
-          }
+          
+          
       };
     
       const handleSelectCliente = (option: SelectOption | undefined) => {
@@ -67,6 +66,15 @@ export const OrdersCreate = () => {
       };
 
     const fields: FormField[] = [
+      {
+          name: 'selectCoustomer',
+          placeholder: 'Cliente',
+          label: 'Select',
+          type: 'select',
+          options: clientes,
+          value: selectCliente,
+          onChange: (option) => handleSelectCliente(option),
+      },
         {
             name: 'selectProduct',
             placeholder: 'Producto',
@@ -74,15 +82,6 @@ export const OrdersCreate = () => {
             options: productos,
             value: selectProducto,
             onChange: (option) => handleSelectProducto(option),
-        },
-        {
-            name: 'selectCoustomer',
-            placeholder: 'Cliente',
-            label: 'Select',
-            type: 'select',
-            options: clientes,
-            value: selectCliente,
-            onChange: (option) => handleSelectCliente(option),
         },
         {
             name: 'quantity',
@@ -96,36 +95,76 @@ export const OrdersCreate = () => {
     ]
 
     const handleAddDetail = (e: any) => {
-        e.preventDefault();
-        console.log('Esta entrando')
-        if (!selectCliente) {
-            alert('Debe seleccionar un cliente antes de agregar productos');
-            return;
+      e.preventDefault();
+    
+      if (!selectCliente) {
+        alert('Debe seleccionar un cliente antes de agregar productos');
+        return;
+      }
+      
+      if (!selectProducto) {
+        alert('Debe seleccionar un producto antes de agregar productos');
+        return;
+      }
+    
+      if (!cantidad || parseInt(cantidad) <= 0) {
+        alert('Debe ingresar una cantidad válida antes de agregar productos');
+        return;
+      }
+    
+      const selectedProduct = dataProductos?.products?.rows?.find((product: any) => product.id === selectProducto?.value);
+      
+      // Verificar si el producto ya está en el detalle
+      const existingDetail = detalles.find(detail => detail.idProducto === selectProducto?.value);
+    
+      if (existingDetail) {
+        // Si el producto ya está en el detalle, actualiza la cantidad
+        const updatedDetalles = detalles.map(detail => {
+          if (detail.idProducto === selectProducto?.value) {
+            const updatedCantidad = parseInt(detail.cantidad) + parseInt(cantidad);
+            const updatedPrecioTotal = updatedCantidad * selectedProduct?.unitPrice;
+    
+            return {
+              ...detail,
+              cantidad: updatedCantidad,
+              precioTotal: updatedPrecioTotal,
+            };
           }
-        if(!selectProducto){
-            alert('Debe seleccionar un producto antes de agregar productos');
-            return;
-        }
-        const selectedProduct = dataProductos?.products?.rows?.find((product: any) => product.id === selectProducto?.value)
-        const totalPrice = parseInt(cantidad || '0') * selectedProduct?.unitPrice
+          return detail;
+        });
+    
+        const newSubtotal = updatedDetalles.reduce((sum, item) => sum + item.precioTotal, 0);
+        const newIva = newSubtotal * 0.08;
+    
+        setDetalles(updatedDetalles);
+        setSubTotal(newSubtotal);
+        setIva(newIva);
+        setPrecio(newSubtotal + newIva);
+      } else {
+        // Si el producto no está en el detalle, agrégalo como un nuevo elemento
+        const totalPrice = parseInt(cantidad || '0') * selectedProduct?.unitPrice;
         const newDetail = {
-            id: detalles.length +1,
-            producto: selectProducto?.label,
-            idProducto: selectProducto?.value,
-            cliente: selectCliente?.label,
-            cantidad: cantidad,
-            precioTotal: totalPrice,
-        }
-
-        const newSubtotal = subTotal + totalPrice
-        const newIva = newSubtotal * 0.08
-        setDetalles([...detalles, newDetail])
-        setSubTotal(newSubtotal)
-        setIva(newIva)
-        setPrecio(newSubtotal + newIva)
-        setNombre('')
-        setDescripcion('')
-    }
+          id: detalles.length + 1,
+          producto: selectProducto?.label,
+          idProducto: selectProducto?.value,
+          cliente: selectCliente?.label,
+          cantidad: cantidad,
+          precioTotal: totalPrice,
+        };
+    
+        const newSubtotal = subTotal + totalPrice;
+        const newIva = newSubtotal * 0.05;
+    
+        setDetalles([...detalles, newDetail]);
+        setSubTotal(newSubtotal);
+        setIva(newIva);
+        setPrecio(newSubtotal + newIva);
+      }
+    
+      setNombre('');
+      setDescripcion('');
+    };
+    
     console.log(detalles)
 
     useEffect(() => {

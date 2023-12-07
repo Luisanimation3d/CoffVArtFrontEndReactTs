@@ -27,7 +27,6 @@ export const Coustomers = () => {
         { key: 'documentType', header: 'Tipo de documento' },
         { key: 'document', header: 'Documento' },
         { key: 'phone', header: 'Teléfono' },
-        { key: 'email', header: 'Email' },
         { key: 'address', header: 'Dirección' },
         { key: 'state', header: 'Estado' }
     ];
