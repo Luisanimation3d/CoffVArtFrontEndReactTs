@@ -44,7 +44,7 @@ export const Table: FC<TableProps> = ({
             </thead>
             <tbody className={`table__body`}>
             {data.map((row, globalIndex) => (
-                <tr key={globalIndex} onClick={() => onRowClick(row)} className={`table__row`}>
+                <tr key={globalIndex} onClick={() => onRowClick(row)} className={`table__row`} data-key={row.id}>
                     {columns.map((column, index) => (
                         <td key={index} className={`table__cell--row`}>{column.key === 'id' ? globalIndex + 1 : (row[column.key])}</td>
                     ))}
