@@ -190,9 +190,64 @@ export const ShopsCreate = () => {
         setSubTotal(newSubtotal)
         setIva(newIva);
         setPrecio(newSubtotal + newIva)
+        setSelectProveedor(undefined);
         console.log('el id eliminado es', id)
     }
     
+    const handleCreateShop = async () => {
+      console.log('Entre')
+    
+      if (!selectProveedor || !detalles.length) {
+        alert('Debe seleccionar un proveedor y agregar al menos un insumo para crear un pedido');
+        return;
+      }
+      let id = detalles[0]
+      const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
+
+      const requestBody = {
+        code: factura,
+        supplierId: selectProveedor?.value,
+        state: 'pendiente',
+        total: subTotal + iva,
+        Supplydetails: detalles.map((detalle) => ({
+          shopId: detalle.id,
+          supplyId: detalle.idInsumo,
+          quantity: detalle.cantidad,
+          value: insumoItem.unitPrice,
+          subtotal: subTotal 
+        })),
+      };
+      console.log("esto estoy mandando" , requestBody)
+    
+      try {
+          const response = await fetch(`https://coffvart-backend.onrender.com/api/shops?apikey=${API_KEY}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+    
+        if (!response.ok) {
+          alert('Error al crear la compra');
+          console.error('Error al crear la compra:', response.statusText);
+          return;
+        }
+    
+        setSelectProveedor(undefined);
+        setDetalles([]);
+        setSubTotal(0);
+        setIva(0);
+        setPrecio(0);
+        setInsumos([]);
+        setProveedores([]);
+    
+        alert('Compra creada con éxito');
+      } catch (error) {
+        console.error('Error al crear la compra:', error);
+        alert('Error al crear la compra');
+      }
+    };
     
     
     
@@ -264,7 +319,7 @@ export const ShopsCreate = () => {
                     </tr>
                   </tbody>
                 </table>
-                <Button text={'Crear Compra'} onClick={() => null} fill={false} />
+                <Button text={'Crear Compra'} onClick={()=>handleCreateShop()} fill={false} type={'SUBMIT'} />
               </div>
             </div>
           </Container>
