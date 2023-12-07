@@ -67,6 +67,9 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
         },
     ]
 
+
+
+
     const validateIfNumber = (value: string) => {
         if (value.length === 0) return true
         const regex = new RegExp('^[0-9]+$')
