@@ -1,5 +1,5 @@
 import {SideBarMenuItemProps} from "../types/MenuBar";
-import {FiHexagon, FiHome,FiUser, FiBriefcase, FiTruck, FiPackage, FiFeather, FiCoffee,FiCheck} from "react-icons/fi";
+import {FiHexagon, FiHome,FiUser, FiBriefcase, FiTruck, FiPackage, FiFeather, FiCoffee,FiCheck, FiShoppingBag, FiShoppingCart, FiInbox} from "react-icons/fi";
 
 import {useAuth} from "../context/AuthContext.tsx";
 
@@ -26,17 +26,17 @@ export const useRutasAdmin = () => {
         {
             title: 'Ventas',
             link: 'Sales',
-            icon: <FiHexagon/>
+            icon: <FiShoppingBag/>
         },
         {
             title: 'Compras',
             link: 'Shops',
-            icon: <FiHexagon/>
+            icon: <FiShoppingCart/>
         },
         {
             title: 'Pedidos',
             link: 'Orders',
-            icon: <FiHexagon/>
+            icon: <FiInbox/>
         },
         {
             title: 'Insumos',

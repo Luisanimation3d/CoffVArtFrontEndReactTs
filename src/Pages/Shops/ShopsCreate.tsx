@@ -104,7 +104,7 @@ export const ShopsCreate = () => {
         },
         {
           name: 'date',
-          type: 'text',
+          type: 'date',
           label: 'Fecha',
           placeholder: 'Fecha',
           size: 'large',
@@ -113,10 +113,10 @@ export const ShopsCreate = () => {
         },
         {
           name: 'description',
-          type: 'text',
+          type: 'textarea',
           label: 'Descripción',
           placeholder: 'Descripción',
-          size: 'large',
+          size: 5,
           value: description,
           onChange: setDescription
       }
@@ -231,7 +231,7 @@ export const ShopsCreate = () => {
         description: description,
         supplierId: selectProveedor?.value,
         total: subTotal + iva,
-        shopdetails: detalles.map((detalle) => ({
+        Suppliesdetails: detalles.map((detalle) => ({
           shopId: detalle.id,
           supplyId: detalle.idInsumo,
           quantity: parseInt(detalle.cantidad),
