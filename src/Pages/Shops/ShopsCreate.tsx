@@ -23,8 +23,9 @@ export const ShopsCreate = () => {
     const [selectInsumo, setSelectInsumo] = useState<SelectOption | undefined>(undefined);
     const [nombre, setNombre] = useState('');
     const [invoice, setInvoice] = useState('');
+    const [date, setDate] = useState(''); 
     const [cantidad, setCantidad] = useState('');
-    const [descripcion, setDescripcion] = useState('');
+    const [description, setDescription] = useState('');
     const [subTotal, setSubTotal] = useState(0);
     const [iva, setIva] = useState(0);
     const [precio, setPrecio] = useState(0);
@@ -39,7 +40,7 @@ export const ShopsCreate = () => {
             header: 'ID',
         },
         {
-            key: 'factura',
+            key: 'invoice',
             header: 'Factura',
         },
         {
@@ -51,9 +52,11 @@ export const ShopsCreate = () => {
             header: 'Proveedor',
         },
         {
-            key: 'cantidad',
-            header: 'Cantidad',
-        }
+          key: 'cantidad',
+          header: 'Cantidad',
+        },
+       
+        
     ]
     const handleSelectInsumo = (option: SelectOption | undefined) => {
         setSelectInsumo(option);
@@ -98,7 +101,25 @@ export const ShopsCreate = () => {
             size: 'large',
             value: cantidad,
             onChange: setCantidad
-        }
+        },
+        {
+          name: 'date',
+          type: 'text',
+          label: 'Fecha',
+          placeholder: 'Fecha',
+          size: 'large',
+          value: date,
+          onChange: setDate
+        },
+        {
+          name: 'description',
+          type: 'text',
+          label: 'Descripción',
+          placeholder: 'Descripción',
+          size: 'large',
+          value: description,
+          onChange: setDescription
+      }
     ]
 
     const handleAddDetail = (e: any) => {
@@ -110,7 +131,7 @@ export const ShopsCreate = () => {
         const totalPrice = parseInt(cantidad || '0') * selectedSupply?.unitPrice
         const newDetail = {
             id: detalles.length +1,
-            factura: invoice,
+            invoice: invoice,
             insumo: selectInsumo?.label,
             idInsumo: selectInsumo?.value,
             proveedor: selectProveedor?.label,
@@ -123,8 +144,7 @@ export const ShopsCreate = () => {
         setSubTotal(newSubtotal)
         setIva(newIva)
         setPrecio(newSubtotal + newIva)
-        setNombre('')
-        setDescripcion('')
+
     }
     console.log(detalles)
 
@@ -205,14 +225,16 @@ export const ShopsCreate = () => {
       const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
 
       const requestBody = {
-        code: factura,
+        invoice: invoice,
+        state: true,
+        date: date,
+        description: description,
         supplierId: selectProveedor?.value,
-        state: 'pendiente',
         total: subTotal + iva,
-        Supplydetails: detalles.map((detalle) => ({
+        shopdetails: detalles.map((detalle) => ({
           shopId: detalle.id,
           supplyId: detalle.idInsumo,
-          quantity: detalle.cantidad,
+          quantity: parseInt(detalle.cantidad),
           value: insumoItem.unitPrice,
           subtotal: subTotal 
         })),
@@ -234,6 +256,7 @@ export const ShopsCreate = () => {
           return;
         }
     
+        setInvoice('');
         setSelectProveedor(undefined);
         setDetalles([]);
         setSubTotal(0);
@@ -241,6 +264,8 @@ export const ShopsCreate = () => {
         setPrecio(0);
         setInsumos([]);
         setProveedores([]);
+        setDate('');
+        setDescription('');
     
         alert('Compra creada con éxito');
       } catch (error) {
