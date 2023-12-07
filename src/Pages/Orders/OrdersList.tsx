@@ -10,10 +10,14 @@ import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { API_KEY } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
+import { EditOrdersModal } from "./OrdersEdit.tsx";
 
 export const Orders = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+    const [idEdit, setidEdit] = useState(0);
+
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate()
 
@@ -124,7 +128,10 @@ console.log(data)
                                 data={dataOrdersFiltered}
                                 onRowClick={getOrderDetails}
                                 editableAction={{
-                                    onClick: (row) => navigate(`/admin/Orders/edit/${row.id}`),
+                                    onClick: (value) => {
+                                        setidEdit(value.id)
+                                        setIsModalOpenEdit(true)
+                                    },
                                 }}
                                 deleteAction={{
                                     onClick: handleDelete,
@@ -133,6 +140,15 @@ console.log(data)
                         )
                     }
                 </div>
+                {
+                    isModalOpenEdit && createPortal(
+                        <>
+                            <EditOrdersModal  id={idEdit} setIsModalOpen={setIsModalOpenEdit} title="Editar Orden"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
+
             </Container>
             {
                 isModalOpen && createPortal(
