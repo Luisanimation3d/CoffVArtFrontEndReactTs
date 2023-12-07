@@ -161,7 +161,7 @@ console.log(data)
                                     },
                                     {
                                         key: "total",
-                                        header: "Total",
+                                        header: "Subtotal",
                                         // render: (row) => (row.quantity !== undefined && row.value !== undefined) ? row.quantity * row.value : 'N/A',
                                     },
                                     // You can add more columns as needed
