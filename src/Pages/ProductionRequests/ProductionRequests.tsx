@@ -23,17 +23,26 @@ export const ProductionRequests = () => {
             header:'Número de Solicitud',
         },
         {
-            key: 'dateOfDispatch',
-            header: 'Fecha de Envio',
+            key: 'supplieId',
+            header: 'Insumo',
         },
         {
             key: 'quantity',
             header: 'Cantidad',
         },
         {
-            key: 'process',
-            header: 'Proceso',
+            key: 'companyId',
+            header: 'Compañia',
         },
+        {
+            key: 'dateOfDispatch',
+            header: 'Fecha de Envio',
+        },
+        
+        {
+            key: 'processId',
+            header: 'Proceso',
+        },    
     ]
 
     const dataProductionRequests= data?.ProductionRequests?.rows|| [];
@@ -56,7 +65,7 @@ export const ProductionRequests = () => {
         }, 500);
     };
 
-
+    
     return(
         <>
         <Container align={'CENTER'} justify={'TOP'}>

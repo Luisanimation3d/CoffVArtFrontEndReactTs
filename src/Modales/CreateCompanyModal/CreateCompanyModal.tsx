@@ -109,7 +109,7 @@ export const CompanysCreateModal = ({setIsModalOpen, title = 'Crear Compañia'}:
         const dataToSend = {
             name: registerForm.name,
             nit: registerForm.nit,
-            coffeType: registerForm.email,
+            email: registerForm.email,
             address: registerForm.address,
             phone: registerForm.phone
         }
