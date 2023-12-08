@@ -8,7 +8,9 @@ export const SimpleLayout = () => {
     return (
         <div className={styles.fullContainer}>
             <header className={styles.header}>
-                <img src={logoBurdeo} alt="Logo Burdeo" onClick={()=> navigate('/home')}/>
+                <img src={logoBurdeo} alt="Logo Burdeo" style={{
+                    cursor: 'pointer'
+                }} onClick={()=> navigate('/home')}/>
             </header>
             <main className={styles.main}>
                 <Outlet/>

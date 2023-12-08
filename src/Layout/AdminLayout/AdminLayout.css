@@ -15,3 +15,29 @@
     padding: 1rem;
     transition: all .5s ease-in-out;
 }
+
+.adminLayout__link--toHome{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #9F212F;
+    font-size: 1.5rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    transition: all .5s ease-in-out;
+}
+
+.adminLayout__link--toHome:after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #9F212F;
+    transition: width .3s;
+}
+
+.adminLayout__link--toHome:hover:after {
+    width: 100%;
+}

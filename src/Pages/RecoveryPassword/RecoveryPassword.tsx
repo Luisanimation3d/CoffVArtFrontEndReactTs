@@ -12,6 +12,7 @@ import {useParams} from "react-router-dom";
 
 export const SendEmail = () => {
     const {data, error: errorPost, post} =useFetch(API_URL)
+    // const {data, error: errorPost, post} = useFetch('http://localhost:3000/api/')
     const [email, setEmail] = useState('');
     const [error, setError] = useState({});
     const formFields: FormField[] = [

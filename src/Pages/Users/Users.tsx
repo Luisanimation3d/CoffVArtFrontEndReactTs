@@ -14,14 +14,19 @@ import {CreateUserModal} from "../../Modales/CreateUserModal/CreateUserModal.tsx
 
 export const User = () => {
     const [search, setSearch] = useState<string>('')
-    const {data, loading, error, get} = useFetch(API_URL)
-    const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)
+    // const {data, loading, error, get} = useFetch(API_URL)
+    // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)
+    const {data, loading, error, get} = useFetch('http://localhost:3000/api/')
     const [dataUsersModify, setDataUsersModify] = useState<any>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const navigate = useNavigate()
+    // useEffect(() => {
+    //     get(`users?apikey=${API_KEY}`)
+    //     getRoles(`roles?apikey=${API_KEY}`)
+    // }, []);
+
     useEffect(() => {
         get(`users?apikey=${API_KEY}`)
-        getRoles(`roles?apikey=${API_KEY}`)
     }, []);
 
     const columnsUsers: Column[] = [
@@ -55,26 +60,39 @@ export const User = () => {
         },
     ]
 
+    // useEffect(() => {
+    //     if (dataRoles?.roles?.rows && data?.users?.rows) {
+    //         const usersWithRol = data?.users?.rows?.map((user: any) => {
+    //             const rol = dataRoles?.roles?.rows?.find((rol: any) => rol.id == user.roleId)
+    //             return {
+    //                 ...user,
+    //                 rol: rol?.name,
+    //             }
+    //         })
+    //         setDataUsersModify({
+    //             ...data,
+    //             users: {
+    //                 ...data.users,
+    //                 rows: usersWithRol,
+    //             }
+    //         })
+    //     }
+    // }, [data, dataRoles])
+
     useEffect(() => {
-        if (dataRoles?.roles?.rows && data?.users?.rows) {
-            const usersWithRol = data?.users?.rows?.map((user: any) => {
-                const rol = dataRoles?.roles?.rows?.find((rol: any) => rol.id == user.roleId)
+        if(data?.users?.rows){
+            const newUsersData = data?.users?.rows.map((user: any) => {
                 return {
                     ...user,
-                    rol: rol?.name,
+                    rol: user?.role?.name
                 }
             })
-            setDataUsersModify({
-                ...data,
-                users: {
-                    ...data.users,
-                    rows: usersWithRol,
-                }
-            })
-        }
-    }, [data, dataRoles])
 
-    const dataUsers = dataUsersModify?.users?.rows || []
+            setDataUsersModify(newUsersData)
+        }
+    }, [data]);
+
+    const dataUsers = dataUsersModify || []
 
     let dataUsersFiltered: any[];
 

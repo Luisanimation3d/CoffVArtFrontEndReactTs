@@ -43,6 +43,7 @@ import {ResetPassword, SendEmail} from "./Pages/RecoveryPassword/RecoveryPasswor
 import {Login} from "./Pages/Login/Login.tsx";
 import {Register} from "./Pages/Register/Register.tsx";
 import {User} from "./Pages/Users/Users.tsx";
+import {Cart} from "./Pages/Cart/Cart.tsx";
 
 export default function App() {
     return (
@@ -100,6 +101,7 @@ export default function App() {
                                 <Route path={'reset-password/:token'} element={<ResetPassword/>}/>
                                 <Route path={'login'} element={<Login/>}/>
                                 <Route path={'register'} element={<Register/>}/>
+                                <Route path={'cart'} element={<Cart/>}/>
                             </Route>
                         </Routes>
                     </HashRouter>
