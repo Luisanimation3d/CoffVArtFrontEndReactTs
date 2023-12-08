@@ -8,9 +8,12 @@ import { Button } from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import { API_KEY } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
+import { createPortal } from "react-dom";
+import { CompanysCreateModal } from "../../Modales/CreateCompanyModal/CreateCompanyModal.tsx";
 
 export const Companys = () => {
     const [search, setSearch] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const {data,loading,error,get,del} = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate();
 
@@ -79,7 +82,7 @@ export const Companys = () => {
 
                     }}>
                         <SearchInput label={'Buscar Compañias'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'companySearch'} />
-                        <Button text={'Crear Compañia'} onClick={() => navigate('/admin/Companys/create')} fill={false}/>
+                        <Button text={'Crear Compañia'} onClick={() => setIsModalOpen(true)} fill={false}/>
                     </div>
                     
                     {
@@ -105,7 +108,15 @@ export const Companys = () => {
                 />)
                  }
             </div>
+            {
+                    isModalOpen && createPortal(
+                        <>
+                            <CompanysCreateModal setIsModalOpen={setIsModalOpen} title="Crear compañia"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
         </Container>
     </>
-    )
-}
+    );
+};

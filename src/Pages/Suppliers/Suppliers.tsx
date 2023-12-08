@@ -8,9 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
 import { API_KEY } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
+import { SuppliersCreateModal } from "../../Modales/CreateSupplierModal/CreateSupplierModal.tsx";
+import { createPortal } from "react-dom";
 
 export const Suppliers = () => {
     const [search, setSearch] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
     useEffect(() => {
@@ -53,7 +56,7 @@ export const Suppliers = () => {
     
     const dataSuppliers = data?.suppliers?.rows || [];
 
-    let dataSuppliersFiltered: any;
+    let dataSuppliersFiltered: any[];
 
     if(search.length > 0){
         dataSuppliersFiltered = dataSuppliers.filter((supplier:any )=>
@@ -89,7 +92,7 @@ export const Suppliers = () => {
                         marginBottom: '1rem',
 
                     }}><SearchInput label={'Buscar Proveedores'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'supplierSearch'} />
-                        <Button text={'Crear Proveedor'} onClick={() => navigate('/admin/Suppliers/create')} fill={false}/>
+                        <Button text={'Crear Proveedor'} onClick={() => setIsModalOpen(true)} fill={false}/>
                     </div>
                     {
                         loading && <p>Cargando...</p>
@@ -111,6 +114,14 @@ export const Suppliers = () => {
                     />)
                     }
                 </div>
+                {
+                    isModalOpen && createPortal(
+                        <>
+                            <SuppliersCreateModal setIsModalOpen={setIsModalOpen} title="Crear Proveedor"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
             </Container>
         </>
     )
