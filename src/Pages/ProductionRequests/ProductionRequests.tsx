@@ -7,11 +7,12 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 
 export const ProductionRequests = () => {
     const [search, setSearch] = useState<string>('');
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { data, loading, error, get, del } = useFetch('http://localhost:3000/api/');
+    const [dataProductionRequestsModify, setDataProductionRequestsModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {
         get(`productionRequests?apikey=${API_KEY}`);
@@ -23,7 +24,7 @@ export const ProductionRequests = () => {
             header:'Número de Solicitud',
         },
         {
-            key: 'supplieId',
+            key: 'supplie',
             header: 'Insumo',
         },
         {
@@ -31,7 +32,7 @@ export const ProductionRequests = () => {
             header: 'Cantidad',
         },
         {
-            key: 'companyId',
+            key: 'company',
             header: 'Compañia',
         },
         {
@@ -40,16 +41,32 @@ export const ProductionRequests = () => {
         },
         
         {
-            key: 'processId',
+            key: 'process',
             header: 'Proceso',
         },    
     ]
+    useEffect(() => {
+        if(data?.productionRequests?.rows){
+            const newProductionRequestsData = data?.productionRequests?.rows.map((productionRequest: any) => {
+                return {
+                    ...productionRequest,
+                    process: productionRequest?.process?.name,
+                    supplie: productionRequest?.supply?.name,
+                    company: productionRequest?.company?.name
+                }
+            })
 
-    const dataProductionRequests= data?.ProductionRequests?.rows|| [];
+            setDataProductionRequestsModify(newProductionRequestsData)
+        }
+    }, [data]);
+
+    const dataProductionRequests = dataProductionRequestsModify || []
+
+    //const dataProductionRequests= data?.ProductionRequests?.rows|| [];
     let dataProductionRequestsFiltered: any;
 
     if(search.length > 0){
-        dataProductionRequestsFiltered = dataProductionRequests.filter((productionRequest:any )=>  
+        dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>  
            productionRequest.requestNumber.toLowerCase().includes(search.toLowerCase()) 
         || productionRequest.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
         || productionRequest.quantity
