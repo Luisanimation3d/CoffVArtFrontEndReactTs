@@ -15,6 +15,7 @@ export const Products = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const [dataToShow, setDataToShow] = useState<any[]>([])
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -32,7 +33,8 @@ export const Products = () => {
         { key: 'state', header: 'Estado' }
     ];
     
-    const dataProducts = data?.products?.rows || [];
+    // const dataProducts = data?.products?.rows || [];
+    const dataProducts = dataToShow || [];
     let dataProductsFiltered: any[];
     
 
@@ -51,6 +53,17 @@ export const Products = () => {
             get(`products?apikey=${API_KEY}`);
         }, 500);
     };
+
+    useEffect(()=>{
+        if(data?.products?.rows){
+            const newData = data?.products?.rows?.map((item: any)=>({
+                ...item,
+                state: <Button text={item.state ? 'Acivo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(value: any) => console.log(value.target?.parentNode.parentNode.dataset.ke, 'Aqui andamos imprimiendo')}/>
+            }))
+
+            setDataToShow(newData)
+        }
+    }, [data])
 
     return (
         <>
