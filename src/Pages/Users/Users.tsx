@@ -16,7 +16,7 @@ export const User = () => {
     const [search, setSearch] = useState<string>('')
     // const {data, loading, error, get} = useFetch(API_URL)
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)
-    const {data, loading, error, get} = useFetch('http://localhost:3000/api/')
+    const {data, loading, error, get} = useFetch(API_URL)
     const [dataUsersModify, setDataUsersModify] = useState<any>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const navigate = useNavigate()
