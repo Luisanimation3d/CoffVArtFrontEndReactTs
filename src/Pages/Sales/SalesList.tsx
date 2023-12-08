@@ -8,13 +8,14 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Sales = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
+    const { data, loading, error, get, del } = useFetch(API_URL)
+    const [dataSalesModify, setDataSalesModify] = useState<any>([])
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,13 +40,26 @@ export const Sales = () => {
             header: "Total",
         },
     ];
-    const dataSales = data?.sales?.rows || [];
+    useEffect(() => {
+        if(data?.sales?.rows){
+            const newSaleData = data?.sales?.rows.map((sale: any) => {
+                return {
+                    ...sale,
+                    coustumerId: sale?.coustumer?.name
+                }
+            })
+
+            setDataSalesModify(newSaleData)
+        }
+    }, [data]);
+
+    const dataSales = dataSalesModify || [];
     let dataSalesFiltered: any;
 
     if (search.length > 0) {
-        dataSalesFiltered = dataSales.filter((sales: any) =>
+        dataSalesFiltered = dataSalesModify.filter((sales: any) =>
                 sales.invoice.toLowerCase().includes(search.toLowerCase()) ||
-                sales.estado.toLowerCase().includes(search.toLowerCase())
+                sales.coustumerId.toLowerCase().includes(search.toLowerCase()) 
         );
     } else {
         dataSalesFiltered = dataSales;

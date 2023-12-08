@@ -8,7 +8,7 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { EditOrdersModal } from "./OrdersEdit.tsx";
 
@@ -17,14 +17,15 @@ export const Orders = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
     const [idEdit, setidEdit] = useState(0);
+    const [dataOrdersModify, setDataOrdersModify] = useState<any>([])
 
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
+
+    const { data, loading, error, get, del } = useFetch('http://localhost:3000/api/')
     const navigate = useNavigate()
 
     useEffect(() => {
         get(`orders?apikey=${API_KEY}`);
     }, []);
-
 
     const columnsOrders: Column[] = [
         { key: 'id', header: 'ID' },
@@ -33,8 +34,21 @@ export const Orders = () => {
         { key: 'customerId', header: 'Cliente' },
         { key: 'state', header: 'Estado' },
     ];
+
+    useEffect(() => {
+        if(data?.orders?.rows){
+            const newCostumerData = data?.orders?.rows.map((order: any) => {
+                return {
+                    ...order,
+                    customerId: order?.coustumer?.name
+                }
+            })
+
+            setDataOrdersModify(newCostumerData)
+        }
+    }, [data]);
     
-    const dataOrders = data?.orders?.rows || [];
+    const dataOrders = dataOrdersModify || [];
     let dataOrdersFiltered: any[];
 
     /* const dataOrders = [
@@ -56,7 +70,7 @@ export const Orders = () => {
 
 
     if (search.length > 0) {
-        dataOrdersFiltered = dataOrders.filter((order:any) =>
+        dataOrdersFiltered = dataOrdersModify.filter((order:any) =>
                 order.code.toLowerCase().includes(search) ||
                 order.state.toLowerCase().includes(search.toLowerCase())
         );
