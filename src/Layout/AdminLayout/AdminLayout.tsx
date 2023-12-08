@@ -1,4 +1,4 @@
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import {SideBarMenu} from "../../components/SideBarMenu/SideBarMenu";
 import {useRutasAdmin} from "../../Routes/AdminRoutes";
 
@@ -9,6 +9,7 @@ export const AdminLayout = () => {
         <>
             <SideBarMenu items={AdminRoutes}/>
             <div className="adminLayout__mainContent">
+                <Link to={'/home'} className={'adminLayout__link--toHome'}>Ir a Inicio</Link>
                 <Outlet/>
             </div>
         </>
