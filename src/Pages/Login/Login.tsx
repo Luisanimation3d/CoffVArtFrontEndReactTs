@@ -88,7 +88,7 @@ export const Login = () => {
         if(data?.token) {
             login(null, data.token);
             alert('Login exitoso');
-            // showModal(false);
+            navigate('/admin/my-profile');
         }
     }, [data])
 

@@ -72,7 +72,7 @@ export const MiniCart = ({setShowMiniCart}: { setShowMiniCart: (showMiniCart: bo
 							</span>
                             <Button
                                 text={'Finalizar compra'}
-                                onClick={() => navigate('/cart')}
+                                onClick={() => navigate('/user/cart')}
                                 fill={false}
                                 autosize={false}
                             />
