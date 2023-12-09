@@ -11,7 +11,7 @@ import { API_KEY, API_URL } from "../../constantes.ts";
 
 export const ProductionRequests = () => {
     const [search, setSearch] = useState<string>('');
-    const { data, loading, error, get, del } = useFetch('http://localhost:3000/api/');
+    const { data, loading, error, get, del } = useFetch(API_URL);
     const [dataProductionRequestsModify, setDataProductionRequestsModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {
