@@ -46,8 +46,9 @@ export const ProductionRequests = () => {
         },    
     ]
     useEffect(() => {
-        if(data?.productionRequests?.rows){
-            const newProductionRequestsData = data?.productionRequests?.rows.map((productionRequest: any) => {
+        if(data?.ProductionRequests?.rows){
+            console.log('Entra')
+            const newProductionRequestsData = data?.ProductionRequests?.rows.map((productionRequest: any) => {
                 return {
                     ...productionRequest,
                     process: productionRequest?.process?.name,
