@@ -136,3 +136,5 @@ export const CompanysEdit = () => {
         />
     );
 };
+
+export default CompanysEdit;

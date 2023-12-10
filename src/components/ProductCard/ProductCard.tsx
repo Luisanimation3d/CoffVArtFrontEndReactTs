@@ -30,7 +30,6 @@ interface ProductCardProps {
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
     const { addToCart } = useCart();
     function handleAddToCart() {
-        console.log('add to cart')
         addToCart({ ...product, quantity: 1 });
         const buttonCart = document.querySelector(
             '#cartButton'

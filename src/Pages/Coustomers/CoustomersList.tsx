@@ -101,3 +101,5 @@ export const Coustomers = () => {
         </>
     );
 };
+
+export default Coustomers;

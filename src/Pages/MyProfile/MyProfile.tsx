@@ -40,3 +40,5 @@ export const MyProfile = () => {
         </Container>
     )
 }
+
+export default MyProfile;

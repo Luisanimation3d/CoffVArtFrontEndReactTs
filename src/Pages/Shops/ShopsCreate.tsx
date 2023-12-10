@@ -1,4 +1,3 @@
-
 import {useEffect, useState} from "react";
 
 import {Container} from "../../components/Container/Container.tsx";
@@ -12,8 +11,18 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY} from "../../constantes.ts";
 
 export const ShopsCreate = () => {
-    const {data: dataInsumos, loading: loadingInsumos, error: errorInsumos, get: getInsumos} = useFetch('https://coffvart-backend.onrender.com/api/')
-    const {data: dataProveedores, loading: loadingProveedores, error: errorProveedores, get: getProveedores} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {
+        data: dataInsumos,
+        loading: loadingInsumos,
+        error: errorInsumos,
+        get: getInsumos
+    } = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {
+        data: dataProveedores,
+        loading: loadingProveedores,
+        error: errorProveedores,
+        get: getProveedores
+    } = useFetch('https://coffvart-backend.onrender.com/api/')
     // const { POST } = useFetch ('https://coffvart-backend.onrender.com/api/')
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
@@ -23,7 +32,7 @@ export const ShopsCreate = () => {
     const [selectInsumo, setSelectInsumo] = useState<SelectOption | undefined>(undefined);
     const [nombre, setNombre] = useState('');
     const [invoice, setInvoice] = useState('');
-    const [date, setDate] = useState(''); 
+    const [date, setDate] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [description, setDescription] = useState('');
     const [subTotal, setSubTotal] = useState(0);
@@ -32,7 +41,7 @@ export const ShopsCreate = () => {
     const [options, setOptions] = useState<SelectOption[]>([]);
     const [insumos, setInsumos] = useState<SelectOption[]>([]);
     const [proveedores, setProveedores] = useState<SelectOption[]>([]);
-   
+
 
     const headers: Column[] = [
         {
@@ -52,19 +61,19 @@ export const ShopsCreate = () => {
             header: 'Proveedor',
         },
         {
-          key: 'cantidad',
-          header: 'Cantidad',
+            key: 'cantidad',
+            header: 'Cantidad',
         },
-       
-        
+
+
     ]
     const handleSelectInsumo = (option: SelectOption | undefined) => {
         setSelectInsumo(option);
-      };
-    
-      const handleSelectProveedor = (option: SelectOption | undefined) => {
+    };
+
+    const handleSelectProveedor = (option: SelectOption | undefined) => {
         setSelectProveedor(option);
-      };
+    };
 
     const fields: FormField[] = [
         {
@@ -103,23 +112,23 @@ export const ShopsCreate = () => {
             onChange: setCantidad
         },
         {
-          name: 'date',
-          type: 'date',
-          label: 'Fecha',
-          placeholder: 'Fecha',
-          size: 'large',
-          value: date,
-          onChange: setDate
+            name: 'date',
+            type: 'date',
+            label: 'Fecha',
+            placeholder: 'Fecha',
+            size: 'large',
+            value: date,
+            onChange: setDate
         },
         {
-          name: 'description',
-          type: 'textarea',
-          label: 'Descripción',
-          placeholder: 'Descripción',
-          size: 5,
-          value: description,
-          onChange: setDescription
-      }
+            name: 'description',
+            type: 'textarea',
+            label: 'Descripción',
+            placeholder: 'Descripción',
+            size: 5,
+            value: description,
+            onChange: setDescription
+        }
     ]
 
     const handleAddDetail = (e: any) => {
@@ -130,7 +139,7 @@ export const ShopsCreate = () => {
         const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectInsumo?.value)
         const totalPrice = parseInt(cantidad || '0') * selectedSupply?.unitPrice
         const newDetail = {
-            id: detalles.length +1,
+            id: detalles.length + 1,
             invoice: invoice,
             insumo: selectInsumo?.label,
             idInsumo: selectInsumo?.value,
@@ -167,7 +176,7 @@ export const ShopsCreate = () => {
     }, []);
 
     useEffect(() => {
-        if(!loadingInsumos && !errorInsumos) {
+        if (!loadingInsumos && !errorInsumos) {
             console.log(dataInsumos?.supplies?.rows, 'Aqui estan los Insumos')
             const optionToSelectInsumos: SelectOption[] = dataInsumos?.supplies?.rows?.map((insumos: any) => ({
                 value: insumos.id,
@@ -179,16 +188,16 @@ export const ShopsCreate = () => {
     }, [dataInsumos]);
 
     useEffect(() => {
-        if(!loadingProveedores && !errorProveedores) {
+        if (!loadingProveedores && !errorProveedores) {
             console.log(dataProveedores?.suppliers?.rows)
             const optionToSelectProveedores: SelectOption[] = dataProveedores?.suppliers?.rows?.map(
                 (proveedor: any) => ({
-                  value: proveedor.id,
-                  label: proveedor.name,
+                    value: proveedor.id,
+                    label: proveedor.name,
                 })
-              );
-              setProveedores(optionToSelectProveedores);
-        }    
+            );
+            setProveedores(optionToSelectProveedores);
+        }
     }, [dataProveedores])
 
     //crea una funcion que elimine el pedido agregado al detalle y se reste en valor total del pedido segun el que se borre
@@ -197,14 +206,14 @@ export const ShopsCreate = () => {
         console.log(id, 'Estoy aqui')
         const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
 
-        const NuevoDetalle= detalles.filter(detalle=> detalle.id !== id.id);
-        const newSubtotal= NuevoDetalle?.reduce((sum, item) => {
-            return parseFloat(sum)+ (parseFloat(insumoItem.unitPrice) * parseInt(item.cantidad))
+        const NuevoDetalle = detalles.filter(detalle => detalle.id !== id.id);
+        const newSubtotal = NuevoDetalle?.reduce((sum, item) => {
+            return parseFloat(sum) + (parseFloat(insumoItem.unitPrice) * parseInt(item.cantidad))
         }, 0)
 
         console.log(newSubtotal, 'nuevo Subtotal')
 
-        const newIva= newSubtotal * 0.08; 
+        const newIva = newSubtotal * 0.08;
 
         setDetalles(NuevoDetalle)
         setSubTotal(newSubtotal)
@@ -213,87 +222,87 @@ export const ShopsCreate = () => {
         setSelectProveedor(undefined);
         console.log('el id eliminado es', id)
     }
-    
-    const handleCreateShop = async () => {
-      console.log('Entre')
-    
-      if (!selectProveedor || !detalles.length) {
-        alert('Debe seleccionar un proveedor y agregar al menos un insumo para crear un pedido');
-        return;
-      }
-      let id = detalles[0]
-      const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
 
-      const requestBody = {
-        invoice: invoice,
-        state: true,
-        date: date,
-        description: description,
-        supplierId: selectProveedor?.value,
-        total: subTotal + iva,
-        Suppliesdetails: detalles.map((detalle) => ({
-          shopId: detalle.id,
-          supplyId: detalle.idInsumo,
-          quantity: parseInt(detalle.cantidad),
-          value: insumoItem.unitPrice,
-          subtotal: subTotal 
-        })),
-      };
-      console.log("esto estoy mandando" , requestBody)
-    
-      try {
-          const response = await fetch(`https://coffvart-backend.onrender.com/api/shops?apikey=${API_KEY}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(requestBody),
-        });
-    
-        if (!response.ok) {
-          alert('Error al crear la compra');
-          console.error('Error al crear la compra:', response.statusText);
-          return;
+    const handleCreateShop = async () => {
+        console.log('Entre')
+
+        if (!selectProveedor || !detalles.length) {
+            alert('Debe seleccionar un proveedor y agregar al menos un insumo para crear un pedido');
+            return;
         }
-    
-        setInvoice('');
-        setSelectProveedor(undefined);
-        setDetalles([]);
-        setSubTotal(0);
-        setIva(0);
-        setPrecio(0);
-        setInsumos([]);
-        setProveedores([]);
-        setDate('');
-        setDescription('');
-    
-        alert('Compra creada con éxito');
-      } catch (error) {
-        console.error('Error al crear la compra:', error);
-        alert('Error al crear la compra');
-      }
+        let id = detalles[0]
+        const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
+
+        const requestBody = {
+            invoice: invoice,
+            state: true,
+            date: date,
+            description: description,
+            supplierId: selectProveedor?.value,
+            total: subTotal + iva,
+            Suppliesdetails: detalles.map((detalle) => ({
+                shopId: detalle.id,
+                supplyId: detalle.idInsumo,
+                quantity: parseInt(detalle.cantidad),
+                value: insumoItem.unitPrice,
+                subtotal: subTotal
+            })),
+        };
+        console.log("esto estoy mandando", requestBody)
+
+        try {
+            const response = await fetch(`https://coffvart-backend.onrender.com/api/shops?apikey=${API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                alert('Error al crear la compra');
+                console.error('Error al crear la compra:', response.statusText);
+                return;
+            }
+
+            setInvoice('');
+            setSelectProveedor(undefined);
+            setDetalles([]);
+            setSubTotal(0);
+            setIva(0);
+            setPrecio(0);
+            setInsumos([]);
+            setProveedores([]);
+            setDate('');
+            setDescription('');
+
+            alert('Compra creada con éxito');
+        } catch (error) {
+            console.error('Error al crear la compra:', error);
+            alert('Error al crear la compra');
+        }
     };
-    
-    
-    
+
+
     return (
         <Container align={'CENTER'}>
-          <Titles title={'CREAR COMPRA'}/>
-          <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
-            <div style={{ width: '50%' }}>
-              <Titles title={`factura N°${invoice}`} level={2} transform={'UPPERCASE'}/>
-              <Form
-                fields={fields}
-                onSubmit={handleAddDetail}
-                button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false} />}
-                cancelButton={false}
-              />
-            </div>
-            <div style={{ width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-              <Titles title={'Detalle de la Compra'} level={2} transform={'UPPERCASE'}/>
-              <Table columns={headers} data={detalles} onRowClick={() => null} deleteAction={{ onClick: handleDeleteProduct }}/>
-              <style>
-                {`
+            <Titles title={'CREAR COMPRA'}/>
+            <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
+                <div style={{width: '50%'}}>
+                    <Titles title={`factura N°${invoice}`} level={2} transform={'UPPERCASE'}/>
+                    <Form
+                        fields={fields}
+                        onSubmit={handleAddDetail}
+                        button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false}/>}
+                        cancelButton={false}
+                    />
+                </div>
+                <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+                    <Titles title={'Detalle de la Compra'} level={2} transform={'UPPERCASE'}/>
+                    <Table columns={headers} data={detalles} onRowClick={() => null}
+                           deleteAction={{onClick: handleDeleteProduct}}/>
+                    <style>
+                        {`
                   .info {
                     width: 100%;
                     display: flex;
@@ -320,34 +329,36 @@ export const ShopsCreate = () => {
                     background-color: #f2f2f2;
                   }
                 `}
-              </style>
-              <div className="info">
-                <table className="totals-table">
-                  <thead>
-                    <tr>
-                      <th>Concepto</th>
-                      <th>Monto</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Subtotal</td>
-                      <td>{subTotal}</td>
-                    </tr>
-                    <tr>
-                      <td>IVA</td>
-                      <td>{iva}</td>
-                    </tr>
-                    <tr>
-                      <td>Total</td>
-                      <td>{precio}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <Button text={'Crear Compra'} onClick={()=>handleCreateShop()} fill={false} type={'SUBMIT'} />
-              </div>
-            </div>
-          </Container>
+                    </style>
+                    <div className="info">
+                        <table className="totals-table">
+                            <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Monto</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>{subTotal}</td>
+                            </tr>
+                            <tr>
+                                <td>IVA</td>
+                                <td>{iva}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>{precio}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <Button text={'Crear Compra'} onClick={() => handleCreateShop()} fill={false} type={'SUBMIT'}/>
+                    </div>
+                </div>
+            </Container>
         </Container>
-      );
-    }
+    );
+}
+
+export default ShopsCreate;

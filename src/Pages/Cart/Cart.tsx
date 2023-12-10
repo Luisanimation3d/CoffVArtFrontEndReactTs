@@ -4,7 +4,7 @@ import {useCart} from "../../context/CartContext.tsx";
 import {CartProductCard} from "../../components/ProductCard/ProductCard.tsx";
 import {useNavigate} from "react-router-dom";
 
-export const Cart = () => {
+export default function Cart() {
     const navigate = useNavigate()
     const {cart} = useCart()
 

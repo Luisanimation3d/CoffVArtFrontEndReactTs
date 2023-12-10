@@ -152,3 +152,5 @@ export const ProductionOrders = () => {
     </>
     )
 }
+
+export default ProductionOrders;

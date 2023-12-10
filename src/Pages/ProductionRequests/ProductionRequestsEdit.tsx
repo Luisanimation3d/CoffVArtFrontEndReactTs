@@ -51,7 +51,7 @@ export const EditProductionRequestModal = ({ id, setIsModalOpen, title = 'Cambia
 
 
     const formFieldsRegister: FormField[] = [
-        
+
         {
             name: 'requestNumber',
             type: 'text',
@@ -59,7 +59,7 @@ export const EditProductionRequestModal = ({ id, setIsModalOpen, title = 'Cambia
             value: registerForm.requestNumber,
             onChange: (value: string) => setRegisterForm({...registerForm, requestNumber: value}),
             size: 'medium',
-        }, 
+        },
         {
             name: 'processId',
             type: 'select',
@@ -79,7 +79,7 @@ export const EditProductionRequestModal = ({ id, setIsModalOpen, title = 'Cambia
         if (registerForm.processId.length === 0) {
             errors.processId = 'El estado es requerido'
         }
-        
+
         return errors
     }
 
@@ -124,3 +124,5 @@ export const EditProductionRequestModal = ({ id, setIsModalOpen, title = 'Cambia
         </ModalContainer>
     )
 }
+
+export default EditProductionRequestModal

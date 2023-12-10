@@ -120,3 +120,5 @@ export const Companys = () => {
     </>
     );
 };
+
+export default Companys;
