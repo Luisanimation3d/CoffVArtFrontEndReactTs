@@ -7,7 +7,7 @@ import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate, useParams } from "react-router-dom";
 
-export const EditProductionRequestModal = ({ id, setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
+export const EditProcessModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const options: SelectOption[] = [
         {
             value: 'enviado',

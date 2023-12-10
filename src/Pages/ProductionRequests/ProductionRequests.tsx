@@ -118,11 +118,12 @@ export const ProductionRequests = () => {
                         columns={columnsProductionRequest}
                         data={dataProductionRequestsFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: (row) => navigate(`/admin/productionRequest/edit/${row.id}`) }}
+                        editableAction={{ onClick: () => null }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }
             </div>
+            
         </Container>
     </>
     )

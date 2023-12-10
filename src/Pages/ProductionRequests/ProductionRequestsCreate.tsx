@@ -1,7 +1,7 @@
 import { FormField, SelectOption} from '../../types/Form'
 import { Button } from '../../components/Button/Button'
 import { Form } from '../../components/Form/Form';
-import { API_KEY } from '../../constantes';
+import { API_KEY, API_URL } from '../../constantes';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
@@ -11,17 +11,17 @@ export const ProductionRequestsCreate= ()=>{
         requestNumber: '',
         dateOfDispatch: '',
         quantity: '',
-        supplieId: undefined,
+        supply: undefined,
         companyId: undefined,
         process: undefined,
     })
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
     const [process, setprocess] = useState<SelectOption[]>([]);
     const [company, setcompany] = useState<SelectOption[]>([]);
-    const { post, loading, error } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { post, loading, error } = useFetch(API_URL);
     const navigate = useNavigate();
 
-    const {data:datasupplie,get:getSupplies} = useFetch('https://coffvart-backend.onrender.com/api/');
+    const {data:datasupplie,get:getSupplies} = useFetch(API_URL);
     useEffect(()=>{
         getSupplies('supplies?apikey='+API_KEY)
     },[]);
@@ -33,7 +33,7 @@ export const ProductionRequestsCreate= ()=>{
         setsupplie(supplieOptions)
     },[datasupplie]);
 
-    const {data:dataprocess,get:getProcesses} = useFetch('https://coffvart-backend.onrender.com/api/');
+    const {data:dataprocess,get:getProcesses} = useFetch(API_URL);
     useEffect(()=>{
         getProcesses('processes?apikey='+API_KEY)
     },[]);
@@ -45,7 +45,7 @@ export const ProductionRequestsCreate= ()=>{
         setprocess(processOptions)
     },[dataprocess]);
 
-    const {data:datacompany,get:getCompanys} = useFetch('https://coffvart-backend.onrender.com/api/');
+    const {data:datacompany,get:getCompanys} = useFetch(API_URL);
 
     useEffect(()=>{
         getCompanys('companys?apikey='+API_KEY)
@@ -84,16 +84,17 @@ export const ProductionRequestsCreate= ()=>{
     {
         name: 'quantity',
         type: 'number',
-        label: 'Cantidad (lb)',
+        label: 'Cantidad (Kg)',
         placeholder: '200',
         value: formValues['quantity'] !== undefined ? String(formValues['quantity']): '',
         onChange: (value) => handleInputChange('quantity', value),
         size: 'medium'
     },
     {
-        name: 'supplieId',
+        name: 'supply',
         type: 'select',
         label: 'Insumo',
+        placeholder: 'Insumo',
         options: supplie,
         value: formValues.supplieId as SelectOption|undefined,
         onChange: (value) => setFormValues(prev=> ({...prev,supplieId:value})),
@@ -103,6 +104,7 @@ export const ProductionRequestsCreate= ()=>{
         name: 'companyId',
         type: 'select',
         label: 'Compañia',
+        placeholder:'Compañia',
         options: company,
         value: formValues.companyId as SelectOption|undefined,
         onChange: (value) => setFormValues(prev=> ({...prev,companyId:value})),
@@ -112,6 +114,7 @@ export const ProductionRequestsCreate= ()=>{
         name: 'processId',
         type: 'select',
         label: 'Proceso',
+        placeholder: 'Proceso',
         options: process,
         value: formValues.processId as SelectOption|undefined,
         onChange: (value) => setFormValues(prev=> ({...prev,processId:value})),
