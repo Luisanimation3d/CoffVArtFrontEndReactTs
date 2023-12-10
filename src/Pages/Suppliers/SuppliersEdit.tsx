@@ -162,3 +162,5 @@ export const SuppliersEdit= ()=>{
         />
     );
 };
+
+export default SuppliersEdit;

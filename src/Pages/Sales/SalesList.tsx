@@ -172,3 +172,5 @@ export const Sales = () => {
         </>
     );
 };
+
+export default Sales;

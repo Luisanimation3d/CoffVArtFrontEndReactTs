@@ -1,18 +1,28 @@
-import { FormField, SelectOption} from '../../types/Form'
-import { Button } from '../../components/Button/Button'
-import { Form } from '../../components/Form/Form';
-import { API_KEY } from '../../constantes';
-import { useFetch } from '../../hooks/useFetch';
-import { useEffect, useState } from 'react';
-import { Column } from '../../types/Table';
-import { Container } from '../../components/Container/Container';
-import { Titles } from '../../components/Titles/Titles';
-import { Table } from '../../components/Table/Table';
+import {FormField, SelectOption} from '../../types/Form'
+import {Button} from '../../components/Button/Button'
+import {Form} from '../../components/Form/Form';
+import {API_KEY} from '../../constantes';
+import {useFetch} from '../../hooks/useFetch';
+import {useEffect, useState} from 'react';
+import {Column} from '../../types/Table';
+import {Container} from '../../components/Container/Container';
+import {Titles} from '../../components/Titles/Titles';
+import {Table} from '../../components/Table/Table';
 
-export const ProductionOrdersCreate= ()=>{
-    const {data: dataSupplie, loading: loadingSupplie, error: errorSupplies, get: getSupplies} = useFetch('https://coffvart-backend.onrender.com/api/')
-    const {data: dataProcess, loading: loadingProcess, error: errorProcesses, get: getProcesses} = useFetch('https://coffvart-backend.onrender.com/api/')
-    
+export const ProductionOrdersCreate = () => {
+    const {
+        data: dataSupplie,
+        loading: loadingSupplie,
+        error: errorSupplies,
+        get: getSupplies
+    } = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {
+        data: dataProcess,
+        loading: loadingProcess,
+        error: errorProcesses,
+        get: getProcesses
+    } = useFetch('https://coffvart-backend.onrender.com/api/')
+
     const [detalles, setDetalles] = useState<any[]>([]);
     const [orderNumber, setOrderNumber] = useState<string>('');
     const [selectProcess, setSelectProcess] = useState<SelectOption | undefined>(undefined);
@@ -26,7 +36,7 @@ export const ProductionOrdersCreate= ()=>{
     const [options, setOptions] = useState<SelectOption[]>([]);
     const [supplies, setSupplies] = useState<SelectOption[]>([]);
     const [processes, setProcesses] = useState<SelectOption[]>([]);
-    
+
     const headers: Column[] = [
         {
             key: 'id',
@@ -51,11 +61,11 @@ export const ProductionOrdersCreate= ()=>{
     ]
     const handleSelectInsumo = (option: SelectOption | undefined) => {
         setSelectSupplie(option);
-      };
-    
-      const handleSelectProcess = (option: SelectOption | undefined) => {
+    };
+
+    const handleSelectProcess = (option: SelectOption | undefined) => {
         setSelectProcess(option);
-      };
+    };
 
     const fields: FormField[] = [
         {
@@ -103,7 +113,7 @@ export const ProductionOrdersCreate= ()=>{
         const selectedSupplie = dataSupplie?.supplies?.rows?.find((supplies: any) => supplies.id === selectSupplie?.value)
         const totalPrice = parseInt(cantidad || '0') * selectedSupplie?.unitPrice
         const newDetail = {
-            id: detalles.length +1,
+            id: detalles.length + 1,
             orderNumber: orderNumber,
             supplie: selectSupplie?.label,
             idSupplie: selectSupplie?.value,
@@ -128,7 +138,7 @@ export const ProductionOrdersCreate= ()=>{
     }, []);
 
     useEffect(() => {
-        if(!loadingSupplie && !errorSupplies) {
+        if (!loadingSupplie && !errorSupplies) {
             console.log(dataSupplie?.supplies?.rows, 'Aqui estan los Insumos')
             const optionToSelectSupplies: SelectOption[] = dataSupplie?.supplies?.rows?.map((supplies: any) => ({
                 value: supplies.id,
@@ -140,16 +150,16 @@ export const ProductionOrdersCreate= ()=>{
     }, [dataSupplie]);
 
     useEffect(() => {
-        if(!loadingProcess && !errorProcesses) {
+        if (!loadingProcess && !errorProcesses) {
             console.log(dataProcess?.process?.rows)
             const optionToSelectProcess: SelectOption[] = dataProcess?.process?.rows?.map(
                 (process: any) => ({
-                  value: process.id,
-                  label: process.name,
+                    value: process.id,
+                    label: process.name,
                 })
-              );
-              setProcesses(optionToSelectProcess);
-        }    
+            );
+            setProcesses(optionToSelectProcess);
+        }
     }, [dataProcess])
 
     //crea una funcion que elimine el pedido agregado al detalle y se reste en valor total del pedido segun el que se borre
@@ -158,14 +168,14 @@ export const ProductionOrdersCreate= ()=>{
         console.log(id, 'Estoy aqui')
         const supplieItem = dataSupplie?.supplies?.rows?.find((supplie: any) => supplieItem.id == id.idSupplie)
 
-        const NuevoDetalle= detalles.filter(detalle=> detalle.id !== id.id);
-        const newSubtotal= NuevoDetalle?.reduce((sum, item) => {
-            return parseFloat(sum)+ (parseFloat(supplieItem.unitPrice) * parseInt(item.cantidad))
+        const NuevoDetalle = detalles.filter(detalle => detalle.id !== id.id);
+        const newSubtotal = NuevoDetalle?.reduce((sum, item) => {
+            return parseFloat(sum) + (parseFloat(supplieItem.unitPrice) * parseInt(item.cantidad))
         }, 0)
 
         console.log(newSubtotal, 'nuevo Subtotal')
 
-        const newIva= newSubtotal * 0.08; 
+        const newIva = newSubtotal * 0.08;
 
         setDetalles(NuevoDetalle)
         setSubTotal(newSubtotal)
@@ -175,22 +185,23 @@ export const ProductionOrdersCreate= ()=>{
     }
     return (
         <Container align={'CENTER'}>
-          <Titles title={'CREAR COMPRA'}/>
-          <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
-            <div style={{ width: '50%' }}>
-              <Titles title={`orden N°${orderNumber}`} level={2} transform={'UPPERCASE'}/>
-              <Form
-                fields={fields}
-                onSubmit={handleAddDetail}
-                button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false} />}
-                cancelButton={false}
-              />
-            </div>
-            <div style={{ width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-              <Titles title={'Detalle de la Orden'} level={2} transform={'UPPERCASE'}/>
-              <Table columns={headers} data={detalles} onRowClick={() => null} deleteAction={{ onClick: handleDeleteProduct }}/>
-              <style>
-                {`
+            <Titles title={'CREAR COMPRA'}/>
+            <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
+                <div style={{width: '50%'}}>
+                    <Titles title={`orden N°${orderNumber}`} level={2} transform={'UPPERCASE'}/>
+                    <Form
+                        fields={fields}
+                        onSubmit={handleAddDetail}
+                        button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false}/>}
+                        cancelButton={false}
+                    />
+                </div>
+                <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+                    <Titles title={'Detalle de la Orden'} level={2} transform={'UPPERCASE'}/>
+                    <Table columns={headers} data={detalles} onRowClick={() => null}
+                           deleteAction={{onClick: handleDeleteProduct}}/>
+                    <style>
+                        {`
                   .info {
                     width: 100%;
                     display: flex;
@@ -217,36 +228,37 @@ export const ProductionOrdersCreate= ()=>{
                     background-color: #f2f2f2;
                   }
                 `}
-              </style>
-              <div className="info">
-                <table className="totals-table">
-                  <thead>
-                    <tr>
-                      <th>Concepto</th>
-                      <th>Monto</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Subtotal</td>
-                      <td>{subTotal}</td>
-                    </tr>
-                    <tr>
-                      <td>IVA</td>
-                      <td>{iva}</td>
-                    </tr>
-                    <tr>
-                      <td>Total</td>
-                      <td>{precio}</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <Button text={'Crear Orden'} onClick={() => null} fill={false} />
-              </div>
-            </div>
-          </Container>
+                    </style>
+                    <div className="info">
+                        <table className="totals-table">
+                            <thead>
+                            <tr>
+                                <th>Concepto</th>
+                                <th>Monto</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>Subtotal</td>
+                                <td>{subTotal}</td>
+                            </tr>
+                            <tr>
+                                <td>IVA</td>
+                                <td>{iva}</td>
+                            </tr>
+                            <tr>
+                                <td>Total</td>
+                                <td>{precio}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <Button text={'Crear Orden'} onClick={() => null} fill={false}/>
+                    </div>
+                </div>
+            </Container>
         </Container>
-      );
-    }
+    );
+}
 
+export default ProductionOrdersCreate;
 

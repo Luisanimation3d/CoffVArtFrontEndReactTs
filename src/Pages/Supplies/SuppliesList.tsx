@@ -103,3 +103,5 @@ export const Supplies = () => {
         </>
     );
 };
+
+export default Supplies;

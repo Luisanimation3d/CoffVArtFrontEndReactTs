@@ -163,3 +163,5 @@ export const CustomersEdit = () => {
         />
     );
 };
+
+export default CustomersEdit;

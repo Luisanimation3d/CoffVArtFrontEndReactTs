@@ -296,3 +296,5 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
         </>
     )
 }
+
+export default RolesEdit

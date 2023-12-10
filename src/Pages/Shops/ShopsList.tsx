@@ -162,3 +162,5 @@ export const Shops = () => {
         </>
     );
 };
+
+export default Shops;

@@ -35,3 +35,5 @@ export const SimpleLayout = () => {
 
     )
 }
+
+export default SimpleLayout;

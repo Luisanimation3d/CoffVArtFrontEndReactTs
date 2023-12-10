@@ -98,3 +98,5 @@ export const Processes = () => {
     </>
     )
 }
+
+export default Processes;

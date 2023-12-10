@@ -206,3 +206,5 @@ console.log(data)
         </>
     );
 };
+
+export default Orders;

@@ -12,7 +12,7 @@ import {Table} from "../../components/Table/Table.tsx";
 import {createPortal} from "react-dom";
 import {CreateUserModal} from "../../Modales/CreateUserModal/CreateUserModal.tsx";
 
-export const User = () => {
+export default function User() {
     const [search, setSearch] = useState<string>('')
     // const {data, loading, error, get} = useFetch(API_URL)
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)

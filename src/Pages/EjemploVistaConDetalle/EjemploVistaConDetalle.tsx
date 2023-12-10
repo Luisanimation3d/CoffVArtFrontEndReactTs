@@ -147,3 +147,5 @@ export const EjemploVistaConDetalle = () => {
         </Container>
     )
 }
+
+export default EjemploVistaConDetalle;

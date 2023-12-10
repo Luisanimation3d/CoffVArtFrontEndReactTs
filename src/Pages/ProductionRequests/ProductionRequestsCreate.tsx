@@ -5,9 +5,10 @@ import { API_KEY, API_URL } from '../../constantes';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-export const ProductionRequestsCreate= ()=>{
-    const [formValues, setFormValues] = useState<Record<string, string  | number| SelectOption| undefined>>({
+import {useNavigate} from 'react-router-dom';
+
+export const ProductionRequestsCreate = () => {
+    const [formValues, setFormValues] = useState<Record<string, string | number | SelectOption | undefined>>({
         requestNumber: '',
         dateOfDispatch: '',
         quantity: '',
@@ -31,7 +32,7 @@ export const ProductionRequestsCreate= ()=>{
             label: item?.name
         }))
         setsupplie(supplieOptions)
-    },[datasupplie]);
+    }, [datasupplie]);
 
     const {data:dataprocess,get:getProcesses} = useFetch(API_URL);
     useEffect(()=>{
@@ -43,20 +44,20 @@ export const ProductionRequestsCreate= ()=>{
             label: item?.name
         }))
         setprocess(processOptions)
-    },[dataprocess]);
+    }, [dataprocess]);
 
     const {data:datacompany,get:getCompanys} = useFetch(API_URL);
 
-    useEffect(()=>{
-        getCompanys('companys?apikey='+API_KEY)
-    },[]);
-    useEffect(()=>{
-        const companyOptions = datacompany?.companys?.rows?.map((item: any)=>({
+    useEffect(() => {
+        getCompanys('companys?apikey=' + API_KEY)
+    }, []);
+    useEffect(() => {
+        const companyOptions = datacompany?.companys?.rows?.map((item: any) => ({
             value: item?.id,
             label: item?.name
         }))
         setcompany(companyOptions)
-    },[datacompany]);
+    }, [datacompany]);
 
 
     console.log(datasupplie)
@@ -136,24 +137,27 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             quantity: formValues.quantity,
         }; console.log('Datos del formulario:', requestBody);
 
-        post(`productionRequests?apikey=${API_KEY}`, requestBody)
-        console.log(loading, error)
-        console.log('solicitud de producción creada con éxito');
-        navigate(-1);
+            post(`productionRequests?apikey=${API_KEY}`, requestBody)
+            console.log(loading, error)
+            console.log('solicitud de producción creada con éxito');
+            navigate(-1);
 
-    } catch (error) {
-        console.error('Error al crear la solicitud de producción', error);
-    }
-};
-return (
-    <Form
-        title='Crear solicitud de producción'
-        fields={productionRequestFields}
-        onSubmit={handleSubmit}
-        button={<Button text='Crear solicitud de producción' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
-    />
-);
+        } catch (error) {
+            console.error('Error al crear la solicitud de producción', error);
+        }
+    };
+    return (
+        <Form
+            title='Crear solicitud de producción'
+            fields={productionRequestFields}
+            onSubmit={handleSubmit}
+            button={<Button text='Crear solicitud de producción' onClick={() => handleSubmit} fill={true}
+                            type={'SUBMIT'}/>}
+        />
+    );
 
 }
+
+export default ProductionRequestsCreate;
 
 
