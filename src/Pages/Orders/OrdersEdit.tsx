@@ -24,111 +24,59 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
     ];
     const [state, setState] = useState<SelectOption | undefined>();
     const navigate = useNavigate()
-    const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
-    useEffect(() => {
-        get(`orders/${id}?apikey=${API_KEY}`)
-    }, []);
-
-    useEffect(() => {
-        if (!loading) {
-            const newValues = {
-                code: data?.orders.code,
-                coustumerId: data?.orders.coustumerId,
-                productId: data?.orders.productId,
-                quantity: data?.orders.quantity,
-                value: data?.orders.value,
-                total: data?.orders.total,
-                state: data?.orders.state,
-            }
-            setRegisterForm(newValues)
-        }
-    }, [data]);
-
     const [error, setError] = useState<{ [key: string]: string }>({})
-    const [registerForm, setRegisterForm] = useState<{
-        code: string,
-        coustumerId: string,
-        productId: string,
-        quantity: string,
-        value: string,
-        total: string,
-        state: string,
-    }>({
+
+    const [formValues, setFormValues] = useState<any>({
         code: '',
-        coustumerId: '',
-        productId: '',
+        coustumerId: undefined,
+        productId: undefined,
         quantity: '',
-        value: '',
-        total: '',
-        state: '',
+        state: undefined,
+    });
 
-    })
-
+    const handleInputChangen = (value: SelectOption | undefined, code: string | number) => {
+        setFormValues((prevValues: any) => ({
+            ...prevValues,
+            state: value,
+            coustumerId: value,
+            productId: value,
+        }));
+    };
 
     const formFieldsRegister: FormField[] = [
-        
         {
             name: 'code',
             type: 'text',
             label: 'Code',
-            value: registerForm.code,
-            onChange: (value: string) => setRegisterForm({...registerForm, code: value}),
+            value: formValues.code,
+            onChange: (value) => handleInputChangen({value, label: value}, 'code'),
             size: 'medium',
         },
         {
             name: 'coustumerId',
             type: 'number',
             label: 'Cliente',
-            value: registerForm.coustumerId,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                amount: validateIfNumber(value) ? value : prev.coustumerId
-            })),
+            value: formValues.coustumerId,
+            onChange: (value) => handleInputChangen({value, label: value}, 'coustumerId'),
             size: 'medium',
         },
         {
             name: 'productId',
             type: 'number',
             label: 'Producto',
-            value: registerForm.productId,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                productId: validateIfNumber(value) ? value : prev.productId
-            })),
+            value: formValues.productId,
+            onChange: (value) => handleInputChangen({value, label: value}, 'productId'),
             size: 'large',
         },
         {
             name: 'quantity',
             type: 'number',
             label: 'Cantidad',
-            value: registerForm.quantity,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                quantity: validateIfNumber(value) ? value : prev.quantity
-            })),
+            value: formValues.quantity,
+            onChange: (value) => handleInputChangen({value, label: value}, 'quantity'),
             size: 'large',
             
         },
-        {
-            name: 'value',
-            type: 'number',
-            label: ' Valor Unitario',
-            placeholder: 'Ingrese el Precio Únitario del producto',
-            value: registerForm.value,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                value: validateIfNumber(value) ? value : prev.value
-            })),
-            size: 'large',
-        },
-        {
-            name: 'total',
-            type: 'text',
-            label: 'Total',
-            value: registerForm.total,
-            onChange: (value: string) => setRegisterForm({...registerForm, total: value}),
-            size: 'large',
-        },  
         {
             name: 'state',
             type: 'select',
@@ -137,10 +85,30 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
             options: options,
             onChange: (o) => setState(o),
             size: 'large',
-
+            
         }
+        
+    ];
 
-    ]
+    const {data, put, get, loading, error: errorRegister} = useFetch('http://localhost:3000/api/')
+
+    useEffect(() => {
+        get(`orders/${id}?apikey=${API_KEY}`)
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            console.log("Data loaded:", data);
+            const newValues = {
+                code: data?.orders.code,
+                coustumerId: data?.orders.coustumerId,
+                productId: data?.orders.productId,
+                quantity: data?.orders.quantity,
+                state: data?.orders.state,
+            }
+            setFormValues(newValues)
+        }
+    }, [data]);
 
     const validateIfNumber = (value: string) => {
         if (value.length === 0) return true
@@ -148,10 +116,9 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
         return regex.test(value)
     }
 
-
     const validateForm = () => {
         const errors: any = {}
-        if (registerForm.state.length === 0) {
+        if (formValues.state.length === 0) {
             errors.state = 'El estado es requerido'
         }
         
@@ -165,14 +132,13 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
             setError(errorsForm)
             return
         }
+        console.log("Submitting form with data:", formValues);
         const requestBody = {
-            code: registerForm.code,
-            coustumerId: registerForm.coustumerId,
-            productId: registerForm.productId,
-            quantity: registerForm.quantity,
-            value: registerForm.value,
-            total: registerForm.total,
-            state: registerForm.state,
+            code: formValues.code,
+            coustumerId: formValues.coustumerId,
+            productId: formValues.productId,
+            quantity: formValues.quantity,
+            state: formValues.state,
         };
 
         put(`orders?apikey=${API_KEY}`, requestBody)
