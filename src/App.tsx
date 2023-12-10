@@ -26,7 +26,6 @@ import { OrdersCreate } from "./Pages/Orders/OrdersCreate.tsx";
 import {RolesCreate} from "./Pages/Roles/RolesCreate.tsx";
 import {ProductionRequests} from "./Pages/ProductionRequests/ProductionRequests.tsx";
 import {ProductionRequestsCreate} from "./Pages/ProductionRequests/ProductionRequestsCreate.tsx";
-import {ProductionRequestsEdit} from "./Pages/ProductionRequests/ProductionRequestsEdit.tsx";
 import {Processes} from "./Pages/Processes/Processes.tsx";
 import {ProcessesCreate} from "./Pages/Processes/ProcessesCreate.tsx";
 import {EjemploVistaConDetalle} from "./Pages/EjemploVistaConDetalle/EjemploVistaConDetalle.tsx";
@@ -72,8 +71,7 @@ export default function App() {
                                     <Route path={'ProductionOrders/create'} element={<ProductionOrdersCreate/>}/>
                                     <Route path={'ProductionOrders/edit/:id'} element={<ProductionOrdersEdit/>}/>
                                     <Route path={'ProductionRequests'} element={<ProductionRequests/>}/>
-                                    <Route path={'ProductionRequests/create'} element={<ProductionRequestsCreate/>}/>
-                                    <Route path={'ProductionRequests/edit/:id'} element={<ProductionRequestsEdit/>}/>
+                                    <Route path={'ProductionRequests/create'} element={<ProductionRequestsCreate/>}/>         
                                     <Route path={'Processes'} element={<Processes/>}/>
                                     <Route path={'Processes/create'} element={<ProcessesCreate/>}/>
                                     <Route path={'Coustomers'} element={<Coustomers/>}/>
