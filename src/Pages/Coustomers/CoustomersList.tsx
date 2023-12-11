@@ -19,6 +19,12 @@ export const Coustomers = () => {
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
 
+    const [page, setPage] = useState<number>(1)
+    useEffect(() => {
+        get(`coustumers?apikey=${API_KEY}&page=${page}`)
+    }, [page]);
+
+
     useEffect(() => {
         get(`coustumers?apikey=${API_KEY}`);
     }, []);
@@ -103,6 +109,10 @@ export const Coustomers = () => {
                         }}
                         nombreArchivo={'Clientes Reporte'}
                         tituloDocumento={'Clientes Reporte'}
+                        page={page}
+                        setPage={setPage}
+                        totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit)}
+                        pagination={true}
                     />)
                     }
                 </div>

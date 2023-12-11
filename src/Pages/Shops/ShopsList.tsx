@@ -9,7 +9,6 @@ import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
-import { API_KEY } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Shops = () => {

@@ -66,6 +66,28 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             size: 'medium',
         },
         {
+            name: 'documentType',
+            type: 'select',
+            label: 'Tipo de documento',
+            placeholder: 'Seleccione un tipo de documento',
+            value: registerForm.documentType,
+            onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
+            size: 'medium',
+            options: documentTypeOptions
+        },
+        {
+            name: 'document',
+            type: 'text',
+            label: 'Documento',
+            placeholder: 'Ingrese su documento',
+            value: registerForm.document,
+            onChange: (value: string) => setRegisterForm(prev => ({
+                ...registerForm,
+                document: validateIfNumber(value) ? value : prev.document
+            })),
+            size: 'large',
+        },
+        {
             name: 'address',
             type: 'text',
             label: 'Dirección',
@@ -111,28 +133,6 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             placeholder: 'Ingrese su contraseña',
             value: registerForm.confirmPassword,
             onChange: (value: string) => setRegisterForm({...registerForm, confirmPassword: value}),
-            size: 'large',
-        },
-{
-            name: 'documentType',
-            type: 'select',
-            label: 'Tipo de documento',
-            placeholder: 'Seleccione un tipo de documento',
-            value: registerForm.documentType,
-            onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
-            size: 'medium',
-            options: documentTypeOptions
-        },
-        {
-            name: 'document',
-            type: 'text',
-            label: 'Documento',
-            placeholder: 'Ingrese su documento',
-            value: registerForm.document,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                document: validateIfNumber(value) ? value : prev.document
-            })),
             size: 'large',
         },
         {

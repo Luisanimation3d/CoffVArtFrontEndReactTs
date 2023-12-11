@@ -22,6 +22,12 @@ export const Orders = () => {
 
     const { data, loading, error, get, del } = useFetch(API_URL)
     const navigate = useNavigate()
+    const [page, setPage] = useState<number>(1);
+    useEffect(() => {
+        get(`orders?apikey=${API_KEY}&page=${page}`)
+    }, [page]);
+
+
 
     useEffect(() => {
         get(`orders?apikey=${API_KEY}`);
@@ -91,16 +97,18 @@ export const Orders = () => {
         console.log(order, "Esta es la orden")
         const orderDetails= order?.ordersderails?.map((orderDetail: any) => ({
             id: orderDetail.id,
+            code: order.code,
             orderId: orderDetail.orderId,
             product: orderDetail.product.name,
             quantity: orderDetail.quantity,
             value: orderDetail.value,
             total: orderDetail.quantity*orderDetail.value,
         }));
+        console.log(orderDetails, "Estos son los detalles de la orden")
+        console.log(order.total, "Este es el total de la orden")
         setOrderDetails(orderDetails);
         setIsModalOpen(true);
         }
-    
     
 console.log(data)
     return (
@@ -150,6 +158,10 @@ console.log(data)
                                 }}
                                 nombreArchivo={'Pedidos Reporte'}
                                 tituloDocumento={'Pedidos Reporte'}
+                                page={page}
+                                setPage={setPage}
+                                totalPages={Math.ceil(data?.orders?.count / data?.options?.limit)}
+                                pagination={true}
                             />
                         )
                     }
@@ -168,12 +180,16 @@ console.log(data)
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
                         <Modal
-                            title="Detalle de Pedido"
+                            title={`Detalle de la orden # ${orderDetails[0]?.code}`}
                             showModal={setIsModalOpen}
                         >
                             
                             <Table
                                 columns={[
+                                    {
+                                        key: "code",
+                                        header: "Codigo",
+                                    },
                                     {
                                         key: "product",
                                         header: "Producto",

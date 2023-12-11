@@ -18,4 +18,8 @@ export  interface TableProps {
     deleteAction?: OptionButton;
     tituloDocumento?: string;
     nombreArchivo?: string;
+    pagination?: boolean;
+    page?: number;
+    setPage?: (page: number) => void;
+    totalPages?: number;
 }
