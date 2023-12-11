@@ -15,7 +15,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     const location = useLocation();
     const {pathname} = location;
     const navigate = useNavigate();
-    const {login, isAuthenticated, updateUser} = useAuth();
+    const {login, isAuthenticated, updateUser, user} = useAuth();
 
     const handleClick = () => {
         navigate({
@@ -97,9 +97,13 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         if (data?.token) {
             login(null, data.token);
             alert('Login exitoso');
-            // showModal(false);
         }
-    }, [data])
+
+        if(user){
+            showModal(false);
+            navigate('/admin/my-profile')
+        }
+    }, [data, user])
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -109,7 +113,18 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
 
     useEffect(() => {
         if (data?.user) {
-            updateUser(data.user);
+            const userToUpdate = {
+                email: data.user.email,
+                name: data.user.name,
+                role: data.user.role,
+                permissions: data.user.permissions,
+                address: data.user.coustomer.address,
+                phone: data.user.coustomer.phone,
+                document: data.user.coustomer.document,
+                documentType: data.user.coustomer.documentType,
+
+            }
+            updateUser(userToUpdate);
         }
     }, [data]);
 

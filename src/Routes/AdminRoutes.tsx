@@ -19,6 +19,11 @@ export const useRutasAdmin = () => {
             icon: <FiHexagon/>
         },
         {
+            title: 'Usuarios',
+            link: 'Users',
+            icon: <FiUser/>
+        },
+        {
             title: 'Clientes',
             link: 'Coustomers',
             icon: <FiUser/>
