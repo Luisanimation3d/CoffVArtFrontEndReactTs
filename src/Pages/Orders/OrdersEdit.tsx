@@ -90,21 +90,22 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
         
     ];
 
-    const {data, put, get, loading, error: errorRegister} = useFetch('http://localhost:3000/api/')
+    const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
 
     useEffect(() => {
         get(`orders/${id}?apikey=${API_KEY}`)
     }, []);
 
     useEffect(() => {
-        if (!loading) {
+        console.log("Data:", data);
+        if (!loading && data?.order) {
             console.log("Data loaded:", data);
             const newValues = {
-                code: data?.orders.code,
-                coustumerId: data?.orders.coustumerId,
-                productId: data?.orders.productId,
-                quantity: data?.orders.quantity,
-                state: data?.orders.state,
+                code: data?.order.code,
+                coustumerId: data?.order.coustumerId,
+                productId: data?.order.productId,
+                quantity: data?.order.quantity,
+                state: data?.order.state,
             }
             setFormValues(newValues)
         }

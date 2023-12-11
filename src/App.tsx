@@ -80,6 +80,7 @@ const ProductionOrdersCreate = lazy(() => import('./Pages/ProductionOrders/Produ
 const ProductionOrdersEdit = lazy(() => import('./Pages/ProductionOrders/ProductionOrdersEdit.tsx'));
 const Orders = lazy(() => import('./Pages/Orders/OrdersList.tsx'));
 const OrdersCreate = lazy(() => import('./Pages/Orders/OrdersCreate.tsx'));
+const OrdersEditPrueba = lazy(() => import('./Pages/Orders/OrdersEditPrueba.tsx'));
 const ProductionRequests = lazy(() => import('./Pages/ProductionRequests/ProductionRequests.tsx'));
 const ProductionRequestsCreate = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsCreate.tsx'));
 const ProductionRequestsEdit = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsEdit.tsx'));
@@ -257,6 +258,11 @@ export default function App() {
                                     <Route path={'Orders/create'} element={
                                         <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
                                             <OrdersCreate/>
+                                        </Suspense>
+                                    }/>
+                                    <Route path={'Orders/edit/:id'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
+                                            <OrdersEditPrueba/>
                                         </Suspense>
                                     }/>
                                     <Route path={'users'} element={
