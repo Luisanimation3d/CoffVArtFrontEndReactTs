@@ -10,6 +10,7 @@ import {useAuth} from '../../context/AuthContext.tsx'
 import styles from './LoginModal.module.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import Swal from "sweetalert2";
 
 export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => {
     const location = useLocation();
@@ -96,7 +97,12 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     useEffect(() => {
         if (data?.token) {
             login(null, data.token);
-            alert('Login exitoso');
+            Swal.fire({
+                title: 'Bienvenido',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
 
         if(user){

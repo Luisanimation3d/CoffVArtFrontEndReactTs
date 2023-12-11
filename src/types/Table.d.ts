@@ -16,4 +16,6 @@ export  interface TableProps {
     optionButtons?: OptionButton[];
     editableAction?: OptionButton;
     deleteAction?: OptionButton;
+    tituloDocumento?: string;
+    nombreArchivo?: string;
 }
