@@ -110,8 +110,8 @@ export const ShopsCreate = () => {
         {
             name: 'quantity',
             type: 'number',
-            label: 'Cantidad',
-            placeholder: 'Cantidad',
+            label: 'Cantidad (Kg)',
+            placeholder: 'Cantidad (Kg)',
             size: 'large',
             value: cantidad,
             onChange: setCantidad
