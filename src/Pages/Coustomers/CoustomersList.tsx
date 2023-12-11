@@ -30,7 +30,7 @@ export const Coustomers = () => {
         { key: 'document', header: 'Documento' },
         { key: 'phone', header: 'Teléfono' },
         { key: 'address', header: 'Dirección' },
-        { key: 'state', header: 'Estado' }
+        
     ];
     
     const dataCoustumers = data?.coustumers?.rows || [];
@@ -101,6 +101,8 @@ export const Coustomers = () => {
                                 setIsModalOpen(true)
                             },
                         }}
+                        nombreArchivo={'Clientes Reporte'}
+                        tituloDocumento={'Clientes Reporte'}
                     />)
                     }
                 </div>
