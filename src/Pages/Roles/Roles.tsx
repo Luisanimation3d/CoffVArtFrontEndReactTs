@@ -124,7 +124,7 @@ export const Roles = () => {
                                    }}
                                    deleteAction={{
                                        label: 'Cambiar estado',
-                                       onClick: handleDelete,
+                                       onClick: (row) => handleDelete(row.id),
                                    }}
                                    nombreArchivo={'Roles Reporte'}
                                    tituloDocumento={'Roles Reporte'}
