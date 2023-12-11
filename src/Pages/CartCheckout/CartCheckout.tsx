@@ -9,6 +9,7 @@ import {FormField, SelectOption} from "../../types/Form";
 import {Form} from "../../components/Form/Form.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import Swal from "sweetalert2";
 
 export const CartCheckout = () => {
     const navigate = useNavigate()
@@ -237,7 +238,12 @@ export const CartCheckout = () => {
 
     useEffect(() => {
         if (data?.newSale) {
-            alert('Compra realizada con éxito')
+            Swal.fire({
+                title: 'Gracias por su compra',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+            })
             navigate('/')
             clearCart()
         }

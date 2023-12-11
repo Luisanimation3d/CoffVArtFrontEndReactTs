@@ -9,6 +9,7 @@ import {useParams, useNavigate} from "react-router-dom";
 
 import styles from './Roles.module.css'
 import {API_KEY} from "../../constantes.ts";
+import Swal from "sweetalert2";
 
 export const RolesEdit = () => {
     const {id} = useParams<{ id: string }>()
@@ -253,9 +254,17 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
         setValueForm(newValues)
         put(`roles/${id}?apikey=${API_KEY}`, newValues)
         if (!loading && !error) {
-            setTimeout(() => {
-                navigate(-1)
-            }, 500)
+            Swal.fire({
+                title: 'Rol editado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#0098DA',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate(-1)
+                }
+            })
         }
     }
 

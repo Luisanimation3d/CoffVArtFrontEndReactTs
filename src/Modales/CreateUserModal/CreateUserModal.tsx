@@ -5,6 +5,7 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
+import Swal from "sweetalert2";
 
 export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const {data, get, post, error: errorRegister} = useFetch(API_URL)
@@ -236,7 +237,12 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
 
     useEffect(() => {
         if (data?.newUser && !errorRegister) {
-            alert('Usuario creado correctamente')
+            Swal.fire({
+                title: 'Usuario creado',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+            })
             setIsModalOpen(false)
         }
     }, [data]);

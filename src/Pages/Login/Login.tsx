@@ -8,6 +8,7 @@ import styles from "./Login.module.css"
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const Login = () => {
     const {login, isAuthenticated, updateUser, user} = useAuth();
@@ -86,7 +87,11 @@ export const Login = () => {
     useEffect(() => {
         if(data?.token) {
             login(null, data.token);
-            alert('Login exitoso');
+            Swal.fire({
+                title: 'Bienvenido',
+                icon: 'success',
+                showConfirmButton: false,
+            })
         }
 
         if(user){

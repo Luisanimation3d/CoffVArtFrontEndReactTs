@@ -105,6 +105,8 @@ export const Roles = () => {
                                        label: 'Cambiar estado',
                                        onClick: handleDelete,
                                    }}
+                                   nombreArchivo={'Roles Reporte'}
+                                   tituloDocumento={'Roles Reporte'}
                             />)
                     }
                 </div>

@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {useEffect, useState} from "react";
@@ -8,8 +8,10 @@ import styles from "./RecoveryPassword.module.css";
 import {Titles} from "../../components/Titles/Titles.tsx";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
+import Swal from "sweetalert2";
 
 export const ResetPassword = () => {
+    const navigate = useNavigate();
     const {token} = useParams();
     const {data, error: errorPost, post} = useFetch(API_URL)
     const [changePassword, setChangePassword] = useState({
@@ -76,7 +78,14 @@ export const ResetPassword = () => {
 
     useEffect(() => {
         if (data?.msg) {
-            alert(data.msg)
+            Swal.fire({
+                icon: 'success',
+                title: 'Contraseña restablecida',
+                text: 'La contraseña se restableció correctamente',
+                confirmButtonText: 'Aceptar',
+            }).then(() => {
+                navigate('/user/login')
+            })
         }
     }, [data]);
 

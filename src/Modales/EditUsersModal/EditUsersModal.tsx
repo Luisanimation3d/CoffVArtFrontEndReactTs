@@ -5,6 +5,7 @@ import {FormField, SelectOption} from "../../types/Form";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
+import Swal from "sweetalert2";
 
 export const EditUsersModal = ({setIsModalOpen, title = 'Editar Usuario', idUser, setIdEdit}: { setIsModalOpen: (value: boolean) => void, title?: string, idUser: number, setIdEdit: (value: number | null) => void }) => {
     const {data, get, put, error: errorEdit} = useFetch(API_URL)
@@ -205,7 +206,12 @@ export const EditUsersModal = ({setIsModalOpen, title = 'Editar Usuario', idUser
 
     useEffect(() => {
         if (data?.user && !errorEdit) {
-            alert('Usuario editado correctamente')
+            Swal.fire({
+                title: 'Usuario editado correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
             setIdEdit(null)
             setIsModalOpen(false)
         }
