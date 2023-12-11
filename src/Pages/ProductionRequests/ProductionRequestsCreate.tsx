@@ -135,6 +135,9 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             requestNumber: formValues.requestNumber,
             dateOfDispatch: formValues.dateOfDispatch,
             quantity: formValues.quantity,
+            processId: (formValues.processId as SelectOption)?.value as number, 
+            supplieId: (formValues.supplieId as SelectOption)?.value as number,   
+            companyId: (formValues.companyId as SelectOption)?.value as number,
         }; console.log('Datos del formulario:', requestBody);
 
             post(`productionRequests?apikey=${API_KEY}`, requestBody)
