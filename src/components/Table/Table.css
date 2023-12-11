@@ -38,6 +38,10 @@
     background-color: #e5ddd4;
 }
 
+.table__container .table__row--diabled{
+    opacity: .3;
+}
+
 .table__container .table__row .table__cell--row{
     padding: 10px;
     text-align: center;
