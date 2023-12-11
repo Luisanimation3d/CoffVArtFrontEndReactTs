@@ -7,14 +7,16 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 import { Modal, ModalContainer } from "../../components/Modal/Modal.tsx";
 import { createPortal } from "react-dom";
+import { EditProcessOModal } from "../../Modales/EditProcessModal/EditProcessOModal.tsx";
 
 export const ProductionOrders = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { data, loading, error, get, del } = useFetch(API_URL);
+    const [dataProductionOrdersModify, setDataProductionOrdersModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {
         get(`productionOrders?apikey=${API_KEY}`);
@@ -38,7 +40,23 @@ export const ProductionOrders = () => {
         }
     ];
 
-    const dataProductionOrders= data?.productionOrders?.rows|| [];
+    useEffect(() => {
+        if(data?.ProductionOrders?.rows){
+            console.log('Entra')
+            const newProductionOrdersData = data?.ProductionOrders?.rows.map((productionOrder: any) => {
+                return {
+                    ...productionOrder,
+                    process: productionOrder?.process?.name,
+                    supplie: productionOrder?.supply?.name,
+                }
+            })
+
+            setDataProductionOrdersModify(newProductionOrdersData)
+        }
+    }, [data]);
+    const [idEdit, setidEdit]= useState(0)
+
+    const dataProductionOrders= dataProductionOrdersModify|| [];
     let dataProductionOrdersFiltered: any;
 
     if(search.length > 0){
@@ -94,7 +112,7 @@ export const ProductionOrders = () => {
                 onChange={e=> setSearch(e.target.value)} 
                 value={search} 
                 idSearch={'productionOrderSearch'} />
-                <Button text={'Crear Orden'} onClick={() => navigate('/admin/ProductionOrders/create')} fill={false}/></div>
+                <Button text={'Crear Orden'} onClick={() => setIsModalOpen(true)} fill={false}/></div>
                 {
                         loading && <p>Cargando...</p>
                     }
@@ -110,17 +128,31 @@ export const ProductionOrders = () => {
                         columns={columnsProductionOrders}
                         data={dataProductionOrdersFiltered}
                         onRowClick={getProductionOrdersDetails}
-                        editableAction={{ onClick: (row) => navigate(`/admin/productionOrder/edit/${row.id}`) }}
+                        editableAction={{ onClick: (e) => {
+                            setidEdit(e.id)
+                            setIsModalOpen(true)
+                        }  }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }
             </div>
+            {
+                    isModalOpen && createPortal(
+                        <>
+                            <EditProcessOModal
+                            id= {idEdit}
+                            setIsModalOpen={setIsModalOpen}
+                            title="Cambiar proceso"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
         </Container>
         {
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
                         <Modal
-                            title="Detalle de Compra"
+                            title="Detalle de la Orden"
                             showModal={setIsModalOpen}
                         >
                             <Table

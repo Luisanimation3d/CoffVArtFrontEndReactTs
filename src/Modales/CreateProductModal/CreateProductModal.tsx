@@ -15,6 +15,7 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
         stockMin: string,
         stockMax: string,
         unitPrice: string,
+        amountSupply: string,
         description: string,
     }>({
         name: '',
@@ -22,6 +23,7 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
         stockMin: '',
         stockMax: '',
         unitPrice: '',
+        amountSupply: '',
         description: '',
     })
 
@@ -85,6 +87,18 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
             size: 'large',
         },
         {
+            name: 'amountSupply',
+            type: 'number',
+            label: 'Cantidad de Insumos',
+            placeholder: 'Ingrese la cantidad de insumos del producto',
+            value: registerForm.amountSupply,
+            onChange: (value: string) => setRegisterForm(prev => ({
+                ...registerForm,
+                amountSupply: validateIfNumber(value) ? value : prev.amountSupply
+            })),
+            size: 'large',
+        },
+        {
             name: 'description',
             type: 'text',
             label: 'Descripción',
@@ -119,6 +133,9 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
         if (registerForm.unitPrice.length === 0) {
             errors.unitPrice = 'El precio unitario es requerido'
         }
+        if (registerForm.amountSupply.length === 0) {
+            errors.amountSupply = 'La cantidad de insumos es requerida'
+        }
         if (registerForm.description.length === 0) {
             errors.description = 'La descripción es requerida'
         }
@@ -139,6 +156,7 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
             stockMin: registerForm.stockMin,
             stockMax: registerForm.stockMax,
             unitPrice: registerForm.unitPrice,
+            amountSupply: registerForm.amountSupply,
             description: registerForm.description,
         }
 
