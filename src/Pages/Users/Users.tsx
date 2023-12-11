@@ -21,10 +21,11 @@ export default function User() {
     const {data, loading, error, get, del} = useFetch(API_URL)
     const [dataUsersModify, setDataUsersModify] = useState<any>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [page, setPage] = useState<number>(1)
 
     useEffect(() => {
-        get(`users?apikey=${API_KEY}`)
-    }, []);
+        get(`users?apikey=${API_KEY}&page=${page}`)
+    }, [page]);
 
     const columnsUsers: Column[] = [
         {
@@ -133,6 +134,10 @@ export default function User() {
                                            setIsModalOpen(true)
                                        },
                                    }}
+                                   page={page}
+                                   setPage={setPage}
+                                   totalPages={Math.ceil(data?.users?.count / data?.options?.limit)}
+                                   pagination={true}
                             />
                         )
                     }
