@@ -74,21 +74,22 @@ export const ProductionRequestsCreate = () => {
         size: 'medium'
     },
     {
+        name: 'companyId',
+        type: 'select',
+        label: 'Compañia',
+        placeholder:'Compañia',
+        options: company,
+        value: formValues.companyId as SelectOption|undefined,
+        onChange: (value) => setFormValues(prev=> ({...prev,companyId:value})),
+        size:'medium',
+    },
+    {
         name: 'dateOfDispatch',
         type: 'date',
         label: 'Fecha de envio',
         placeholder: '20/11/2023',
         value: formValues['dateOfDispatch'] !== undefined ? String(formValues['dateOfDispatch']): '',
         onChange: (value) => handleInputChange('dateOfDispatch', value),
-        size: 'medium'
-    },
-    {
-        name: 'quantity',
-        type: 'number',
-        label: 'Cantidad (Kg)',
-        placeholder: '200',
-        value: formValues['quantity'] !== undefined ? String(formValues['quantity']): '',
-        onChange: (value) => handleInputChange('quantity', value),
         size: 'medium'
     },
     {
@@ -102,25 +103,16 @@ export const ProductionRequestsCreate = () => {
         size:'medium',
     },
     {
-        name: 'companyId',
-        type: 'select',
-        label: 'Compañia',
-        placeholder:'Compañia',
-        options: company,
-        value: formValues.companyId as SelectOption|undefined,
-        onChange: (value) => setFormValues(prev=> ({...prev,companyId:value})),
-        size:'medium',
+        name: 'quantity',
+        type: 'number',
+        label: 'Cantidad (Kg)',
+        placeholder: '200',
+        value: formValues['quantity'] !== undefined ? String(formValues['quantity']): '',
+        onChange: (value) => handleInputChange('quantity', value),
+        size: 'medium'
     },
-    {
-        name: 'processId',
-        type: 'select',
-        label: 'Proceso',
-        placeholder: 'Proceso',
-        options: process,
-        value: formValues.processId as SelectOption|undefined,
-        onChange: (value) => setFormValues(prev=> ({...prev,processId:value})),
-        size:'medium',
-    }
+    
+   
 ];
 const handleInputChange = (name: string, value: string | number) => {
     setFormValues(prevValues => ({

@@ -71,10 +71,8 @@ const Shops = lazy(() => import('./Pages/Shops/ShopsList.tsx'));
 const ShopsCreate = lazy(() => import('./Pages/Shops/ShopsCreate.tsx'));
 const Companys = lazy(() => import('./Pages/Companys/Companys.tsx'));
 const CompanysCreate = lazy(() => import('./Pages/Companys/CompanysCreate.tsx'));
-const CompanysEdit = lazy(() => import('./Pages/Companys/CompanysEdit.tsx'));
 const Suppliers = lazy(() => import('./Pages/Suppliers/Suppliers.tsx'));
 const SuppliersCreate = lazy(() => import('./Pages/Suppliers/SuppliersCreate.tsx'));
-const SuppliersEdit = lazy(() => import('./Pages/Suppliers/SuppliersEdit.tsx'));
 const ProductionOrders = lazy(() => import('./Pages/ProductionOrders/ProductionOrders.tsx'));
 const ProductionOrdersCreate = lazy(() => import('./Pages/ProductionOrders/ProductionOrdersCreate.tsx'));
 const ProductionOrdersEdit = lazy(() => import('./Pages/ProductionOrders/ProductionOrdersEdit.tsx'));
@@ -155,11 +153,7 @@ export default function App() {
                                             <CompanysCreate/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'Companys/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de companys</h1>}>
-                                            <CompanysEdit/>
-                                        </Suspense>
-                                    }/>
+                                    
                                     <Route path={'Suppliers'} element={
                                         <Suspense fallback={<h1>Cargando el componente de suppliers</h1>}>
                                             <Suppliers/>
@@ -170,11 +164,7 @@ export default function App() {
                                             <SuppliersCreate/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'Suppliers/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de suppliers</h1>}>
-                                            <SuppliersEdit/>
-                                        </Suspense>
-                                    }/>
+                                    
                                     <Route path={'ProductionOrders'} element={
                                         <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
                                             <ProductionOrders/>
@@ -200,11 +190,7 @@ export default function App() {
                                             <ProductionRequestsCreate/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'ProductionRequests/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de production requests</h1>}>
-                                            <ProductionRequestsEdit/>
-                                        </Suspense>
-                                    }/>
+                                    
                                     <Route path={'Processes'} element={
                                         <Suspense fallback={<h1>Cargando el componente de processes</h1>}>
                                             <Processes/>
