@@ -11,16 +11,24 @@ import { API_KEY, API_URL } from "../../constantes.ts";
 import { Modal, ModalContainer } from "../../components/Modal/Modal.tsx";
 import { createPortal } from "react-dom";
 import { EditProcessOModal } from "../../Modales/EditProcessModal/EditProcessOModal.tsx";
+import { ProductionOrderCreateModal } from "../../Modales/CreateProductionOderModal/CreateProductionOrderModal.tsx";
 
 export const ProductionOrders = () => {
     const [search, setSearch] = useState<string>('');
+    const [orderToCreate, setOrderToCreate] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
     const { data, loading, error, get, del } = useFetch(API_URL);
     const [dataProductionOrdersModify, setDataProductionOrdersModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {
         get(`productionOrders?apikey=${API_KEY}`);
     }, []);
+
+    const openEditModal = (id: number) => {
+        setidEdit(id);
+        setIsModalOpenEdit(true);
+    };
     const columnsProductionOrders: Column[] = [
         {
             key:'orderNumber',
@@ -112,7 +120,7 @@ export const ProductionOrders = () => {
                 onChange={e=> setSearch(e.target.value)} 
                 value={search} 
                 idSearch={'productionOrderSearch'} />
-                <Button text={'Crear Orden'} onClick={() => setIsModalOpen(true)} fill={false}/></div>
+                <Button text={'Crear Orden'} onClick={() => setOrderToCreate(true)} fill={false}/></div>
                 {
                         loading && <p>Cargando...</p>
                     }
@@ -130,7 +138,7 @@ export const ProductionOrders = () => {
                         onRowClick={getProductionOrdersDetails}
                         editableAction={{ onClick: (e) => {
                             setidEdit(e.id)
-                            setIsModalOpen(true)
+                            setIsModalOpenEdit(true)
                         }  }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
@@ -138,10 +146,11 @@ export const ProductionOrders = () => {
             </div>
             {
                     isModalOpen && createPortal(
-                        <>
-                            <EditProcessOModal
+                        <><ProductionOrderCreateModal orderToCreate={setOrderToCreate} title="Crear Orden" />
+                               
+                               <EditProcessOModal
                             id= {idEdit}
-                            setIsModalOpen={setIsModalOpen}
+                            setIsModalOpen={setIsModalOpenEdit}
                             title="Cambiar proceso"/>
                         </>,
                         document.getElementById('modal') as HTMLElement
