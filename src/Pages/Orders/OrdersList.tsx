@@ -142,11 +142,7 @@ console.log(data)
                                 data={dataOrdersFiltered}
                                 onRowClick={getOrderDetails}
                                 editableAction={{
-                                    onClick: (value) => {
-                                        setidEdit(value.id)
-                                        setIsModalOpenEdit(true)
-                                    },
-                                }}
+                                    onClick: (row) => navigate(`/admin/Orders/edit/${row.id}`),}}
                                 deleteAction={{
                                     onClick: handleDelete,
                                 }}
