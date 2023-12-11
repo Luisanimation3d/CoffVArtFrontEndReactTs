@@ -58,7 +58,7 @@ export const Products = () => {
         if(data?.products?.rows){
             const newData = data?.products?.rows?.map((item: any)=>({
                 ...item,
-                state: <Button text={item.state ? 'Acivo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(value: any) => console.log(value.target?.parentNode.parentNode.dataset.ke, 'Aqui andamos imprimiendo')}/>
+                state: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(value: any) => console.log(value.target?.parentNode.parentNode.dataset.key, 'Aqui andamos imprimiendo')}/>
             }))
 
             setDataToShow(newData)

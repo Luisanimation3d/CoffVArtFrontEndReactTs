@@ -19,7 +19,7 @@ export  interface TableProps {
     tituloDocumento?: string;
     nombreArchivo?: string;
     pagination?: boolean;
-    page: number;
-    setPage: (page: number) => void;
-    totalPages: number;
+    page?: number;
+    setPage?: (page: number) => void;
+    totalPages?: number;
 }
