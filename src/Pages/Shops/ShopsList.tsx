@@ -141,7 +141,7 @@ export const Shops = () => {
                                     },
                                     {
                                         key: "quantity",
-                                        header: "Cantidad",
+                                        header: "Cantidad (Kg)",
                                     },
                                     {
                                         key: "value",
