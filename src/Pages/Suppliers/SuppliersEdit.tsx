@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
+/*import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
-import {FormField, SelectOption} from '../../types/Form';
+import {FormField} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
 import {Form} from '../../components/Form/Form';
 import {API_KEY, API_URL} from '../../constantes';
@@ -133,4 +133,4 @@ export const SuppliersEdit= ()=>{
     );
 };
 
-export default SuppliersEdit;
+export default SuppliersEdit;*/

@@ -10,9 +10,11 @@ import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { SuppliersCreateModal } from "../../Modales/CreateSupplierModal/CreateSupplierModal.tsx";
 import { createPortal } from "react-dom";
+import { SuppliersEditModal } from "../../Modales/EditSupplierModal/EditSupplierModal.tsx";
 
 export const Suppliers = () => {
     const [search, setSearch] = useState<string>('');
+    const [supplierToEdit, setSupplierToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch(API_URL);
     const navigate = useNavigate();
@@ -105,15 +107,25 @@ export const Suppliers = () => {
                         columns={columnsSuppliers}
                         data={dataSuppliersFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: (row) => navigate(`/admin/Suppliers/edit/${row.id}`) }}
+                        editableAction={{
+                            label: 'Editar Proveedor',
+                            onClick: (row: any) => {
+                                setSupplierToEdit(row.id)
+                                setIsModalOpen(true)
+                            }} }
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }
                 </div>
                 {
                     isModalOpen && createPortal(
-                        <>
-                            <SuppliersCreateModal setIsModalOpen={setIsModalOpen} title="Crear Proveedor"/>
+                        <>{
+                            supplierToEdit?(
+                                <SuppliersEditModal setIsModalOpen={setIsModalOpen} idSupplier={supplierToEdit} setIdEdit={setSupplierToEdit}/>
+                            ):
+                            (<SuppliersCreateModal setIsModalOpen={setIsModalOpen} title="Crear Proveedor"/>)
+                        }
+                            
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )

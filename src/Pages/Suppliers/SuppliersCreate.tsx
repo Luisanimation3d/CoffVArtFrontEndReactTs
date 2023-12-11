@@ -15,7 +15,6 @@ export const SuppliersCreate = () => {
         address: '',
         phone: '',
         quality: '',
-        unitCost: '',
     })
 
     const {post, loading, error} = useFetch(API_URL);

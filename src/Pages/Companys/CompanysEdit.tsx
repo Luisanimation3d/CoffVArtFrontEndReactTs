@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+/*import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
 import {FormField} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
@@ -120,4 +120,4 @@ export const CompanysEdit = () => {
     );
 };
 
-export default CompanysEdit;
+export default CompanysEdit;*/

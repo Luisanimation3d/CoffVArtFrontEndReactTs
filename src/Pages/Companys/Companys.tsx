@@ -10,9 +10,11 @@ import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { createPortal } from "react-dom";
 import { CompanysCreateModal } from "../../Modales/CreateCompanyModal/CreateCompanyModal.tsx";
+import { CompanysEditModal } from "../../Modales/EditCompanyModal/EditCompanyModal.tsx";
 
 export const Companys = () => {
     const [search, setSearch] = useState<string>('');
+    const [companyToEdit, setCompanyToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const {data,loading,error,get,del} = useFetch(API_URL)
     const navigate = useNavigate();
@@ -22,6 +24,10 @@ export const Companys = () => {
     },[]);
     
     const columnsCompanys: Column[] = [
+        {
+            key: 'id',
+            header:'ID',
+        },
         {
             key:'name',
             header:'Nombre',
@@ -56,7 +62,7 @@ export const Companys = () => {
         || company.email.toLowerCase().includes(search.toLowerCase())
         );
     }else{
-        dataCompanysFiltered = dataCompanys
+        dataCompanysFiltered = dataCompanys;
     }
     
     const handleDelete = (row: any) => {
@@ -100,19 +106,25 @@ export const Companys = () => {
                 <Table columns={columnsCompanys}
                     data={dataCompanysFiltered}
                     onRowClick={()=> null}
-                    editableAction={{ onClick: (row) => navigate(`/admin/Companys/edit/${row.id}`)
-                }}
-                deleteAction={{
-                    onClick: () => handleDelete,
-                }}
+                    editableAction={{
+                        label: 'Editar Compania',
+                        onClick: (row: any) => {
+                            setCompanyToEdit(row.id)
+                            setIsModalOpen(true)
+                        }} }
+                deleteAction={{onClick:handleDelete}}
                 />)
-                 }
+                }
             </div>
             {
                     isModalOpen && createPortal(
-                        <>
+                        <>{
+                            companyToEdit?(
+                                <CompanysEditModal setIsModalOpen={setIsModalOpen} idCompany={companyToEdit} setIdEdit={setCompanyToEdit}/>
+                            ):
                             <CompanysCreateModal setIsModalOpen={setIsModalOpen} title="Crear compañia"/>
-                        </>,
+                                 }
+                            </>,
                         document.getElementById('modal') as HTMLElement
                     )
                 }

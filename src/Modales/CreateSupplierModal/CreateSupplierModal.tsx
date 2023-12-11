@@ -19,7 +19,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
         address: string,
         phone: string,
         quality: string,
-        unitCost: string,
     }>({
         name: '',
         nit: '',
@@ -27,7 +26,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
         address: '',
         phone: '',
         quality: '',
-        unitCost: '',
     })
     const formFieldsRegister: FormField[] = [
         {
@@ -88,18 +86,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
             onChange: (value: string) => setRegisterForm({...registerForm, quality: value}),
             size: 'medium'
         },
-        {
-            name: 'unitCost',
-            type: 'number',
-            label: 'Costo bulto',
-            placeholder: 'Premiun',
-            value: registerForm.unitCost,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                unitCost: validateIfNumber(value) ? value : prev.unitCost 
-            })),
-            size: 'large'
-        },
     ];
     const validateIfNumber = (value: string) => {
         if (value.length === 0) return true
@@ -128,9 +114,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
         if (registerForm.quality.length === 0) {
             errors.quality = 'La calidad es requerida'
         }
-        if (registerForm.unitCost.length === 0) {
-            errors.unitCost = 'El costo unitario es requerida'
-        }
         return errors
     }
 
@@ -149,7 +132,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
             address: registerForm.address,
             phone: registerForm.phone,
             quality: registerForm.quality,
-            unitCost: registerForm.unitCost,
         }
 
         post(`suppliers?apikey=${API_KEY}`, dataToSend)
