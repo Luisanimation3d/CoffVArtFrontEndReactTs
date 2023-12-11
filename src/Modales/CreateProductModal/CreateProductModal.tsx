@@ -133,7 +133,7 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
         if (registerForm.unitPrice.length === 0) {
             errors.unitPrice = 'El precio unitario es requerido'
         }
-        if{registerForm.amountSupply.length === 0} {  
+        if (registerForm.amountSupply.length === 0) {
             errors.amountSupply = 'La cantidad de insumos es requerida'
         }
         if (registerForm.description.length === 0) {
