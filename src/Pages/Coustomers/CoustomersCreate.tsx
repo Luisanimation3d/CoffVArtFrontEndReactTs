@@ -171,3 +171,5 @@ export const CustomersCreate = () => {
         />
     );
 };
+
+export default CustomersCreate;

@@ -292,7 +292,8 @@ export const ProductionOrdersCreate= ()=>{
             </div>
           </Container>
         </Container>
-      );
-    }
+    );
+}
 
+export default ProductionOrdersCreate;
 

@@ -250,3 +250,5 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
         </>
     )
 }
+
+export default RolesCreate

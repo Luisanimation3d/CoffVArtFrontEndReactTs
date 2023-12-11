@@ -15,3 +15,5 @@ export const AdminLayout = () => {
         </>
     )
 }
+
+export default AdminLayout;

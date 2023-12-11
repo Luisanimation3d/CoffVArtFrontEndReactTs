@@ -43,7 +43,7 @@ export const CartProvider = ({ children }: any) => {
     }, [state]);
 
     const addToCart = (item: any) => {
-        if (state.cart.find((product: any) => product.id === item.id)) {
+        if (state.cart.find((product: any) => product.id === item.id) && state.cart.find((product: any) => product.id === item.id)?.quantity < 10) {
             const newCart = state.cart.map((product: any) => {
                 if (product.id === item.id) {
                     return {
@@ -57,6 +57,8 @@ export const CartProvider = ({ children }: any) => {
                 type: 'SET_CART',
                 payload: newCart,
             });
+            return;
+        }else if(state.cart.find((product: any) => product.id === item.id)?.quantity == 10){
             return;
         }
         dispatch({

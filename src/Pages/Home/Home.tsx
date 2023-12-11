@@ -4,7 +4,7 @@ import ProductImage from '../../assets/product.jpg';
 import coffeeGif from '../../assets/descargar.gif';
 import { SliderBanner } from "../../components/SliderBanner/SliderBanner.tsx";
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Home.css';
 import { ProductCard } from "../../components/ProductCard/ProductCard.tsx";
 import { useEffect, useRef, useState } from 'react';
@@ -13,30 +13,30 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {Product} from "../../types/ProductCard";
 
-gsap.registerPlugin(ScrollTrigger);
-const boxDOMEL = document.createElement("div");
-boxDOMEL.classList.add("box");
-const contenedor = document.querySelector(".userLayout__mainContent");
-
-contenedor?.appendChild(boxDOMEL);
-
-gsap.to(boxDOMEL, {
-  background: "#ffcc00",
-  rotate: 180,
-  duration: 3,
-  delay: 1,
-  //opacity:0,
-  xPercent: "+=100"
-})
+// gsap.registerPlugin(ScrollTrigger);
+// const boxDOMEL = document.createElement("div");
+// boxDOMEL.classList.add("box");
+// const contenedor = document.querySelector(".userLayout__mainContent");
+//
+// contenedor?.appendChild(boxDOMEL);
+//
+// gsap.to(boxDOMEL, {
+//   background: "#ffcc00",
+//   rotate: 180,
+//   duration: 3,
+//   delay: 1,
+//   //opacity:0,
+//   xPercent: "+=100"
+// })
 export const Home = () => {
-  const {data, loading, error, get } = useFetch(API_URL);
+  const {data, get } = useFetch(API_URL);
   const [products, setProducts] = useState<Product[]>([]);
   const cupRef = useRef(null);
   const homeContentRef = useRef(null);
   const [isCupAnimationComplete, setIsCupAnimationComplete] = useState(false);
 
 
-  const images = [BannerBurdeo1, BannerBurdeo2];
+  // const images = [BannerBurdeo1, BannerBurdeo2];
   // const productosHome = [
   //   {
   //     id: 1,
@@ -147,3 +147,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

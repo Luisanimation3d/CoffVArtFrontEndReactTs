@@ -1,11 +1,11 @@
-import { FormField } from '../../types/Form'
-import { Button } from '../../components/Button/Button'
-import { Form } from '../../components/Form/Form';
-import { API_KEY } from '../../constantes';
-import { useFetch } from '../../hooks/useFetch';
-import { useState } from 'react';
+import {FormField} from '../../types/Form'
+import {Button} from '../../components/Button/Button'
+import {Form} from '../../components/Form/Form';
+import {API_KEY} from '../../constantes';
+import {useFetch} from '../../hooks/useFetch';
+import {useState} from 'react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 
 export const SuppliersCreate = () => {
     const [formValues, setFormValues] = useState<Record<string, string | number>>({
@@ -18,7 +18,7 @@ export const SuppliersCreate = () => {
         unitCost: '',
     })
 
-    const { post, loading, error } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const {post, loading, error} = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate()
     const supplierFields: FormField[] = [
         {
@@ -102,27 +102,30 @@ export const SuppliersCreate = () => {
                 phone: formValues.phone,
                 quality: formValues.quality,
                 unitCost: formValues.unitCost,
-            }; console.log('Datos del formulario:', requestBody);
+            };
+            console.log('Datos del formulario:', requestBody);
 
-        post(`suppliers?apikey=${API_KEY}`, requestBody)
-        console.log(loading, error)
-        console.log('proveedor creado con éxito');
-        navigate(-1);
-        
+            post(`suppliers?apikey=${API_KEY}`, requestBody)
+            console.log(loading, error)
+            console.log('proveedor creado con éxito');
+            navigate(-1);
 
-    } catch (error) {
-        console.error('Error al crear el proveedor', error);
-    }
-};
-return (
-    <Form
-        title='Crear proveedor'
-        fields={supplierFields}
-        onSubmit={handleSubmit}
-        button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
-    />
-);
+
+        } catch (error) {
+            console.error('Error al crear el proveedor', error);
+        }
+    };
+    return (
+        <Form
+            title='Crear proveedor'
+            fields={supplierFields}
+            onSubmit={handleSubmit}
+            button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
+        />
+    );
 
 }
+
+export default SuppliersCreate;
 
 

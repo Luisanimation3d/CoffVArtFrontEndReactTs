@@ -150,3 +150,5 @@ export const TiendaUser = () => {
 		</div>
 	);
 };
+
+export default TiendaUser;
