@@ -19,6 +19,8 @@ export const Roles = () => {
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate()
     const [page, setPage] = useState<number>(1)
+    const [dataToShow, setDataToShow] = useState<any[]>([])
+    const [idRolToModify, setIdRolToModify] = useState<number|null>(null)
     useEffect(() => {
         get(`roles?apikey=${API_KEY}&page=${page}`)
     }, [page]);
@@ -34,6 +36,10 @@ export const Roles = () => {
         {
             key: 'description',
             header: 'Descripción',
+        },
+        {
+            key: 'State',
+            header: 'Estado',
         }
     ]
     const dataRoles = data?.roles?.rows || []
@@ -46,7 +52,7 @@ export const Roles = () => {
     }
 
     const handleDelete = (row: any) => {
-        del(`roles/${row.id}?apikey=${API_KEY}`)
+        del(`roles/${row}?apikey=${API_KEY}`)
         setTimeout(() => {
             get(`roles?apikey=${API_KEY}`)
         }, 500)
@@ -66,6 +72,20 @@ export const Roles = () => {
         setDataModal(dataModalRol)
         setIsModalOpen(true)
     }
+
+    useEffect(()=>{
+        if(data?.roles?.rows){
+            const newData = data?.roles?.rows?.map((item: any)=>({
+                ...item,
+                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
+                    e.stopPropagation()
+                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
+                }}/>
+            }))
+
+            setDataToShow(newData)
+        }
+    }, [data])
 
     return (
         <>
@@ -98,13 +118,13 @@ export const Roles = () => {
                     }
                     {
                         !loading && !error && dataRolesFiltered.length > 0 && (
-                            <Table columns={columnsRoles} data={dataRolesFiltered} onRowClick={handleRowClick}
+                            <Table columns={columnsRoles} data={dataToShow} onRowClick={handleRowClick}
                                    editableAction={{
                                        onClick: (row) => navigate(`/admin/roles/edit/${row.id}`),
                                    }}
                                    deleteAction={{
                                        label: 'Cambiar estado',
-                                       onClick: handleDelete,
+                                       onClick: (row) => handleDelete(row.id),
                                    }}
                                    nombreArchivo={'Roles Reporte'}
                                    tituloDocumento={'Roles Reporte'}

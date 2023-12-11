@@ -11,15 +11,15 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     const options: SelectOption[] = [
         {
             value: 2,
-            label: 'Enviado',
+            label: 'Recibido',
         },
         {
             value: 3,
-            label: 'Cancelado',
+            label: 'Finalizado',
         },
         {
             value: 4,
-            label: 'Finalizado',
+            label: 'Cancelado',
         }
     ];
     const [process, setProcess] = useState<SelectOption | undefined>();
@@ -76,13 +76,6 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         };
         console.log(requestBody)
         put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
-        if(!errorRegister){
-            setTimeout(() => {
-                if (process?.value == 4) {
-                    navigate('/admin/ProductionOrders/create')
-                }
-            }, 500);
-        }
     };
     if (loading) {
         return <div>Cargando...</div>;
