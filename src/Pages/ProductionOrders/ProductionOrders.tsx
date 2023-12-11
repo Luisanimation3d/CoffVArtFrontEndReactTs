@@ -24,11 +24,6 @@ export const ProductionOrders = () => {
     useEffect(() => {
         get(`productionOrders?apikey=${API_KEY}`);
     }, []);
-
-    const openEditModal = (id: number) => {
-        setidEdit(id);
-        setIsModalOpenEdit(true);
-    };
     const columnsProductionOrders: Column[] = [
         {
             key:'orderNumber',
@@ -146,12 +141,22 @@ export const ProductionOrders = () => {
             </div>
             {
                     isModalOpen && createPortal(
-                        <><ProductionOrderCreateModal orderToCreate={setOrderToCreate} title="Crear Orden" />
-                               
-                               <EditProcessOModal
+                        <>
+                            
+                                <EditProcessOModal
                             id= {idEdit}
                             setIsModalOpen={setIsModalOpenEdit}
                             title="Cambiar proceso"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
+                {
+                    orderToCreate  && createPortal(
+                        <> 
+                            <ProductionOrderCreateModal 
+                            setIsModalOpen={setOrderToCreate}
+                             title="Crear Orden" />
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )
