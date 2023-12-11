@@ -8,6 +8,7 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import styles from './RecoveryPassword.module.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import Swal from "sweetalert2";
 
 export const SendEmail = () => {
     const {data, error: errorPost, post} =useFetch(API_URL)
@@ -55,7 +56,14 @@ export const SendEmail = () => {
 
     useEffect(() => {
         if (data?.msg) {
-            alert(data.msg)
+            Swal.fire({
+                title: '¡Listo!',
+                text: 'Se ha enviado un correo electrónico con las instrucciones para restablecer tu contraseña',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            }).then(() => {
+                setEmail('');
+            })
         }
     }, [data]);
 

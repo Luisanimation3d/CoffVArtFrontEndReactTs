@@ -9,10 +9,11 @@ import {useLocation, useNavigate} from "react-router-dom";
 import ImageRegister from '../../assets/RegisterImage.png'
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import Swal from "sweetalert2";
 
 export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) => {
     const location = useLocation();
-    const { pathname } = location;
+    const {pathname} = location;
     const navigate = useNavigate();
     const {data, post, error: errorRegister} = useFetch(API_URL)
     const [registerForm, setRegisterForm] = useState<{
@@ -199,8 +200,13 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
 
     useEffect(() => {
         if (data?.newUser && !errorRegister) {
-            alert('Usuario creado correctamente')
-            navigate('/user/Login');
+            Swal.fire({
+                title: 'Usuario creado exitosamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+            }).then(() => {
+                navigate('/user/Login');
+            })
         }
     }, [data]);
 

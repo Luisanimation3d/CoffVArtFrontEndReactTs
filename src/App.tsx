@@ -4,7 +4,7 @@ import {LabelView} from "./components/LabelView/LabelView.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
 import {CartProvider} from "./context/CartContext.tsx";
 import {ProtectedRoutes} from "./Routes/ProtectedRoutes.tsx";
-import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
+// import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
 
 // import {Supplies} from "./Pages/Supplies/SuppliesList.tsx";
 // import {Products} from "./Pages/Products/ProductsList.tsx";
@@ -98,6 +98,7 @@ const SendEmail = lazy(() => import('./Pages/RecoveryPassword/ResetPassword.tsx'
 const Login = lazy(() => import('./Pages/Login/Login.tsx'));
 const Register = lazy(() => import('./Pages/Register/Register.tsx'));
 const Cart = lazy(() => import('./Pages/Cart/Cart.tsx'));
+const CartCheckout = lazy(() => import('./Pages/CartCheckout/CartCheckout.tsx'));
 
 export default function App() {
     return (
@@ -327,6 +328,11 @@ export default function App() {
                                 <Route path={'cart'} element={
                                     <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
                                         <Cart/>
+                                    </Suspense>
+                                }/>
+                                <Route path={'checkout'} element={
+                                    <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
+                                        <CartCheckout/>
                                     </Suspense>
                                 }/>
                             </Route>

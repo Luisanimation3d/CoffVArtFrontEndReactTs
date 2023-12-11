@@ -9,6 +9,7 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import styles from './Roles.module.css'
 import {API_KEY} from "../../constantes.ts";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const RolesCreate = () => {
     const [step, setStep] = useState<number>(1)
@@ -209,9 +210,17 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
         post(`roles?apikey=${API_KEY}`, newValues)
             console.log(loading, error)
         if (!loading && !error) {
-            setTimeout(() => {
-                navigate(-1)
-            }, 500)
+            Swal.fire({
+                title: 'Rol editado correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: '#0098DA',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate(-1)
+                }
+            })
         }
     }
 
