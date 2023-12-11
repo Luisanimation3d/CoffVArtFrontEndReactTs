@@ -6,6 +6,7 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
+import {API_KEY, API_URL} from "../../constantes.ts";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { API_KEY } from "../../constantes.ts";
@@ -43,6 +44,11 @@ export const Shops = () => {
             header: "Fecha de Compra",
         }
     ];
+
+    
+
+
+
     const dataShops = data?.shops?.rows || [];
     let dataShopsFiltered: any;
 
@@ -121,6 +127,8 @@ export const Shops = () => {
                         deleteAction={{
                             onClick: handleDelete,
                         }}
+                        nombreArchivo={'Compras Reporte'}
+                        tituloDocumento={'Compras Reporte'}
                     />
                         )
                     }

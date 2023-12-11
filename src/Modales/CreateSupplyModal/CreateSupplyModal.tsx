@@ -5,6 +5,7 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
+import Swal from "sweetalert2";
 
 export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const {data, post, error: errorRegister} = useFetch(API_URL)
@@ -26,11 +27,11 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
             placeholder: 'Ingrese el nombre del Producto',
             value: registerForm.name,
             onChange: (value: string) => setRegisterForm({...registerForm, name: value}),
-            size: 'medium',
+            size: 'large',
         },
         {
             name: 'description',
-            type: 'text',
+            type: 'textarea',
             label: 'Descripción',
             placeholder: 'Ingrese la descripción del producto',
             value: registerForm.description,
@@ -70,8 +71,13 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
     }
 
     useEffect(() => {
-        if (data?.newProduct && !errorRegister) {
-            alert('Insumo creado correctamente')
+        if (data?.newSupply && !errorRegister) {
+            Swal.fire({
+                title: 'Insumo creado',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500,
+            })
             setIsModalOpen(false)
         }
     }, [data]);
