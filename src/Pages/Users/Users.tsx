@@ -140,6 +140,8 @@ export default function User() {
                     {
                         !loading && !error && dataUsersFiltered.length > 0 && (
                             <Table columns={columnsUsers} data={dataUsersFiltered} onRowClick={()=>{}}
+                                   nombreArchivo={'Usuarios Reporte'}
+                                   tituloDocumento={'Usuarios'}
                                 editableAction={{
                                     label: 'Editar Usuario',
                                     onClick: (row: any) => {
