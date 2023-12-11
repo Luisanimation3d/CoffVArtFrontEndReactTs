@@ -131,6 +131,8 @@ export const Sales = () => {
                         deleteAction={{
                             onClick: handleDelete,
                         }}
+                        nombreArchivo={"Ventas"}
+                        tituloDocumento={"Ventas"}
                     />
                         )
                     }
