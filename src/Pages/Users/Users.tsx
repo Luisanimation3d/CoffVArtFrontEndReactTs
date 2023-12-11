@@ -45,10 +45,6 @@ export default function User() {
             header: 'Apellido',
         },
         {
-            key: 'address',
-            header: 'Dirección',
-        },
-        {
             key: 'phone',
             header: 'Teléfono',
         },

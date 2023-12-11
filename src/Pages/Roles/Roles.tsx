@@ -18,9 +18,10 @@ export const Roles = () => {
     const [nameRol, setNameRol] = useState<string>('')
     const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate()
+    const [page, setPage] = useState<number>(1)
     useEffect(() => {
-        get(`roles?apikey=${API_KEY}`)
-    }, []);
+        get(`roles?apikey=${API_KEY}&page=${page}`)
+    }, [page]);
     const columnsRoles: Column[] = [
         {
             key: 'id',
@@ -107,6 +108,10 @@ export const Roles = () => {
                                    }}
                                    nombreArchivo={'Roles Reporte'}
                                    tituloDocumento={'Roles Reporte'}
+                                   page={page}
+                                   setPage={setPage}
+                                   totalPages={Math.ceil(data?.roles?.count / data?.options?.limit)}
+                                   pagination={true}
                             />)
                     }
                 </div>

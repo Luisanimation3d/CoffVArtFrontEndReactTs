@@ -20,7 +20,7 @@ export const ModalContainer: FC<ModalContainerProps> = ({
 
 export const Modal: FC<ModalProps> = ({ title, children, showModal, ...props }) => {
     return (
-        <div className={`modal ${props?.className}`} onClick={(e) => e.stopPropagation()}>
+        <div className={`modal ${props?.className ? props?.className : ''}`} onClick={(e) => e.stopPropagation()}>
             <button
                 className='modal__close'
                 onClick={() => {
