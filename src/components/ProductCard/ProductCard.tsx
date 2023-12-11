@@ -106,9 +106,9 @@ export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
     }
 
     function handleAddQuantity() {
-        if (product.quantity >= 10) {
-            return;
-        }
+            if (product.quantity >= 10) {
+                return;
+            }
         addQuantity(product.id);
     }
 

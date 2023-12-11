@@ -11,13 +11,9 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [registerForm, setRegisterForm] = useState<{
         name: string,
-        amount: string,
-        unitPrice: string,
         description: string,
     }>({
         name: '',
-        amount: '',
-        unitPrice: '',
         description: '',
     })
 
@@ -33,30 +29,6 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
             size: 'medium',
         },
         {
-            name: 'amount',
-            type: 'number',
-            label: 'Cantidad',
-            placeholder: 'Ingrese la cantidad del Producto',
-            value: registerForm.amount,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                amount: validateIfNumber(value) ? value : prev.amount
-            })),
-            size: 'medium',
-        },
-        {
-            name: 'unitPrice',
-            type: 'number',
-            label: 'Precio Únitario',
-            placeholder: 'Ingrese el Precio Únitario del producto',
-            value: registerForm.unitPrice,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
-                unitPrice: validateIfNumber(value) ? value : prev.unitPrice
-            })),
-            size: 'large',
-        },
-        {
             name: 'description',
             type: 'text',
             label: 'Descripción',
@@ -70,23 +42,10 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
 
 
 
-    const validateIfNumber = (value: string) => {
-        if (value.length === 0) return true
-        const regex = new RegExp('^[0-9]+$')
-        return regex.test(value)
-    }
-
-
     const validateForm = () => {
         const errors: any = {}
         if (registerForm.name.length === 0) {
             errors.name = 'El nombre es requerido'
-        }
-        if (registerForm.amount.length === 0) {
-            errors.amount = 'La cantidad es requerida'
-        }
-        if (registerForm.unitPrice.length === 0) {
-            errors.unitPrice = 'El precio unitario es requerido'
         }
         if (registerForm.description.length === 0) {
             errors.description = 'La descripción es requerida'
@@ -104,8 +63,6 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
         setError({})
         const dataToSend = {
             name: registerForm.name,
-            amount: registerForm.amount,
-            unitPrice: registerForm.unitPrice,
             description: registerForm.description,
         }
 

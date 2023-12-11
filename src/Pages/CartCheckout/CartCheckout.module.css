@@ -34,6 +34,7 @@
     letter-spacing: 0.125rem;
     text-transform: uppercase;
     position: relative;
+    transition: .5s ease;
 }
 
 .navigationListItem:after {
@@ -129,6 +130,7 @@
     gap: 2rem;
     width: 100%;
     border-top: 1px solid #D6CAB0;
+    padding: 2rem 0;
 }
 
 .productsCartContainerCards{

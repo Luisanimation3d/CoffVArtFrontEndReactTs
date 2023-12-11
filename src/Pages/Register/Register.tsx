@@ -7,6 +7,7 @@ import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const Register = () => {
     const navigate = useNavigate();
@@ -192,9 +193,13 @@ export const Register = () => {
 
     useEffect(() => {
         if (data?.newUser && !errorRegister) {
-            alert('Usuario creado correctamente')
-            console.log(data)
-            navigate('/user/Login');
+            Swal.fire({
+                title: 'Usuario creado exitosamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar',
+            }).then(() => {
+                navigate('/user/Login');
+            })
         }
     }, [data]);
 

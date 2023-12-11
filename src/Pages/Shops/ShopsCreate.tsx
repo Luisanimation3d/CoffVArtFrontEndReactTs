@@ -37,6 +37,7 @@ export const ShopsCreate = () => {
     const [description, setDescription] = useState('');
     const [subTotal, setSubTotal] = useState(0);
     const [iva, setIva] = useState(0);
+    const [unitPrice, setUnitPrice] = useState('');
     const [precio, setPrecio] = useState(0);
     const [options, setOptions] = useState<SelectOption[]>([]);
     const [insumos, setInsumos] = useState<SelectOption[]>([]);
@@ -55,6 +56,10 @@ export const ShopsCreate = () => {
         {
             key: 'insumo',
             header: 'Insumo',
+        },
+        {
+            key: 'unitPrice',
+            header: 'Precio Unitario',   
         },
         {
             key: 'proveedor',
@@ -105,11 +110,20 @@ export const ShopsCreate = () => {
         {
             name: 'quantity',
             type: 'number',
-            label: 'Cantidad',
-            placeholder: 'Cantidad',
+            label: 'Cantidad (Kg)',
+            placeholder: 'Cantidad (Kg)',
             size: 'large',
             value: cantidad,
             onChange: setCantidad
+        },
+        {
+            name: 'unitPrice',
+            type: 'number',
+            label: 'Precio Unitario',
+            placeholder: 'Precio Unitario',
+            size: 'large',
+            value: unitPrice,
+            onChange: setUnitPrice
         },
         {
             name: 'date',
@@ -136,8 +150,8 @@ export const ShopsCreate = () => {
         console.log('Esta entrando')
 
 
-        const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectInsumo?.value)
-        const totalPrice = parseInt(cantidad || '0') * selectedSupply?.unitPrice
+        //const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectInsumo?.value)
+        const totalPrice = parseInt(cantidad || '0') * parseFloat(unitPrice)
         const newDetail = {
             id: detalles.length + 1,
             invoice: invoice,
@@ -145,6 +159,7 @@ export const ShopsCreate = () => {
             idInsumo: selectInsumo?.value,
             proveedor: selectProveedor?.label,
             cantidad: cantidad,
+            unitPrice: unitPrice,
             precioTotal: totalPrice,
         }
         const newSubtotal = subTotal + totalPrice
@@ -204,11 +219,11 @@ export const ShopsCreate = () => {
     const handleDeleteProduct = (id: any) => {
         console.log('Esta entrando')
         console.log(id, 'Estoy aqui')
-        const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
+        //const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
 
         const NuevoDetalle = detalles.filter(detalle => detalle.id !== id.id);
         const newSubtotal = NuevoDetalle?.reduce((sum, item) => {
-            return parseFloat(sum) + (parseFloat(insumoItem.unitPrice) * parseInt(item.cantidad))
+            return parseFloat(sum) + (parseFloat(item.unitPrice) * parseInt(item.cantidad))
         }, 0)
 
         console.log(newSubtotal, 'nuevo Subtotal')
@@ -231,7 +246,7 @@ export const ShopsCreate = () => {
             return;
         }
         let id = detalles[0]
-        const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
+        //const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
 
         const requestBody = {
             invoice: invoice,
@@ -244,7 +259,7 @@ export const ShopsCreate = () => {
                 shopId: detalle.id,
                 supplyId: detalle.idInsumo,
                 quantity: parseInt(detalle.cantidad),
-                value: insumoItem.unitPrice,
+                value: parseFloat(detalle.unitPrice),
                 subtotal: subTotal
             })),
         };

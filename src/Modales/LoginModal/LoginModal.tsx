@@ -10,12 +10,13 @@ import {useAuth} from '../../context/AuthContext.tsx'
 import styles from './LoginModal.module.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import Swal from "sweetalert2";
 
 export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => {
     const location = useLocation();
     const {pathname} = location;
     const navigate = useNavigate();
-    const {login, isAuthenticated, updateUser} = useAuth();
+    const {login, isAuthenticated, updateUser, user} = useAuth();
 
     const handleClick = () => {
         navigate({
@@ -96,10 +97,19 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     useEffect(() => {
         if (data?.token) {
             login(null, data.token);
-            alert('Login exitoso');
-            // showModal(false);
+            Swal.fire({
+                title: 'Bienvenido',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
         }
-    }, [data])
+
+        if(user){
+            showModal(false);
+            navigate('/admin/my-profile')
+        }
+    }, [data, user])
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -109,7 +119,18 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
 
     useEffect(() => {
         if (data?.user) {
-            updateUser(data.user);
+            const userToUpdate = {
+                email: data.user.email,
+                name: data.user.name,
+                role: data.user.role,
+                permissions: data.user.permissions,
+                address: data.user.coustomer.address,
+                phone: data.user.coustomer.phone,
+                document: data.user.coustomer.document,
+                documentType: data.user.coustomer.documentType,
+
+            }
+            updateUser(userToUpdate);
         }
     }, [data]);
 

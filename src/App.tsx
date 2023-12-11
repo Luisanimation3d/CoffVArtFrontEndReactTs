@@ -4,7 +4,7 @@ import {LabelView} from "./components/LabelView/LabelView.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
 import {CartProvider} from "./context/CartContext.tsx";
 import {ProtectedRoutes} from "./Routes/ProtectedRoutes.tsx";
-import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
+// import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
 
 // import {Supplies} from "./Pages/Supplies/SuppliesList.tsx";
 // import {Products} from "./Pages/Products/ProductsList.tsx";
@@ -80,6 +80,7 @@ const ProductionOrdersCreate = lazy(() => import('./Pages/ProductionOrders/Produ
 const ProductionOrdersEdit = lazy(() => import('./Pages/ProductionOrders/ProductionOrdersEdit.tsx'));
 const Orders = lazy(() => import('./Pages/Orders/OrdersList.tsx'));
 const OrdersCreate = lazy(() => import('./Pages/Orders/OrdersCreate.tsx'));
+const OrdersEditPrueba = lazy(() => import('./Pages/Orders/OrdersEditPrueba.tsx'));
 const ProductionRequests = lazy(() => import('./Pages/ProductionRequests/ProductionRequests.tsx'));
 const ProductionRequestsCreate = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsCreate.tsx'));
 const ProductionRequestsEdit = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsEdit.tsx'));
@@ -97,6 +98,7 @@ const SendEmail = lazy(() => import('./Pages/RecoveryPassword/ResetPassword.tsx'
 const Login = lazy(() => import('./Pages/Login/Login.tsx'));
 const Register = lazy(() => import('./Pages/Register/Register.tsx'));
 const Cart = lazy(() => import('./Pages/Cart/Cart.tsx'));
+const CartCheckout = lazy(() => import('./Pages/CartCheckout/CartCheckout.tsx'));
 
 export default function App() {
     return (
@@ -258,6 +260,11 @@ export default function App() {
                                             <OrdersCreate/>
                                         </Suspense>
                                     }/>
+                                    <Route path={'Orders/edit/:id'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
+                                            <OrdersEditPrueba/>
+                                        </Suspense>
+                                    }/>
                                     <Route path={'users'} element={
                                         <Suspense fallback={<h1>Cargando el componente de usuarios</h1>}>
                                             <User/>
@@ -321,6 +328,11 @@ export default function App() {
                                 <Route path={'cart'} element={
                                     <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
                                         <Cart/>
+                                    </Suspense>
+                                }/>
+                                <Route path={'checkout'} element={
+                                    <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
+                                        <CartCheckout/>
                                     </Suspense>
                                 }/>
                             </Route>

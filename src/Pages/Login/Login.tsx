@@ -8,9 +8,10 @@ import styles from "./Login.module.css"
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 export const Login = () => {
-    const {login, isAuthenticated, updateUser} = useAuth();
+    const {login, isAuthenticated, updateUser, user} = useAuth();
     const navigate = useNavigate();
     const {data, error: errorLogin, post, get} = useFetch(API_URL)
     const [error, setError] = useState<{ [key: string]: string }>({});
@@ -42,7 +43,6 @@ export const Login = () => {
     ]
 
     const validate = (values: any) => {
-        console.log(values);
         const errors: any = {};
         if (!values.email) {
             errors.email = 'El correo Electrónico es requerido'
@@ -87,10 +87,26 @@ export const Login = () => {
     useEffect(() => {
         if(data?.token) {
             login(null, data.token);
-            alert('Login exitoso');
-            navigate('/admin/my-profile');
+            Swal.fire({
+                title: 'Bienvenido',
+                icon: 'success',
+                showConfirmButton: false,
+            })
         }
-    }, [data])
+
+        if(user){
+            if(localStorage.getItem('CartComes') === 'true'){
+                localStorage.removeItem('CartComes');
+                setTimeout(()=> {
+                    navigate('/user/checkout')
+                }, 500)
+            }else{
+                setTimeout(()=> {
+                    navigate('/admin/my-profile');
+                },500)
+            }
+        }
+    }, [data, user])
 
     useEffect(() => {
         if(isAuthenticated){
@@ -99,8 +115,19 @@ export const Login = () => {
     }, [isAuthenticated])
 
     useEffect(() => {
-        if(data?.user) {
-            updateUser(data.user);
+        if (data?.user) {
+            const userToUpdate = {
+                email: data.user.email,
+                name: data.user.name,
+                role: data.user.role,
+                permissions: data.user.permissions,
+                address: data.user.coustomer.address,
+                phone: data.user.coustomer.phone,
+                document: data.user.coustomer.document,
+                documentType: data.user.coustomer.documentType,
+
+            }
+            updateUser(userToUpdate);
         }
     }, [data]);
 

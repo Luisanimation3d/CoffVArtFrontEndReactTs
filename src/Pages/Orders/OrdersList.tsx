@@ -10,7 +10,7 @@ import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
-import { EditOrdersModal } from "./OrdersEdit.tsx";
+import { EditOrder } from "../../Modales/EditOrderModal/EditOrderModal.tsx";
 
 export const Orders = () => {
     const [search, setSearch] = useState<string>("");
@@ -141,12 +141,10 @@ console.log(data)
                                 columns={columnsOrders}
                                 data={dataOrdersFiltered}
                                 onRowClick={getOrderDetails}
-                                editableAction={{
-                                    onClick: (value) => {
-                                        setidEdit(value.id)
-                                        setIsModalOpenEdit(true)
-                                    },
-                                }}
+                                editableAction={{ onClick: (e) => {
+                                    setidEdit(e.id)
+                                    setIsModalOpenEdit(true)
+                                } }}
                                 deleteAction={{
                                     onClick: handleDelete,
                                 }}
@@ -157,7 +155,7 @@ console.log(data)
                 {
                     isModalOpenEdit && createPortal(
                         <>
-                            <EditOrdersModal  id={idEdit} setIsModalOpen={setIsModalOpenEdit} title="Editar Orden"/>
+                            <EditOrder  id={idEdit} setIsModalOpen={setIsModalOpenEdit} title="Editar Orden"/>
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )

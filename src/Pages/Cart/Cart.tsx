@@ -3,14 +3,25 @@ import {Button} from "../../components/Button/Button.tsx";
 import {useCart} from "../../context/CartContext.tsx";
 import {CartProductCard} from "../../components/ProductCard/ProductCard.tsx";
 import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../context/AuthContext.tsx";
 
 export default function Cart() {
     const navigate = useNavigate()
     const {cart} = useCart()
+    const {isAuthenticated} = useAuth()
 
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
     const impuestos = subtotal * 0.19
     const total = subtotal + impuestos + 10000
+
+    const handleNavigateUser = () => {
+        if (isAuthenticated) {
+            navigate('/user/checkout')
+        } else {
+            localStorage.setItem('CartComes', String(true))
+            navigate('/user/login')
+        }
+    }
 
     return (
         <>
@@ -32,8 +43,8 @@ export default function Cart() {
                             <nav className={styles.navigationCartContainer}>
                                 <ul className={`${styles.navigationList}`}>
                                     <li className={`${styles.navigationListItem} ${styles['navigationListItem--active']}`}>Carrito</li>
-                                    <li className={`${styles.navigationListItem}`}>Completa tu información</li>
-                                    <li className={`${styles.navigationListItem}`}>Envío</li>
+                                    <li className={`${styles.navigationListItem}`}>Valida tu información</li>
+                                    <li className={`${styles.navigationListItem}`}>Valida el envío</li>
                                     <li className={`${styles.navigationListItem}`}>Pago</li>
                                 </ul>
                             </nav>
@@ -70,7 +81,7 @@ export default function Cart() {
                                             className={styles.summaryItemValue}>$ {Intl.NumberFormat('es-co').format(total)}</div>
                                     </div>
                                     <div className={styles.buttonsContainer}>
-                                        <Button text={'Finalizar orden'} fill={false} autosize={false}/>
+                                        <Button text={'Finalizar orden'} fill={false} autosize={false} onClick={handleNavigateUser}/>
                                         <Button text={'Seguir comprando'} fill={true} autosize={false}
                                                 onClick={() => navigate('/tiendaUser')}/>
                                     </div>

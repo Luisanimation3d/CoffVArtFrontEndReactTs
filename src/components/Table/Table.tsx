@@ -2,6 +2,7 @@ import {FC, useState} from 'react'
 import {TableProps} from '../../types/Table'
 import {FiEdit2, FiMoreVertical, FiTrash2} from 'react-icons/fi'
 import './Table.css'
+import {ExcelButton} from "../ExcelButton/ExcelButton.tsx";
 
 
 export const Table: FC<TableProps> = ({
@@ -11,6 +12,8 @@ export const Table: FC<TableProps> = ({
                                           optionButtons,
                                           editableAction,
                                           deleteAction,
+                                          tituloDocumento,
+                                          nombreArchivo
                                       }: TableProps) => {
 
     const [expandedRow, setExpandedRow] = useState<any>([])
@@ -29,6 +32,10 @@ export const Table: FC<TableProps> = ({
     }
 
     return (
+        <>
+        {
+            tituloDocumento && nombreArchivo && <ExcelButton dataDownload={data} tituloDocumento={tituloDocumento} nombreArchivo={nombreArchivo}/>
+        }
         <table className={`table__container`}>
             <thead className={`table__header`}>
             <tr>
@@ -94,5 +101,6 @@ export const Table: FC<TableProps> = ({
             ))}
             </tbody>
         </table>
+        </>
     )
 }

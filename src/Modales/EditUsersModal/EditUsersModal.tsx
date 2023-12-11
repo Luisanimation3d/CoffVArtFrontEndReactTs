@@ -1,24 +1,23 @@
-import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
-import {useEffect, useState} from "react";
-import {FormField, SelectOption} from "../../types/Form";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import {useEffect, useState} from "react";
+import {FormField, SelectOption} from "../../types/Form";
+import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import Swal from "sweetalert2";
 
-export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
-    const {data, get, post, error: errorRegister} = useFetch(API_URL)
+export const EditUsersModal = ({setIsModalOpen, title = 'Editar Usuario', idUser, setIdEdit}: { setIsModalOpen: (value: boolean) => void, title?: string, idUser: number, setIdEdit: (value: number | null) => void }) => {
+    const {data, get, put, error: errorEdit} = useFetch(API_URL)
+    const {data: dataUser, get: getUser} = useFetch(API_URL)
     const [options, setOptions] = useState<SelectOption[]>([])
     const [error, setError] = useState<{ [key: string]: string }>({})
-    const [registerForm, setRegisterForm] = useState<{
+    const [editForm, setEditForm] = useState<{
         name: string,
         lastname: string,
         address: string,
         phone: string,
         email: string,
-        password: string,
-        confirmPassword: string,
         documentType: SelectOption | undefined,
         document: string,
         role: SelectOption | undefined,
@@ -28,8 +27,6 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
         address: '',
         phone: '',
         email: '',
-        password: '',
-        confirmPassword: '',
         documentType: undefined,
         document: '',
         role: undefined
@@ -52,8 +49,8 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'text',
             label: 'Nombre',
             placeholder: 'Ingrese su nombre',
-            value: registerForm.name,
-            onChange: (value: string) => setRegisterForm({...registerForm, name: value}),
+            value: editForm.name,
+            onChange: (value: string) => setEditForm({...editForm, name: value}),
             size: 'medium',
         },
         {
@@ -61,8 +58,8 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'text',
             label: 'Apellido',
             placeholder: 'Ingrese su apellido',
-            value: registerForm.lastname,
-            onChange: (value: string) => setRegisterForm({...registerForm, lastname: value}),
+            value: editForm.lastname,
+            onChange: (value: string) => setEditForm({...editForm, lastname: value}),
             size: 'medium',
         },
         {
@@ -70,8 +67,8 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'text',
             label: 'Dirección',
             placeholder: 'Ingrese su dirección',
-            value: registerForm.address,
-            onChange: (value: string) => setRegisterForm({...registerForm, address: value}),
+            value: editForm.address,
+            onChange: (value: string) => setEditForm({...editForm, address: value}),
             size: 'large',
         },
         {
@@ -79,9 +76,9 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'text',
             label: 'Teléfono',
             placeholder: 'Ingrese su teléfono',
-            value: registerForm.phone,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
+            value: editForm.phone,
+            onChange: (value: string) => setEditForm(prev => ({
+                ...editForm,
                 phone: validateIfNumber(value) ? value : prev.phone
             })),
             size: 'large',
@@ -91,35 +88,17 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'text',
             label: 'Email',
             placeholder: 'Ingrese su email',
-            value: registerForm.email,
-            onChange: (value: string) => setRegisterForm({...registerForm, email: value}),
+            value: editForm.email,
+            onChange: (value: string) => setEditForm({...editForm, email: value}),
             size: 'large',
         },
         {
-            name: 'password',
-            type: 'password',
-            label: 'Contraseña',
-            placeholder: 'Ingrese su contraseña',
-            value: registerForm.password,
-            onChange: (value: string) => setRegisterForm({...registerForm, password: value}),
-            size: 'large',
-        },
-        {
-            name: 'confirmPassword',
-            type: 'password',
-            label: 'Confirmar contraseña',
-            placeholder: 'Ingrese su contraseña',
-            value: registerForm.confirmPassword,
-            onChange: (value: string) => setRegisterForm({...registerForm, confirmPassword: value}),
-            size: 'large',
-        },
-{
             name: 'documentType',
             type: 'select',
             label: 'Tipo de documento',
             placeholder: 'Seleccione un tipo de documento',
-            value: registerForm.documentType,
-            onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
+            value: editForm.documentType,
+            onChange: (value: SelectOption | undefined) => setEditForm({...editForm, documentType: value}),
             size: 'medium',
             options: documentTypeOptions
         },
@@ -128,9 +107,9 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'text',
             label: 'Documento',
             placeholder: 'Ingrese su documento',
-            value: registerForm.document,
-            onChange: (value: string) => setRegisterForm(prev => ({
-                ...registerForm,
+            value: editForm.document,
+            onChange: (value: string) => setEditForm(prev => ({
+                ...editForm,
                 document: validateIfNumber(value) ? value : prev.document
             })),
             size: 'large',
@@ -140,8 +119,8 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             type: 'select',
             label: 'Rol',
             placeholder: 'Seleccione un rol',
-            value: registerForm.role,
-            onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, role: value}),
+            value: editForm.role,
+            onChange: (value: SelectOption | undefined) => setEditForm({...editForm, role: value}),
             size: 'large',
             options: options
         }
@@ -160,39 +139,30 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
 
     const validateForm = () => {
         const errors: any = {}
-        if (registerForm.name.length === 0) {
+        if (editForm.name.length === 0) {
             errors.name = 'El nombre es requerido'
         }
-        if (registerForm.lastname.length === 0) {
+        if (editForm.lastname.length === 0) {
             errors.lastname = 'El apellido es requerido'
         }
-        if (registerForm.address.length === 0) {
+        if (editForm.address.length === 0) {
             errors.address = 'La dirección es requerida'
         }
-        if (registerForm.phone.length === 0) {
+        if (editForm.phone.length === 0) {
             errors.phone = 'El teléfono es requerido'
         }
-        if (registerForm.email.length === 0) {
+        if (editForm.email.length === 0) {
             errors.email = 'El email es requerido'
-        }else if(!validateEmail(registerForm.email)){
+        }else if(!validateEmail(editForm.email)){
             errors.email = 'El email no es válido'
         }
-        if (registerForm.password.length === 0) {
-            errors.password = 'La contraseña es requerida'
-        }
-        if (registerForm.confirmPassword.length === 0) {
-            errors.confirmPassword = 'La confirmación de contraseña es requerida'
-        } else if (registerForm.password !== registerForm.confirmPassword) {
-            errors.password = 'Las contraseñas no coinciden'
-            errors.confirmPassword = 'Las contraseñas no coinciden'
-        }
-        if (!registerForm.documentType) {
+        if (!editForm.documentType) {
             errors.documentType = 'El tipo de documento es requerido'
         }
-        if (registerForm.document.length === 0) {
+        if (editForm.document.length === 0) {
             errors.document = 'El documento es requerido'
         }
-        if (!registerForm.role) {
+        if (!editForm.role) {
             errors.role = 'El rol es requerido'
         }
         return errors
@@ -207,18 +177,17 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
         }
         setError({})
         const dataToSend = {
-            name: registerForm.name,
-            lastname: registerForm.lastname,
-            address: registerForm.address,
-            phone: registerForm.phone,
-            email: registerForm.email,
-            password: registerForm.password,
-            documentType: registerForm.documentType?.value,
-            document: registerForm.document,
-            roleId: registerForm.role?.value,
+            name: editForm.name,
+            lastname: editForm.lastname,
+            address: editForm.address,
+            phone: editForm.phone,
+            email: editForm.email,
+            documentType: editForm.documentType?.value,
+            document: editForm.document,
+            roleId: editForm.role?.value,
         }
 
-        post(`users?apikey=${API_KEY}`, dataToSend)
+        put(`users/${idUser}?apikey=${API_KEY}`, dataToSend)
     }
 
     useEffect(() => {
@@ -236,16 +205,38 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
     }, [data]);
 
     useEffect(() => {
-        if (data?.newUser && !errorRegister) {
+        if (data?.user && !errorEdit) {
             Swal.fire({
-                title: 'Usuario creado',
+                title: 'Usuario editado correctamente',
                 icon: 'success',
                 showConfirmButton: false,
-                timer: 1500,
+                timer: 1500
             })
+            setIdEdit(null)
             setIsModalOpen(false)
         }
     }, [data]);
+
+    useEffect(() => {
+        getUser(`users/${idUser}?apikey=${API_KEY}`)
+    },[])
+
+    useEffect(() => {
+        if(dataUser?.user){
+            console.log(dataUser?.user)
+            const userToEdit = {
+                name: dataUser?.user?.name,
+                lastname: dataUser?.user?.lastname,
+                address: dataUser?.user?.coustumer?.address,
+                phone: dataUser?.user?.phone,
+                email: dataUser?.user?.email,
+                documentType: documentTypeOptions.find(option => option.value === dataUser?.user?.coustumer?.documentType),
+                document: dataUser?.user?.coustumer?.document,
+                role: options.find(option => option.value === dataUser?.user?.roleId),
+            }
+            setEditForm(userToEdit)
+        }
+    }, [dataUser]);
 
     return (
         <ModalContainer ShowModal={setIsModalOpen}>
