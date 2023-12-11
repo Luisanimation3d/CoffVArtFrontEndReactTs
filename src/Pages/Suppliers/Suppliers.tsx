@@ -6,15 +6,17 @@ import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { SuppliersCreateModal } from "../../Modales/CreateSupplierModal/CreateSupplierModal.tsx";
 import { createPortal } from "react-dom";
+import { SuppliersEditModal } from "../../Modales/EditSupplierModal/EditSupplierModal.tsx";
 
 export const Suppliers = () => {
     const [search, setSearch] = useState<string>('');
+    const [supplierToEdit, setSupplierToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { data, loading, error, get, del } = useFetch(API_URL);
     const navigate = useNavigate();
     useEffect(() => {
         get(`suppliers?apikey=${API_KEY}`);
@@ -47,10 +49,6 @@ export const Suppliers = () => {
         {
             key: 'quality',
             header: 'Calidad',
-        },
-        {
-            key: 'unitCost',
-            header: 'Costo Unitario',
         }
     ];
     
@@ -109,15 +107,25 @@ export const Suppliers = () => {
                         columns={columnsSuppliers}
                         data={dataSuppliersFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: (row) => navigate(`/admin/supplier/edit/${row.id}`) }}
+                        editableAction={{
+                            label: 'Editar Proveedor',
+                            onClick: (row: any) => {
+                                setSupplierToEdit(row.id)
+                                setIsModalOpen(true)
+                            }} }
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }
                 </div>
                 {
                     isModalOpen && createPortal(
-                        <>
-                            <SuppliersCreateModal setIsModalOpen={setIsModalOpen} title="Crear Proveedor"/>
+                        <>{
+                            supplierToEdit?(
+                                <SuppliersEditModal setIsModalOpen={setIsModalOpen} idSupplier={supplierToEdit} setIdEdit={setSupplierToEdit}/>
+                            ):
+                            (<SuppliersCreateModal setIsModalOpen={setIsModalOpen} title="Crear Proveedor"/>)
+                        }
+                            
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )
