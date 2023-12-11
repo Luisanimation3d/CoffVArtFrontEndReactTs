@@ -68,7 +68,6 @@ export const Processes = () => {
 
                     }}>
                         <SearchInput label={'Buscar Procesos'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'processSearch'} />
-                        <Button text={'Crear Procesos'} onClick={() => navigate('/admin/Processes/create')} fill={false}/>
                     </div>
                     
                     {
@@ -86,8 +85,7 @@ export const Processes = () => {
                 <Table columns={columnsProcesses}
                     data={dataProcessesFiltered}
                     onRowClick={()=> null}
-                    editableAction={{ onClick: (row) => navigate(`/admin/Process/edit/${row.id}`)
-                }}
+                    
                 deleteAction={{
                     onClick: () => handleDelete,
                 }}
