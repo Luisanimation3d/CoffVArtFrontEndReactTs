@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { SuppliersCreateModal } from "../../Modales/CreateSupplierModal/CreateSupplierModal.tsx";
 import { createPortal } from "react-dom";
@@ -14,7 +14,7 @@ import { createPortal } from "react-dom";
 export const Suppliers = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { data, loading, error, get, del } = useFetch(API_URL);
     const navigate = useNavigate();
     useEffect(() => {
         get(`suppliers?apikey=${API_KEY}`);
@@ -47,10 +47,6 @@ export const Suppliers = () => {
         {
             key: 'quality',
             header: 'Calidad',
-        },
-        {
-            key: 'unitCost',
-            header: 'Costo Unitario',
         }
     ];
     
@@ -109,7 +105,7 @@ export const Suppliers = () => {
                         columns={columnsSuppliers}
                         data={dataSuppliersFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: (row) => navigate(`/admin/supplier/edit/${row.id}`) }}
+                        editableAction={{ onClick: (row) => navigate(`/admin/Suppliers/edit/${row.id}`) }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }

@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { createPortal } from "react-dom";
 import { CompanysCreateModal } from "../../Modales/CreateCompanyModal/CreateCompanyModal.tsx";
@@ -14,7 +14,7 @@ import { CompanysCreateModal } from "../../Modales/CreateCompanyModal/CreateComp
 export const Companys = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const {data,loading,error,get,del} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {data,loading,error,get,del} = useFetch(API_URL)
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -100,7 +100,7 @@ export const Companys = () => {
                 <Table columns={columnsCompanys}
                     data={dataCompanysFiltered}
                     onRowClick={()=> null}
-                    editableAction={{ onClick: (row) => navigate(`/admin/Company/edit/${row.id}`)
+                    editableAction={{ onClick: (row) => navigate(`/admin/Companys/edit/${row.id}`)
                 }}
                 deleteAction={{
                     onClick: () => handleDelete,

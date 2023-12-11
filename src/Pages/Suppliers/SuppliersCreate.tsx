@@ -1,7 +1,7 @@
 import {FormField} from '../../types/Form'
 import {Button} from '../../components/Button/Button'
 import {Form} from '../../components/Form/Form';
-import {API_KEY} from '../../constantes';
+import {API_KEY, API_URL} from '../../constantes';
 import {useFetch} from '../../hooks/useFetch';
 import {useState} from 'react';
 import React from 'react';
@@ -18,7 +18,7 @@ export const SuppliersCreate = () => {
         unitCost: '',
     })
 
-    const {post, loading, error} = useFetch('https://coffvart-backend.onrender.com/api/');
+    const {post, loading, error} = useFetch(API_URL);
     const navigate = useNavigate()
     const supplierFields: FormField[] = [
         {
@@ -75,15 +75,6 @@ export const SuppliersCreate = () => {
             onChange: (value) => handleInputChange('quality', value),
             size: 'medium'
         },
-        {
-            name: 'unitCost',
-            type: 'number',
-            label: 'Costo bulto',
-            placeholder: 'Premiun',
-            value: formValues['unitCost'] !== undefined ? String(formValues['unitCost']) : '',
-            onChange: (value) => handleInputChange('unitCost', value),
-            size: 'medium'
-        },
     ];
     const handleInputChange = (name: string, value: string | number) => {
         setFormValues(prevValues => ({
@@ -101,7 +92,6 @@ export const SuppliersCreate = () => {
                 address: formValues.address,
                 phone: formValues.phone,
                 quality: formValues.quality,
-                unitCost: formValues.unitCost,
             };
             console.log('Datos del formulario:', requestBody);
 
