@@ -4,10 +4,11 @@ import {useCart} from "../../context/CartContext.tsx";
 import {CartProductCard} from "../../components/ProductCard/ProductCard.tsx";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../context/AuthContext.tsx";
+import {FiX} from "react-icons/fi";
 
 export default function Cart() {
     const navigate = useNavigate()
-    const {cart} = useCart()
+    const {cart, clearCart} = useCart()
     const {isAuthenticated} = useAuth()
 
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
@@ -48,6 +49,7 @@ export default function Cart() {
                                     <li className={`${styles.navigationListItem}`}>Pago</li>
                                 </ul>
                             </nav>
+                            <Button text={<><FiX/> Vaciar Carrito</>} onClick={clearCart}/>
                             <div className={styles.cartResumeContainer}>
                                 <div className={styles.productCartContainer}>
                                     <div className={styles.productsCartContainerCards}>

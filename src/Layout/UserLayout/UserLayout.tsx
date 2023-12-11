@@ -1,8 +1,14 @@
 import {HeaderMenu} from "../../components/HeaderMenu/HeaderMenu.tsx";
-import {Outlet} from "react-router-dom";
+import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {UserFooter} from "../../components/Footer/Footer";
 
 export const UserLayout = () => {
+    const location = useLocation()
+    const navigate = useNavigate()
+    if(location.pathname === '/'){
+        navigate('/home')
+        return null
+    }
     return (
         <>
             <HeaderMenu/>
