@@ -13,6 +13,10 @@ export type User = {
     email: string;
     name: string;
     role: string;
+    address: string;
+    phone: string;
+    document: string;
+    documentType: string;
     permissions: string[];
 }
 

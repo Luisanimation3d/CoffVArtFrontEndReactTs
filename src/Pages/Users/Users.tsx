@@ -11,9 +11,11 @@ import styles from './Users.module.css';
 import {Table} from "../../components/Table/Table.tsx";
 import {createPortal} from "react-dom";
 import {CreateUserModal} from "../../Modales/CreateUserModal/CreateUserModal.tsx";
+import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
 
 export default function User() {
     const [search, setSearch] = useState<string>('')
+    const [userToEdit, setUserToEdit] = useState<number|null>(null)
     // const {data, loading, error, get} = useFetch(API_URL)
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)
     const {data, loading, error, get} = useFetch(API_URL)
@@ -102,6 +104,11 @@ export default function User() {
         dataUsersFiltered = dataUsers
     }
 
+    useEffect(() => {
+        if(userToEdit == null){
+            get(`users?apikey=${API_KEY}`)
+        }
+    }, [userToEdit]);
 
     return (
         <>
@@ -135,7 +142,10 @@ export default function User() {
                             <Table columns={columnsUsers} data={dataUsersFiltered} onRowClick={()=>{}}
                                 editableAction={{
                                     label: 'Editar Usuario',
-                                    onClick: (row: any) => navigate(`/admin/users/edit/${row.id}`),
+                                    onClick: (row: any) => {
+                                        setUserToEdit(row.id)
+                                        setIsModalOpen(true)
+                                    },
                                 }}
                             />
                         )
@@ -144,7 +154,13 @@ export default function User() {
                 {
                     isModalOpen && createPortal(
                         <>
-                            <CreateUserModal setIsModalOpen={setIsModalOpen}/>
+                            {
+                                userToEdit ? (
+                                    <EditUsersModal setIsModalOpen={setIsModalOpen} idUser={userToEdit} setIdEdit={setUserToEdit}/>
+                                ):(
+                                    <CreateUserModal setIsModalOpen={setIsModalOpen}/>
+                                )
+                            }
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )

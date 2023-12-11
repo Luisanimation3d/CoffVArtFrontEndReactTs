@@ -496,3 +496,9 @@
     color: #9f212f;
     font-weight: bold;
 }
+
+@media screen and (max-width: 800px){
+    .cartProductCard--description{
+        display: none;
+    }
+}

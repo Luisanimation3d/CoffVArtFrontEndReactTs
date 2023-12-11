@@ -55,6 +55,10 @@ export const AuthProvider = ({children}: any) => {
         name: string,
         role: string,
         permissions: string[],
+        address: string,
+        phone: string,
+        document: string,
+        documentType: string,
     }) => {
         dispatch({type: AuthActionValues.UPDATE_USER, payload: user});
     }
