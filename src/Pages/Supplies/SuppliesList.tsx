@@ -88,6 +88,8 @@ export const Supplies = () => {
                         onRowClick={() => null}
                         editableAction={{ onClick: () => null }}
                         deleteAction={{ onClick: handleDelete }}
+                        nombreArchivo={'Insumos Reporte'}
+                        tituloDocumento={'Insumos Reporte'}
                     />)
                     }
                 </div>
