@@ -5,20 +5,20 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
-export const EditProcessModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
+export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const options: SelectOption[] = [
         {
-            value: 'enviado',
+            value: 2,
             label: 'Enviado',
         },
         {
-            value: 'cancelado',
+            value: 3,
             label: 'Cancelado',
         },
         {
-            value: 'finalizado',
+            value: 4,
             label: 'Finalizado',
         }
     ];
@@ -28,38 +28,22 @@ export const EditProcessModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}:
     useEffect(() => {
         get(`productionRequests/${id}?apikey=${API_KEY}`)
     }, []);
-
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                requestNumber: data?.ProductionRequest.requestNumber,
-                processId: data?.ProductionRequest.processId,
+                processId: data?.ProductionRequest?.processId
             }
             setRegisterForm(newValues)
         }
     }, [data]);
-
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [registerForm, setRegisterForm] = useState<{
-        requestNumber: string,
         processId: string,
     }>({
-        requestNumber: '',
         processId: '',
 
     })
-
-
-    const formFieldsRegister: FormField[] = [
-        
-        {
-            name: 'requestNumber',
-            type: 'text',
-            label: 'Numero de solicitud',
-            value: registerForm.requestNumber,
-            onChange: (value: string) => setRegisterForm({...registerForm, requestNumber: value}),
-            size: 'medium',
-        }, 
+    const formFieldsRegister: FormField[] = [ 
         {
             name: 'processId',
             type: 'select',
@@ -72,8 +56,6 @@ export const EditProcessModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}:
         }
 
     ]
-
-
     const validateForm = () => {
         const errors: any = {}
         if (registerForm.processId.length === 0) {
@@ -82,7 +64,6 @@ export const EditProcessModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}:
         
         return errors
     }
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateForm();
@@ -91,22 +72,21 @@ export const EditProcessModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}:
             return
         }
         const requestBody = {
-            requestNumber: registerForm.requestNumber,
-            proceessId: registerForm.processId,
+            processId: process?.value,
         };
-
-        put(`productionRequests?apikey=${API_KEY}`, requestBody)
-        if(errorRegister){
+        console.log(requestBody)
+        put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
+        if(!errorRegister){
             setTimeout(() => {
-                navigate(-1)
+                if (process?.value == 4) {
+                    navigate('/admin/ProductionRequests/create')
+                }
             }, 500);
         }
     };
-
     if (loading) {
         return <div>Cargando...</div>;
     }
-
     return (
         <ModalContainer ShowModal={setIsModalOpen}>
             <Modal showModal={setIsModalOpen} title={title}>

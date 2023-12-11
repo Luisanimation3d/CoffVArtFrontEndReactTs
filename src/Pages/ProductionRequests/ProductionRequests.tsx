@@ -8,9 +8,12 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { API_KEY, API_URL } from "../../constantes.ts";
+import {EditProcessRModal } from "../../Modales/EditProcessModal/EditProcessRModal.tsx";
+import { createPortal } from "react-dom";
 
 export const ProductionRequests = () => {
     const [search, setSearch] = useState<string>('');
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch(API_URL);
     const [dataProductionRequestsModify, setDataProductionRequestsModify] = useState<any>([])
     const navigate = useNavigate()
@@ -45,6 +48,7 @@ export const ProductionRequests = () => {
             header: 'Proceso',
         },    
     ]
+
     useEffect(() => {
         if(data?.ProductionRequests?.rows){
             console.log('Entra')
@@ -60,6 +64,7 @@ export const ProductionRequests = () => {
             setDataProductionRequestsModify(newProductionRequestsData)
         }
     }, [data]);
+    const [idEdit, setidEdit]= useState(0)
 
     const dataProductionRequests = dataProductionRequestsModify || []
 
@@ -82,7 +87,6 @@ export const ProductionRequests = () => {
             get(`productionRequests?apikey=${API_KEY}`);
         }, 500);
     };
-
     
     return(
         <>
@@ -118,12 +122,25 @@ export const ProductionRequests = () => {
                         columns={columnsProductionRequest}
                         data={dataProductionRequestsFiltered}
                         onRowClick={() => null}
-                        editableAction={{ onClick: () => null }}
+                        editableAction={{ onClick: (e) => {
+                            setidEdit(e.id)
+                            setIsModalOpen(true)
+                        } }}
                         deleteAction={{ onClick: handleDelete }}
                     />)
                     }
             </div>
-            
+            {
+                    isModalOpen && createPortal(
+                        <>
+                            <EditProcessRModal
+                            id= {idEdit}
+                            setIsModalOpen={setIsModalOpen}
+                            title="Cambiar proceso"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
         </Container>
     </>
     )
