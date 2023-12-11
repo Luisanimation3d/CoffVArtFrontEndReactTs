@@ -79,7 +79,7 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         if(!errorRegister){
             setTimeout(() => {
                 if (process?.value == 4) {
-                    navigate('/admin/ProductionRequests/create')
+                    navigate('/admin/ProductionOrders/create')
                 }
             }, 500);
         }
