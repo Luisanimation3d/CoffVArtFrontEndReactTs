@@ -15,17 +15,12 @@ import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
 
 export default function User() {
     const [search, setSearch] = useState<string>('')
-    const [userToEdit, setUserToEdit] = useState<number|null>(null)
+    const [userToEdit, setUserToEdit] = useState<number | null>(null)
     // const {data, loading, error, get} = useFetch(API_URL)
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)
-    const {data, loading, error, get} = useFetch(API_URL)
+    const {data, loading, error, get, del} = useFetch(API_URL)
     const [dataUsersModify, setDataUsersModify] = useState<any>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const navigate = useNavigate()
-    // useEffect(() => {
-    //     get(`users?apikey=${API_KEY}`)
-    //     getRoles(`roles?apikey=${API_KEY}`)
-    // }, []);
 
     useEffect(() => {
         get(`users?apikey=${API_KEY}`)
@@ -58,27 +53,15 @@ export default function User() {
         },
     ]
 
-    // useEffect(() => {
-    //     if (dataRoles?.roles?.rows && data?.users?.rows) {
-    //         const usersWithRol = data?.users?.rows?.map((user: any) => {
-    //             const rol = dataRoles?.roles?.rows?.find((rol: any) => rol.id == user.roleId)
-    //             return {
-    //                 ...user,
-    //                 rol: rol?.name,
-    //             }
-    //         })
-    //         setDataUsersModify({
-    //             ...data,
-    //             users: {
-    //                 ...data.users,
-    //                 rows: usersWithRol,
-    //             }
-    //         })
-    //     }
-    // }, [data, dataRoles])
+    const handleDelete = (row: any) => {
+        del(`users/${row}?apikey=${API_KEY}`)
+        setTimeout(() => {
+            get(`users?apikey=${API_KEY}`)
+        }, 500)
+    }
 
     useEffect(() => {
-        if(data?.users?.rows){
+        if (data?.users?.rows) {
             const newUsersData = data?.users?.rows.map((user: any) => {
                 return {
                     ...user,
@@ -101,7 +84,7 @@ export default function User() {
     }
 
     useEffect(() => {
-        if(userToEdit == null){
+        if (userToEdit == null) {
             get(`users?apikey=${API_KEY}`)
         }
     }, [userToEdit]);
@@ -109,9 +92,9 @@ export default function User() {
     return (
         <>
             <Container align={'center'} justify={'TOP'}>
-                <Titles title={'Usuarios'} />
+                <Titles title={'Usuarios'}/>
                 <div className={styles.usersTable} style={{
-                width: '100%',
+                    width: '100%',
                 }}>
                     <div style={{
                         display: 'flex',
@@ -135,16 +118,21 @@ export default function User() {
                     }
                     {
                         !loading && !error && dataUsersFiltered.length > 0 && (
-                            <Table columns={columnsUsers} data={dataUsersFiltered} onRowClick={()=>{}}
+                            <Table columns={columnsUsers} data={dataUsersFiltered} onRowClick={() => {
+                            }}
                                    nombreArchivo={'Usuarios Reporte'}
                                    tituloDocumento={'Usuarios'}
-                                editableAction={{
-                                    label: 'Editar Usuario',
-                                    onClick: (row: any) => {
-                                        setUserToEdit(row.id)
-                                        setIsModalOpen(true)
-                                    },
-                                }}
+                                   deleteAction={{
+                                       label: 'Cambiar estado',
+                                       onClick: (row) => handleDelete(row.id),
+                                   }}
+                                   editableAction={{
+                                       label: 'Editar Usuario',
+                                       onClick: (row: any) => {
+                                           setUserToEdit(row.id)
+                                           setIsModalOpen(true)
+                                       },
+                                   }}
                             />
                         )
                     }
@@ -154,8 +142,9 @@ export default function User() {
                         <>
                             {
                                 userToEdit ? (
-                                    <EditUsersModal setIsModalOpen={setIsModalOpen} idUser={userToEdit} setIdEdit={setUserToEdit}/>
-                                ):(
+                                    <EditUsersModal setIsModalOpen={setIsModalOpen} idUser={userToEdit}
+                                                    setIdEdit={setUserToEdit}/>
+                                ) : (
                                     <CreateUserModal setIsModalOpen={setIsModalOpen}/>
                                 )
                             }
