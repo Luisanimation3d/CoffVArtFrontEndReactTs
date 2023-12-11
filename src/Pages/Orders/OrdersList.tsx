@@ -148,6 +148,8 @@ console.log(data)
                                 deleteAction={{
                                     onClick: handleDelete,
                                 }}
+                                nombreArchivo={'Pedidos Reporte'}
+                                tituloDocumento={'Pedidos Reporte'}
                             />
                         )
                     }
