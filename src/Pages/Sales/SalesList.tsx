@@ -17,6 +17,10 @@ export const Sales = () => {
     const { data, loading, error, get, del } = useFetch(API_URL)
     const [dataSalesModify, setDataSalesModify] = useState<any>([])
     const navigate = useNavigate();
+    const [page, setPage] = useState<number>(1)
+    useEffect(() => {
+        get(`sales?apikey=${API_KEY}&page=${page}`)
+    }, [page]);
 
     useEffect(() => {
         get(`sales?apikey=${API_KEY}`);
@@ -77,6 +81,7 @@ export const Sales = () => {
         console.log(sale, "esta es la venta");
         const salesDetails= sale?.salesdetails?.map((salesDetail: any) => ({
             id: salesDetail.id,
+            invoice: sale.invoice,
             saleId: salesDetail.saleId,
             product: salesDetail.product.name,
             quantity: salesDetail.quantity,
@@ -108,7 +113,6 @@ export const Sales = () => {
                         value={search}
                         idSearch={"SalesSearch"}
                 />
-                <Button text={'Crear Venta'} onClick={()=> navigate('/admin/')} fill= {false} />
                 </div>
                 {
                         loading && <p>Cargando...</p>
@@ -125,14 +129,13 @@ export const Sales = () => {
                         columns={columnsSales}
                         data={dataSalesFiltered}
                         onRowClick={getSalesDetails}
-                        editableAction={{
-                            onClick: () => null,
-                        }}
-                        deleteAction={{
-                            onClick: handleDelete,
-                        }}
                         nombreArchivo={"Ventas"}
                         tituloDocumento={"Ventas"}
+                        page={page}
+                        setPage={setPage}
+                        totalPages={Math.ceil(data?.sales?.count / data?.options?.limit)}
+                        pagination={true}
+                        
                     />
                         )
                     }
@@ -142,11 +145,15 @@ export const Sales = () => {
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
                         <Modal
-                            title="Detalle de Ventas"
+                            title={`Detalle de la orden # ${salesDetails[0]?.invoice}`}
                             showModal={setIsModalOpen}
                         >
                             <Table
                                 columns={[
+                                    {
+                                        key: "invoice",
+                                        header: "Factura",
+                                    },
                                     {
                                         key: "product",
                                         header: "Producto",

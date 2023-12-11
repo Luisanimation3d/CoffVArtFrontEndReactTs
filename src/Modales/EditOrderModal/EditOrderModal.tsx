@@ -22,6 +22,10 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: 
             label: 'Enviando',
         },
         {
+            value: 'entregado',
+            label: 'Entregado',
+        },
+        {
             value: 'cancelado',
             label: 'Cancelado',
         },
