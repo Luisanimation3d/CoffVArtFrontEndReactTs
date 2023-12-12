@@ -9,11 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { API_KEY } from "../../constantes";
 import { CreateProductModal } from "../../Modales/CreateProductModal/CreateProductModal";
+import { ProductEditModal } from "../../Modales/EditProductModal/EditProductModal.tsx";
 import { createPortal } from "react-dom";
 
 export const Products = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [productToEdit, setProductToEdit] = useState<number|null>(null)
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const [dataToShow, setDataToShow] = useState<any[]>([])
     const navigate = useNavigate();
@@ -30,7 +32,7 @@ export const Products = () => {
         { key: 'stockMax', header: 'Stock Máximo' },
         { key: 'unitPrice', header: 'Precio Únitario' },
         { key: 'description', header: 'Descripción' },
-        { key: 'state', header: 'Estado' }
+        { key: 'State', header: 'Estado' }
     ];
     
     // const dataProducts = data?.products?.rows || [];
@@ -48,7 +50,7 @@ export const Products = () => {
     }
 
     const handleDelete = (row: any) => {
-        del(`products/${row.id}?apikey=${API_KEY}`);
+        del(`products/${row}?apikey=${API_KEY}`);
         setTimeout(() => {
             get(`products?apikey=${API_KEY}`);
         }, 500);
@@ -58,7 +60,10 @@ export const Products = () => {
         if(data?.products?.rows){
             const newData = data?.products?.rows?.map((item: any)=>({
                 ...item,
-                state: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(value: any) => console.log(value.target?.parentNode.parentNode.dataset.key, 'Aqui andamos imprimiendo')}/>
+                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
+                    e.stopPropagation()
+                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
+                }}/>
             }))
 
             setDataToShow(newData)
@@ -100,7 +105,12 @@ export const Products = () => {
                         columns={columnsProducts}
                         data={dataToShow}
                         onRowClick={() => null}
-                        editableAction={{ onClick: () => null }}
+                        editableAction={{
+                            label: 'Editar Producto',
+                            onClick: (row: any) => {
+                                setProductToEdit(row.id)
+                                setIsModalOpen(true)
+                            }} }
                         deleteAction={{ onClick: handleDelete }}
                         nombreArchivo={'Productos Reporte'}
                         tituloDocumento={'Productos Reporte'}
@@ -109,8 +119,12 @@ export const Products = () => {
                 </div>
                 {
                     isModalOpen && createPortal(
-                        <>
+                        <>{
+                            productToEdit?(
+                                <ProductEditModal setIsModalOpen={setIsModalOpen} idProduct={productToEdit} setIdEdit={setProductToEdit}/>
+                            ):
                             <CreateProductModal setIsModalOpen={setIsModalOpen} title="Crear Producto"/>
+                        }
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )

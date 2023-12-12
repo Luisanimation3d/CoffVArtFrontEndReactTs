@@ -14,6 +14,7 @@ import { useFetch } from "../../hooks/useFetch.tsx";
 export const Shops = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataToShow, setDataToShow] = useState<any[]>([])
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate();
 
@@ -41,6 +42,10 @@ export const Shops = () => {
         {
             key: "date",
             header: "Fecha de Compra",
+        },
+        {
+            key: "State",
+            header: "Estado",   
         }
     ];
 
@@ -61,7 +66,7 @@ export const Shops = () => {
     }
 
     const handleDelete = (row: any) => {
-        del(`shops/${row.id}?apikey=${API_KEY}`);
+        del(`shops/${row}?apikey=${API_KEY}`);
         setTimeout(() => {
             get(`shops?apikey=${API_KEY}`);
         }, 500);
@@ -82,6 +87,20 @@ export const Shops = () => {
         setShopsDetails(shopsDetails);
         setIsModalOpen(true);
     };
+
+    useEffect(()=>{
+        if(data?.shops?.rows){
+            const newData = data?.shops?.rows?.map((item: any)=>({
+                ...item,
+                State: <Button text={item.state ? 'Activo' : 'Anulada'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
+                    e.stopPropagation()
+                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
+                }}/>
+            }))
+
+            setDataToShow(newData)
+        }
+    }, [data])
 
     return (
         <>
@@ -119,7 +138,7 @@ export const Shops = () => {
                         !loading && !error && dataShopsFiltered.length > 0 && (
                     <Table
                         columns={columnsShops}
-                        data={dataShopsFiltered}
+                        data={dataToShow}
                         onRowClick={getShopsDetails}
                         editableAction={{
                             onClick: () => null,
