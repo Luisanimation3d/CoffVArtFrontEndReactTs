@@ -109,6 +109,9 @@ export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
             if (product.quantity >= 10) {
                 return;
             }
+            if(product.quantity >= product.stock){
+                return;
+            }
         addQuantity(product.id);
     }
 
@@ -138,7 +141,7 @@ export const MiniCartProductCard: FC<MiniCartProductCardProps> = ({
                     </button>
                     <p className='miniCartProductCard--quantity'>{product.quantity}</p>
                     <button
-                        className={`miniCartProductCard--buttonQuantity ${product.quantity ===	 10 && 'miniCartProductCard--buttonQuantity--disabled'}`}
+                        className={`miniCartProductCard--buttonQuantity ${product.quantity ===	 10 && 'miniCartProductCard--buttonQuantity--disabled'} ${product.quantity >= product.stock ? 'cartProductCard--buttonQuantity--disabled' : ''}`}
                         onClick={handleAddQuantity}
                     >
                         <FaPlus />
@@ -196,6 +199,9 @@ export const CartProductCard: FC<MiniCartProductCardProps> = ({ product }) => {
         if (product.quantity >= 10) {
             return;
         }
+        if(product.quantity >= product.stock){
+            return;
+        }
         addQuantity(product.id);
     }
     function handleRemoveQuantity() {
@@ -224,7 +230,7 @@ export const CartProductCard: FC<MiniCartProductCardProps> = ({ product }) => {
                         <FaMinus />
                     </button>
                     <p className='cartProductCard--quantity'>{product.quantity}</p>
-                    <button className={`cartProductCard--buttonQuantity ${product.quantity === 10 && 'cartProductCard--buttonQuantity--disabled'}`}
+                    <button className={`cartProductCard--buttonQuantity ${product.quantity === 10 ? 'cartProductCard--buttonQuantity--disabled' : ''} ${product.quantity >= product.stock ? 'cartProductCard--buttonQuantity--disabled' : ''}`}
                             onClick={handleAddQuantity}
                     >
                         <FaPlus />

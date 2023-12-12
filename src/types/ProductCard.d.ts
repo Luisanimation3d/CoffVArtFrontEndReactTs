@@ -19,6 +19,7 @@ export interface MiniCartProductCardInfoProps {
     discount?: number;
     new?: boolean;
     quantity: number;
+    stock: number;
 }
 
 export interface ProductCardProps {

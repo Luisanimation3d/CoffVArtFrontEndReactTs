@@ -53,7 +53,7 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
     useEffect(()=>{
         const productionOptions = dataproduction?.ProductionRequests?.rows?.map((item: any)=>({
             value: item?.id,
-            label: item?.name
+            label: item?.requestNumber
         }))
         setproduction(productionOptions)
     }, [dataproduction]);
@@ -127,8 +127,8 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
             const requestBody = {
                 orderNumber: formValues.orderNumber,
                 quantity: formValues.quantity,
-                processId: (formValues.processId as SelectOption)?.value as number, 
-                supply: formValues.supply?.value , 
+                processId: (formValues.processId as SelectOption)?.value as number,
+                supplieId: formValues.supply?.value ,
                 productionRId: formValues?.productionRId?.value, 
             }; console.log('Datos del formulario:', requestBody);
             
