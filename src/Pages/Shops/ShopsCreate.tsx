@@ -145,12 +145,56 @@ export const ShopsCreate = () => {
         }
     ]
 
-    const handleAddDetail = (e: any) => {
-        e.preventDefault();
-        console.log('Esta entrando')
+    
+        const handleAddDetail = (e: any) => {
+            e.preventDefault();
+    
+            if (!selectInsumo) {
+                alert('Debe seleccionar un insumo antes de agregar a la tabla');
+                return;
+            }
+    
+            if (!selectProveedor) {
+                alert('Debe seleccionar un proveedor antes de agregar insumos');
+                return;
+            }
+    
+            if (!cantidad || parseInt(cantidad) <= 0) {
+                alert('Debe ingresar una cantidad válida antes de agregar insumos');
+                return;
+            }
 
 
-        //const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectInsumo?.value)
+        //const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectedSupply?.value)
+
+        const existingDetail = detalles.find(detail => detail.idInsumo === selectInsumo?.value);
+
+        if (existingDetail) {
+            // Si el producto ya está en el detalle, actualiza la cantidad
+            const updatedDetalles = detalles.map(detail => {
+                if (detail.idInsumo === selectInsumo.value) {
+                    const updatedCantidad = parseInt(detail.cantidad) + parseInt(cantidad);
+                    const updatedPrecioTotal = updatedCantidad * parseFloat(unitPrice);
+
+                    return {
+                        ...detail,
+                        cantidad: updatedCantidad,
+                        precioTotal: updatedPrecioTotal,
+                    };
+                }
+                return detail;
+            });
+
+            const newSubtotal = updatedDetalles.reduce((sum, item) => sum + item.precioTotal, 0);
+            const newIva = newSubtotal * 0.08;
+
+            setDetalles(updatedDetalles);
+            setSubTotal(newSubtotal);
+            setIva(newIva);
+            setPrecio(newSubtotal + newIva);
+        } else {
+            // Si el producto no está en el detalle, agrégalo como un nuevo elemento
+           
         const totalPrice = parseInt(cantidad || '0') * parseFloat(unitPrice)
         const newDetail = {
             id: detalles.length + 1,
@@ -161,16 +205,23 @@ export const ShopsCreate = () => {
             cantidad: cantidad,
             unitPrice: unitPrice,
             precioTotal: totalPrice,
-        }
-        const newSubtotal = subTotal + totalPrice
-        const newIva = newSubtotal * 0.08
-        setDetalles([...detalles, newDetail])
-        setSubTotal(newSubtotal)
-        setIva(newIva)
-        setPrecio(newSubtotal + newIva)
+            };
 
-    }
-    console.log(detalles)
+            const newSubtotal = subTotal + totalPrice
+            const newIva = newSubtotal * 0.08
+            setDetalles([...detalles, newDetail])
+            setSubTotal(newSubtotal)
+            setIva(newIva)
+            setPrecio(newSubtotal + newIva)
+        }
+
+    };
+    
+
+
+
+
+    
 
     // useEffect(() => {
     //     const characters = [
@@ -375,5 +426,6 @@ export const ShopsCreate = () => {
         </Container>
     );
 }
+
 
 export default ShopsCreate;
