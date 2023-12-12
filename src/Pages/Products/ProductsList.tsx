@@ -98,7 +98,7 @@ export const Products = () => {
                         !loading && !error && dataProductsFiltered.length > 0 && (
                     <Table
                         columns={columnsProducts}
-                        data={dataProductsFiltered}
+                        data={dataToShow}
                         onRowClick={() => null}
                         editableAction={{ onClick: () => null }}
                         deleteAction={{ onClick: handleDelete }}

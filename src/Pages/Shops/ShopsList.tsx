@@ -72,6 +72,7 @@ export const Shops = () => {
         console.log(shop, "esta es la compra");
         const shopsDetails= shop?.shopdetails?.map((shopsDetail: any) => ({
             id: shopsDetail.id,
+            invoice: shop.invoice,
             shopId: shopsDetail.shopId,
             supply: shopsDetail.supply.name,
             quantity: shopsDetail.quantity,
@@ -137,11 +138,15 @@ export const Shops = () => {
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
                         <Modal
-                            title="Detalle de Compra"
+                            title={`Detalle de Compra # ${shopsDetails[0]?.invoice}`}
                             showModal={setIsModalOpen}
                         >
                             <Table
                                 columns={[
+                                    {
+                                        key: "invoice",
+                                        header: "Factura",
+                                    },
                                     {
                                         key: "supply",
                                         header: "Insumo",

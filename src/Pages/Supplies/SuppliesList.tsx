@@ -9,11 +9,14 @@ import { CreateSupplyModal } from "../../Modales/CreateSupplyModal/CreateSupplyM
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
+import { SupplyEditModal } from "../../Modales/EditSupplyModal/EditSupplyModal.tsx";
 import { API_KEY } from "../../constantes";
 
 export const Supplies = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+    const [supplyToEdit, setSupplyToEdit] = useState<number|null>(null)
+    const [dataToShow, setDataToShow] = useState<any[]>([])
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
     const navigate = useNavigate();
 
@@ -27,7 +30,7 @@ export const Supplies = () => {
         { key: 'amount', header: 'Cantidad' },
         { key: 'unitPrice', header: 'Precio Únitario' },
         { key: 'description', header: 'Descripción' },
-        { key: 'state', header: 'Estado' }
+        { key: 'State', header: 'Estado' }
     ];
     
     const dataSupplies = data?.supplies?.rows || [];
@@ -50,6 +53,20 @@ export const Supplies = () => {
             get(`supplies?apikey=${API_KEY}`);
         }, 500);
     };
+
+    useEffect(()=>{
+        if(data?.supplies?.rows){
+            const newData = data?.supplies?.rows?.map((item: any)=>({
+                ...item,
+                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
+                    e.stopPropagation()
+                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
+                }}/>
+            }))
+
+            setDataToShow(newData)
+        }
+    }, [data])
 
     return (
         <>
@@ -84,9 +101,14 @@ export const Supplies = () => {
                         !loading && !error && dataSuppliesFiltered.length > 0 && (
                     <Table
                         columns={columnsSupplies}
-                        data={dataSuppliesFiltered}
+                        data={dataToShow}
                         onRowClick={() => null}
-                        editableAction={{ onClick: () => null }}
+                        editableAction={{
+                            label: 'Editar Insumo',
+                            onClick: (row: any) => {
+                                setSupplyToEdit(row.id)
+                                setIsModalOpen(true)
+                            }} }
                         deleteAction={{ onClick: handleDelete }}
                         nombreArchivo={'Insumos Reporte'}
                         tituloDocumento={'Insumos Reporte'}
@@ -95,8 +117,12 @@ export const Supplies = () => {
                 </div>
                 {
                     isModalOpen && createPortal(
-                        <>
+                        <>{
+                            supplyToEdit?(
+                                <SupplyEditModal setIsModalOpen={setIsModalOpen} idSupply={supplyToEdit} setIdEdit={setSupplyToEdit}/>
+                            ):
                             <CreateSupplyModal setIsModalOpen={setIsModalOpen} title="Crear Insumo"/>
+                        }
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )

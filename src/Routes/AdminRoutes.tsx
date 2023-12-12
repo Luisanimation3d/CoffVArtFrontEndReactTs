@@ -78,11 +78,11 @@ export const useRutasAdmin = () => {
             link: 'Processes',
             icon: <FiCheck/>
         },
-        {
-            title: 'Ejemplo',
-            link: 'ejemplo',
-            icon: <FiBriefcase/>
-        }
+        // {
+        //     title: 'Ejemplo',
+        //     link: 'ejemplo',
+        //     icon: <FiBriefcase/>
+        // }
     ]
     const AdminRoutes = adminToCompare?.filter((item) => {
         return user?.permissions?.find((permission) => {
