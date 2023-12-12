@@ -6,8 +6,9 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
-export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
+export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
         {
             value: 'pendiente',
@@ -30,6 +31,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: 
             label: 'Cancelado',
         },
     ];
+    const [IsModalAlert, setIsModalAlert] = useState(false)
     const [state, setProcess] = useState<SelectOption | undefined>();
     const navigate = useNavigate()
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
@@ -58,7 +60,55 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: 
             label: 'Proceso',
             value: registerForm.state,
             options: options,
-            onChange: (o) => setRegisterForm(prev=>({...prev, state: o})),
+            onChange: (o) => {
+            const currentStatus = data?.order?.state;
+            let showAlert = false;
+            console.log(currentStatus)
+            console.log(o?.value, "value")
+
+        // Validar que solo se pueda poner en "Cancelado" si está en "Pendiente"
+        if (currentStatus == "pendiente" && o?.value== "cancelado") {
+            showAlert = true;
+            Swal.fire({
+                title: 'Error',
+                text: 'No puedes cambiar a Cancelado a menos que esté en Pendiente',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        } else if (currentStatus == "enviado" && o?.value == "entregado") {
+            showAlert = true;
+            Swal.fire({
+                title: 'Error',
+                text: 'No puedes cambiar a Entregado a menos que esté en Enviado',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        } else if (currentStatus == "entregado" && o?.value == "cancelado") {
+            showAlert = true;
+            Swal.fire({
+                title: 'Error',
+                text: 'No puedes cambiar a Cancelado a menos que esté en Entregado',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+            return;
+        } else if (currentStatus == "cancelado" && o?.value == "pendiente") {
+            showAlert = true;
+            Swal.fire({
+                title: 'Error',
+                text: 'No puedes cambiar a Pendiente a menos que esté en Cancelado',
+                icon: 'error',
+                confirmButtonText: 'Ok'
+            });
+        } else{
+            setRegisterForm({
+                ...registerForm,
+                state: o
+            })
+        }
+            },
             size: 'large',
 
         }
@@ -78,7 +128,12 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: 
         };
         console.log(requestBody)
         put(`orders/${id}?apikey=${API_KEY}`, requestBody)
-        console.log(loading, error)
+        Swal.fire({
+                title: 'Éxito',
+                text: 'Se ha cambiado el estado de la orden',
+                icon: 'success',
+                confirmButtonText: 'Ok'
+            });
     };
     if (loading) {
         return <div>Cargando...</div>;
@@ -91,7 +146,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: 
                     padding: '1rem 2rem',
                 }}>
                     <Form fields={formFieldsRegister} button={<Button text={title} type={'SUBMIT'}/>}
-                          onSubmit={handleSubmit}
+                          onSubmit={handleSubmit }
                           cancelButton={false}
                           errors={error}
                     />
