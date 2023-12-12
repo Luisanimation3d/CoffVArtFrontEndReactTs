@@ -97,6 +97,7 @@ const Login = lazy(() => import('./Pages/Login/Login.tsx'));
 const Register = lazy(() => import('./Pages/Register/Register.tsx'));
 const Cart = lazy(() => import('./Pages/Cart/Cart.tsx'));
 const CartCheckout = lazy(() => import('./Pages/CartCheckout/CartCheckout.tsx'));
+const ThanksCheckout = lazy(() => import('./Pages/ThanksCheckout/ThanksCheckout.tsx'));
 
 export default function App() {
     return (
@@ -319,6 +320,11 @@ export default function App() {
                                 <Route path={'checkout'} element={
                                     <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
                                         <CartCheckout/>
+                                    </Suspense>
+                                }/>
+                                <Route path={'thanks'} element={
+                                    <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
+                                        <ThanksCheckout/>
                                     </Suspense>
                                 }/>
                             </Route>

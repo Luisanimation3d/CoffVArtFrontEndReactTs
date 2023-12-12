@@ -1,0 +1,61 @@
+.ThanksContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 2rem;
+    padding: 2rem;
+    height: 100%;
+}
+
+.imageContainer{
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imageContainer img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ThanksInfo{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.ThanksInfo h1{
+    font-size: 2rem;
+    font-weight: 500;
+    color: #9F212F;
+}
+
+.ThanksInfo p{
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #121212;
+}
+
+.ThanksInfo span{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #9F212F;
+}
+
+.ThanksInfo a{
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #9F212F;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.ThanksInfo a:hover{
+    color: #D6CAB0;
+}

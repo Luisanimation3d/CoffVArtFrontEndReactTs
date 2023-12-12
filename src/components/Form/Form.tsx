@@ -10,19 +10,19 @@ import {Select} from "../SelectInput/SelectInput.tsx";
 import {TextAreaInput} from "../TextAreaInput/TextAreaInput.tsx";
 
 export const Form: FC<FormProps> = ({
-    title,
-    fields,
-    onSubmit,
-    button,
-    cancelButton = true,
-    errors,
-    extra
-}) => {
+                                        title,
+                                        fields,
+                                        onSubmit,
+                                        button,
+                                        cancelButton = true,
+                                        errors,
+                                        extra
+                                    }) => {
     const navigate = useNavigate();
 
     return (
         <>
-            <form onSubmit={onSubmit} style={{ minWidth: '100%' }}>
+            <form onSubmit={onSubmit} style={{minWidth: '100%'}}>
                 {title && <h1>{title}</h1>}
                 <div className="formInputContainer">
                     {fields?.map((
@@ -46,7 +46,9 @@ export const Form: FC<FormProps> = ({
                             case "number":
                             case 'date': {
                                 return (
-                                    <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`} key={index}>
+                                    <div
+                                        className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
+                                        key={index}>
                                         <Input key={index} value={value} onChange={onChange} label={label} name={name}
                                                size={size} type={type}/>
                                         {errors && errors[name] && (
@@ -57,11 +59,19 @@ export const Form: FC<FormProps> = ({
                             }
                             case "select": {
                                 return multiple ? (
-                                    <Select key={index} type={type} options={options} onChange={onChange} value={value}
-                                            placeholder={placeholder} multiple/>
+                                    <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
+                                         key={index}>
+                                        <Select key={index} type={type} options={options} onChange={onChange}
+                                                value={value}
+                                                placeholder={placeholder} size={size} multiple/>
+                                    </div>
                                 ) : (
-                                    <Select key={index} type={type} options={options} onChange={onChange} value={value}
-                                            placeholder={placeholder}/>
+                                    <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
+                                         key={index}>
+                                        <Select key={index} type={type} options={options} onChange={onChange}
+                                                value={value}
+                                                placeholder={placeholder}/>
+                                    </div>
                                 );
                             }
                             case "textarea": {
@@ -93,7 +103,7 @@ export const Form: FC<FormProps> = ({
                 }
                 {button}
                 {cancelButton && (
-                    <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false} />
+                    <Button text={"Cancelar"} onClick={() => navigate(-1)} fill={false}/>
                 )}
             </form>
         </>
