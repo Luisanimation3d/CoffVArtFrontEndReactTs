@@ -40,6 +40,10 @@ export const ProductionOrders = () => {
         {
             key: 'supplieId',
             header: 'Insumo'
+        },
+        {
+            key: 'productionRId',
+            header: 'Solicitud'
         }
     ];
 
@@ -51,6 +55,7 @@ export const ProductionOrders = () => {
                     ...productionOrder,
                     process: productionOrder?.process?.name,
                     supplie: productionOrder?.supply?.name,
+                    productionRId: productionOrder?.productionRId?.requestNumber
                 }
             })
 
