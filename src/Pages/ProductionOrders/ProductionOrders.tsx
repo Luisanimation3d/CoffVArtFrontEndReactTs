@@ -30,32 +30,32 @@ export const ProductionOrders = () => {
             header:'Número de Orden',
         },
         {
+            key: 'productionRId',
+            header: 'Solicitud'
+        },
+        {
+            key: 'supplie',
+            header: 'Insumo'
+        },
+        {
             key: 'quantity',
             header: 'Cantidad',
         },
         {
-            key: 'processId',
+            key: 'process',
             header: 'Proceso',
         },
-        {
-            key: 'supplieId',
-            header: 'Insumo'
-        },
-        {
-            key: 'productionRId',
-            header: 'Solicitud'
-        }
     ];
 
     useEffect(() => {
-        if(data?.ProductionOrders?.rows){
+        if(data?.productionOrders?.rows){
             console.log('Entra')
-            const newProductionOrdersData = data?.ProductionOrders?.rows.map((productionOrder: any) => {
+            const newProductionOrdersData = data?.productionOrders?.rows.map((productionOrder: any) => {
                 return {
                     ...productionOrder,
                     process: productionOrder?.process?.name,
                     supplie: productionOrder?.supply?.name,
-                    productionRId: productionOrder?.productionRId?.requestNumber
+                    productionRId: productionOrder?.productionRequest?.requestNumber
                 }
             })
 
