@@ -72,7 +72,7 @@ export const CreateUserModal = ({setIsModalOpen, title = 'Crear Usuario'}: { set
             placeholder: 'Seleccione un tipo de documento',
             value: registerForm.documentType,
             onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
-            size: 'medium',
+            size: 'large',
             options: documentTypeOptions
         },
         {

@@ -25,7 +25,7 @@
     align-items: center;
     flex-direction: column;
     border-radius: 10px;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 .modal__close{
