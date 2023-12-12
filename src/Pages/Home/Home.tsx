@@ -104,6 +104,7 @@ export const Home = () => {
 
   useEffect(() => {
     if (data?.products) {
+      console.log(data?.products?.rows)
       const productsArray: Product[] = data?.products?.rows.map((product: any) => ({
         id: product.id,
         name: product.name,
@@ -112,6 +113,7 @@ export const Home = () => {
         description: product.description,
         link: `/producto/${product.id}`,
         new: new Date(product.createdAt) > new Date(new Date().setDate(new Date().getDate() - 7)),
+        stock: product.amount
       }))
       setProducts(productsArray)
     }

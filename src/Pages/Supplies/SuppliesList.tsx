@@ -48,7 +48,7 @@ export const Supplies = () => {
 
 
     const handleDelete = (row: any) => {
-        del(`supplies/${row.id}?apikey=${API_KEY}`);
+        del(`supplies/${row}?apikey=${API_KEY}`);
         setTimeout(() => {
             get(`supplies?apikey=${API_KEY}`);
         }, 500);

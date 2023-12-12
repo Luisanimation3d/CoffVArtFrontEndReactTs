@@ -115,6 +115,7 @@ export const TiendaUser = () => {
 				description: product.description,
 				link: `/producto/${product.id}`,
 				new: new Date(product.createdAt) > new Date(new Date().setDate(new Date().getDate() - 7)),
+				stock: product.amount
 			}))
 			setProducts(productsArray)
 		}
