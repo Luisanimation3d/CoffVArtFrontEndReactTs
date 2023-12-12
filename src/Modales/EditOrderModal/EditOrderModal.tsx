@@ -53,7 +53,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
         state: undefined,
 
     })
-    const formFieldsRegister: FormField[] = [ 
+    const formFieldsRegister: FormField[] = [
         {
             name: 'state',
             type: 'select',
@@ -61,59 +61,59 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             value: registerForm.state,
             options: options,
             onChange: (o) => {
-            const currentStatus = data?.order?.state;
-            let showAlert = false;
-            console.log(currentStatus)
-            console.log(o?.value, "value")
-
-        // Validar que solo se pueda poner en "Cancelado" si está en "Pendiente"
-        if (currentStatus == "pendiente" && o?.value== "cancelado") {
-            showAlert = true;
-            Swal.fire({
-                title: 'Error',
-                text: 'No puedes cambiar a Cancelado a menos que esté en Pendiente',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-            return;
-        } else if (currentStatus == "enviado" && o?.value == "entregado") {
-            showAlert = true;
-            Swal.fire({
-                title: 'Error',
-                text: 'No puedes cambiar a Entregado a menos que esté en Enviado',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-            return;
-        } else if (currentStatus == "entregado" && o?.value == "cancelado") {
-            showAlert = true;
-            Swal.fire({
-                title: 'Error',
-                text: 'No puedes cambiar a Cancelado a menos que esté en Entregado',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-            return;
-        } else if (currentStatus == "cancelado" && o?.value == "pendiente") {
-            showAlert = true;
-            Swal.fire({
-                title: 'Error',
-                text: 'No puedes cambiar a Pendiente a menos que esté en Cancelado',
-                icon: 'error',
-                confirmButtonText: 'Ok'
-            });
-        } else{
-            setRegisterForm({
-                ...registerForm,
-                state: o
-            })
-        }
+                const currentStatus = data?.order?.state;
+                let showAlert = false;
+                console.log(currentStatus);
+                console.log(o?.value, "value");
+    
+                // Validar que solo se pueda poner en "Cancelado" si está en "Pendiente"
+                if (currentStatus === 'entregado' && o?.value === 'pendiente') {
+                    showAlert = true;
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No puedes cambiar a pendiente si ya se entregado',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                } else if (currentStatus === 'entregado' && o?.value === 'confirmado') {
+                    showAlert = true;
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No puedes cambiar a Confirmado si ya esta Entregado',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                } else if (currentStatus === 'entregado' && o?.value === 'enviado') {
+                    showAlert = true;
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No puedes cambiar a Enviado si ya esta Entregado',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                } else if (currentStatus === 'entregado' && o?.value === 'cancelado') {
+                    showAlert = true;
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'No puedes cambiar a Cancelado si ya esta entregado',
+                        icon: 'error',
+                        confirmButtonText: 'Ok'
+                    });
+                } else {
+                    showAlert = false;
+                }
+    
+                // Actualizar el formulario solo si no se ha mostrado ninguna alerta
+                if (!showAlert) {
+                    setRegisterForm({
+                        ...registerForm,
+                        state: o
+                    });
+                }
             },
             size: 'large',
-
         }
-
-    ]
+    ];
     const validateForm = () => {
         const errors: any = {}
         if (!registerForm.state) {
