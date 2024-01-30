@@ -8,26 +8,29 @@ import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate} from "react-router-dom";
 
 export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
-    const options: SelectOption[] = [
-        {
-            value: 5,
-            label: 'Desgacificación',
-        },
-        {
-            value: 6,
-            label: 'Empaquetado',
-        },
-        {
-            value: 7,
-            label: 'Finalizado',
-        }
-    ];
     const [process, setProcess] = useState<SelectOption | undefined>();
     const navigate = useNavigate()
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
+    const { data: processData, get: getProcess } = useFetch(API_URL);
+    const [options, setOptions] = useState<SelectOption[]>([]);
     useEffect(() => {
         get(`productionOrders/${id}?apikey=${API_KEY}`)
     }, []);
+
+    useEffect(() => {
+        getProcess(`processes?apikey=${API_KEY}`);
+    }, []);
+
+    useEffect(() => {
+        if (processData?.processes?.rows) {
+          const process = processData?.processes?.rows?.map((process: any) => ({
+            label: process.name,
+            value: process.id,
+          }));
+          setOptions(process);
+        }
+      }, [processData]);
+
     useEffect(() => {
         if (!loading) {
             const newValues = {
@@ -59,7 +62,7 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     const validateForm = () => {
         const errors: any = {}
         if (registerForm.processId.length === 0) {
-            errors.processId = 'El estado es requerido'
+            errors.processId = 'El proceso es requerido'
         }
         
         return errors

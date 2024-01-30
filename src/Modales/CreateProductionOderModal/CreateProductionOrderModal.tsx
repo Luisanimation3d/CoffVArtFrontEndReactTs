@@ -10,16 +10,14 @@ import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden de producción'}:
 { setIsModalOpen: (value: boolean) => void, title?: string }) => {
-    const [formValues, setFormValues] = useState<{orderNumber:string,quantity:number,processId:SelectOption|undefined, supply:SelectOption|undefined,productionRId:SelectOption|undefined}>({
+    const [formValues, setFormValues] = useState<{orderNumber:string,quantity:number,processId:SelectOption|undefined, supply:SelectOption|undefined}>({
         orderNumber: '',
         quantity: 0,
         processId: undefined,
         supply: undefined,
-        productionRId: undefined,
     })
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
     const [process, setprocess] = useState<SelectOption[]>([]);
-    const [production, setproduction] = useState<SelectOption[]>([]);
     const { post, loading, error } = useFetch(API_URL);
     const navigate = useNavigate();
 
@@ -46,20 +44,7 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
         }))
         setprocess(processOptions)
     }, [dataprocess]);
-    const {data:dataproduction,get:getProduction} = useFetch(API_URL);
-    useEffect(()=>{
-        getProduction('productionRequests?apikey='+API_KEY)
-    },[]);
-    useEffect(()=>{
-        const productionOptions = dataproduction?.ProductionRequests?.rows?.map((item: any)=>({
-            value: item?.id,
-            label: item?.requestNumber
-        }))
-        setproduction(productionOptions)
-    }, [dataproduction]);
-    console.log(dataprocess, "velas gay de mierda")
-    console.log(dataproduction, "velas muy gay de mierda")
-    console.log(datasupplie)
+    
 
     const productionOrderFields: FormField[] = [
         {
@@ -70,17 +55,6 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
             value: formValues['orderNumber'] !== undefined ? String(formValues['orderNumber']): '',
             onChange: (value) => handleInputChange('orderNumber', value),
             size: 'medium'
-        },
-        {
-            name: 'productionRId',
-            type: 'select',
-            label: 'solicitud',
-            placeholder: 'Solicitud',
-            options:production,
-            value: formValues.productionRId as SelectOption|undefined,
-            onChange: (value) => setFormValues(prev=> ({...prev,productionRId:value})),
-            size: 'medium',
-            
         },
         {
             name: 'processId',
@@ -128,8 +102,7 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
                 orderNumber: formValues.orderNumber,
                 quantity: formValues.quantity,
                 processId: (formValues.processId as SelectOption)?.value as number,
-                supplieId: formValues.supply?.value ,
-                productionRId: formValues?.productionRId?.value, 
+                supplieId: formValues.supply?.value , 
             }; console.log('Datos del formulario:', requestBody);
             
     
