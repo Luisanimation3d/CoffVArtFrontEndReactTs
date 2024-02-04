@@ -156,7 +156,7 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
                           errors={error}
                     />
                     ):(
-                        <Form fields={formFieldsQuantity} button={<Button text={title} type={'SUBMIT'}/>}
+                        <Form fields={formFieldsQuantity} button={<Button text={'Guardar Cantidad'} type={'SUBMIT'}/>}
                           onSubmit={handleSubmitRecived}
                           cancelButton={false}
                           errors={error}

@@ -26,12 +26,8 @@ export const ProductionOrders = () => {
     }, []);
     const columnsProductionOrders: Column[] = [
         {
-            key:'orderNumber',
+            key:'id',
             header:'Número de Orden',
-        },
-        {
-            key: 'productionRId',
-            header: 'Solicitud'
         },
         {
             key: 'supplie',
@@ -145,7 +141,7 @@ export const ProductionOrders = () => {
                     }
             </div>
             {
-                    isModalOpen && createPortal(
+                    isModalOpenEdit && createPortal(
                         <>
                             
                                 <EditProcessOModal

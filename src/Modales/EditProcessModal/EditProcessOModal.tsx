@@ -30,7 +30,6 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
           setOptions(process);
         }
       }, [processData]);
-
     useEffect(() => {
         if (!loading) {
             const newValues = {
@@ -61,8 +60,9 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     ]
     const validateForm = () => {
         const errors: any = {}
-        if (registerForm.processId.length === 0) {
+        if (!registerForm.processId || registerForm.processId.length === 0) {
             errors.processId = 'El proceso es requerido'
+            console.log("entró al condicional")
         }
         
         return errors
@@ -77,15 +77,9 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         const requestBody = {
             processId: process?.value,
         };
-        console.log(requestBody)
+        console.log(requestBody, "aquí body")
         put(`productionOrders/${id}?apikey=${API_KEY}`, requestBody)
-        if(!errorRegister){
-            setTimeout(() => {
-                if (process?.value == 7) {
-                    navigate('/admin/ProductionOrders/create')
-                }
-            }, 500);
-        }
+        console.log(process,"aquí process")
     };
     if (loading) {
         return <div>Cargando...</div>;
