@@ -59,7 +59,7 @@ export const ProductionRequestsCreate = () => {
         setcompany(companyOptions)
     }, [datacompany]);
 
-    console.log(dataprocess, "velas gay de mierda")
+    console.log(dataprocess, "datos")
     console.log(datasupplie)
     console.log(datacompany)
 

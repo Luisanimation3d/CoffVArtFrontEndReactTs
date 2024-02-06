@@ -23,7 +23,7 @@ export const ProductionRequests = () => {
 
     const columnsProductionRequest: Column[] = [
         {
-            key:'requestNumber',
+            key:'id',
             header:'Número de Solicitud',
         },
         {
@@ -57,7 +57,9 @@ export const ProductionRequests = () => {
                     ...productionRequest,
                     process: productionRequest?.process?.name,
                     supplie: productionRequest?.supply?.name,
-                    company: productionRequest?.company?.name
+                    company: productionRequest?.company?.name,
+                    dateOfDispatch: productionRequest.dateOfDispatch.substring(0, 10),
+                    
                 }
             })
 
@@ -73,7 +75,7 @@ export const ProductionRequests = () => {
 
     if(search.length > 0){
         dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>  
-           productionRequest.requestNumber.toLowerCase().includes(search.toLowerCase()) 
+           productionRequest.id.toLowerCase().includes(search.toLowerCase()) 
         || productionRequest.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
         || productionRequest.quantity
         || productionRequest.process.toLowerCase().includes(search.toLowerCase())
@@ -127,6 +129,7 @@ export const ProductionRequests = () => {
                             setIsModalOpen(true)
                         } }}
                         deleteAction={{ onClick: handleDelete }}
+                        
                     />)
                     }
             </div>
