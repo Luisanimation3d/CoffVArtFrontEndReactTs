@@ -3,6 +3,7 @@ import {FiDownload, FiMoreVertical, FiPlus, FiSearch} from "react-icons/fi";
 import React, {useEffect, useId, useRef, useState} from "react";
 import {Pagination} from "../Pagination/Pagination.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
+import { handleDownloadExcel } from '../../helpers/downloadExcel.ts';
 
 
 type ColumnType = {
@@ -59,6 +60,34 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
             document.removeEventListener('click', handleDocumentClick);
         };
     }, []);
+    
+    const dataToDownload = (datos) => {
+        const dataToDownload = datos?.map((row, index) => {
+            const newRow = {...row,id: index + 1, state: typeof row.state === 'boolean' ? row.state ? 'Activo' : 'Inactivo' : row.state};
+            return newRow;
+        });
+
+        // Cambiar el nombre de las columnas a las que esta en el header
+        const dataToDownloadWithHeaders = dataToDownload.map(row => {
+            const newRow = {};
+            for (let key in row) {
+                columns.map(column => {
+                    if (column.key === key) {
+                        if(column.key === 'id') {
+                            // colocar el nombre # en vez de id
+                            newRow['#'] = row[key];
+                        }else{
+                            newRow[column.header] = row[key];
+                        }
+                    }
+                })
+            }
+            return newRow;
+        });
+
+        return dataToDownloadWithHeaders;
+    }
+
     return (
         <>
             <div
@@ -77,7 +106,12 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                 </>
                             )
                         }
-                        <button className={`${styles.table__header__action__button}`}><FiDownload/></button>
+                        <button 
+                            className={`${styles.table__header__action__button}`}
+                            onClick={() => handleDownloadExcel(dataToDownload(data), title || 'data', title || 'data')}    
+                        >
+                            <FiDownload/>
+                        </button>
                     </div>
                     <h3 className={`${styles.table__header__title}`}>
                         {title}
@@ -139,7 +173,11 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                     {
                                         data?.map((row, globalIndex) => (
                                             <>
-                                                <tr key={globalIndex} onClick={() => onRowClick && onRowClick(row)} className={`${styles.table__content__tbody__row} ${onRowClick ? styles.table__content__tbody__row__click : ''}`} data-key={row.id}>
+                                                <tr 
+                                                    key={globalIndex} 
+                                                    onClick={() => onRowClick && onRowClick(row)}
+                                                    className={`${styles.table__content__tbody__row} ${onRowClick ? styles.table__content__tbody__row__click : ''}`} 
+                                                    data-key={row.id}>
                                                     {
                                                         columns.map((column, index) => (
                                                             <>
@@ -149,9 +187,9 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                                                     ) :
                                                                     column.key === 'state' ? (
                                                                         <td className={`${styles.table__content__tbody__item}`} key={index}>
-                                                                            <span className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' ? styles.table__content__status__pending : row[column.key] == 'Approved' ? styles.table__content__status__approved : row[column.key] == 'Declined' ? styles.table__content__status__declined : ''}`} key={index}>
+                                                                            <span className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' || row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' ? styles.table__content__status__pending : row[column.key] == 'Approved' ? styles.table__content__status__approved : row[column.key] == 'Declined' ? styles.table__content__status__declined : ''}`} key={index}>
                                                                                 {
-                                                                                    handleStateRow(row[column.key]) ? row[column.key] ? 'Activo' : 'Inactivo' : row[column.key]
+                                                                                    handleStateRow(row[column.key]) ? row[column.key] ? 'Activo' : 'Inactivo' : row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' ? 'Pendiente' : row[column.key].toLocaleString().toUpperCase() == 'APROBADO' ? 'Aprobado' : row[column.key].toLocaleString().toUpperCase() == 'RECHAZADO' ? 'Rechazado' : row[column.key]
                                                                                 }
                                                                             </span>
                                                                         </td>

@@ -120,14 +120,14 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     useEffect(() => {
         if (data?.user) {
             const userToUpdate = {
-                email: data.user.email,
-                name: data.user.name,
-                role: data.user.role,
-                permissions: data.user.permissions,
-                address: data.user.coustomer.address,
-                phone: data.user.coustomer.phone,
-                document: data.user.coustomer.document,
-                documentType: data.user.coustomer.documentType,
+                email: data.user?.email,
+                name: data.user?.name,
+                role: data.user?.role,
+                permissions: data.user?.permissions,
+                address: data.user?.coustomer?.address,
+                phone: data.user?.coustomer?.phone,
+                document: data.user?.coustomer?.document,
+                documentType: data.user?.coustomer?.documentType,
 
             }
             updateUser(userToUpdate);
