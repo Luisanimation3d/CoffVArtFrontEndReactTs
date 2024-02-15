@@ -73,12 +73,10 @@ export const CreateSupplyModal = ({setIsModalOpen, title = 'Crear Insumo'}: { se
     useEffect(() => {
         if (data?.newSupply && !errorRegister) {
             Swal.fire({
-                title: 'Insumo creado',
+                title: 'Insumo creado con éxito',
                 icon: 'success',
-                showConfirmButton: false,
-                timer: 1500,
+                confirmButtonText: 'Aceptar',
             })
-            setIsModalOpen(false)
         }
     }, [data]);
 

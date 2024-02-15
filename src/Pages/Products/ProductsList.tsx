@@ -12,6 +12,7 @@ import { CreateProductModal } from "../../Modales/CreateProductModal/CreateProdu
 import { ProductEditModal } from "../../Modales/EditProductModal/EditProductModal.tsx";
 import { createPortal } from "react-dom";
 
+
 export const Products = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -30,7 +31,7 @@ export const Products = () => {
         { key: 'amount', header: 'Cantidad' },
         { key: 'stockMin', header: 'Stock Minimo' },
         { key: 'stockMax', header: 'Stock Máximo' },
-        { key: 'unitPrice', header: 'Precio Únitario' },
+        { key: 'unitPrice', header: 'Precio Unitario' },
         { key: 'description', header: 'Descripción' },
         { key: 'State', header: 'Estado' }
     ];
@@ -69,6 +70,7 @@ export const Products = () => {
             setDataToShow(newData)
         }
     }, [data])
+
 
     return (
         <>
