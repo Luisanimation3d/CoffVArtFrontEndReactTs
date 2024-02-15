@@ -11,6 +11,8 @@ import { useFetch } from "../../hooks/useFetch.tsx";
 import { SuppliersCreateModal } from "../../Modales/CreateSupplierModal/CreateSupplierModal.tsx";
 import { createPortal } from "react-dom";
 import { SuppliersEditModal } from "../../Modales/EditSupplierModal/EditSupplierModal.tsx";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 export const Suppliers = () => {
     const [search, setSearch] = useState<string>('');
@@ -49,6 +51,10 @@ export const Suppliers = () => {
         {
             key: 'quality',
             header: 'Calidad',
+        },
+        {
+            key: 'state',
+            header: 'Estado',
         }
     ];
     
@@ -67,56 +73,35 @@ export const Suppliers = () => {
     }else{
         dataSuppliersFiltered = dataSuppliers;
     }
-    const handleDelete = (row: any) => {
-        del(`suppliers/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`suppliers?apikey=${API_KEY}`);
-        }, 500);
-    };
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`suppliers/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`suppliers?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
 
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={'Proveedores'} level={1}/>
-                <div className="supplier__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-
-                    }}><SearchInput label={'Buscar Proveedores'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'supplierSearch'} />
-                        <Button text={'Crear Proveedor'} onClick={() => setIsModalOpen(true)} fill={false}/>
-                    </div>
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataSuppliersFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataSuppliersFiltered.length > 0 && (
-                    <Table
-                        columns={columnsSuppliers}
-                        data={dataSuppliersFiltered}
-                        onRowClick={() => null}
-                        editableAction={{
-                            label: 'Editar Proveedor',
-                            onClick: (row: any) => {
-                                setSupplierToEdit(row.id)
-                                setIsModalOpen(true)
-                            }} }
-                        deleteAction={{ onClick: handleDelete }}
-                    />)
-                    }
-                </div>
+            <TableRedisign
+                    columns={columnsSuppliers}
+                    data={dataSuppliersFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Proveedores'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
                 {
                     isModalOpen && createPortal(
                         <>{

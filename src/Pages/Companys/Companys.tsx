@@ -11,6 +11,8 @@ import { useFetch } from "../../hooks/useFetch.tsx";
 import { createPortal } from "react-dom";
 import { CompanysCreateModal } from "../../Modales/CreateCompanyModal/CreateCompanyModal.tsx";
 import { CompanysEditModal } from "../../Modales/EditCompanyModal/EditCompanyModal.tsx";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 export const Companys = () => {
     const [search, setSearch] = useState<string>('');
@@ -47,6 +49,10 @@ export const Companys = () => {
         {
             key: 'phone',
             header: 'Contacto',
+        },
+        {
+            key: 'state',
+            header: 'Estado',
         }
     ]
 
@@ -65,57 +71,35 @@ export const Companys = () => {
         dataCompanysFiltered = dataCompanys;
     }
     
-    const handleDelete = (row: any) => {
-        del(`companys/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`companys?apikey=${API_KEY}`);
-        }, 500);
-    };
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`companys/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`companys?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
     return(
         <>
         <Container align={'CENTER'} justify={'TOP'}>
-            <Titles title={'Compañias'} level={1}/>
-            <div className="companys__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-            <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-
-                    }}>
-                        <SearchInput label={'Buscar Compañias'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'companySearch'} />
-                        <Button text={'Crear Compañia'} onClick={() => setIsModalOpen(true)} fill={false}/>
-                    </div>
-                    
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataCompanysFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataCompanysFiltered.length > 0 && (
-                
-                <Table columns={columnsCompanys}
+        <TableRedisign
+                    columns={columnsCompanys}
                     data={dataCompanysFiltered}
-                    onRowClick={()=> null}
-                    editableAction={{
-                        label: 'Editar Compania',
-                        onClick: (row: any) => {
-                            setCompanyToEdit(row.id)
-                            setIsModalOpen(true)
-                        }} }
-                deleteAction={{onClick:handleDelete}}
-                />)
-                }
-            </div>
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Compañias'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
+                    
             {
                     isModalOpen && createPortal(
                         <>{

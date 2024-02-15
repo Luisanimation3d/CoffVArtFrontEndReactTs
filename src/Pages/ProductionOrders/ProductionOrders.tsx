@@ -12,6 +12,8 @@ import { Modal, ModalContainer } from "../../components/Modal/Modal.tsx";
 import { createPortal } from "react-dom";
 import { EditProcessOModal } from "../../Modales/EditProcessModal/EditProcessOModal.tsx";
 import { ProductionOrderCreateModal } from "../../Modales/CreateProductionOderModal/CreateProductionOrderModal.tsx";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 export const ProductionOrders = () => {
     const [search, setSearch] = useState<string>('');
@@ -38,7 +40,7 @@ export const ProductionOrders = () => {
             header: 'Cantidad',
         },
         {
-            key: 'process',
+            key: 'state',
             header: 'Proceso',
         },
     ];
@@ -49,7 +51,7 @@ export const ProductionOrders = () => {
             const newProductionOrdersData = data?.productionOrders?.rows.map((productionOrder: any) => {
                 return {
                     ...productionOrder,
-                    process: productionOrder?.process?.name,
+                    state: productionOrder?.process?.name,
                     supplie: productionOrder?.supply?.name,
                     productionRId: productionOrder?.productionRequest?.requestNumber
                 }
@@ -72,12 +74,20 @@ export const ProductionOrders = () => {
     }else{
         dataProductionOrdersFiltered = dataProductionOrders
     }
-    const handleDelete = (row: any) => {
-        del(`productionOrders/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`productionOrders?apikey=${API_KEY}`);
-        }, 500);
-    };
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`productionOrders/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`productionOrders?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
 
     const [productionOrdersDetails, setProductionOrdersDetails] = useState<any[]>([]);
 
@@ -98,48 +108,17 @@ export const ProductionOrders = () => {
     return(
         <>
         <Container align={'CENTER'} justify={'TOP'}>
-            <Titles title={'Ordenes de Producción'} level={1}/>
-            
-            <div className="productionOrders__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-
-                    }}><SearchInput 
-                label={'Buscar Ordenes'} 
-                onChange={e=> setSearch(e.target.value)} 
-                value={search} 
-                idSearch={'productionOrderSearch'} />
-                <Button text={'Crear Orden'} onClick={() => setOrderToCreate(true)} fill={false}/></div>
-                {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataProductionOrdersFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataProductionOrdersFiltered.length > 0 && (
-                    <Table
-                        columns={columnsProductionOrders}
-                        data={dataProductionOrdersFiltered}
-                        onRowClick={getProductionOrdersDetails}
-                        editableAction={{ onClick: (e) => {
-                            setidEdit(e.id)
-                            setIsModalOpenEdit(true)
-                        }  }}
-                        deleteAction={{ onClick: handleDelete }}
-                    />)
-                    }
-            </div>
+        <TableRedisign
+                    columns={columnsProductionOrders}
+                    data={dataProductionOrdersFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Ordenes de Producción'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
             {
                     isModalOpenEdit && createPortal(
                         <>
