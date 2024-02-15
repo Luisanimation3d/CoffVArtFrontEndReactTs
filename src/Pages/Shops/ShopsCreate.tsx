@@ -148,7 +148,11 @@ export const ShopsCreate = () => {
     
         const handleAddDetail = (e: any) => {
             e.preventDefault();
-    
+
+            if (!invoice) {
+                alert('Debe ingresar el número de factura antes de agregar insumos');
+                return;
+            }
             if (!selectInsumo) {
                 alert('Debe seleccionar un insumo antes de agregar a la tabla');
                 return;
