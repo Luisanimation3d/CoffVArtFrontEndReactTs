@@ -11,6 +11,8 @@ import { API_KEY } from "../../constantes";
 import { CreateProductModal } from "../../Modales/CreateProductModal/CreateProductModal";
 import { ProductEditModal } from "../../Modales/EditProductModal/EditProductModal.tsx";
 import { createPortal } from "react-dom";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 
 export const Products = () => {
@@ -33,11 +35,11 @@ export const Products = () => {
         { key: 'stockMax', header: 'Stock Máximo' },
         { key: 'unitPrice', header: 'Precio Unitario' },
         { key: 'description', header: 'Descripción' },
-        { key: 'State', header: 'Estado' }
+        { key: 'state', header: 'Estado' }
     ];
     
     // const dataProducts = data?.products?.rows || [];
-    const dataProducts = dataToShow || [];
+    const dataProducts = data?.products?.rows || [];
     let dataProductsFiltered: any[];
     
 
@@ -50,75 +52,36 @@ export const Products = () => {
         dataProductsFiltered = dataProducts;
     }
 
-    const handleDelete = (row: any) => {
-        del(`products/${row}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`products?apikey=${API_KEY}`);
-        }, 500);
-    };
-
-    useEffect(()=>{
-        if(data?.products?.rows){
-            const newData = data?.products?.rows?.map((item: any)=>({
-                ...item,
-                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
-                    e.stopPropagation()
-                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
-                }}/>
-            }))
-
-            setDataToShow(newData)
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`products/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`products?apikey=${API_KEY}`);
+            }, 500);
         }
-    }, [data])
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
 
 
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={'Productos'} level={1} />
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent:'space-between',
-                            alignItems: 'center',
-                            marginBottom: '1rem',
-                        }}>
-                    <SearchInput label={'Buscar Producto'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'ProductsSearch'} />
-
-                    <Button text={'Crear Producto'} onClick={() => setIsModalOpen(true)} fill={false}/>
-                    </div>
-                    
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataProductsFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataProductsFiltered.length > 0 && (
-                    <Table
-                        columns={columnsProducts}
-                        data={dataToShow}
-                        onRowClick={() => null}
-                        editableAction={{
-                            label: 'Editar Producto',
-                            onClick: (row: any) => {
-                                setProductToEdit(row.id)
-                                setIsModalOpen(true)
-                            }} }
-                        deleteAction={{ onClick: handleDelete }}
-                        nombreArchivo={'Productos Reporte'}
-                        tituloDocumento={'Productos Reporte'}
-                    />)
-                    }
-                </div>
+            <TableRedisign
+                    columns={columnsProducts}
+                    data={dataProductsFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Productos'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
                 {
                     isModalOpen && createPortal(
                         <>{

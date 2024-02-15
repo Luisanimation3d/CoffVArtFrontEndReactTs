@@ -10,6 +10,9 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
+
 
 export const Shops = () => {
     const [search, setSearch] = useState<string>("");
@@ -44,7 +47,7 @@ export const Shops = () => {
             header: "Fecha de Compra",
         },
         {
-            key: "State",
+            key: "state",
             header: "Estado",   
         }
     ];
@@ -71,6 +74,20 @@ export const Shops = () => {
             get(`shops?apikey=${API_KEY}`);
         }, 500);
     };
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`shops/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`shops?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
     const [shopsDetails, setShopsDetails] = useState<any[]>([]);
 
     const getShopsDetails = (shop: any) => {
@@ -105,53 +122,17 @@ export const Shops = () => {
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={"Compras"} level={1}/>
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    marginBottom: '20px',
-                }}>
-                    <SearchInput
-                        label={"Buscar Compra"}
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search}
-                        idSearch={"ShopsSearch"}
-                />
-                <Button text={'Crear Compra'} onClick={()=> navigate('/admin/Shops/Create')} fill= {false} />
-                </div>
-                {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataShopsFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataShopsFiltered.length > 0 && (
-                    <Table
-                        columns={columnsShops}
-                        data={dataToShow}
-                        onRowClick={getShopsDetails}
-                        editableAction={{
-                            onClick: () => null,
-                        }}
-                        deleteAction={{
-                            onClick: handleDelete,
-                        }}
-                        nombreArchivo={'Compras Reporte'}
-                        tituloDocumento={'Compras Reporte'}
-                    />
-                        )
-                    }
-                </div>
+            <TableRedisign
+                    columns={columnsShops}
+                    data={dataShopsFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Productos'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />  
             </Container>
             {
                 isModalOpen && createPortal(
