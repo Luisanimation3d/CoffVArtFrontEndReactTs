@@ -27,6 +27,27 @@ export const CompanysCreateModal = ({setIsModalOpen, title = 'Crear Compañia'}:
     })
     const formFieldsRegister: FormField[] = [
         {
+            name: 'nit',
+            type: 'text',
+            label: 'NIT',
+            placeholder: '10122012334-5',
+            value: registerForm.nit,
+            onChange: (value:string) => setRegisterForm({
+                ...registerForm,
+                nit: value}),
+            size: 'medium',
+        },
+        
+        {
+            name: 'address',
+            type: 'text',
+            label: 'Dirección',
+            placeholder: 'Cra 00 # 00 - 00',
+            value: registerForm.address,
+            onChange: (value: string) => setRegisterForm({...registerForm, address: value}),
+            size: 'medium'
+        },
+        {
             name: 'name',
             type: 'text',
             label: 'Nombre del proveedor',
@@ -38,16 +59,15 @@ export const CompanysCreateModal = ({setIsModalOpen, title = 'Crear Compañia'}:
             size: 'medium'
         },
         {
-            name: 'nit',
+            name: 'phone',
             type: 'text',
-            label: 'NIT',
-            placeholder: '10122012334-5',
-            value: registerForm.nit,
-            onChange: (value:string) => setRegisterForm({
-                ...registerForm,
-                nit: value}),
-            size: 'medium',
+            label: 'Teléfono',
+            placeholder: '300 000 00 00',
+            value: registerForm.phone,
+            onChange: (value:string) => setRegisterForm({...registerForm, phone: value}),
+            size: 'medium'
         },
+        
         {
             name: 'email',
             type: 'text',
@@ -55,25 +75,7 @@ export const CompanysCreateModal = ({setIsModalOpen, title = 'Crear Compañia'}:
             placeholder: '@correo.com',
             value: registerForm.email,
             onChange: (value:string) => setRegisterForm({...registerForm, email: value}),
-            size: 'medium',
-        },
-        {
-            name: 'address',
-            type: 'text',
-            label: 'Dirección',
-            placeholder: 'Cra 00 # 00 - 00',
-            value: registerForm.address,
-            onChange: (value: string) => setRegisterForm({...registerForm, address: value}),
-            size: 'medium'
-        },
-        {
-            name: 'phone',
-            type: 'text',
-            label: 'Teléfono',
-            placeholder: '300 000 00 00',
-            value: registerForm.phone,
-            onChange: (value:string) => setRegisterForm({...registerForm, phone: value}),
-            size: 'large'
+            size: 'large',
         },
     ];
 

@@ -10,6 +10,8 @@ import { useFetch } from "../../hooks/useFetch.tsx";
 import { API_KEY, API_URL } from "../../constantes.ts";
 import {EditProcessRModal } from "../../Modales/EditProcessModal/EditProcessRModal.tsx";
 import { createPortal } from "react-dom";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 export const ProductionRequests = () => {
     const [search, setSearch] = useState<string>('');
@@ -44,7 +46,7 @@ export const ProductionRequests = () => {
         },
         
         {
-            key: 'process',
+            key: 'state',
             header: 'Proceso',
         },    
     ]
@@ -55,7 +57,7 @@ export const ProductionRequests = () => {
             const newProductionRequestsData = data?.ProductionRequests?.rows.map((productionRequest: any) => {
                 return {
                     ...productionRequest,
-                    process: productionRequest?.process?.name,
+                    state: productionRequest?.process?.name,
                     supplie: productionRequest?.supply?.name,
                     company: productionRequest?.company?.name,
                     dateOfDispatch: productionRequest.dateOfDispatch.substring(0, 10),
@@ -78,61 +80,40 @@ export const ProductionRequests = () => {
            productionRequest.id.toLowerCase().includes(search.toLowerCase()) 
         || productionRequest.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
         || productionRequest.quantity
-        || productionRequest.process.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.state.toLowerCase().includes(search.toLowerCase())
         )
     }else{
         dataProductionRequestsFiltered = dataProductionRequests
     }
-    const handleDelete = (row: any) => {
-        del(`productionRequests/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`productionRequests?apikey=${API_KEY}`);
-        }, 500);
-    };
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`productionRequest/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`productionRequests?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
     
     return(
         <>
         <Container align={'CENTER'} justify={'TOP'}>
-            <Titles title={'Solicitudes de Producción'} level={1}/>
-            <div className="productionRequest__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-
-                    }}><SearchInput label={'Buscar Solicitudes'} onChange={e=> setSearch(e.target.value)} value={search} idSearch={'productionRequestSearch'} />
-                    <Button text={'Crear Solicitud'} onClick={() => navigate('/admin/ProductionRequests/create')} fill={false}/>
-                    </div>
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataProductionRequestsFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                
-                    !loading && !error && dataProductionRequestsFiltered.length > 0 && (
-                        <Table
-                        columns={columnsProductionRequest}
-                        data={dataProductionRequestsFiltered}
-                        onRowClick={() => null}
-                        editableAction={{ onClick: (e) => {
-                            setidEdit(e.id)
-                            setIsModalOpen(true)
-                        } }}
-                        deleteAction={{ onClick: handleDelete }}
-                        
-                    />)
-                    }
-            </div>
+        <TableRedisign
+                    columns={columnsProductionRequest}
+                    data={dataProductionRequestsFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Solicitudes de Producción'}
+                    createAction={() => navigate('/admin/ProductionRequests/create')}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
             {
                     isModalOpen && createPortal(
                         <>

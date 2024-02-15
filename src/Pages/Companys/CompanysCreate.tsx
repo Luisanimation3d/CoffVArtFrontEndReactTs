@@ -20,15 +20,6 @@ export const CompanysCreate = () => {
     const navigate = useNavigate()
     const companyFields: FormField[] = [
         {
-            name: 'name',
-            type: 'text',
-            label: 'Nombre de la compañia',
-            placeholder: 'Compañia S.A.S',
-            value: formValues['name'] !== undefined ? String(formValues['name']) : '',
-            onChange: (value) => handleInputChange('name', value),
-            size: 'medium'
-        },
-        {
             name: 'nit',
             type: 'text',
             label: 'NIT',
@@ -38,12 +29,12 @@ export const CompanysCreate = () => {
             size: 'medium'
         },
         {
-            name: 'email',
-            type: 'email',
-            label: 'Correo',
-            placeholder: 'Compañia@company.com',
-            value: formValues['email'] !== undefined ? String(formValues['email']) : '',
-            onChange: (value) => handleInputChange('email', value),
+            name: 'name',
+            type: 'text',
+            label: 'Nombre de la compañia',
+            placeholder: 'Compañia S.A.S',
+            value: formValues['name'] !== undefined ? String(formValues['name']) : '',
+            onChange: (value) => handleInputChange('name', value),
             size: 'medium'
         },
         {
@@ -62,6 +53,15 @@ export const CompanysCreate = () => {
             placeholder: '300 000 00 00',
             value: formValues['phone'] !== undefined ? String(formValues['phone']) : '',
             onChange: (value) => handleInputChange('phone', value),
+            size: 'medium'
+        },
+        {
+            name: 'email',
+            type: 'email',
+            label: 'Correo',
+            placeholder: 'Compañia@company.com',
+            value: formValues['email'] !== undefined ? String(formValues['email']) : '',
+            onChange: (value) => handleInputChange('email', value),
             size: 'medium'
         },
     ];
