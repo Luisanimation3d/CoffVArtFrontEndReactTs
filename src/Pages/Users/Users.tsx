@@ -8,16 +8,19 @@ import {CreateUserModal} from "../../Modales/CreateUserModal/CreateUserModal.tsx
 import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
+import {useNavigate} from "react-router-dom";
 
 export default function User() {
     const [search, setSearch] = useState<string>('')
     const [userToEdit, setUserToEdit] = useState<number | null>(null)
     // const {data, loading, error, get} = useFetch(API_URL)
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch(API_URL)
-    const {data, loading, error, get, del} = useFetch(API_URL)
-    const [dataUsersModify, setDataUsersModify] = useState<any>([])
+    const {data, loading, get, del} = useFetch(API_URL)
+    const [dataUsersModify, setDataUsersModify] = useState<{[key: string]: string | number}[]>([])
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [page, setPage] = useState<number>(1)
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         get(`users?apikey=${API_KEY}&page=${page}`)
@@ -54,7 +57,7 @@ export default function User() {
         }
     ]
 
-    const handleDelete = (row: any) => {
+    const handleDelete = (row: unknown) => {
         del(`users/${row}?apikey=${API_KEY}`)
         setTimeout(() => {
             get(`users?apikey=${API_KEY}`)
@@ -123,6 +126,7 @@ export default function User() {
                    callback={handleCallback}
                    loading={loading}
                    onRowClick={row => alert(row.name)}
+                   createAction={() => navigate('/admin/users/create')}
                />
                 {
                     isModalOpen && createPortal(
