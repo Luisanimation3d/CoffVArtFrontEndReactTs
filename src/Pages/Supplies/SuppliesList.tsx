@@ -28,7 +28,7 @@ export const Supplies = () => {
         { key: 'id', header: 'ID' },
         { key: 'name', header: 'Nombre' },
         { key: 'amount', header: 'Cantidad' },
-        { key: 'unitPrice', header: 'Precio Únitario' },
+        { key: 'unitPrice', header: 'Precio Unitario' },
         { key: 'description', header: 'Descripción' },
         { key: 'State', header: 'Estado' }
     ];
