@@ -88,6 +88,7 @@
     .adminLayout__mainContent{
         height: calc(100% - 50px);
         width: 100%;
+        padding: 1rem 0;
     }
     .adminLayout__link--toHome{
         top: 1rem;

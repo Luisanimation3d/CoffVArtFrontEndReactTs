@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './SideBarRedisign.module.css';
+import { useLocation } from 'react-router-dom';
 
 import userImage from '../../assets/userImage.png';
 import {
@@ -236,6 +237,7 @@ export const SideBarMenuRedisignMobile = ({
 	const { logout, user } = useAuth();
 	const navigate = useNavigate();
 	const { get: logoutGet } = useFetch(API_URL);
+	const location = useLocation()
 
 	const { darkMode, setDarkMode } = useDarkMode();
 
@@ -265,6 +267,10 @@ export const SideBarMenuRedisignMobile = ({
 			navigate('/home');
 		}, 500);
 	};
+
+	useEffect(() => {
+		setToggleMenu(false)
+	}, [location])
 
 	return (
 		<>

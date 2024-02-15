@@ -693,3 +693,9 @@
     background-color: #D6CAB0;
     color: #121212 !important;
 }
+
+@media screen and (max-width: 768px){
+    .header__items__container{
+        max-height: calc(100vh - 480px);
+    }
+}

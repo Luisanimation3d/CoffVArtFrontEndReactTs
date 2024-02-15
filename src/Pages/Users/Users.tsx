@@ -122,6 +122,7 @@ export default function User() {
                    dropDownOptions={options}
                    callback={handleCallback}
                    loading={loading}
+                   onRowClick={row => alert(row.name)}
                />
                 {
                     isModalOpen && createPortal(
