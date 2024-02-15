@@ -33,11 +33,12 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                processId: data?.ProductionOrder?.processId
+                processId: data?.productionOrder?.processId
             }
             setRegisterForm(newValues)
         }
     }, [data]);
+    console.log(data,"data")
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [registerForm, setRegisterForm] = useState<{
         processId: string,
@@ -58,11 +59,12 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         }
 
     ]
+    console.log(registerForm.processId,'register proceso')
     const validateForm = () => {
         const errors: any = {}
         if (!registerForm.processId || registerForm.processId.length === 0) {
             errors.processId = 'El proceso es requerido'
-            console.log("entró al condicional")
+            console.log("El proceso es requerido")
         }
         
         return errors
@@ -80,7 +82,11 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         console.log(requestBody, "aquí body")
         put(`productionOrders/${id}?apikey=${API_KEY}`, requestBody)
         console.log(process,"aquí process")
-    };
+    }; useEffect(()=> {
+        if(data && !loading && !errorRegister){
+            console.log("pedrito")
+        }
+    },[data])
     if (loading) {
         return <div>Cargando...</div>;
     }
