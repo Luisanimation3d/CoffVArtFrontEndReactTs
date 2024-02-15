@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { EditOrder } from "../../Modales/EditOrderModal/EditOrderModal.tsx";
+import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
 
 export const Orders = () => {
     const [search, setSearch] = useState<string>("");
@@ -114,58 +115,18 @@ console.log(data)
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={"Pedidos"} level={1}/>
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-                    }}>
-                        <SearchInput
-                        label={"Buscar Pedido"}
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search}
-                        idSearch={"SalesSearch"}
-                    />
-                    <Button text={'Crear Pedido'} onClick={()=> navigate('/admin/Orders/create')} fill= {false} />
-                    </div>
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataOrdersFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataOrdersFiltered.length > 0 && (
-                            <Table
-                                columns={columnsOrders}
-                                data={dataOrdersFiltered}
-                                onRowClick={getOrderDetails}
-                                editableAction={{ onClick: (e) => {
-                                    setidEdit(e.id)
-                                    setIsModalOpenEdit(true)
-                                } }}
-                                deleteAction={{
-                                    onClick: handleDelete,
-                                }}
-                                nombreArchivo={'Pedidos Reporte'}
-                                tituloDocumento={'Pedidos Reporte'}
-                                page={page}
-                                setPage={setPage}
-                                totalPages={Math.ceil(data?.orders?.count / data?.options?.limit)}
-                                pagination={true}
-                            />
-                        )
-                    }
-                </div>
+                <TableRedisign
+                    columns={columnsOrders}
+                    data={dataOrdersFiltered}
+                    onRowClick={getOrderDetails}
+                    search={search}
+                    setSearch={setSearch}
+                    createAction={() => navigate('/admin/Orders/create')}
+                    title="Ordenes"
+                    page={page}
+                    setPage={setPage}
+                    callback={getOrderDetails}
+                />
                 {
                     isModalOpenEdit && createPortal(
                         <>
@@ -188,7 +149,7 @@ console.log(data)
                                 columns={[
                                     {
                                         key: "code",
-                                        header: "Codigo",
+                                        header: "Código",
                                     },
                                     {
                                         key: "product",
