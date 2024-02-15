@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { SupplyEditModal } from "../../Modales/EditSupplyModal/EditSupplyModal.tsx";
 import { API_KEY } from "../../constantes";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 export const Supplies = () => {
     const [search, setSearch] = useState<string>('');
@@ -30,7 +32,7 @@ export const Supplies = () => {
         { key: 'amount', header: 'Cantidad' },
         { key: 'unitPrice', header: 'Precio Unitario' },
         { key: 'description', header: 'Descripción' },
-        { key: 'State', header: 'Estado' }
+        { key: 'state', header: 'Estado' }
     ];
     
     const dataSupplies = data?.supplies?.rows || [];
@@ -46,75 +48,35 @@ export const Supplies = () => {
         dataSuppliesFiltered = dataSupplies;
     }
 
-
-    const handleDelete = (row: any) => {
-        del(`supplies/${row}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`supplies?apikey=${API_KEY}`);
-        }, 500);
-    };
-
-    useEffect(()=>{
-        if(data?.supplies?.rows){
-            const newData = data?.supplies?.rows?.map((item: any)=>({
-                ...item,
-                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
-                    e.stopPropagation()
-                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
-                }}/>
-            }))
-
-            setDataToShow(newData)
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        if(type === 'Cambiar estado'){
+            del(`supplies/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`supplies?apikey=${API_KEY}`);
+            }, 500);
         }
-    }, [data])
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
 
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={'Insumos'} level={1} />
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent:'space-between',
-                            alignItems: 'center',
-                            marginBottom: '1rem',
-                        }}>
-                    <SearchInput label={'Buscar Insumo'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'SuppliesSearch'} />
-
-                    <Button text={'Crear Insumo'} onClick={() => setIsModalOpen(true)} fill={false}/>
-                    </div>
-                    
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataSuppliesFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataSuppliesFiltered.length > 0 && (
-                    <Table
-                        columns={columnsSupplies}
-                        data={dataToShow}
-                        onRowClick={() => null}
-                        editableAction={{
-                            label: 'Editar Insumo',
-                            onClick: (row: any) => {
-                                setSupplyToEdit(row.id)
-                                setIsModalOpen(true)
-                            }} }
-                        deleteAction={{ onClick: handleDelete }}
-                        nombreArchivo={'Insumos Reporte'}
-                        tituloDocumento={'Insumos Reporte'}
-                    />)
-                    }
-                </div>
+            <TableRedisign
+                    columns={columnsSupplies}
+                    data={dataSuppliesFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Insumos'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
                 {
                     isModalOpen && createPortal(
                         <>{
