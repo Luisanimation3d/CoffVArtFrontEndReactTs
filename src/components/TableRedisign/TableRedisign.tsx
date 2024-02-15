@@ -67,10 +67,9 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
             return newRow;
         });
 
-        // Cambiar el nombre de las columnas a las que esta en el header
         const dataToDownloadWithHeaders = dataToDownload.map(row => {
             const newRow = {};
-            for (let key in row) {
+            for (const key in row) {
                 columns.map(column => {
                     if (column.key === key) {
                         if(column.key === 'id') {
@@ -187,7 +186,8 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                                                     ) :
                                                                     column.key === 'state' ? (
                                                                         <td className={`${styles.table__content__tbody__item}`} key={index}>
-                                                                            <span className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' || row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' ? styles.table__content__status__pending : row[column.key] == 'Approved' ? styles.table__content__status__approved : row[column.key] == 'Declined' ? styles.table__content__status__declined : ''}`} key={index}>
+                                                                            <span
+                                                                                className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' || row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' || row[column.key].toLocaleString().toUpperCase() == 'TOSTANTO' || row[column.key].toLocaleString().toUpperCase() == 'EMPAQUETADO' ? styles.table__content__status__pending : row[column.key] == 'Approved' || row[column.key].toLocaleString().toUpperCase() == 'FINALIZADO' || row[column.key].toLocaleString().toUpperCase() == 'RECIBIDO' ? styles.table__content__status__approved : row[column.key] == 'Declined' || row[column.key].toLocaleString().toUpperCase() == 'CANCELADO' ? styles.table__content__status__declined : row[column.key].toLocaleString().toUpperCase() == 'ENVIADO' || row[column.key].toLocaleString().toUpperCase() == 'DESGASIFICACIÓN' ? styles.table__content__status__onHold : ''}`} key={index}>
                                                                                 {
                                                                                     handleStateRow(row[column.key]) ? row[column.key] ? 'Activo' : 'Inactivo' : row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' ? 'Pendiente' : row[column.key].toLocaleString().toUpperCase() == 'APROBADO' ? 'Aprobado' : row[column.key].toLocaleString().toUpperCase() == 'RECHAZADO' ? 'Rechazado' : row[column.key]
                                                                                 }

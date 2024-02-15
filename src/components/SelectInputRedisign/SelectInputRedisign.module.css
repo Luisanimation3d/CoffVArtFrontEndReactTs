@@ -1,0 +1,298 @@
+.container {
+    position: relative;
+    width: 100%;
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem;
+    border-radius: .25rem;
+    outline: none;
+    transition: border-color .3s ease-in-out;
+}
+
+.value {
+    flex-grow: 1;
+    display: flex;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.clear-button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.25rem;
+    height: 1.25rem;
+    transition: color .3s ease-in-out;
+    animation: ClearButtonFadeIn .5s ease;
+}
+
+@keyframes ClearButtonFadeIn {
+    from {
+        rotate: 360deg;
+    }
+    to {
+        rotate: 0deg;
+    }
+}
+
+.clear-button:focus,
+.clear-button:hover {
+    color: #9F212F;
+}
+
+.divider {
+    align-self: stretch;
+    width: 2px;
+    transition: background .3s ease-in-out;
+}
+
+.caret {
+    transition: color .5s ease-in-out;
+    animation: RotateChevronInactive .5s ease forwards;
+}
+
+.caret.caret--active {
+    animation: RotateChevronActive .5s ease forwards;
+}
+
+@keyframes RotateChevronActive {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+@keyframes RotateChevronInactive {
+    from {
+        transform: rotate(-180deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.options {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: none;
+    max-height: 15rem;
+    overflow-y: auto;
+    border-radius: .25rem;
+    width: 100%;
+    left: 0;
+    top: calc(100% + .25rem);
+    z-index: 100;
+}
+
+.options.show {
+    display: block;
+}
+
+.option {
+    padding: .25rem .5rem;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.option-badge {
+    display: flex;
+    align-items: center;
+    border: none;
+    padding: .15rem .5rem;
+    gap: .5rem;
+    cursor: pointer;
+    outline: none;
+    border-radius: 50px;
+    font-weight: bold;
+    transition: .3s ease-in-out;
+}
+
+.option-badge:hover > .remove-button,
+.option-badge:focus > .remove-button {
+    color: #9F212F;
+}
+
+.option-badge > .remove-button {
+    font-size: 1.25rem;
+    background: none;
+    height: 1.25rem;
+    color: #fff;
+    transition: 0.3s ease-in-out;
+}
+
+.label {
+    position: absolute;
+    font-size: 1rem;
+    transition: .3s ease-in-out;
+    top: 50%;
+    padding: 0 .2rem;
+    font-weight: 600;
+    transform: translate(0, -50%);
+    pointer-events: none;
+}
+
+.container:focus .label {
+    top: -.1rem;
+    font-size: .8rem;
+}
+
+.label.label--active {
+    top: -.1rem;
+    font-size: .8rem;
+    color: #D6CAB0;
+}
+
+
+/* Dark Mode */
+.darkMode{
+    border: 2px solid #ccc;
+}
+
+.darkMode:focus {
+    border-color: #d6cab0;
+}
+
+.darkMode .value{
+    color: #ccc;
+}
+
+.darkMode .clear-button{
+    color: #ccc;
+}
+
+.darkMode .divider{
+    background: #ccc;
+}
+
+.darkMode.container:focus .divider {
+    background: #d6cab0;
+}
+
+.darkMode .caret{
+    color: #ccc;
+}
+
+.darkMode .caret.caret--active{
+    color: #d6cab0;
+
+}
+
+.darkMode .option{
+    background: #1f1f1f;
+    color: #ccc;
+    border: .05rem solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode .option.highlighted {
+    background: #121212;
+    color: #ccc;
+}
+
+.darkMode .option.selected {
+    background: #d6cab0;
+    color: #121212;
+}
+
+.darkMode .option-badge{
+    background: #121212;
+    color: #ccc;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode .option-badge:hover,
+.darkMode .option-badge:focus {
+    background: #1f1f1f;
+    color: #ccc;
+    border: 2px solid #d6cab0;
+}
+
+.darkMode .label{
+    color: #ccc;
+    background: #1f1f1f;
+}
+
+.darkMode.container:focus .label{
+    color: #d6cab0;
+}
+
+/* Light Mode */
+
+.lightMode{
+    border: 2px solid #D6CAB0;
+}
+
+.lightMode:focus {
+    border-color: #9F212F;
+}
+
+.lightMode .value{
+    color: #D6CAB0;
+}
+
+.lightMode .clear-button{
+    color: #9F212F;
+}
+
+.lightMode .divider{
+    background: #d6cab0;
+}
+
+.lightMode.container:focus .divider {
+    background: #9F212F;
+}
+
+.lightMode .caret{
+    color: #D6CAB0;
+}
+
+.lightMode .caret.caret--active{
+    color: #9F212F;
+}
+
+.lightMode .option{
+    background: #f1f1f1;
+    color: #121212;
+    border: .05rem solid rgba(0, 0, 0, 0.1);
+}
+
+.lightMode .option.highlighted {
+    background: #ccc;
+    color: #121212;
+}
+
+.lightMode .option.selected {
+    background: #9F212F;
+    color: #fff;
+}
+
+.lightMode .option-badge{
+    background: #D6CAB0;
+    color: #121212;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.lightMode .option-badge:hover,
+.lightMode .option-badge:focus {
+    background: #ccc;
+    color: #121212;
+    border: 2px solid #121212;
+}
+
+.lightMode .label{
+    color: #D6CAB0;
+    background: #fff;
+}
+
+.lightMode.container:focus .label{
+    color: #9F212F;
+}
+
+

@@ -186,6 +186,28 @@
     background: #ff4757;
 }
 
+.table__content__status__onHold {
+    color: #1BA8F2;
+    background: rgba(27, 168, 242, 0.3);
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+
+.table__content__status__onHold::before {
+    content: '';
+    display: inline-block;
+    width: .5rem;
+    height: .5rem;
+    border-radius: 50%;
+    background: #1BA8F2;
+}
+
 .table__content__tbody__button {
     display: flex;
     align-items: center;

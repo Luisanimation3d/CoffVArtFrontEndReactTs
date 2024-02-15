@@ -1,0 +1,95 @@
+.container{
+    display: flex;
+    width: 100%;
+    border-radius: .25rem;
+    position: relative;
+    padding: 1rem;
+}
+
+.textArea{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    resize: none;
+    font-size: 1rem;
+}
+
+.textArea::placeholder{
+    color: transparent;
+}
+
+.label{
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 1rem;
+    color: #D6CAB0;
+    font-weight: 600;
+    background: #fff;
+    padding: 0 .25rem;
+    pointer-events: none;
+    transition: .3s ease-in-out;
+}
+
+.textArea:focus + .label{
+    top: -.2rem;
+    transform: translate(0, -50%);
+    font-size: .8rem;
+    color: #9F212F;
+}
+
+.textArea:not(:focus):not(:placeholder-shown) + label {
+    top: -.2rem;
+    transform: translate(0, -50%);
+    font-size: .8rem;
+}
+
+/* Dark Mode */
+
+.darkMode.container{
+    border: 2px solid #ccc;
+}
+
+.darkMode.container:has(.textArea:focus){
+    border: 2px solid #d6cab0;
+}
+
+.darkMode .textArea{
+    color: #ccc;
+}
+
+.darkMode .label{
+    color: #ccc;
+    background: #1E1E1E;
+}
+
+.darkMode .textArea:focus + .label{
+    color: #d6cab0;
+}
+
+/* Light Mode */
+
+.lightMode.container{
+    border: 2px solid #d6cab0;
+}
+
+.lightMode.container:has(.textArea:focus){
+    border: 2px solid #9F212F;
+}
+
+.lightMode .textArea{
+    color: #121212;
+}
+
+.lightMode .label{
+    color: #D6CAB0;
+    background: #fff;
+}
+
+.lightMode .textArea:focus + .label{
+    color: #9F212F;
+}
+
+
