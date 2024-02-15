@@ -1,7 +1,16 @@
-.sideBarMenu__container.sideBarMenu__container--active ~ .adminLayout__mainContent{
-    margin-left: 250px;
-    width: calc(100% - 250px);
+.header__open__container ~ .adminLayout__mainContent{
+    width: calc(100% - 300px);
     left: 0;
+}
+
+.adminLayout__mainContent__darkMode.adminLayout__mainContent{
+    background: #1f1f1f;
+    color: #f1f1f1;
+}
+
+.adminLayout__mainContent__lightMode.adminLayout__mainContent{
+    background: #f1f1f1;
+    color: #1f1f1f;
 }
 
 .adminLayout__mainContent{
@@ -9,10 +18,8 @@
     min-height: 100vh;
     height: 100vh;
     top: 0;
-    left: 80px;
     width: calc(100% - 80px);
-    background-color: #f1f1f1;
-    padding: 1rem;
+    padding: 4rem 0;
     transition: all .5s ease-in-out;
 }
 
@@ -40,4 +47,50 @@
 
 .adminLayout__link--toHome:hover:after {
     width: 100%;
+}
+
+.adminLayout__mainContainer{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.adminLayout__actionButton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 100;
+    border: none;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    background: #9F212F;
+    color: #f1f1f1;
+    transition: all .3s;
+}
+
+.adminLayout__actionButton:hover{
+    background: #ff4757;
+}
+
+@media screen and (max-width: 768px) {
+    .adminLayout__actionButton{
+        display: none;
+    }
+    .adminLayout__mainContainer{
+        flex-direction: column;
+    }
+
+    .adminLayout__mainContent{
+        height: calc(100% - 50px);
+        width: 100%;
+    }
+    .adminLayout__link--toHome{
+        top: 1rem;
+        right: 1rem;
+    }
 }

@@ -1,15 +1,14 @@
 import {useEffect, useState} from "react";
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table";
-import {Titles} from "../../components/Titles/Titles";
 import {Container} from "../../components/Container/Container";
-import {SearchInput} from "../../components/SearchInput/SearchInput";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useFetch} from "../../hooks/useFetch";
 import {createPortal} from "react-dom";
 import {API_KEY} from "../../constantes";
 import {Button} from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
@@ -38,7 +37,7 @@ export const Roles = () => {
             header: 'Descripción',
         },
         {
-            key: 'State',
+            key: 'state',
             header: 'Estado',
         }
     ]
@@ -90,51 +89,18 @@ export const Roles = () => {
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={'Roles'} level={1}/>
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                    <div style={{
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        alignItems: 'center',
-                        marginBottom: '1rem',
-
-                    }}>
-                        <SearchInput label={'Buscar Roles'} onChange={e => setSearch(e.target.value)} value={search}
-                                     idSearch={'roleSearch'}/>
-                        <Button text={'Crear Rol'} onClick={() => navigate('/admin/roles/create')} fill={false}/>
-                    </div>
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataRolesFiltered.length === 0 && <p>No hay resultados</p>
-                    }
-                    {
-                        !loading && !error && dataRolesFiltered.length > 0 && (
-                            <Table columns={columnsRoles} data={dataToShow} onRowClick={handleRowClick}
-                                   editableAction={{
-                                       onClick: (row) => navigate(`/admin/roles/edit/${row.id}`),
-                                   }}
-                                   deleteAction={{
-                                       label: 'Cambiar estado',
-                                       onClick: (row) => handleDelete(row.id),
-                                   }}
-                                   nombreArchivo={'Roles Reporte'}
-                                   tituloDocumento={'Roles Reporte'}
-                                   page={page}
-                                   setPage={setPage}
-                                   totalPages={Math.ceil(data?.roles?.count / data?.options?.limit)}
-                                   pagination={true}
-                            />)
-                    }
-                </div>
+                <TableRedisign
+                    columns={columnsRoles}
+                    data={dataRolesFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Roles'}
+                    loading={loading}
+                    page={page}
+                    setPage={setPage}
+                    pagination={true}
+                    totalPages={Math.ceil(data?.roles?.count / data?.options?.limit) || 1}
+                />
             </Container>
             {
                 isModalOpen && createPortal(

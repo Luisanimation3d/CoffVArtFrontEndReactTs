@@ -3,19 +3,22 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    padding: .5rem 1rem;
+    border-radius: .5rem;
 }
 
 .pagination__button {
-    color: #121212;
-    padding: 0.5rem 1rem;
-    /*border: 1px solid #D6CAB0;*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    width: 2rem;
+    height: 2rem;
     border: none;
     border-radius: 5px;
-    background-color: #fff;
     outline: none;
     cursor: pointer;
+    font-weight: 600;
     transition: all 0.3s ease-in-out;
 }
 
@@ -27,9 +30,46 @@
 .pagination__button--active {
     color: #fff;
     pointer-events: none;
-    background-color: #9F212F;
 }
 
-.pagination__button--disabled {
-    visibility: hidden;
+/* Dark Mode */
+
+.pagination__container__darkMode{
+    background: #171717;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pagination__container__darkMode .pagination__button{
+    color: #ccc;
+    background: #121212;
+}
+
+.pagination__container__darkMode .pagination__button:hover{
+    background: #1f1f1f;
+}
+
+.pagination__container__darkMode .pagination__button--active{
+    background: #D6CAB0;
+    color: #121212;
+}
+
+/* Light Mode */
+.pagination__container__lightMode{
+    background: #f5f6fa;
+    border: 1px solid #dedede;
+}
+
+.pagination__container__lightMode .pagination__button{
+    color: #121212;
+    background: #dedede;
+}
+
+.pagination__container__lightMode .pagination__button:hover{
+    background: #cecece;
+    color: #121212;
+}
+
+.pagination__container__lightMode .pagination__button--active{
+    background: #9F212F;
+    color: #fff;
 }

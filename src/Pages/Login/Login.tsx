@@ -125,7 +125,6 @@ export const Login = () => {
                 phone: data.user.coustomer.phone,
                 document: data.user.coustomer.document,
                 documentType: data.user.coustomer.documentType,
-
             }
             updateUser(userToUpdate);
         }

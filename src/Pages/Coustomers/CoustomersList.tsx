@@ -11,6 +11,8 @@ import { API_KEY } from "../../constantes";
 import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
 import { createPortal } from "react-dom";
 import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
+import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import {FiShuffle} from "react-icons/fi";
 
 export const Coustomers = () => {
     const [search, setSearch] = useState<string>('');
@@ -36,7 +38,7 @@ export const Coustomers = () => {
         { key: 'document', header: 'Documento' },
         { key: 'phone', header: 'Teléfono' },
         { key: 'address', header: 'Dirección' },
-        
+        { key: 'state', header: 'Estado' }
     ];
     
     const dataCoustumers = data?.coustumers?.rows || [];
@@ -52,12 +54,21 @@ export const Coustomers = () => {
         dataCoustumersFiltered = dataCoustumers;
     }
 
-    const handleDelete = (row: any) => {
-        del(`coustumers/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`coustumers?apikey=${API_KEY}`);
-        }, 500);
-    };
+    const handleCallback = (row: {[key : string] : string | number}, type) => {
+        if(type === 'Cambiar estado'){
+            del(`coustumers/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`coustumers?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
 
     useEffect(() => {
         if(userToEdit == null){
@@ -68,54 +79,17 @@ export const Coustomers = () => {
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={'Clientes'} level={1} />
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent:'space-between',
-                            alignItems: 'center',
-                            marginBottom: '1rem',
-                        }}>
-                    <SearchInput label={'Buscar clientes'} onChange={(e) => setSearch(e.target.value)} value={search} idSearch={'CoustomerSearch'} />
-                    <Button text={'Crear Cliente'} onClick={() => setIsModalOpen(true)} fill={false}/>
-                    </div>
-                    
-                    {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataCoustumersFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataCoustumersFiltered.length > 0 && (
-                    <Table
-                        columns={columnsCoustumers}
-                        data={dataCoustumersFiltered}
-                        onRowClick={() => null}
-                        deleteAction={{ onClick: handleDelete }}
-                        editableAction={{
-                            label: 'Editar Cliente',
-                            onClick: (row: any) => {
-                                setUserToEdit(row.id)
-                                setIsModalOpen(true)
-                            },
-                        }}
-                        nombreArchivo={'Clientes Reporte'}
-                        tituloDocumento={'Clientes Reporte'}
-                        page={page}
-                        setPage={setPage}
-                        totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit)}
-                        pagination={true}
-                    />)
-                    }
-                </div>
+                <TableRedisign
+                    columns={columnsCoustumers}
+                    data={dataCoustumersFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Clientes'}
+                    createAction={() => setIsModalOpen(true)}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
                 {
                     isModalOpen && createPortal(
                         <>

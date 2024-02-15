@@ -3,6 +3,7 @@ import {lazy, Suspense} from "react";
 import {LabelView} from "./components/LabelView/LabelView.tsx";
 import {AuthProvider} from "./context/AuthContext.tsx";
 import {CartProvider} from "./context/CartContext.tsx";
+import {DarkModeProvider} from "./context/DarkMode.tsx";
 import {ProtectedRoutes} from "./Routes/ProtectedRoutes.tsx";
 // import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
 
@@ -103,235 +104,237 @@ export default function App() {
     return (
         <>
             <AuthProvider>
-                <CartProvider>
-                    <HashRouter>
-                        <Routes>
-                            <Route path={'/ejemplo'} element={<EjemploVistaConDetalle/>}/>
-                            <Route element={<ProtectedRoutes/>}>
-                                <Route path={'/admin/'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de admin</h1>}>
-                                        <AdminLayout/>
+                <DarkModeProvider>
+                    <CartProvider>
+                        <HashRouter>
+                            <Routes>
+                                <Route path={'/ejemplo'} element={<EjemploVistaConDetalle/>}/>
+                                <Route element={<ProtectedRoutes/>}>
+                                    <Route path={'/admin/'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de admin</h1>}>
+                                            <AdminLayout/>
+                                        </Suspense>
+                                    }>
+                                        <Route path={'*'} element={<div>error</div>}/>
+                                        <Route path={'dashboard'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de dashboard</h1>}>
+                                                <Dashboard/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Roles'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de roles</h1>}>
+                                                <Roles/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'roles/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de roles</h1>}>
+                                                <RolesCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'roles/edit/:id'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de roles</h1>}>
+                                                <RolesEdit/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Supplys'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de supplies</h1>}>
+                                                <Supplies/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Products'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de products</h1>}>
+                                                <Products/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Companys'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de companys</h1>}>
+                                                <Companys/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Companys/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de companys</h1>}>
+                                                <CompanysCreate/>
+                                            </Suspense>
+                                        }/>
+
+                                        <Route path={'Suppliers'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de suppliers</h1>}>
+                                                <Suppliers/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Suppliers/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de suppliers</h1>}>
+                                                <SuppliersCreate/>
+                                            </Suspense>
+                                        }/>
+
+                                        <Route path={'ProductionOrders'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
+                                                <ProductionOrders/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'ProductionOrders/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
+                                                <ProductionOrdersCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'ProductionOrders/edit/:id'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
+                                                <ProductionOrdersEdit/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'ProductionRequests'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de production requests</h1>}>
+                                                <ProductionRequests/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'ProductionRequests/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de production requests</h1>}>
+                                                <ProductionRequestsCreate/>
+                                            </Suspense>
+                                        }/>
+
+                                        <Route path={'Processes'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de processes</h1>}>
+                                                <Processes/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Processes/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de processes</h1>}>
+                                                <ProcessesCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Coustomers'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
+                                                <Coustomers/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Coustomer/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
+                                                <CustomersCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Coustomer/edit/:id'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
+                                                <CustomersEdit/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'ejemplo'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de ejemplo</h1>}>
+                                                <EjemploVistaConDetalle/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Sales'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de sales</h1>}>
+                                                <Sales/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Shops'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de shops</h1>}>
+                                                <Shops/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Shops/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de shops</h1>}>
+                                                <ShopsCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Orders'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
+                                                <Orders/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Orders/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
+                                                <OrdersCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'Orders/edit/:id'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
+                                                <OrdersEditPrueba/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'users'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de usuarios</h1>}>
+                                                <User/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'my-profile'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de mi perfil</h1>}>
+                                                <MyProfile/>
+                                            </Suspense>
+                                        }/>
+                                    </Route>
+                                </Route>
+                                <Route path={'*'} element={<div>error</div>}/>
+                                <Route path={'/'} element={
+                                    <Suspense fallback={<h1>Cargando el componente de user</h1>}>
+                                        <UserLayout/>
                                     </Suspense>
                                 }>
+                                    <Route path={'home'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de home</h1>}>
+                                            <Home/>
+                                        </Suspense>
+                                    }/>
+                                    <Route path={'tiendaUser'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de tienda</h1>}>
+                                            <TiendaUser/>
+                                        </Suspense>
+                                    }/>
+                                    <Route path={'producto/:id'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de detalle de producto</h1>}>
+                                            <ProductDetailPage/>
+                                        </Suspense>
+                                    }/>
                                     <Route path={'*'} element={<div>error</div>}/>
-                                    <Route path={'dashboard'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de dashboard</h1>}>
-                                            <Dashboard/>
+                                </Route>
+                                <Route path={'/user/'} element={
+                                    <Suspense fallback={<h1>Cargando el componente de user</h1>}>
+                                        <SimpleLayout/>
+                                    </Suspense>
+                                }>
+                                    <Route path={'sendRecoveryPassword'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de send email</h1>}>
+                                            <SendEmail/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'Roles'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de roles</h1>}>
-                                            <Roles/>
+                                    <Route path={'reset-password/:token'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de reset password</h1>}>
+                                            <ResetPassword/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'roles/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de roles</h1>}>
-                                            <RolesCreate/>
+                                    <Route path={'login'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de login</h1>}>
+                                            <Login/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'roles/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de roles</h1>}>
-                                            <RolesEdit/>
+                                    <Route path={'register'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de registro</h1>}>
+                                            <Register/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'Supplys'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de supplies</h1>}>
-                                            <Supplies/>
+                                    <Route path={'cart'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
+                                            <Cart/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'Products'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de products</h1>}>
-                                            <Products/>
+                                    <Route path={'checkout'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
+                                            <CartCheckout/>
                                         </Suspense>
                                     }/>
-                                    <Route path={'Companys'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de companys</h1>}>
-                                            <Companys/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Companys/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de companys</h1>}>
-                                            <CompanysCreate/>
-                                        </Suspense>
-                                    }/>
-                                    
-                                    <Route path={'Suppliers'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de suppliers</h1>}>
-                                            <Suppliers/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Suppliers/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de suppliers</h1>}>
-                                            <SuppliersCreate/>
-                                        </Suspense>
-                                    }/>
-                                    
-                                    <Route path={'ProductionOrders'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
-                                            <ProductionOrders/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'ProductionOrders/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
-                                            <ProductionOrdersCreate/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'ProductionOrders/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
-                                            <ProductionOrdersEdit/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'ProductionRequests'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de production requests</h1>}>
-                                            <ProductionRequests/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'ProductionRequests/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de production requests</h1>}>
-                                            <ProductionRequestsCreate/>
-                                        </Suspense>
-                                    }/>
-                                    
-                                    <Route path={'Processes'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de processes</h1>}>
-                                            <Processes/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Processes/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de processes</h1>}>
-                                            <ProcessesCreate/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Coustomers'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
-                                            <Coustomers/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Coustomer/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
-                                            <CustomersCreate/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Coustomer/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
-                                            <CustomersEdit/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'ejemplo'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de ejemplo</h1>}>
-                                            <EjemploVistaConDetalle/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Sales'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de sales</h1>}>
-                                            <Sales/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Shops'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de shops</h1>}>
-                                            <Shops/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Shops/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de shops</h1>}>
-                                            <ShopsCreate/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Orders'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
-                                            <Orders/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Orders/create'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
-                                            <OrdersCreate/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'Orders/edit/:id'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
-                                            <OrdersEditPrueba/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'users'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de usuarios</h1>}>
-                                            <User/>
-                                        </Suspense>
-                                    }/>
-                                    <Route path={'my-profile'} element={
-                                        <Suspense fallback={<h1>Cargando el componente de mi perfil</h1>}>
-                                            <MyProfile/>
+                                    <Route path={'thanks'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
+                                            <ThanksCheckout/>
                                         </Suspense>
                                     }/>
                                 </Route>
-                            </Route>
-                            <Route path={'*'} element={<div>error</div>}/>
-                            <Route path={'/'} element={
-                                <Suspense fallback={<h1>Cargando el componente de user</h1>}>
-                                    <UserLayout/>
-                                </Suspense>
-                            }>
-                                <Route path={'home'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de home</h1>}>
-                                        <Home/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'tiendaUser'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de tienda</h1>}>
-                                        <TiendaUser/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'producto/:id'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de detalle de producto</h1>}>
-                                        <ProductDetailPage/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'*'} element={<div>error</div>}/>
-                            </Route>
-                            <Route path={'/user/'} element={
-                                <Suspense fallback={<h1>Cargando el componente de user</h1>}>
-                                    <SimpleLayout/>
-                                </Suspense>
-                            }>
-                                <Route path={'sendRecoveryPassword'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de send email</h1>}>
-                                        <SendEmail/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'reset-password/:token'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de reset password</h1>}>
-                                        <ResetPassword/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'login'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de login</h1>}>
-                                        <Login/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'register'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de registro</h1>}>
-                                        <Register/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'cart'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
-                                        <Cart/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'checkout'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
-                                        <CartCheckout/>
-                                    </Suspense>
-                                }/>
-                                <Route path={'thanks'} element={
-                                    <Suspense fallback={<h1>Cargando el componente de carrito</h1>}>
-                                        <ThanksCheckout/>
-                                    </Suspense>
-                                }/>
-                            </Route>
-                        </Routes>
-                    </HashRouter>
-                    <LabelView/>
-                </CartProvider>
+                            </Routes>
+                        </HashRouter>
+                        <LabelView/>
+                    </CartProvider>
+                </DarkModeProvider>
             </AuthProvider>
         </>
     )
