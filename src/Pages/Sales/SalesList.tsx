@@ -10,6 +10,7 @@ import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
+import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
 
 export const Sales = () => {
     const [search, setSearch] = useState<string>("");
@@ -95,51 +96,16 @@ export const Sales = () => {
     return (
         <>
             <Container align={'CENTER'} justify={'TOP'}>
-                <Titles title={"Ventas"} level={1}/>
-                <div className="roles__table" style={
-                    {
-                        width: '100%',
-                    }
-                }>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    width: '100%',
-                    marginBottom: '20px',
-                }}>
-                    <SearchInput
-                        label={"Buscar Ventas"}
-                        onChange={(e) => setSearch(e.target.value)}
-                        value={search}
-                        idSearch={"SalesSearch"}
+                <TableRedisign
+                    columns={columnsSales}
+                    data={dataSalesFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    onRowClick={getSalesDetails}
+                    title={'Ventas'}
+                    loading={loading}
+                    callback={getSalesDetails}
                 />
-                </div>
-                {
-                        loading && <p>Cargando...</p>
-                    }
-                    {
-                        error && <p>Ha ocurrido un error</p>
-                    }
-                    {
-                        !loading && !error && dataSalesFiltered.length === 0 && <p>No hay datos</p>
-                    }
-                    {
-                        !loading && !error && dataSalesFiltered.length > 0 && (
-                    <Table
-                        columns={columnsSales}
-                        data={dataSalesFiltered}
-                        onRowClick={getSalesDetails}
-                        nombreArchivo={"Ventas"}
-                        tituloDocumento={"Ventas"}
-                        page={page}
-                        setPage={setPage}
-                        totalPages={Math.ceil(data?.sales?.count / data?.options?.limit)}
-                        pagination={true}
-                        
-                    />
-                        )
-                    }
-                </div>
             </Container>
             {
                 isModalOpen && createPortal(

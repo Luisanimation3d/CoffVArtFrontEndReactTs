@@ -54,7 +54,7 @@ export const Coustomers = () => {
         dataCoustumersFiltered = dataCoustumers;
     }
 
-    const handleCallback = (row: {[key : string] : string | number}, type) => {
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
         if(type === 'Cambiar estado'){
             del(`coustumers/${row.id}?apikey=${API_KEY}`);
             setTimeout(() => {
