@@ -2,22 +2,19 @@ import {useState, useEffect} from "react";
 import {createPortal} from "react-dom";
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
-import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
-import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
-import { Button } from "../../components/Button/Button.tsx";
 import { useNavigate } from "react-router-dom";
 import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
+import { FiShuffle } from "react-icons/fi";
 
 export const Sales = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { data, loading, error, get, del } = useFetch(API_URL)
     const [dataSalesModify, setDataSalesModify] = useState<any>([])
-    const navigate = useNavigate();
     const [page, setPage] = useState<number>(1)
     useEffect(() => {
         get(`sales?apikey=${API_KEY}&page=${page}`)
@@ -44,6 +41,10 @@ export const Sales = () => {
             key: "total",
             header: "Total",
         },
+        {
+        key:'state',
+        header: 'Estado'
+        }
     ];
     useEffect(() => {
         if(data?.sales?.rows){
@@ -70,12 +71,22 @@ export const Sales = () => {
         dataSalesFiltered = dataSales;
     }
 
-    const handleDelete = (row: any) => {
-        del(`sales/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`sales?apikey=${API_KEY}`);
-        }, 500);
-    };
+
+    const handleCallback= (row: {[key : string] : string | number}, type: string | number) => {	
+        if(type === 'Cambiar estado'){
+            del(`sales/${row.id}?apikey=${API_KEY}`);
+            console.log(del)
+            setTimeout(() => {
+                get(`sales?apikey=${API_KEY}`);
+            }, 500);
+        }
+    }
+    const options = [
+        {
+            label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        }
+    ]
     const [salesDetails, setSalesDetails] = useState<any[]>([]);
 
     const getSalesDetails = (sale: any) => {
@@ -104,7 +115,10 @@ export const Sales = () => {
                     onRowClick={getSalesDetails}
                     title={'Ventas'}
                     loading={loading}
-                    callback={getSalesDetails}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                    totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
+                    pagination={true}
                 />
             </Container>
             {
