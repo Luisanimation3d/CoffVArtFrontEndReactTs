@@ -6,6 +6,8 @@ import {useFetch} from '../../hooks/useFetch';
 import {useState} from 'react';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import {Container} from "../../components/Container/Container.tsx";
+import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const CompanysCreate = () => {
     const [formValues, setFormValues] = useState<Record<string, string | number>>({
@@ -62,7 +64,7 @@ export const CompanysCreate = () => {
             placeholder: 'Compañia@company.com',
             value: formValues['email'] !== undefined ? String(formValues['email']) : '',
             onChange: (value) => handleInputChange('email', value),
-            size: 'medium'
+            size: 'large'
         },
     ];
     const handleInputChange = (name: string, value: string | number) => {
@@ -94,12 +96,19 @@ export const CompanysCreate = () => {
         }
     };
     return (
-        <Form
+        <Container>
+            <FormRedisign 
+            fields={companyFields} 
+            onSubmit={handleSubmit} 
+            button={'Registrar Compañia'} 
+            title={'Crear Compañia'}/>
+        </Container>
+        /*<Form
             title='Crear Compañia'
             fields={companyFields}
             onSubmit={handleSubmit}
             button={<Button text='Crear Compañia' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
-        />
+        />*/
     );
 
 }

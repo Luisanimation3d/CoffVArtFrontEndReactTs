@@ -6,6 +6,8 @@ import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import {Container} from "../../components/Container/Container.tsx";
+import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const ProductionRequestsCreate = () => {
     const [formValues, setFormValues] = useState<Record<string, string | number | SelectOption | undefined>>({
@@ -131,13 +133,20 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         }
     };
     return (
-        <Form
+        <Container>
+            <FormRedisign 
+            fields={productionRequestFields} 
+            onSubmit={handleSubmit} 
+            button={'Registrar Solicitud'} 
+            title={'Crear Solicitud de Producción'}/>
+        </Container>
+        /*<Form
             title='Crear solicitud de producción'
             fields={productionRequestFields}
             onSubmit={handleSubmit}
             button={<Button text='Crear solicitud de producción' onClick={() => handleSubmit} fill={true}
                             type={'SUBMIT'}/>}
-        />
+        />*/
     );
 
 }
