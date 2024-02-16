@@ -66,6 +66,7 @@ const UserCreate = lazy(() => import('./Pages/Users/CreateUser.tsx'));
 const Supplies = lazy(() => import('./Pages/Supplies/SuppliesList.tsx'));
 const Products = lazy(() => import('./Pages/Products/ProductsList.tsx'));
 const Coustomers = lazy(() => import('./Pages/Coustomers/CoustomersList.tsx'));
+const CreateCoustomer = lazy(() => import('./Pages/Coustomers/CoustomersCreaten.tsx'));
 const CustomersCreate = lazy(() => import('./Pages/Coustomers/CoustomersCreate.tsx'));
 const CustomersEdit = lazy(() => import('./Pages/Coustomers/CoustomersEdit.tsx'));
 const Sales = lazy(() => import('./Pages/Sales/SalesList.tsx'));
@@ -248,6 +249,11 @@ export default function App() {
                                         <Route path={'Orders/create'} element={
                                             <Suspense fallback={<h1>Cargando el componente de orders</h1>}>
                                                 <OrdersCreate/>
+                                            </Suspense>
+                                        }/>
+                                        <Route path={'coustomers/create'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de coustomers</h1>}>
+                                                <CreateCoustomer/>
                                             </Suspense>
                                         }/>
                                         <Route path={'Orders/edit/:id'} element={

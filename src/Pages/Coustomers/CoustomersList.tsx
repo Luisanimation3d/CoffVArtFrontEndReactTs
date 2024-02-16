@@ -81,10 +81,13 @@ export const Coustomers = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Clientes'}
-                    createAction={() => setIsModalOpen(true)}
+                    createAction={() => navigate('/admin/coustomers/create')}
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}
+                    totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
+                    pagination={true}
+                    
                 />
                 {
                     isModalOpen && createPortal(
