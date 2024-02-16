@@ -9,7 +9,6 @@ import {useNavigate} from 'react-router-dom';
 
 export const ProductionRequestsCreate = () => {
     const [formValues, setFormValues] = useState<Record<string, string | number | SelectOption | undefined>>({
-        requestNumber: '',
         dateOfDispatch: '',
         quantity: '',
         supply: undefined,
@@ -65,15 +64,6 @@ export const ProductionRequestsCreate = () => {
 
     const productionRequestFields: FormField[] = [
     {
-        name: 'requestNumber',
-        type: 'text',
-        label: 'Numero de la solicitud',
-        placeholder: '1',
-        value: formValues['requestNumber'] !== undefined ? String(formValues['requestNumber']): '',
-        onChange: (value) => handleInputChange('requestNumber', value),
-        size: 'medium'
-    },
-    {
         name: 'companyId',
         type: 'select',
         label: 'Compañia',
@@ -124,7 +114,6 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
         const requestBody = {
-            requestNumber: formValues.requestNumber,
             dateOfDispatch: formValues.dateOfDispatch,
             quantity: formValues.quantity,
             processId: (formValues.processId as SelectOption)?.value as number, 

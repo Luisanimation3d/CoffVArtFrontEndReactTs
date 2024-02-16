@@ -10,8 +10,7 @@ import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden de producción'}:
 { setIsModalOpen: (value: boolean) => void, title?: string }) => {
-    const [formValues, setFormValues] = useState<{orderNumber:string,quantity:number,processId:SelectOption|undefined, supply:SelectOption|undefined}>({
-        orderNumber: '',
+    const [formValues, setFormValues] = useState<{quantity:number,processId:SelectOption|undefined, supply:SelectOption|undefined}>({
         quantity: 0,
         processId: undefined,
         supply: undefined,
@@ -47,15 +46,6 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
     
 
     const productionOrderFields: FormField[] = [
-        {
-            name: 'orderNumber',
-            type: 'text',
-            label: 'Numero de orden',
-            placeholder: '1',
-            value: formValues['orderNumber'] !== undefined ? String(formValues['orderNumber']): '',
-            onChange: (value) => handleInputChange('orderNumber', value),
-            size: 'medium'
-        },
         {
             name: 'processId',
             type: 'select',
@@ -99,7 +89,6 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
         e.preventDefault();
         try {
             const requestBody = {
-                orderNumber: formValues.orderNumber,
                 quantity: formValues.quantity,
                 processId: (formValues.processId as SelectOption)?.value as number,
                 supplieId: formValues.supply?.value , 
