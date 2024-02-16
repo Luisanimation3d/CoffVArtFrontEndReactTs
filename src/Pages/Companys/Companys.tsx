@@ -94,7 +94,7 @@ export const Companys = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Compañias'}
-                    createAction={() => setIsModalOpen(true)}
+                    createAction={() => navigate('/admin/Companys/create')}
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}

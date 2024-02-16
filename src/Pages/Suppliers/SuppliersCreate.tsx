@@ -6,6 +6,8 @@ import {useFetch} from '../../hooks/useFetch';
 import {useState} from 'react';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
+import {Container} from "../../components/Container/Container.tsx";
+import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const SuppliersCreate = () => {
     const [formValues, setFormValues] = useState<Record<string, string | number>>({
@@ -105,12 +107,19 @@ export const SuppliersCreate = () => {
         }
     };
     return (
-        <Form
+        <Container>
+            <FormRedisign 
+            fields={supplierFields} 
+            onSubmit={handleSubmit} 
+            button={'Registrar Proveedor'} 
+            title={'Crear Proveedor'}/>
+        </Container>
+        /*<Form
             title='Crear proveedor'
             fields={supplierFields}
             onSubmit={handleSubmit}
             button={<Button text='Crear proveedor' onClick={() => handleSubmit} fill={true} type={'SUBMIT'}/>}
-        />
+        />*/
     );
 
 }

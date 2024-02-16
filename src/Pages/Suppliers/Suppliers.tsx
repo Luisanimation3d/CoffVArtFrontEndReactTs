@@ -97,7 +97,7 @@ export const Suppliers = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Proveedores'}
-                    createAction={() => setIsModalOpen(true)}
+                    createAction={() => navigate('/admin/Suppliers/create')}
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}

@@ -81,10 +81,18 @@ export const ProductionOrders = () => {
                 get(`productionOrders?apikey=${API_KEY}`);
             }, 500);
         }
+        if(type === 'Cambiar proceso'){
+            setidEdit(row.id as number)
+            setIsModalOpenEdit(true)
+        }
     }
     const options = [
-        {
+        /*{
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },*/
+        {
+            label: 'Cambiar proceso',
             icon: <FiShuffle/>
         }
     ]
@@ -114,7 +122,7 @@ export const ProductionOrders = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Ordenes de Producción'}
-                    createAction={() => setIsModalOpen(true)}
+                    createAction={() => navigate('/admin/ProductionOrders/create')}
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}

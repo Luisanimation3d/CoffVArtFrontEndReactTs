@@ -91,11 +91,20 @@ export const ProductionRequests = () => {
             setTimeout(() => {
                 get(`productionRequests?apikey=${API_KEY}`);
             }, 500);
+            console.log(row,'row')
+        } 
+        if(type === 'Cambiar proceso'){
+            setidEdit(row.id as number)
+            setIsModalOpen(true)
         }
     }
     const options = [
-        {
+        /*{
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },*/
+        {
+            label: 'Cambiar proceso',
             icon: <FiShuffle/>
         }
     ]
