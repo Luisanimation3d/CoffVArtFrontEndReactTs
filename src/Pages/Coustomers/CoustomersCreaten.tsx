@@ -2,10 +2,12 @@ import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {useState} from "react";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY } from '../../constantes';
 
-export const CreateUser = () => {
+
+export const CreateCoustomer = () => {
     const [error, setError] = useState<{}>({})
+
 
 
     const [formData, setFormData] = useState<{
@@ -126,6 +128,7 @@ export const CreateUser = () => {
             size: 'medium',
         }
     ]
+
     const handleSubmit= async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
@@ -202,12 +205,11 @@ export const CreateUser = () => {
         
         }
     };
-
     return (
         <Container>
-            <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Usuario'} title={'CREAr USUARIO'} errors={error}/>
+            <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Cliente'} title={'CREAR CLIENTE'} errors={error}/>
         </Container>
     )
 }
 
-export default CreateUser;
+export default CreateCoustomer;
