@@ -127,7 +127,7 @@ export const Shops = () => {
                     data={dataShopsFiltered}
                     search={search}
                     setSearch={setSearch}
-                    title={'Productos'}
+                    title={'Compras'}
                     createAction={() => setIsModalOpen(true)}
                     loading={loading}
                     callback={handleCallback}

@@ -20,6 +20,7 @@ export const Supplies = () => {
     const [supplyToEdit, setSupplyToEdit] = useState<number|null>(null)
     const [dataToShow, setDataToShow] = useState<any[]>([])
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -72,10 +73,15 @@ export const Supplies = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Insumos'}
-                    createAction={() => setIsModalOpen(true)}
-                    loading={loading}
-                    callback={handleCallback}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.users?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     dropDownOptions={options}
+                    createAction={() => navigate('/admin/supplys/create')}
+                    loading={loading}
+                    onRowClick={row => alert(row.name)}
+                    callback={handleCallback}
                 />
                 {
                     isModalOpen && createPortal(
