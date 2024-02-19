@@ -8,10 +8,7 @@ import { useAuth} from '../../context/AuthContext.tsx';
 
 export const MiComponente= ()=> {
   const [salesDetails, setSalesDetails] = useState([]);
-  const {data} = useFetch(API_URL);
-  const {get} = useFetch("http://localhost:3000/api/");
-  const {loading} = useFetch(API_URL);
-  const {error} = useFetch(API_URL);
+  const {data, error, get, loading} = useFetch('http://localhost:3000/api/');
 
   const {user}= useAuth();
   const coustomerId = 6 
@@ -25,18 +22,20 @@ export const MiComponente= ()=> {
       setSalesDetails(data.sales);
     }
   }, [data]);
+
+  console.log(data)
+
   return (
     <div>
       <h2>Detalles de las ventas:</h2>
       <ul>
-        {salesDetails.map((sale: { id: number, salesDetails: { product: { name: string }, quantity: number, value: number }[] }) => (
+        {/* {salesDetails?.map((sale: { id: number, salesDetails: { product: { name: string }, quantity: number, value: number } }) => (
           <li key={sale.id}>
-            <h3>Producto: {sale.salesDetails[0].product.name}</h3>
-            <p>Cantidad: {sale.salesDetails[0].quantity}</p>
-            <p>Valor Unitario: {sale.salesDetails[0].value}</p>
-            {/* Agrega más detalles según sea necesario */}
+            <h3>Producto: {sale.salesDetails.product?.name}</h3>
+            <p>Cantidad: {sale.salesDetails?.quantity}</p>
+            <p>Valor Unitario: {sale.salesDetails?.value}</p>
           </li>
-        ))}
+        ))} */}
       </ul>
     </div>
   );
