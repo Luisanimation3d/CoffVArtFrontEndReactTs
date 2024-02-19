@@ -85,6 +85,10 @@
     color: #ccc;
 }
 
+.darkMode .input::-webkit-calendar-picker-indicator{
+    color-scheme: dark;
+}
+
 .darkMode .input:focus + .label {
     color: #d6cab0;
 }
@@ -115,6 +119,10 @@
 
 .lightMode .input{
     color: #121212;
+}
+
+.lightMode .input::-webkit-calendar-picker-indicator{
+    color-scheme: light;
 }
 
 .lightMode .input:focus + .label {

@@ -10,6 +10,12 @@ export const useRutasAdmin = () => {
     const adminToCompare: MenuItemsProps = [
         {
             type: 'menu',
+            icon: <FiHome/>,
+            title: 'Inicio',
+            link: '/'
+        },
+        {
+            type: 'menu',
             title: 'Dashboard',
             icon: <FiHome/>,
             link: 'dashboard'
