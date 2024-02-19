@@ -102,6 +102,7 @@ const Register = lazy(() => import('./Pages/Register/Register.tsx'));
 const Cart = lazy(() => import('./Pages/Cart/Cart.tsx'));
 const CartCheckout = lazy(() => import('./Pages/CartCheckout/CartCheckout.tsx'));
 const ThanksCheckout = lazy(() => import('./Pages/ThanksCheckout/ThanksCheckout.tsx'));
+const MiComponente = lazy(() => import('./Pages/Myshops/Myshops.tsx'));
 
 export default function App() {
     return (
@@ -298,6 +299,11 @@ export default function App() {
                                     <Route path={'tiendaUser'} element={
                                         <Suspense fallback={<h1>Cargando el componente de tienda</h1>}>
                                             <TiendaUser/>
+                                        </Suspense>
+                                    }/>
+                                    <Route path={'myshops'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de tienda</h1>}>
+                                            <MiComponente/>
                                         </Suspense>
                                     }/>
                                     <Route path={'producto/:id'} element={

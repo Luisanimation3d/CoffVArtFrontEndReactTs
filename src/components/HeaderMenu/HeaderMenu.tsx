@@ -45,13 +45,16 @@ export const HeaderMenu = () => {
                             <Link to={'/home'} className={`headerMenu__menu--link`}>Inicio</Link>
                         </li>
                         <li className={`headerMenu__menu--item`}>
-                            <Link to={'/nosotros'} className={`headerMenu__menu--link`}>Nosotros</Link>
+                             <Link to={'/nosotros'} className={`headerMenu__menu--link`}>Nosotros</Link>
                         </li>
                         <li className={`headerMenu__menu--item`}>
                             <Link to={'/tiendaUser'} className={`headerMenu__menu--link`}>Tienda</Link>
                         </li>
                         <li className={`headerMenu__menu--item`}>
                             <Link to={'/blog'} className={`headerMenu__menu--link`}>Contacto</Link>
+                        </li>
+                        <li className={`headerMenu__menu--item`}>
+                            <Link to={'/myshops'} className={`headerMenu__menu--link`}>Mis compras</Link>
                         </li>
                     </ul>
                 </nav>
