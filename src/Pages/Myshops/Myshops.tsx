@@ -3,15 +3,18 @@ import { useState, useEffect } from 'react';
 import ButtonStepper from "../../components/Order/ShopState.tsx";
 import { useFetch } from '../../hooks/useFetch.tsx';
 import { API_KEY, API_URL } from '../../constantes.ts';
+import { useAuth} from '../../context/AuthContext.tsx';
+
 
 export const MiComponente= ()=> {
   const [salesDetails, setSalesDetails] = useState([]);
   const {data} = useFetch(API_URL);
-  const {get} = useFetch(API_URL);
+  const {get} = useFetch("http://localhost:3000/api/");
   const {loading} = useFetch(API_URL);
   const {error} = useFetch(API_URL);
 
-  const coustomerId = 2;
+  const {user}= useAuth();
+  const coustomerId = 6 
 
   useEffect(() => {
     get(`sales/customer/${coustomerId}?apikey=${API_KEY}`);
