@@ -185,7 +185,7 @@ export const CreateUser = () => {
         }
         try {
             const requestBody = {
-                rol: formData.rol?.value,
+                roleId: formData.rol?.value,
                 documentType: formData.documentType?.value,
                 document: formData.documentNumber,
                 name: formData.name,
@@ -195,7 +195,6 @@ export const CreateUser = () => {
                 email: formData.email,
                 password: formData.password,
                 confirmPassword: formData.confirmPassword,
-
             };
             console.log('Datos del formulario', requestBody);
 
@@ -215,7 +214,6 @@ export const CreateUser = () => {
             console.log('Usuario creado con éxito');
         } catch (error) {
             console.error('Error al crear el usuario', error);
-
         }
     };
 

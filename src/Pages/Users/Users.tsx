@@ -7,7 +7,7 @@ import {createPortal} from "react-dom";
 import {CreateUserModal} from "../../Modales/CreateUserModal/CreateUserModal.tsx";
 import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
-import {FiShuffle} from "react-icons/fi";
+import {FiPenTool, FiShuffle} from "react-icons/fi";
 import {useNavigate} from "react-router-dom";
 
 export default function User() {
@@ -98,6 +98,10 @@ export default function User() {
         {
             label: 'Cambiar estado',
             icon: <FiShuffle/>
+        },
+        {
+            label: 'Editar',
+            icon: <FiPenTool/>
         }
     ]
 

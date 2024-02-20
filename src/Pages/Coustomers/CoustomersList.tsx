@@ -51,14 +51,14 @@ export const Coustomers = () => {
     }
 
     const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
-        console.log(type)
+        console.log(row,'row')
         if(type === 'Cambiar estado'){
             del(`coustumers/${row.id}?apikey=${API_KEY}`);
             setTimeout(() => {
                 get(`coustumers?apikey=${API_KEY}`);
             }, 500);
         }else if(type === 'Editar'){
-            navigate(`/admin/Coustomer/edit/${row.id}`)
+            navigate(`/admin/Coustomer/edit/${row.userId}`)
         }
     }
 
@@ -96,7 +96,6 @@ export const Coustomers = () => {
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}
-                    
                 />
                 {
                     isModalOpen && createPortal(
