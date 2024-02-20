@@ -1,13 +1,32 @@
 import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
-import {useState} from "react";
-import { API_KEY } from '../../constantes';
+import {useEffect, useState} from "react";
+import {API_KEY, API_URL} from '../../constantes';
+import {useFetch} from "../../hooks/useFetch.tsx";
 
 
 export const CreateCoustomer = () => {
-    const [error, setError] = useState<{}>({})
+    const [error, setError] = useState<{[key: string]: string}>({})
 
+    const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
+
+    const {get, data} = useFetch(API_URL);
+
+    useEffect(() => {
+        get(`roles?apikey=${API_KEY}`);
+    }, []);
+
+    useEffect(() => {
+        if(data?.roles?.rows){
+            setOptionsRoles(data?.roles?.rows.map((role: any) => {
+                return {
+                    label: role.name,
+                    value: role.id
+                }
+            }))
+        }
+    }, [data])
 
 
     const [formData, setFormData] = useState<{
@@ -43,11 +62,7 @@ export const CreateCoustomer = () => {
             name: 'rol',
             size: 'large',
             placeholder: 'Seleccione un rol',
-            options: [
-                {label: 'Administrador', value: 'admin'},
-                {label: 'Vendedor', value: 'seller'},
-                {label: 'Cliente', value: 'client'},
-            ]
+            options: optionsRoles
         },
         {
             type: 'select',

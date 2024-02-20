@@ -1,11 +1,12 @@
 import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
-import {useState} from "react";
-import { API_KEY } from "../../constantes.ts";
+import {useState, useEffect} from "react";
+import {API_KEY, API_URL} from "../../constantes.ts";
+import {useFetch} from "../../hooks/useFetch.tsx";
 
 export const CreateUser = () => {
-    const [error, setError] = useState<{}>({})
+    const [error, setError] = useState<{[key: string]: string}>({})
 
 
     const [formData, setFormData] = useState<{
@@ -32,6 +33,25 @@ export const CreateUser = () => {
         rol: undefined,
     });
 
+    const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
+
+    const {get, data} = useFetch(API_URL);
+
+    useEffect(() => {
+        get(`roles?apikey=${API_KEY}`);
+    }, []);
+
+    useEffect(() => {
+        if(data?.roles?.rows){
+            setOptionsRoles(data?.roles?.rows.map((role: any) => {
+                return {
+                    label: role.name,
+                    value: role.id
+                }
+            }))
+        }
+    }, [data])
+
     const fields: FormField[] = [
         {
             type: 'select',
@@ -41,11 +61,7 @@ export const CreateUser = () => {
             name: 'rol',
             size: 'large',
             placeholder: 'Seleccione un rol',
-            options: [
-                {label: 'Administrador', value: 'admin'},
-                {label: 'Vendedor', value: 'seller'},
-                {label: 'Cliente', value: 'client'},
-            ]
+            options: optionsRoles
         },
         {
             type: 'select',
@@ -126,7 +142,7 @@ export const CreateUser = () => {
             size: 'medium',
         }
     ]
-    const handleSubmit= async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
         if (!formData.rol) {
@@ -167,7 +183,7 @@ export const CreateUser = () => {
             setError(mensajeError)
             return
         }
-        try{
+        try {
             const requestBody = {
                 rol: formData.rol?.value,
                 documentType: formData.documentType?.value,
@@ -179,7 +195,7 @@ export const CreateUser = () => {
                 email: formData.email,
                 password: formData.password,
                 confirmPassword: formData.confirmPassword,
-            
+
             };
             console.log('Datos del formulario', requestBody);
 
@@ -192,20 +208,21 @@ export const CreateUser = () => {
             });
             console.log('Respuesta del servidor', response);
 
-            if(!response.ok){
+            if (!response.ok) {
                 console.error('Error al crear el usuario', response.statusText);
                 return;
             }
             console.log('Usuario creado con éxito');
-        }catch(error){
+        } catch (error) {
             console.error('Error al crear el usuario', error);
-        
+
         }
     };
 
     return (
         <Container>
-            <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Usuario'} title={'CREAr USUARIO'} errors={error}/>
+            <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Usuario'} title={'CREAr USUARIO'}
+                          errors={error}/>
         </Container>
     )
 }
