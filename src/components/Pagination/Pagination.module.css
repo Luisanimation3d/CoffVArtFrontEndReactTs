@@ -32,6 +32,12 @@
     pointer-events: none;
 }
 
+.pagination__button--disabled{
+    pointer-events: none;
+    color: #ccc;
+    opacity: .4;
+}
+
 /* Dark Mode */
 
 .pagination__container__darkMode{

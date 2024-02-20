@@ -1,16 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
 import {FormField, SelectOption} from '../../types/Form';
-import {Button} from '../../components/Button/Button';
-import {Form} from '../../components/Form/Form';
-import { FormRedisign } from '../../components/FormRedisign/FormRedisign';
+import {FormRedisign} from '../../components/FormRedisign/FormRedisign';
 import {API_KEY, API_URL} from '../../constantes';
 import {useParams, useNavigate} from 'react-router-dom';
-
+import {Container} from "../../components/Container/Container.tsx";
 
 
 export const CustomersEdit = () => {
-    
+
     const {id} = useParams<{ id: string }>()
     const navigate = useNavigate()
     const [error, setError] = useState<{}>({})
@@ -18,8 +16,13 @@ export const CustomersEdit = () => {
 
     const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
 
-    const {get: getRoles} = useFetch(API_URL)
-    const {data: dataRoles} = useFetch(API_URL);
+    const {get: getRoles, data: dataRoles} = useFetch(API_URL);
+
+    const optionsDocumentType: SelectOption[] = [
+        {label: 'Cédula de ciudadanía', value: 'CC'},
+        {label: 'Cédula de extranjería', value: 'CE'},
+        {label: 'Pasaporte', value: 'PA'},
+    ]
 
 
     useEffect(() => {
@@ -27,7 +30,7 @@ export const CustomersEdit = () => {
     }, []);
 
     useEffect(() => {
-        if(dataRoles?.roles?.rows){
+        if (dataRoles?.roles?.rows) {
             setOptionsRoles(dataRoles?.roles?.rows.map((role: any) => {
                 return {
                     label: role.name,
@@ -36,6 +39,8 @@ export const CustomersEdit = () => {
             }))
         }
     }, [dataRoles])
+
+    console.log(optionsRoles, 'optionsRoles')
 
     const [formData, setFormData] = useState<{
         name: string,
@@ -76,11 +81,7 @@ export const CustomersEdit = () => {
             name: 'documentType',
             size: 'medium',
             placeholder: 'Seleccione un tipo de documento',
-            options:  [
-                {label: 'Cédula de ciudadanía', value: 'CC'},
-                {label: 'Cédula de extranjería', value: 'CE'},
-                {label: 'Pasaporte', value: 'PA'},
-            ]
+            options: optionsDocumentType
         },
         {
             type: 'text',
@@ -133,7 +134,6 @@ export const CustomersEdit = () => {
     ]
 
 
-
     const {data, loading, error: errorFetch, get, put} = useFetch(API_URL)
 
     useEffect(() => {
@@ -143,15 +143,14 @@ export const CustomersEdit = () => {
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                roleId: data?.users.role?.value,
-                documentType: data?.users.documentType?.value,
-                document: data?.users.document,
-                name: data?.users.name,
-                lastname: data?.users.lastname,
-                address: data?.users.address,
-                email: data?.users.email,
-                phone: data?.user.phone,
-                documentNumber: data?.users.documentNumber, // Add this line
+                roleId: optionsRoles.find((option) => option.value === data?.user?.roleId),
+                documentType: optionsDocumentType.find((option) => option.value === data?.user?.coustumer?.documentType),
+                name: data?.user.name,
+                lastname: data?.user.lastname,
+                address: data?.user?.coustumer?.address,
+                email: data?.user?.email,
+                phone: data?.user?.phone,
+                documentNumber: data?.user?.coustumer?.document,
             }
             setFormData(newValues)
         }
@@ -188,13 +187,13 @@ export const CustomersEdit = () => {
         console.log(formData, 'esto lo voy a mandar')
         const requestBody = {
             roleId: formData.roleId?.value,
-                documentType: formData.documentType?.value,
-                document: formData.documentNumber,
-                name: formData.name,
-                lastname: formData.lastname,
-                address: formData.address,
-                phone: formData.phone,
-                email: formData.email,
+            documentType: formData.documentType?.value,
+            document: formData.documentNumber,
+            name: formData.name,
+            lastname: formData.lastname,
+            address: formData.address,
+            phone: formData.phone,
+            email: formData.email,
         };
         console.log(requestBody, 'esto es lo que voy a mandar')
         put(`users/${id}?apikey=${API_KEY}`, requestBody)
@@ -210,13 +209,15 @@ export const CustomersEdit = () => {
     }
 
     return (
-        <Form
-            title='Editar Cliente'
-            fields={fields}
-            onSubmit={handleSubmit}
-            button={<Button text='Editar Cliente' onClick={() => null} fill={true} type={'SUBMIT'}/>}
-            errors={error}
-        />
+        <Container>
+            <FormRedisign
+                title='Editar Cliente'
+                fields={fields}
+                onSubmit={handleSubmit}
+                button={'Guardar'}
+                errors={error}
+            />
+        </Container>
     );
 };
 

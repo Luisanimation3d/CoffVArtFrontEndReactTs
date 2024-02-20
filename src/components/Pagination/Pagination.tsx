@@ -31,11 +31,11 @@ export const Pagination = ({page, setPage, totalPages}: {
             <div
                 className={`${styles['pagination__container']} ${darkMode ? styles.pagination__container__darkMode : styles.pagination__container__lightMode}`}>
                 {
-                    page > 1 && (
+                    // page > 1 && (
                         <button
                             className={`${styles['pagination__button']} ${page == 1 ? styles['pagination__button--disabled'] : ''}`}
                             onClick={handlePreviousPage}>{<FiChevronLeft/> || '1'}</button>
-                    )
+                    // )
                 }
                 {
                     pages.map((pageItem, index) => (
@@ -45,11 +45,11 @@ export const Pagination = ({page, setPage, totalPages}: {
                     ))
                 }
                 {
-                    page !== totalPages && (
+                    // page !== totalPages && (
                         <button
-                            className={`${styles['pagination__button']}`}
+                            className={`${styles['pagination__button']} ${page === totalPages ? styles['pagination__button--disabled'] : ''}`}
                             onClick={handleNextPage}>{<FiChevronRight/> || '>'}</button>
-                    )
+                    // )
                 }
             </div>
         </>
