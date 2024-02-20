@@ -42,8 +42,8 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
     const dropdownRef: React.MutableRefObject<HTMLDivElement> | React.MutableRefObject<any> = useRef(null);
 
     const handleDocumentClick = (e: any) => {
-        if (dropdownRef.current && !dropdownRef.current?.contains(e.target) && expandedRow.id) {
-            setExpandedRow({});
+        if(expandedRow?.id !== undefined || e.target !== dropdownRef?.current){
+            setExpandedRow({})
         }
     };
 
