@@ -187,7 +187,7 @@ export const CreateCoustomer = () => {
         }
         try{
             const requestBody = {
-                rol: formData.rol?.value,
+                roleId: formData.rol?.value,
                 documentType: formData.documentType?.value,
                 document: formData.documentNumber,
                 name: formData.name,

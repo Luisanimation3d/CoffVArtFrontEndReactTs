@@ -4,16 +4,38 @@ import {FormField, SelectOption} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
 import {Form} from '../../components/Form/Form';
 import { FormRedisign } from '../../components/FormRedisign/FormRedisign';
-import {API_KEY} from '../../constantes';
+import {API_KEY, API_URL} from '../../constantes';
 import {useParams, useNavigate} from 'react-router-dom';
 
 
 
 export const CustomersEdit = () => {
+    
     const {id} = useParams<{ id: string }>()
     const navigate = useNavigate()
     const [error, setError] = useState<{}>({})
     const [tipo, setTipo] = useState<SelectOption | undefined>();
+
+    const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
+
+    const {get: getRoles} = useFetch(API_URL)
+    const {data: dataRoles} = useFetch(API_URL);
+
+
+    useEffect(() => {
+        getRoles(`roles?apikey=${API_KEY}`);
+    }, []);
+
+    useEffect(() => {
+        if(dataRoles?.roles?.rows){
+            setOptionsRoles(dataRoles?.roles?.rows.map((role: any) => {
+                return {
+                    label: role.name,
+                    value: role.id
+                }
+            }))
+        }
+    }, [dataRoles])
 
     const [formData, setFormData] = useState<{
         name: string,
@@ -23,7 +45,7 @@ export const CustomersEdit = () => {
         address: string,
         phone: string,
         email: string,
-        rol: SelectOption | undefined,
+        roleId: SelectOption | undefined,
     }>({
         name: '',
         lastname: '',
@@ -32,23 +54,19 @@ export const CustomersEdit = () => {
         address: '',
         phone: '',
         email: '',
-        rol: undefined,
+        roleId: undefined,
     });
 
     const fields: FormField[] = [
         {
             type: 'select',
-            value: formData.rol,
-            onChange: (value: SelectOption | undefined) => setFormData({...formData, rol: value}),
+            value: formData.roleId,
+            onChange: (value: SelectOption | undefined) => setFormData({...formData, roleId: value}),
             label: 'Rol',
             name: 'rol',
             size: 'large',
             placeholder: 'Seleccione un rol',
-            options: [
-                {label: 'Administrador', value: 'admin'},
-                {label: 'Vendedor', value: 'seller'},
-                {label: 'Cliente', value: 'client'},
-            ]
+            options: optionsRoles
         },
         {
             type: 'select',
@@ -58,7 +76,7 @@ export const CustomersEdit = () => {
             name: 'documentType',
             size: 'medium',
             placeholder: 'Seleccione un tipo de documento',
-            options: [
+            options:  [
                 {label: 'Cédula de ciudadanía', value: 'CC'},
                 {label: 'Cédula de extranjería', value: 'CE'},
                 {label: 'Pasaporte', value: 'PA'},
@@ -116,7 +134,7 @@ export const CustomersEdit = () => {
 
 
 
-    const {data, loading, error: errorFetch, get, put} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {data, loading, error: errorFetch, get, put} = useFetch('http://localhost:3000/api/')
 
     useEffect(() => {
         get(`users/${id}?apikey=${API_KEY}`)
@@ -125,7 +143,7 @@ export const CustomersEdit = () => {
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                rol: data?.users.rol?.value,
+                roleId: data?.users.role?.value,
                 documentType: data?.users.documentType?.value,
                 document: data?.users.document,
                 name: data?.users.name,
@@ -143,7 +161,7 @@ export const CustomersEdit = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
-        if (!formData.rol) {
+        if (!formData.roleId) {
             mensajeError = {...mensajeError, rol: 'El rol es requerido'}
         }
         if (!formData.documentType) {
@@ -169,7 +187,7 @@ export const CustomersEdit = () => {
         }
         console.log(formData, 'esto lo voy a mandar')
         const requestBody = {
-            rol: formData.rol?.value,
+            roleId: formData.roleId?.value,
                 documentType: formData.documentType?.value,
                 document: formData.documentNumber,
                 name: formData.name,
