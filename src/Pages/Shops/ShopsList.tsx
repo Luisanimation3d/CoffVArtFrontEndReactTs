@@ -20,6 +20,7 @@ export const Shops = () => {
     const [dataToShow, setDataToShow] = useState<any[]>([])
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate();
+    const [page, setPage] = useState<number>(1)
 
     useEffect(() => {
         get(`shops?apikey=${API_KEY}`);
@@ -128,7 +129,11 @@ export const Shops = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Compras'}
-                    createAction={() => setIsModalOpen(true)}
+                    createAction={() => navigate('/admin/shops/create')}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}
