@@ -134,7 +134,7 @@ export const CustomersEdit = () => {
 
 
 
-    const {data, loading, error: errorFetch, get, put} = useFetch('http://localhost:3000/api/')
+    const {data, loading, error: errorFetch, get, put} = useFetch(API_URL)
 
     useEffect(() => {
         get(`users/${id}?apikey=${API_KEY}`)
