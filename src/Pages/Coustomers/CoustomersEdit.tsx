@@ -5,6 +5,7 @@ import {FormRedisign} from '../../components/FormRedisign/FormRedisign';
 import {API_KEY, API_URL} from '../../constantes';
 import {useParams, useNavigate} from 'react-router-dom';
 import {Container} from "../../components/Container/Container.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 
 export const CustomersEdit = () => {
@@ -16,7 +17,7 @@ export const CustomersEdit = () => {
 
     const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
 
-    const {get: getRoles, data: dataRoles} = useFetch(API_URL);
+    const {get: getRoles, data: dataRoles, loading: loadingRoles} = useFetch(API_URL);
 
     const optionsDocumentType: SelectOption[] = [
         {label: 'Cédula de ciudadanía', value: 'CC'},
@@ -198,13 +199,23 @@ export const CustomersEdit = () => {
         console.log(requestBody, 'esto es lo que voy a mandar')
         put(`users/${id}?apikey=${API_KEY}`, requestBody)
         if (!errorFetch) {
-            setTimeout(() => {
-                navigate(-1)
-            }, 500);
+            // setTimeout(() => {
+            //     navigate(-1)
+            // }, 500);
         }
     };
 
-    if (loading) {
+    useEffect(() => {
+        if (data && !errorFetch) {
+            toast('Usuario editado con éxito' , {
+                icon: '👏',
+                position: 'bottom-right'
+            })
+            // navigate(-1)
+        }
+    }, [data, errorFetch]);
+
+    if (loading && !optionsRoles.length && loadingRoles) {
         return <div>Cargando...</div>;
     }
 
@@ -217,6 +228,7 @@ export const CustomersEdit = () => {
                 button={'Guardar'}
                 errors={error}
             />
+            <Toaster/>
         </Container>
     );
 };
