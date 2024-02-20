@@ -51,17 +51,24 @@ export const Coustomers = () => {
     }
 
     const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        console.log(type)
         if(type === 'Cambiar estado'){
             del(`coustumers/${row.id}?apikey=${API_KEY}`);
             setTimeout(() => {
                 get(`coustumers?apikey=${API_KEY}`);
             }, 500);
+        }else if(type === 'Editar'){
+            navigate(`/admin/Coustomer/edit/${row.id}`)
         }
     }
 
     const options = [
         {
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },
+        {
+            label: 'Editar',
             icon: <FiShuffle/>
         }
     ]
@@ -82,6 +89,7 @@ export const Coustomers = () => {
                     setSearch={setSearch}
                     title={'Clientes'}
                     createAction={() => navigate('/admin/coustomers/create')}
+                    
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}

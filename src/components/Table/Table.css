@@ -10,7 +10,7 @@
 }
 
 .table__container .table__header{
-    background-color: #f2f2f2;
+    background-color: #2f2b2b;
     color: #000;
     font-weight: bold;
     border: 1px solid #ddd;
@@ -23,13 +23,13 @@
 .table__container .table__header .table__cell{
     padding: 10px;
     font-weight: bold;
-    background: #9f212f;
+    background: rgba(255, 255, 255, 0.1);
     color: #fff;
 }
 
 .table__container .table__row{
-    background-color: #fff;
-    color: #000;
+    background-color: #2e2c2c;
+    color: #ffffff;
     cursor: pointer;
     transition: .3s ease;
 }
@@ -132,3 +132,25 @@
     background-color: #9f212f;
     color: #fff;
 }
+
+.table__container__lightMode .table__header {
+    background-color: #ffffff;
+    color: #eae3e3;
+    font-weight: bold;
+    border: 1px solid #ddd;
+  }
+  
+  .table__container__lightMode .table__header .table__cell {
+    padding: 10px;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.1);
+    color: #040303;
+  }
+  
+  .table__container__lightMode .table__row {
+    background-color: #dedede;
+    color: #030303;
+    cursor: pointer;
+    transition: .3s ease;
+  }
+  

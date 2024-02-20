@@ -3,145 +3,183 @@ import {useFetch} from '../../hooks/useFetch';
 import {FormField, SelectOption} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
 import {Form} from '../../components/Form/Form';
+import { FormRedisign } from '../../components/FormRedisign/FormRedisign';
 import {API_KEY} from '../../constantes';
 import {useParams, useNavigate} from 'react-router-dom';
+
 
 
 export const CustomersEdit = () => {
     const {id} = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const options: SelectOption[] = [
-        {
-            value: 'CC',
-            label: 'CC',
-        },
-        {
-            value: 'TI',
-            label: 'TI',
-        },
-    ];
-
+    const [error, setError] = useState<{}>({})
     const [tipo, setTipo] = useState<SelectOption | undefined>();
-    const [formValues, setFormValues] = useState<any>({
+
+    const [formData, setFormData] = useState<{
+        name: string,
+        lastname: string,
+        documentType: SelectOption | undefined,
+        documentNumber: string,
+        address: string,
+        phone: string,
+        email: string,
+        rol: SelectOption | undefined,
+    }>({
         name: '',
-        tipo: undefined,
-        document: '',
+        lastname: '',
+        documentType: undefined,
+        documentNumber: '',
+        address: '',
         phone: '',
         email: '',
-        address: '',
+        rol: undefined,
     });
-    const [error, setError] = useState<{}>({});
 
-    const handleInputChangen = (value: SelectOption | undefined, name: string | number) => {
-        setFormValues((prevValues: any) => ({
-            ...prevValues,
-            tipo: value,
-        }));
-    };
-
-    const customerFields: FormField[] = [
+    const fields: FormField[] = [
         {
-            name: 'name',
+            type: 'select',
+            value: formData.rol,
+            onChange: (value: SelectOption | undefined) => setFormData({...formData, rol: value}),
+            label: 'Rol',
+            name: 'rol',
+            size: 'large',
+            placeholder: 'Seleccione un rol',
+            options: [
+                {label: 'Administrador', value: 'admin'},
+                {label: 'Vendedor', value: 'seller'},
+                {label: 'Cliente', value: 'client'},
+            ]
+        },
+        {
+            type: 'select',
+            value: formData.documentType,
+            onChange: (value: SelectOption | undefined) => setFormData({...formData, documentType: value}),
+            label: 'Tipo de documento',
+            name: 'documentType',
+            size: 'medium',
+            placeholder: 'Seleccione un tipo de documento',
+            options: [
+                {label: 'Cédula de ciudadanía', value: 'CC'},
+                {label: 'Cédula de extranjería', value: 'CE'},
+                {label: 'Pasaporte', value: 'PA'},
+            ]
+        },
+        {
             type: 'text',
+            value: formData.documentNumber,
+            onChange: (value: string) => setFormData({...formData, documentNumber: value}),
+            label: 'Número de documento',
+            name: 'documentNumber',
+            size: 'medium',
+        },
+        {
+            type: 'text',
+            value: formData.name,
+            onChange: (value: string) => setFormData({...formData, name: value}),
             label: 'Nombre',
-            placeholder: 'Nombre',
-            value: formValues.name !== undefined ? String(formValues.name) : '',
-            onChange: (value) => handleInputChange('name', value),
+            name: 'name',
+            size: 'medium',
+        },
+        {
+            type: 'text',
+            value: formData.lastname,
+            onChange: (value: string) => setFormData({...formData, lastname: value}),
+            label: 'Apellido',
+            name: 'lastname',
+            size: 'medium',
+        },
+        {
+            type: 'text',
+            value: formData.address,
+            onChange: (value: string) => setFormData({...formData, address: value}),
+            label: 'Dirección',
+            name: 'address',
+            size: 'medium',
+        },
+        {
+            type: 'text',
+            value: formData.phone,
+            onChange: (value: string) => setFormData({...formData, phone: value}),
+            label: 'Teléfono',
+            name: 'phone',
+            size: 'medium',
+        },
+        {
+            type: 'email',
+            value: formData.email,
+            onChange: (value: string) => setFormData({...formData, email: value}),
+            label: 'Correo electrónico',
+            name: 'email',
             size: 'large',
         },
-        {
-            name: 'documentType',
-            type: 'select',
-            label: 'Tipo de documento',
-            placeholder: 'Tipo de documento',
-            value: formValues.tipo,
-            options: options,
-            onChange: (o) => handleInputChangen(o, 'tipo'),
-            size: 'medium'
-        },
-        {
-            name: 'document',
-            type: 'number',
-            label: 'Documento',
-            placeholder: 'Documento',
-            value: formValues['document'] !== undefined ? String(formValues['document']) : '',
-            onChange: (value) => handleInputChange('document', value),
-            size: 'large'
-        },
-        {
-            name: 'phone',
-            type: 'text',
-            label: 'Telefono',
-            placeholder: 'Telefono',
-            value: formValues['phone'] !== undefined ? String(formValues['phone']) : '',
-            onChange: (value) => handleInputChange('phone', value),
-            size: 'large'
-        },
-        {
-            name: 'email',
-            type: 'email',
-            label: 'Email',
-            placeholder: 'Email',
-            value: formValues['email'] !== undefined ? String(formValues['email']) : '',
-            onChange: (value) => handleInputChange('email', value),
-            size: 'large'
-        },
-        {
-            name: 'address',
-            type: 'text',
-            label: 'Dirección',
-            placeholder: 'Dirección',
-            value: formValues['address'] !== undefined ? String(formValues['address']) : '',
-            onChange: (value) => handleInputChange('address', value),
-            size: 'large'
-        },
-    ];
+    ]
 
-    // ...
 
-// ...
 
     const {data, loading, error: errorFetch, get, put} = useFetch('https://coffvart-backend.onrender.com/api/')
 
     useEffect(() => {
-        get(`coustumers/${id}?apikey=${API_KEY}`)
+        get(`users/${id}?apikey=${API_KEY}`)
     }, []);
 
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                name: data?.coustomers.name,
-                tipo: data?.coustomers.documentType === 'CC' ? options[0] : options[1],
-                document: data?.coustomers.document,
-                phone: data?.coustomers.phone,
-                email: data?.coustomers.email,
-                address: data?.coustomers.address,
+                rol: data?.users.rol?.value,
+                documentType: data?.users.documentType?.value,
+                document: data?.users.document,
+                name: data?.users.name,
+                lastname: data?.users.lastname,
+                address: data?.users.address,
+                email: data?.users.email,
+                phone: data?.user.phone,
+                documentNumber: data?.users.documentNumber, // Add this line
             }
-            setFormValues(newValues)
+            setFormData(newValues)
         }
     }, [data]);
 
 
-    const handleInputChange = (name: string, value: string | number) => {
-        setFormValues((prevValues: any) => ({
-            ...prevValues,
-            [name]: value,
-        }));
-    };
-
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formValues, 'esto lo voy a mandar')
+        let mensajeError = {}
+        if (!formData.rol) {
+            mensajeError = {...mensajeError, rol: 'El rol es requerido'}
+        }
+        if (!formData.documentType) {
+            mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
+        }
+        if (!formData.documentNumber) {
+            mensajeError = {...mensajeError, documentNumber: 'El número de documento es requerido'}
+        }
+        if (!formData.name) {
+            mensajeError = {...mensajeError, name: 'El nombre es requerido'}
+        }
+        if (!formData.lastname) {
+            mensajeError = {...mensajeError, lastname: 'El apellido es requerido'}
+        }
+        if (!formData.address) {
+            mensajeError = {...mensajeError, address: 'La dirección es requerida'}
+        }
+        if (!formData.phone) {
+            mensajeError = {...mensajeError, phone: 'El teléfono es requerido'}
+        }
+        if (!formData.email) {
+            mensajeError = {...mensajeError, email: 'El correo electrónico es requerido'}
+        }
+        console.log(formData, 'esto lo voy a mandar')
         const requestBody = {
-            name: formValues.name,
-            documentType: formValues?.tipo?.value,
-            document: formValues.document,
-            phone: formValues.phone,
-            email: formValues.email,
-            address: formValues.address,
+            rol: formData.rol?.value,
+                documentType: formData.documentType?.value,
+                document: formData.documentNumber,
+                name: formData.name,
+                lastname: formData.lastname,
+                address: formData.address,
+                phone: formData.phone,
+                email: formData.email,
         };
         console.log(requestBody, 'esto es lo que voy a mandar')
-        put(`coustumers/${id}?apikey=${API_KEY}`, requestBody)
+        put(`users/${id}?apikey=${API_KEY}`, requestBody)
         if (!errorFetch) {
             setTimeout(() => {
                 navigate(-1)
@@ -156,7 +194,7 @@ export const CustomersEdit = () => {
     return (
         <Form
             title='Editar Cliente'
-            fields={customerFields}
+            fields={fields}
             onSubmit={handleSubmit}
             button={<Button text='Editar Cliente' onClick={() => null} fill={true} type={'SUBMIT'}/>}
             errors={error}
