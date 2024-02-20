@@ -3,7 +3,7 @@ import { Container } from "../../components/Container/Container";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
-import { API_KEY } from "../../constantes";
+import { API_KEY, API_URL } from "../../constantes";
 import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
 import { createPortal } from "react-dom";
 import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
@@ -14,7 +14,7 @@ export const Coustomers = () => {
     const [search, setSearch] = useState<string>('');
     const [userToEdit, setUserToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { data, loading, error, get, del } = useFetch(API_URL);
     const navigate = useNavigate();
 
     const [page, setPage] = useState<number>(1)
@@ -89,12 +89,13 @@ export const Coustomers = () => {
                     setSearch={setSearch}
                     title={'Clientes'}
                     createAction={() => navigate('/admin/coustomers/create')}
-                    
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     loading={loading}
                     callback={handleCallback}
                     dropDownOptions={options}
-                    totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
-                    pagination={true}
                     
                 />
                 {
