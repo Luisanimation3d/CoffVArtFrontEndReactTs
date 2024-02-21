@@ -59,11 +59,18 @@ export const Products = () => {
             setTimeout(() => {
                 get(`products?apikey=${API_KEY}`);
             }, 500);
+         }else if(type === 'Editar'){
+            console.log(row, 'Row')
+            navigate(`/admin/Products/edit/${row.id}`)
         }
     }
     const options = [
         {
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },
+        {
+            label: 'Editar',
             icon: <FiShuffle/>
         }
     ]
