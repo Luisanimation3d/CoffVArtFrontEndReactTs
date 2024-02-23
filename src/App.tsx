@@ -185,9 +185,9 @@ export default function App() {
                                                 <ProductionOrdersCreate/>
                                             </Suspense>
                                         }/>
-                                        <Route path={'ProductionOrders/edit/:id'} element={
+                                        <Route path={'ProductionOrders/edit'} element={
                                             <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
-                                                <OrderProducts/>
+                                                <ProductionOrdersEdit/>
                                             </Suspense>
                                         }/>
                                         <Route path={'ProductionRequests'} element={
