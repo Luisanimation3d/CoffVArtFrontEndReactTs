@@ -194,7 +194,7 @@ export const IncrementProducts = () => {
             productionOrder: productionOrder,
             state: true,
             Productsdetails: detalles.map((detalle) => ({
-                productionOrderDetailId: detalle.id,
+                productionOrderId: detalle.id,
                 productId: detalle.idProduct,
                 quantity: parseInt(detalle.cantidad),
             })),
@@ -202,7 +202,7 @@ export const IncrementProducts = () => {
         console.log("esto estoy mandando", requestBody)
 
         try {
-            const response = await fetch(`https://coffvart-backend.onrender.com/api/ProductionOrderDetail?apikey=${API_KEY}`, {
+            const response = await fetch(`https://coffvart-backend.onrender.com/api/productionOrderDetail?apikey=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -279,14 +279,6 @@ export const IncrementProducts = () => {
                 `}
                     </style>
                     <div className="info">
-                        <table className="totals-table">
-                            <thead>
-                            <tr>
-                                <th>Concepto</th>
-                                <th>Monto</th>
-                            </tr>
-                            </thead>
-                        </table>
                         <Button text={'Crear Compra'} onClick={() => handleCreateIncrement()} fill={false} type={'SUBMIT'}/>
                     </div>
                 </div>
