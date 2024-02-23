@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-
+import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
 import {Column} from "../../types/Table";
@@ -9,8 +9,11 @@ import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY} from "../../constantes.ts";
+import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const ShopsCreate = () => {
+    const [error, setError] = useState<{[key: string]: string}>({})
+
     const {
         data: dataInsumos,
         loading: loadingInsumos,
@@ -357,18 +360,15 @@ export const ShopsCreate = () => {
     return (
         <Container align={'CENTER'}>
             <Titles title={'CREAR COMPRA'}/>
-            <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
+            <Container justify={'TOP'} align={'TOP'} direction={'ROW'} gap={2}>
                 <div style={{width: '50%'}}>
-                    <Titles title={`factura N°${invoice}`} level={2} transform={'UPPERCASE'}/>
-                    <Form
-                        fields={fields}
-                        onSubmit={handleAddDetail}
-                        button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false}/>}
-                        cancelButton={false}
-                    />
+                    {/* <Titles title={`factura N°${invoice}`} level={2} transform={'UPPERCASE'}/> */}
+                    <Container>
+                    <FormRedisign fields={fields} onSubmit={handleCreateShop} button={"Registrar Compra"} title={`factura N°${invoice}`} errors={error}/>
+                    </Container>
                 </div>
-                <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
-                    <Titles title={'Detalle de la Compra'} level={2} transform={'UPPERCASE'}/>
+                <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <Titles title={'Detalle de la Compra'} level={2} transform={'UPPERCASE'} font-size={'1.5 rem'} font-weight={600}/>                    
                     <Table columns={headers} data={detalles} onRowClick={() => null}
                            deleteAction={{onClick: handleDeleteProduct}}/>
                     <style>

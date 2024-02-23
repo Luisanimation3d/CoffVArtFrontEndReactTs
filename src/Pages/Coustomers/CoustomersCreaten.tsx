@@ -149,30 +149,32 @@ export const CreateCoustomer = () => {
     const handleSubmit= async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.rol) {
             mensajeError = {...mensajeError, rol: 'El rol es requerido'}
         }
         if (!formData.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!formData.documentNumber) {
-            mensajeError = {...mensajeError, documentNumber: 'El número de documento es requerido'}
+        if (!formData.documentNumber || formData.documentNumber.length < 8 || formData.documentNumber.length > 15) {
+            mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
-        if (!formData.name) {
-            mensajeError = {...mensajeError, name: 'El nombre es requerido'}
+        if (!formData.name || formData.name.length < 3 || formData.name.length > 15) {
+            mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras' };
         }
-        if (!formData.lastname) {
-            mensajeError = {...mensajeError, lastname: 'El apellido es requerido'}
+        if (!formData.lastname || formData.lastname.length < 3 || formData.lastname.length > 15) {
+            mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
         }
         if (!formData.address) {
             mensajeError = {...mensajeError, address: 'La dirección es requerida'}
         }
-        if (!formData.phone) {
-            mensajeError = {...mensajeError, phone: 'El teléfono es requerido'}
+        if (!formData.phone || formData.phone.length < 10 || formData.phone.length > 12) {
+            mensajeError = { ...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres' };
         }
-        if (!formData.email) {
-            mensajeError = {...mensajeError, email: 'El correo electrónico es requerido'}
+        if (!formData.email || !emailRegex.test(formData.email)) {
+            mensajeError = { ...mensajeError, email: 'Ingrese un correo electrónico válido' };
         }
+    
         if (!formData.password) {
             mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
         }
