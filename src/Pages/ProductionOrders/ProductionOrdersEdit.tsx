@@ -125,7 +125,7 @@ export const IncrementProducts = () => {
             // Si el producto no está en el detalle, agrégalo como un nuevo elemento
             const newDetail = {
                 id: detalles.length + 1,
-                productionOrder: productionOrder,
+                productionOrder: selectProductionOrder?.value,
                 product: selectProduct?.label,
                 idProduct: selectProduct?.value,
                 cantidad: cantidad,
@@ -191,18 +191,21 @@ export const IncrementProducts = () => {
         let id = detalles[0]
 
         const requestBody = {
-            productionOrder: productionOrder,
+            productionOrderId: selectProductionOrder?.value,
             state: true,
-            Productsdetails: detalles.map((detalle) => ({
-                productionOrderId: detalle.id,
-                productId: detalle.idProduct,
-                quantity: parseInt(detalle.cantidad),
+            Productdetails: detalles.map((detalle) => ({
+                Id: detalle.id,
+                productionOrderId: detalle.idproductionOrder,
+                Productdetails: {
+                    productId: detalle.idProduct,
+                    quantity: parseInt(detalle.cantidad),
+                }
             })),
         };
         console.log("esto estoy mandando", requestBody)
 
         try {
-            const response = await fetch(`https://coffvart-backend.onrender.com/api/productionOrderDetail?apikey=${API_KEY}`, {
+            const response = await fetch(`${API_URL}productionOrders/detail?apikey=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
