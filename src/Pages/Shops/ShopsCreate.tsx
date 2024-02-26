@@ -364,7 +364,7 @@ export const ShopsCreate = () => {
                 <div style={{width: '50%'}}>
                     {/* <Titles title={`factura N°${invoice}`} level={2} transform={'UPPERCASE'}/> */}
                     <Container>
-                    <FormRedisign fields={fields} onSubmit={handleCreateShop} button={"Registrar Compra"} title={`factura N°${invoice}`} errors={error}/>
+                    <FormRedisign fields={fields} onSubmit={handleAddDetail} button={"Añadir insumo"} title={`factura N°${invoice}`} errors={error}/>
                     </Container>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
