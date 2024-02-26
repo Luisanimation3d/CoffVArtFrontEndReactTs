@@ -11,6 +11,7 @@ import './Myshops.css';
 export const MiComponente= ()=> {
   const navigate= useNavigate()  
   const [salesDetails, setSalesDetails] = useState([]);
+  const [expandedCard, setExpandedCard] = useState(null);
   const {data, error, get, loading} = useFetch(API_URL);
 
   const {user}= useAuth();
@@ -43,28 +44,55 @@ export const MiComponente= ()=> {
     return details || [];
   };
 
+  const handleCardClick = (saleId: any) => {
+    setExpandedCard((prevExpandedCard) =>
+      prevExpandedCard === saleId ? null : saleId
+    );
+  };
+
   return (
-    <div>
+    <div className='container'>
       {salesDetails.map((sale: any) => (
-        <div key={sale.id} className="sale-container">
-          <div className='sale-image'>
-          <img src={"src/assets/product.jpg"} alt={""} />
+        <div
+          key={sale.id}
+          className={`sale-container ${expandedCard === sale.id ? 'expanded' : ''}`}
+          onClick={() => handleCardClick(sale.id)}
+        >
+          <div className="header">
+            <h2>Factura N° {sale.invoice}</h2>
+          <h2 className="total-amount">$ {sale.total}</h2>
           </div>
-          <h2>Invoice: {sale.invoice}</h2>
-          <ul className='sale-details-item'>
-            {getSalesDetails(sale).map((detail: any) => (
-              <li key={detail.id}>
-                <p>Producto: {detail.product}</p>
-                <p>Cantidad: {detail.quantity}</p>
-                <p>Valor Unitario: {detail.value}</p>
-                <p>Total: {detail.total}</p>
-              </li>
-            ))}
-          </ul>
+          {expandedCard === sale.id && (
+            <div className="info-container">
+              <div className="customer-info">
+                <h3>Información del Cliente</h3>
+                <p>Nombre: {sale.coustumer.name}</p>
+              </div>
+              <div className="purchase-info">
+                {getSalesDetails(sale).map((detail: any) => (
+                  <li key={detail.id}>
+                    <p>
+                      <strong>Producto:</strong> {detail.product}
+                    </p>
+                    <p>
+                      <strong>Cantidad:</strong> {detail.quantity}
+                    </p>
+                    <p>
+                      <strong>Valor Unitario:</strong> $ {detail.value}
+                    </p>
+                    <p>
+                      <strong>Estado del Envío:</strong> {sale.state}
+                    </p>
+                  </li>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </div>
   );
+  
 };
 
 
