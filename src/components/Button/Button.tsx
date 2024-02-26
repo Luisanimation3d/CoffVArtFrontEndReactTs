@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react';
 import './Button.css';
+import {useDarkMode} from "../../context/DarkMode.tsx";
 
 import { ButtonProps } from '../../types/Button';
 
@@ -12,6 +13,7 @@ export function Button({
 	type = 'button',
 }: ButtonProps): JSX.Element {
 	const btnUseRef = useRef<HTMLButtonElement>(null);
+	const {darkMode} = useDarkMode();
 
 	useEffect(() => {
 		btnUseRef.current?.addEventListener('click', (e: any) => {
@@ -45,9 +47,9 @@ export function Button({
 	return (
 		<button
 			onClick={onClick}
-			className={`btn btn--${fill ? 'filled' : 'outline'} btn--${
+			className={`btn btn--${fill ? 'filled' : 'outline'} ${darkMode ? 'dark-mode__outline': 'light-mode__outline'} btn--${
 				autosize ? 'auto' : 'fixed'
-			} ${disabled ? 'btn--disabled' : ''}`}
+			} ${disabled ? 'btn--disabled' : ''} ${darkMode ? 'dark-mode' : 'light-mode'}`}
 			ref={btnUseRef}
 			type={type}
 		>

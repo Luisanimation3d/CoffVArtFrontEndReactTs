@@ -4,12 +4,16 @@ import {FormField, SelectOption} from "../../types/Form";
 import {useEffect, useState} from "react";
 import {API_KEY, API_URL} from '../../constantes';
 import {useFetch} from "../../hooks/useFetch.tsx";
+import { useNavigate } from "react-router-dom";
+
 
 
 export const CreateCoustomer = () => {
     const [error, setError] = useState<{[key: string]: string}>({})
 
     const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
+
+    const navigate= useNavigate();
 
     const {get, data} = useFetch(API_URL);
 
@@ -178,6 +182,10 @@ export const CreateCoustomer = () => {
         if (!formData.password) {
             mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
         }
+
+        if (formData.password.length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) { mensajeError = {...mensajeError, password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'}; 
+        }
+        
         if (!formData.confirmPassword) {
             mensajeError = {...mensajeError, confirmPassword: 'La confirmación de contraseña es requerida'}
         }
@@ -217,6 +225,9 @@ export const CreateCoustomer = () => {
             if(!response.ok){
                 console.error('Error al crear el usuario', response.statusText);
                 return;
+            }
+            if(response.ok){
+                navigate('/admin/Coustomers')
             }
             console.log('Usuario creado con éxito');
         }catch(error){

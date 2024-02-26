@@ -9,6 +9,9 @@ import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY} from "../../constantes.ts";
+import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
+import { useDarkMode} from "../../context/DarkMode.tsx";
+import { useNavigate } from "react-router-dom";
 
 export const OrdersCreate = () => {
     const {
@@ -26,6 +29,7 @@ export const OrdersCreate = () => {
     // const { POST } = useFetch ('https://coffvart-backend.onrender.com/api/')
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const navigate = useNavigate()
     const [detalles, setDetalles] = useState<any[]>([]);
     const [factura, setFactura] = useState<string>('');
     const [selectCliente, setSelectCliente] = useState<SelectOption | undefined>(undefined);
@@ -39,13 +43,10 @@ export const OrdersCreate = () => {
     const [options, setOptions] = useState<SelectOption[]>([]);
     const [productos, setProductos] = useState<SelectOption[]>([]);
     const [clientes, setClientes] = useState<SelectOption[]>([]);
+    const darkMode= {useDarkMode}
 
 
     const headers: Column[] = [
-        {
-            key: 'id',
-            header: 'ID',
-        },
         {
             key: 'producto',
             header: 'Producto',
@@ -281,6 +282,9 @@ export const OrdersCreate = () => {
                 console.error('Error al crear el pedido:', response.statusText);
                 return;
             }
+            if(response.ok){
+                navigate('/admin/Orders')
+            }
 
             setSelectCliente(undefined);
             setDetalles([]);
@@ -291,6 +295,7 @@ export const OrdersCreate = () => {
             setClientes([]);
 
             alert('Pedido creado con éxito');
+            
         } catch (error) {
             console.error('Error al crear el pedido:', error);
             alert('Error al crear el pedido');
@@ -302,10 +307,10 @@ export const OrdersCreate = () => {
             <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
                 <div style={{width: '50%'}}>
                     <Titles title={`factura N°${factura}`} level={2} transform={'UPPERCASE'}/>
-                    <Form
+                    <FormRedisign
                         fields={fields}
                         onSubmit={handleAddDetail}
-                        button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false}/>}
+                        button={"Agregar"}
                         cancelButton={false}
                     />
                 </div>
@@ -337,13 +342,16 @@ export const OrdersCreate = () => {
                     padding: 8px;
                     text-align: right;
                   }
-                  .totals-table th {
+                  .table__lightMode .totals-table th {
                     background-color: #f2f2f2;
+                  }
+                  .table__darkModee .totals-table th {
+                    background-color: #000000;
                   }
                 `}
                     </style>
                     <div className="info">
-                        <table className="totals-table">
+                        <table className={`totals-table ${darkMode ? 'table__darkMode' : 'table__lightMode'}`}>
                             <thead>
                             <tr>
                                 <th>Concepto</th>
