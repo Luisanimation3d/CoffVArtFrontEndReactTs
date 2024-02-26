@@ -405,7 +405,7 @@ export const ShopsCreate = () => {
                   .table__lightMode .totals-table th {
                     background-color: #f2f2f2;
                   }
-                  .table__darkModee .totals-table th {
+                  .table__darkMode .totals-table th {
                     background-color: #000000;
                   }
                 `}
