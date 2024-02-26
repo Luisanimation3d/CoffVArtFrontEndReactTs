@@ -1,53 +1,66 @@
+
 .btn {
     min-height: 38px;
     height: 38px;
 }
 
-/* Button Filled */
 
 .btn--filled {
-	display: block;
-	padding: 0.5rem 1rem;
-	border-radius: 10px;
-	color: #fff;
-	font-size: 1rem;
-	font-weight: bold;
-	border: none;
-	outline: none;
-	cursor: pointer;
-	background: #9f212f;
-	text-transform: uppercase;
-	transition: all .3s ease-in-out;
-	position: relative;
-    overflow: hidden;
-}
-
-.btn--filled:hover {
-    background: #7f212f;
-}
-
-/* Button Outlined */
-
-.btn--outline {
     display: block;
     padding: 0.5rem 1rem;
     border-radius: 10px;
-    color: #9f212f;
     font-size: 1rem;
     font-weight: bold;
-    border: 2px solid #9f212f;
+    border: none;
     outline: none;
     cursor: pointer;
-    background: transparent;
     text-transform: uppercase;
     transition: all .3s ease-in-out;
     position: relative;
     overflow: hidden;
 }
 
-.btn--outline:hover {
+.btn--filled {
+    background: #333;
+    color: #fff;
+}
+
+.light-mode .btn--filled {
     background: #9f212f;
     color: #fff;
+}
+
+.btn--filled:hover {
+    background: #7f212f;
+}
+
+.btn--outline {
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+    background: rgba(46, 213, 115, 0.3);
+    border: 1px solid #2ed573;
+    text-transform: uppercase;
+    transition: all .3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.dark-mode__outline .btn--outline {
+    color: #ffffff; 
+    background: rgba(46, 213, 115, 0.3);
+    border: 1px solid #2ed573;
+}
+
+.light-mode__outline .btn--outline {
+    color: #000000; 
+    background: rgba(46, 213, 115, 0.3);
+    border: 1px solid #2ed573;
 }
 
 .btn--auto {
@@ -59,52 +72,40 @@
 }
 
 .btn--disabled {
-    /* pointer-events: none; */
     cursor: not-allowed;
     opacity: .5;
 }
 
-.btn--filled.btn--disabled {
-    display: block;
-	padding: 0.5rem 1rem;
-	border-radius: 10px;
-	color: #fff;
-	font-size: 1rem;
-	font-weight: bold;
-	border: none;
-	outline: none;
-	background: #9f212f;
-	text-transform: uppercase;
-	transition: all .3s ease-in-out;
-	position: relative;
-    overflow: hidden;
-}
-
-.btn--filled.btn--disabled:active {
-    pointer-events: none;
-}
-
+.btn--filled.btn--disabled,
 .btn--outline.btn--disabled {
     display: block;
     padding: 0.5rem 1rem;
     border-radius: 10px;
-    color: #9f212f;
     font-size: 1rem;
     font-weight: bold;
-    border: 2px solid #9f212f;
     outline: none;
-    background: transparent;
-    text-transform: uppercase;
     transition: all .3s ease-in-out;
     position: relative;
     overflow: hidden;
 }
 
-.btn--outline.btn--disabled:active {
+.btn--filled.btn--disabled {
+    color: #fff;
+    border: none;
+    background: #9f212f;
+}
+
+.btn--outline.btn--disabled {
+    color: #9f212f;
+    border: 2px solid #9f212f;
+    background: transparent;
+}
+
+.btn--disabled:active {
     pointer-events: none;
 }
 
-/* Circle Animation */
+/* Animación de círculo */
 .circle {
     position: absolute;
     background-color: #fff;

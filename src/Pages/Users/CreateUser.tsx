@@ -4,9 +4,11 @@ import {FormField, SelectOption} from "../../types/Form";
 import {useState, useEffect} from "react";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
+import { useNavigate } from "react-router-dom";
 
 export const CreateUser = () => {
     const [error, setError] = useState<{[key: string]: string}>({})
+    const navigate = useNavigate();
 
 
     const [formData, setFormData] = useState<{
@@ -145,33 +147,39 @@ export const CreateUser = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.rol) {
             mensajeError = {...mensajeError, rol: 'El rol es requerido'}
         }
         if (!formData.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!formData.documentNumber) {
-            mensajeError = {...mensajeError, documentNumber: 'El número de documento es requerido'}
+        if (!formData.documentNumber || formData.documentNumber.length < 8 || formData.documentNumber.length > 15) {
+            mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
-        if (!formData.name) {
-            mensajeError = {...mensajeError, name: 'El nombre es requerido'}
+        if (!formData.name || formData.name.length < 3 || formData.name.length > 15) {
+            mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras' };
         }
-        if (!formData.lastname) {
-            mensajeError = {...mensajeError, lastname: 'El apellido es requerido'}
+        if (!formData.lastname || formData.lastname.length < 3 || formData.lastname.length > 15) {
+            mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
         }
         if (!formData.address) {
             mensajeError = {...mensajeError, address: 'La dirección es requerida'}
         }
-        if (!formData.phone) {
-            mensajeError = {...mensajeError, phone: 'El teléfono es requerido'}
+        if (!formData.phone || formData.phone.length < 10 || formData.phone.length > 12) {
+            mensajeError = { ...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres' };
         }
-        if (!formData.email) {
-            mensajeError = {...mensajeError, email: 'El correo electrónico es requerido'}
+        if (!formData.email || !emailRegex.test(formData.email)) {
+            mensajeError = { ...mensajeError, email: 'Ingrese un correo electrónico válido' };
         }
+    
         if (!formData.password) {
             mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
         }
+
+        if (formData.password.length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) { mensajeError = {...mensajeError, password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'}; 
+        }
+        
         if (!formData.confirmPassword) {
             mensajeError = {...mensajeError, confirmPassword: 'La confirmación de contraseña es requerida'}
         }
@@ -210,6 +218,9 @@ export const CreateUser = () => {
             if (!response.ok) {
                 console.error('Error al crear el usuario', response.statusText);
                 return;
+            }
+            if(response.ok){
+                navigate('/admin/Users')
             }
             console.log('Usuario creado con éxito');
         } catch (error) {

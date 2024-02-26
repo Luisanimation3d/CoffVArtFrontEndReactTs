@@ -1,16 +1,33 @@
-h1.titles__title{
+h1.titles__title__darkMode{
     font-size: 3rem;
     font-weight: bolder;
     text-align: center;
-    color: #9F212F;
+    color: #fffafb;
     text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
+}
+h1.titles__title__lightMode{
+    color: #000000;
+    font-size: 3rem;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Montserrat', sans-serif;
 }
 
-h2.titles__title{
+h2.titles__title__darkMode{
     font-size: 2rem;
     font-weight: bolder;
     text-align: center;
-    color: #9F212F;
+    color: #f6f6f6;
+    font-family: 'Montserrat', sans-serif;
+}
+h2.titles__title__lightMode{
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
 }
 
 h3.titles__title{
@@ -40,3 +57,4 @@ h6.titles__title{
     text-align: center;
     color: #9F212F;
 }
+
