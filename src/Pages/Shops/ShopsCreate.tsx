@@ -10,6 +10,8 @@ import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY} from "../../constantes.ts";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
+import { useDarkMode} from "../../context/DarkMode.tsx";
+
 
 export const ShopsCreate = () => {
     const [error, setError] = useState<{[key: string]: string}>({})
@@ -45,6 +47,8 @@ export const ShopsCreate = () => {
     const [options, setOptions] = useState<SelectOption[]>([]);
     const [insumos, setInsumos] = useState<SelectOption[]>([]);
     const [proveedores, setProveedores] = useState<SelectOption[]>([]);
+    const darkMode= {useDarkMode}
+
 
 
     const headers: Column[] = [
@@ -398,10 +402,16 @@ export const ShopsCreate = () => {
                   .totals-table th {
                     background-color: #f2f2f2;
                   }
+                  .table__lightMode .totals-table th {
+                    background-color: #f2f2f2;
+                  }
+                  .table__darkModee .totals-table th {
+                    background-color: #000000;
+                  }
                 `}
                     </style>
                     <div className="info">
-                        <table className="totals-table">
+                        <table className={`totals-table ${darkMode ? 'table__darkMode' : 'table__lightMode'}`}>
                             <thead>
                             <tr>
                                 <th>Concepto</th>

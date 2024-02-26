@@ -5,6 +5,7 @@ import {AuthProvider} from "./context/AuthContext.tsx";
 import {CartProvider} from "./context/CartContext.tsx";
 import {DarkModeProvider} from "./context/DarkMode.tsx";
 import {ProtectedRoutes} from "./Routes/ProtectedRoutes.tsx";
+import OrderProducts from "./Pages/ProductionOrders/ProductionOrdersEdit.tsx";
 // import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
 
 // import {Supplies} from "./Pages/Supplies/SuppliesList.tsx";
@@ -184,7 +185,7 @@ export default function App() {
                                                 <ProductionOrdersCreate/>
                                             </Suspense>
                                         }/>
-                                        <Route path={'ProductionOrders/edit/:id'} element={
+                                        <Route path={'ProductionOrders/edit'} element={
                                             <Suspense fallback={<h1>Cargando el componente de production orders</h1>}>
                                                 <ProductionOrdersEdit/>
                                             </Suspense>

@@ -13,14 +13,14 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
     const { data: processData, get: getProcess } = useFetch(API_URL);
     const [options, setOptions] = useState<SelectOption[]>([]);
+
     useEffect(() => {
         get(`productionOrders/${id}?apikey=${API_KEY}`)
     }, []);
-
     useEffect(() => {
         getProcess(`processes?apikey=${API_KEY}`);
-    }, []);
-
+    }, []); 
+    
     useEffect(() => {
         if (processData?.processes?.rows) {
           const process = processData?.processes?.rows?.map((process: any) => ({
@@ -58,7 +58,9 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
 
         }
 
-    ]
+    ];
+    
+    
     console.log(registerForm.processId,'register proceso')
     const validateForm = () => {
         const errors: any = {}
@@ -69,6 +71,7 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         
         return errors
     }
+    
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateForm();
@@ -82,9 +85,12 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         console.log(requestBody, "aquí body")
         put(`productionOrders/${id}?apikey=${API_KEY}`, requestBody)
         console.log(process,"aquí process")
-    }; useEffect(()=> {
+    };
+    useEffect(()=> {
         if(data && !loading && !errorRegister){
-            console.log("pedrito")
+            if(process?.value == 5 ){
+                navigate(`/admin/ProductionOrders/edit`)
+            }
         }
     },[data])
     if (loading) {
@@ -97,11 +103,14 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
                     width: '100%',
                     padding: '1rem 2rem',
                 }}>
-                    <Form fields={formFieldsRegister} button={<Button text={title} type={'SUBMIT'}/>}
+                    {
+                        <Form fields={formFieldsRegister} button={<Button text={title} type={'SUBMIT'}/>}
                           onSubmit={handleSubmit}
                           cancelButton={false}
                           errors={error}
                     />
+                    }
+                    
                 </div>
             </Modal>
         </ModalContainer>
