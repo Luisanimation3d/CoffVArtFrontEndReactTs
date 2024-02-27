@@ -101,10 +101,21 @@ export const IncrementProducts = () => {
                 return;
             }
 
+            const selectedProductionOrder = dataPO?.productionOrders?.rows.find((order: any) => order.id === selectProductionOrder.value);
 
-        //const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectedSupply?.value)
+            if (!selectedProductionOrder) {
+                alert('Debe seleccionar una orden de produccion antes de agregar a la tabla');
+                return;
+            }
+            
+            const productionOrderQuantity = selectedProductionOrder?.quantity;
+            if (parseInt(cantidad) > productionOrderQuantity) {
+                alert(`La cantidad excede el límite máximo de ${productionOrderQuantity}`);
+                return; 
+            }
 
         const existingDetail = detalles.find(detail => detail.idProduct === selectProduct?.value);
+        
 
         if (existingDetail) {
             // Si el producto ya está en el detalle, actualiza la cantidad
