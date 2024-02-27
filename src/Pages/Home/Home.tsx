@@ -79,11 +79,13 @@ export const Home = () => {
         setIsCupAnimationComplete(true);
       },
     });
+    
+
 
     gsap.set(cupRef.current, { opacity: 0, scale: 0 });
 
-    timeline.to(cupRef.current, { opacity: 1, scale: 1, duration: 1 });
-    timeline.to(cupRef.current, { opacity: 0, scale: 0, duration: 1 }, '+=5');
+    timeline.to(cupRef.current, { opacity: 1, scale: 1, duration: 0.4});
+    timeline.to(cupRef.current, { opacity: 0, scale: 0, duration: 0.4 }, '+=1.8');
 
     timeline.play();
   }, []);
