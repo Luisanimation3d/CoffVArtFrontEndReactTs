@@ -102,7 +102,7 @@ export const Login = () => {
                 }, 500)
             }else{
                 setTimeout(()=> {
-                    navigate('/admin/my-profile');
+                    navigate('/admin/dashboard');
                 },500)
             }
         }
