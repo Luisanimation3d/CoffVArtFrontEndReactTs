@@ -76,7 +76,7 @@ export const CreateUser = () => {
             options: [
                 {label: 'Cédula de ciudadanía', value: 'CC'},
                 {label: 'Cédula de extranjería', value: 'CE'},
-                {label: 'Pasaporte', value: 'PA'},
+                {label: 'Pasaporte', value: 'PAS'},
             ]
         },
         {
@@ -154,19 +154,19 @@ export const CreateUser = () => {
         if (!formData.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!formData.documentNumber || formData.documentNumber.length < 8 || formData.documentNumber.length > 15) {
+        if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 15) {
             mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
-        if (!formData.name || formData.name.length < 3 || formData.name.length > 15) {
+        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15) {
             mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras' };
         }
-        if (!formData.lastname || formData.lastname.length < 3 || formData.lastname.length > 15) {
+        if (!formData.lastname || formData.lastname.trim().length < 3) {
             mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
         }
-        if (!formData.address) {
-            mensajeError = {...mensajeError, address: 'La dirección es requerida'}
+        if (!formData.address || formData.address.trim().length < 10){
+            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 5 caracteres'}
         }
-        if (!formData.phone || formData.phone.length < 10 || formData.phone.length > 12) {
+        if (!formData.phone || formData.phone.trim().length < 10 || formData.phone.trim().length > 12) {
             mensajeError = { ...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres' };
         }
         if (!formData.email || !emailRegex.test(formData.email)) {
@@ -177,7 +177,7 @@ export const CreateUser = () => {
             mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
         }
 
-        if (formData.password.length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) { mensajeError = {...mensajeError, password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'}; 
+        if (formData.password.trim().length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) { mensajeError = {...mensajeError, password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'}; 
         }
         
         if (!formData.confirmPassword) {

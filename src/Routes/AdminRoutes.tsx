@@ -179,7 +179,7 @@ export const useRutasAdmin = () => {
         },
         {
             type: 'subMenu',
-            title: 'ventas',
+            title: 'Ventas',
             icon: <FiShoppingCart />,
             subItems: [
                 {
