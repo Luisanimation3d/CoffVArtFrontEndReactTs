@@ -65,6 +65,7 @@ const RolesEdit = lazy(() => import('./Pages/Roles/RolesEdit.tsx'));
 const User = lazy(() => import('./Pages/Users/Users.tsx'));
 const UserCreate = lazy(() => import('./Pages/Users/CreateUser.tsx'));
 const Supplies = lazy(() => import('./Pages/Supplies/SuppliesList.tsx'));
+const SuppliesEdit = lazy(() => import('./Pages/Supplies/EditSupply.tsx'));
 const SupplyCreate = lazy(() => import('./Pages/Supplies/CreateSupply.tsx'));
 const Products = lazy(() => import('./Pages/Products/ProductsList.tsx'));
 const ProductsCreate = lazy(() => import('./Pages/Products/ProductsCreate.tsx'));
@@ -289,7 +290,13 @@ export default function App() {
                                          <Route path={'Products/edit/:id'} element={
                                             <Suspense fallback={<h1>Cargando el componente de productos</h1>}>
                                                 <ProductsEdit/>
+                                            </Suspense>                                          
+                                        }/>
+                                         <Route path={'Supplys/edit/:id'} element={
+                                            <Suspense fallback={<h1>Cargando el componente de insumos</h1>}>
+                                                <SuppliesEdit/>
                                             </Suspense>
+                                            
                                         }/>
                                         <Route path={'my-profile'} element={
                                             <Suspense fallback={<h1>Cargando el componente de mi perfil</h1>}>

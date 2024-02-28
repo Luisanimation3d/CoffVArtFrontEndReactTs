@@ -55,11 +55,18 @@ export const Supplies = () => {
             setTimeout(() => {
                 get(`supplies?apikey=${API_KEY}`);
             }, 500);
+        }else if(type === 'Editar'){
+            console.log(row, 'Row')
+            navigate(`/admin/Supplys/edit/${row.id}`)
         }
     }
     const options = [
         {
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },
+        {
+            label: 'Editar',
             icon: <FiShuffle/>
         }
     ]
