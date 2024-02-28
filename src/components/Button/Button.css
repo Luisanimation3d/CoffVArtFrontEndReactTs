@@ -42,8 +42,8 @@
     font-weight: bold;
     outline: none;
     cursor: pointer;
-    background: rgba(46, 213, 115, 0.3);
-    border: 1px solid #2ed573;
+    background: rgba(69, 169, 112, 0.3);
+    border: 1px solid #001e0c;
     text-transform: uppercase;
     transition: all .3s ease-in-out;
     position: relative;
@@ -54,12 +54,12 @@
 .dark-mode__outline .btn--outline {
     color: #ffffff; 
     background: rgba(46, 213, 115, 0.3);
-    border: 1px solid #2ed573;
+    border: 1px solid #65977a;
 }
 
 .light-mode__outline .btn--outline {
     color: #000000; 
-    background: rgba(46, 213, 115, 0.3);
+    background: rgba(164, 243, 197, 0.3);
     border: 1px solid #2ed573;
 }
 
