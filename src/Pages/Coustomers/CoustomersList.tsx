@@ -6,13 +6,13 @@ import { useFetch } from "../../hooks/useFetch";
 import { API_KEY, API_URL } from "../../constantes";
 import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
 import { createPortal } from "react-dom";
-import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
+import { UserProfileComponent } from "../../Modales/DetailsCostumers/DetailsCostumers.tsx";
 
 export const Coustomers = () => {
     const [search, setSearch] = useState<string>('');
-    const [userToEdit, setUserToEdit] = useState<number|null>(null)
+    const [userToDetail, setUserToDetail] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch(API_URL);
     const navigate = useNavigate();
@@ -74,10 +74,10 @@ export const Coustomers = () => {
     ]
 
     useEffect(() => {
-        if(userToEdit == null){
+        if(userToDetail == null){
             get(`coustumers?apikey=${API_KEY}`)
         }
-    }, [userToEdit]);
+    }, [userToDetail]);
 
     return (
         <>
@@ -87,6 +87,11 @@ export const Coustomers = () => {
                     data={dataCoustumersFiltered}
                     search={search}
                     setSearch={setSearch}
+                    onRowClick={(row: any) => {
+                        console.log("Clicked Row Data:", row);
+                        setUserToDetail(row.id);
+                        setIsModalOpen(true);
+                    }}
                     title={'Clientes'}
                     createAction={() => navigate('/admin/coustomers/create')}
                     page={page || 1}
@@ -101,8 +106,8 @@ export const Coustomers = () => {
                     isModalOpen && createPortal(
                         <>
                             {
-                                userToEdit ? (
-                                    <EditUsersModal setIsModalOpen={setIsModalOpen} idUser={userToEdit} setIdEdit={setUserToEdit} title={'Editar Cliente'}/>
+                                userToDetail ? (
+                                    <UserProfileComponent setIsModalOpen={setIsModalOpen} idUser={userToDetail}/>
                                 ):(
                                     <CreateUserModal setIsModalOpen={setIsModalOpen} title={'Crear Cliente'}/>
                                 )
