@@ -10,10 +10,10 @@ export const CreateSupply = () => {
 
     const [formData, setFormData] = useState<{
         name: string,
-       description: string,
+        description: string,
     }>({
         name: '',
-       description: '',
+        description: '',
     });
 
     const fields: FormField[] = [
