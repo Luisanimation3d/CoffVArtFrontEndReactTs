@@ -214,7 +214,7 @@ export const CreateCoustomer = () => {
             };
             console.log('Datos del formulario', requestBody);
 
-            const response = await fetch(`https://coffvart-backend.onrender.com/api/users?apikey=${API_KEY}`, {
+            const response = await fetch(`http://localhost:3000/api/users?apikey=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
