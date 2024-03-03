@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
-export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
+export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
         {
             value: 'pendiente',
@@ -30,12 +30,12 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
     const navigate = useNavigate()
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
     useEffect(() => {
-        get(`orders/${id}?apikey=${API_KEY}`)
+        get(`sales/${id}?apikey=${API_KEY}`)
     }, []);
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                state: data?.orders?.state
+                state: data?.sales?.state
             }
             setRegisterForm(newValues)
         }
@@ -55,7 +55,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             value: registerForm.state,
             options: options,
             onChange: (o) => {
-                const currentStatus = data?.order?.state;
+                const currentStatus = data?.sale?.state;
                 let showAlert = false;
                 console.log(currentStatus);
                 console.log(o?.value, "value");
@@ -153,10 +153,10 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             state: registerForm?.state?.value,
         };
         console.log(requestBody)
-        put(`orders/${id}?apikey=${API_KEY}`, requestBody)
+        put(`sales/${id}?apikey=${API_KEY}`, requestBody)
         Swal.fire({
                 title: 'Éxito',
-                text: 'Se ha cambiado el estado de la orden',
+                text: 'Se ha cambiado el estado de la venta',
                 icon: 'success',
                 confirmButtonText: 'Ok'
             });
