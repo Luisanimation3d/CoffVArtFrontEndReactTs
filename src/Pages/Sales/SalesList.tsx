@@ -4,8 +4,8 @@ import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
-import { useNavigate } from "react-router-dom";
 import { API_KEY, API_URL } from "../../constantes.ts";
+import { EditSale } from "../../Modales/EditOrderModal/EditSaleModal.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
 import { FiShuffle } from "react-icons/fi";
@@ -13,6 +13,8 @@ import { FiShuffle } from "react-icons/fi";
 export const Sales = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+    const [idEdit, setidEdit] = useState(0);
     const { data, loading, error, get, del } = useFetch(API_URL)
     const [dataSalesModify, setDataSalesModify] = useState<any>([])
     const [page, setPage] = useState<number>(1)
@@ -73,17 +75,27 @@ export const Sales = () => {
 
 
     const handleCallback= (row: {[key : string] : string | number}, type: string | number) => {	
-        if(type === 'Cambiar estado'){
+        if(type === 'Eliminar'){
             del(`sales/${row.id}?apikey=${API_KEY}`);
             console.log(del)
             setTimeout(() => {
                 get(`sales?apikey=${API_KEY}`);
             }, 500);
         }
-    }
+        if (type === 'Cambiar proceso') {
+            setidEdit(row.id as number);
+            setIsModalOpenEdit(true);
+            console.log(typeof row.id)
+        }
+    }; 
+
     const options = [
+        /*{
+            label: 'Eliminar',
+            icon: <FiShuffle/>
+        },*/
         {
-            label: 'Cambiar estado',
+            label: 'Cambiar proceso',
             icon: <FiShuffle/>
         }
     ]
@@ -120,6 +132,15 @@ export const Sales = () => {
                     totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
                     pagination={true}
                 />
+                {
+                    isModalOpenEdit && createPortal(
+                        <>
+                        <EditSale id={idEdit} setIsModalOpen={setIsModalOpenEdit} title='Cambiar proceso'/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                        
+                    )
+                }
             </Container>
             {
                 isModalOpen && createPortal(

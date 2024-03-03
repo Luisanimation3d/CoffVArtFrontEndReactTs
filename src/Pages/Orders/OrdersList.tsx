@@ -12,6 +12,7 @@ import { API_KEY, API_URL } from "../../constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { EditOrder } from "../../Modales/EditOrderModal/EditOrderModal.tsx";
 import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
+import { FiShuffle } from "react-icons/fi";
 
 export const Orders = () => {
     const [search, setSearch] = useState<string>("");
@@ -85,12 +86,29 @@ export const Orders = () => {
         dataOrdersFiltered = dataOrders;
     }
 
-    const handleDelete = (row: any) => {
-        del(`orders/${row.id}?apikey=${API_KEY}`);
-        setTimeout(() => {
-            get(`orders?apikey=${API_KEY}`);
-        }, 500);
+    const handleDelete = (row: {[key: string] : string | number}, type: string | number) => {
+        if(type === 'Eliminar'){
+            del(`orders/${row.id}?apikey=${API_KEY}`);
+            setTimeout(() => {
+                get(`orders?apikey=${API_KEY}`);
+            }, 500);
+            console.log(row, 'row');
+        }
+        if(type === 'Cambiar proceso'){
+            setidEdit(row.id as number);
+            setIsModalOpenEdit(true);
+        }
     }; 
+    const options = [
+        {
+            label: 'Eliminar',
+            icon: <FiShuffle/>
+        },
+        {
+            label: 'Cambiar proceso',
+            icon: <FiShuffle/>
+        }
+    ];
 
     const [orderDetails, setOrderDetails] = useState<any[]>([]);
 
@@ -119,18 +137,19 @@ console.log(data)
                     columns={columnsOrders}
                     data={dataOrdersFiltered}
                     onRowClick={getOrderDetails}
+                    dropDownOptions={options}
                     search={search}
                     setSearch={setSearch}
                     createAction={() => navigate('/admin/Orders/create')}
                     title="Ordenes"
                     page={page}
                     setPage={setPage}
-                    callback={getOrderDetails}
+                    callback={handleDelete}
                 />
                 {
                     isModalOpenEdit && createPortal(
                         <>
-                            <EditOrder  id={idEdit} setIsModalOpen={setIsModalOpenEdit} title="Editar Orden"/>
+                            <EditOrder  id={idEdit} setIsModalOpen={setIsModalOpenEdit} title="Cambiar proceso"/>
                         </>,
                         document.getElementById('modal') as HTMLElement
                     )
