@@ -101,6 +101,7 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                         onClick={createAction}
                                     >
                                         <FiPlus/>
+                                        <span className={`${styles.create__tooltip}`}>Crear nuevo</span>
                                     </button>
                                 </>
                             )
@@ -110,6 +111,7 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                             onClick={() => handleDownloadExcel(dataToDownload(data), title || 'data', title || 'data')}    
                         >
                             <FiDownload/>
+                            <span className={`${styles.create__tooltip}`}>Descargar informe</span>
                         </button>
                     </div>
                     <h3 className={`${styles.table__header__title}`}>

@@ -33,8 +33,38 @@
     padding: .5rem 1rem;
     border-radius: .5rem;
     cursor: pointer;
+    position: relative;
     transition: .3s;
 }
+
+.create__tooltip{
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: .5rem;
+    border-radius: .5rem;
+    font-size: .8rem;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    width: max-content;
+    transition: .3s;
+}
+
+.create__tooltip::before{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    border: 5px solid transparent;
+}
+
+.table__header__action__button:hover .create__tooltip{
+    opacity: 1;
+}
+
 
 .table__header__title {
     font-size: 1.5rem;
@@ -327,6 +357,15 @@
     background: #1f1f1f;
 }
 
+.table__container__darkMode .table__header__action__button .create__tooltip{
+    background: #121212;
+    color: #ccc;
+}
+
+.table__container__darkMode .table__header__action__button .create__tooltip::before{
+    border-bottom-color: #121212;
+}
+
 /* Light Mode */
 
 .table__container__lightMode {
@@ -390,6 +429,16 @@
 
 .table__container__lightMode .table__content__tbody__dropdown__item:hover {
     background: #dedede;
+}
+
+.table__container__lightMode .table__header__action__button .create__tooltip{
+    background: #fff;
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.table__container__lightMode .table__header__action__button .create__tooltip::before{
+    border-bottom-color: #fff;
 }
 
 @media screen and (max-width: 768px) {
