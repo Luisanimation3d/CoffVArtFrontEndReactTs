@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {API_KEY, API_URL} from '../../constantes';
 import {useFetch} from "../../hooks/useFetch.tsx";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -221,24 +222,26 @@ export const CreateCoustomer = () => {
                 },
                 body: JSON.stringify(requestBody)
             });
-            console.log('Respuesta del servidor', response);
-
-            if(!response.ok){
-                console.error('Error al crear el usuario', response.statusText);
-                return;
+            if(response){
+                const data = await response.json();
+                if(data.message == "Usuario creado correctamente"){
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 500);
+                }
             }
-            if(response.ok){
-                navigate('/admin/Coustomers')
-            }
-            console.log('Usuario creado con éxito');
         }catch(error){
             console.error('Error al crear el usuario', error);
-        
         }
     };
     return (
         <Container>
             <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Cliente'} title={'CREAR CLIENTE'} errors={error}/>
+        <Toaster/>
         </Container>
     )
 }
