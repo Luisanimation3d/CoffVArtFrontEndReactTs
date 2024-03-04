@@ -1,4 +1,3 @@
-import React from 'react';
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useEffect, useState} from "react";
 import {useFetch} from "../../hooks/useFetch.tsx";
@@ -14,21 +13,13 @@ import {
   MDBCardText,
   MDBCardBody,
   MDBCardImage,
-  MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem
 } from 'mdb-react-ui-kit';
 
 
 export const UserProfileComponent= ({setIsModalOpen, title = 'Informacion del usuario', idUser}: { setIsModalOpen: (value: boolean) => void, title?: string, idUser: number}) => {
     console.log("UserProfileComponent - User ID:", idUser);
     const [userData, setUserData] = useState<any>({});
-    const {data, get, error, loading} = useFetch(API_URL)
+    const {data, get} = useFetch(API_URL)
     useEffect(() => {
         get(`coustumers/${idUser}?apikey=${API_KEY}`);
     }, [idUser]);

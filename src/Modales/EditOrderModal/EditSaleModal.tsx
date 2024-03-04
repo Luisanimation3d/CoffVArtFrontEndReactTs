@@ -3,12 +3,11 @@ import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
-import {Form} from "../../components/Form/Form.tsx";
-import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate} from "react-router-dom";
-import Swal from "sweetalert2";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
+import toast, { Toaster } from "react-hot-toast";
+
 
 export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
@@ -63,68 +62,10 @@ export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: 
                 // Validar que solo se pueda poner en "Cancelado" si está en "Pendiente"
                 if (currentStatus === 'entregado' && o?.value === 'pendiente') {
                     showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a pendiente si ya se entregado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                } else if (currentStatus === 'entregado' && o?.value === 'confirmado') {
-                    showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Confirmado si ya esta Entregado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
+                    toast.error('No puedes cambiar a pendiente si ya esta entregado')
                 } else if (currentStatus === 'entregado' && o?.value === 'enviado') {
                     showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Enviado si ya esta Entregado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                } else if (currentStatus === 'entregado' && o?.value === 'cancelado') {
-                    showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Cancelado si ya esta entregado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                } else if (currentStatus === 'cancelado' && o?.value === 'pendiente'){
-                    showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Pendiente si ya esta Cancelado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                }else if (currentStatus === 'cancelado' && o?.value === 'confirmado'){
-                    showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Confirmado si ya esta Cancelado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                } else if (currentStatus === 'cancelado' && o?.value === 'enviado'){
-                    showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Enviado si ya esta Cancelado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
-                } else if (currentStatus === 'cancelado' && o?.value === 'entregado'){
-                    showAlert = true;
-                    Swal.fire({
-                        title: 'Error',
-                        text: 'No puedes cambiar a Entregado si ya esta Cancelado',
-                        icon: 'error',
-                        confirmButtonText: 'Ok'
-                    });
+                    toast.error('No puedes cambiar a enviado si ya está entregado');
                 } else {
                     showAlert = false;
                 }
@@ -154,12 +95,15 @@ export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: 
         };
         console.log(requestBody)
         put(`sales/${id}?apikey=${API_KEY}`, requestBody)
-        Swal.fire({
-                title: 'Éxito',
-                text: 'Se ha cambiado el estado de la venta',
-                icon: 'success',
-                confirmButtonText: 'Ok'
-            });
+        if(data.message == "Estado cambiado correctamente"){
+            toast(data.message, {
+                icon: '👏',
+                position: 'bottom-right'
+            })
+            setTimeout(() => {
+                navigate(-1)
+            }, 2000);
+        }
     };
     if (loading) {
         return <div>Cargando...</div>;
@@ -171,12 +115,37 @@ export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: 
                     width: '100%',
                     padding: '1rem 2rem',
                 }}>
+
+                    <Container>
                     <FormRedisign fields={formFieldsRegister} button={'Cambiar proceso'}
                           onSubmit={handleSubmit }
                           cancelButton={false}
                           errors={error}
                           />
-                          <Container></Container>
+                           <Toaster 
+                        position="top-center"
+                        reverseOrder= {false}
+                        gutter={8}
+                        containerClassName=""
+                        containerStyle={{}}
+                        toastOptions={{
+                        className: '',
+                        duration: 5000,
+                            style:{
+                                background: '#363636',
+                                color: '#fff'
+                            },
+                            success: {
+                                duration: 3000,
+                                iconTheme: {
+                                    primary: 'green',
+                                    secondary: 'black'
+                
+                                },
+                            },
+                        }}  
+                    />
+                        </Container>
                 </div>
             </Modal>
         </ModalContainer>
