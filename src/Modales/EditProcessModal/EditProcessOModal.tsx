@@ -72,7 +72,7 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         return errors
     }
     
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateForm();
         if(Object.keys(errorsForm).length !== 0) {
@@ -82,9 +82,16 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         const requestBody = {
             processId: process?.value,
         };
-        console.log(requestBody, "aquí body")
-        put(`productionOrders/${id}?apikey=${API_KEY}`, requestBody)
-        console.log(process,"aquí process")
+        try{
+            await put(`productionOrders/${id}?apikey=${API_KEY}`, requestBody)
+            if(process?.value !== 5){
+                setIsModalOpen(false)
+            }
+        }
+        catch(error){
+            console.error('Error al actualizar el proceso', error)
+        }
+        
     };
     useEffect(()=> {
         if(data && !loading && !errorRegister){
