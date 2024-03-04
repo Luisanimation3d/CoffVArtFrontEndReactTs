@@ -14,7 +14,7 @@ export const Coustomers = () => {
     const [search, setSearch] = useState<string>('');
     const [userToDetail, setUserToDetail] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const { data, loading, error, get, del } = useFetch(API_URL);
+    const { data, loading, get, del } = useFetch(API_URL);
     const navigate = useNavigate();
 
     const [page, setPage] = useState<number>(1)
@@ -26,12 +26,12 @@ export const Coustomers = () => {
     useEffect(() => {
         get(`coustumers?apikey=${API_KEY}`);
     }, []);
-
+    
     const columnsCoustumers: Column[] = [
         { key: 'id', header: 'ID' },
         { key: 'name', header: 'Nombre' },
-        { key: 'documentType', header: 'Tipo de documento' },
-        { key: 'document', header: 'Documento' },
+        { key: 'documentType', header: 'Tipo de documento'},
+        { key: 'document', header: 'Documento'},
         { key: 'phone', header: 'Teléfono' },
         { key: 'address', header: 'Dirección' },
         { key: 'state', header: 'Estado' }

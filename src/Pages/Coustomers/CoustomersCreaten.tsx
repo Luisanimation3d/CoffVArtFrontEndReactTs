@@ -171,7 +171,7 @@ export const CreateCoustomer = () => {
             mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
         }
         if (!formData.address || formData.address.trim().length < 10){
-            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 5 caracteres'}
+            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}
         }
 
         if (!formData.phone || formData.phone.trim().length < 10 || formData.phone.trim().length > 12) {
@@ -231,7 +231,7 @@ export const CreateCoustomer = () => {
                     })
                     setTimeout(() => {
                         navigate(-1)
-                    }, 500);
+                    }, 2000);
                 }
             }
         }catch(error){
@@ -241,7 +241,31 @@ export const CreateCoustomer = () => {
     return (
         <Container>
             <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Cliente'} title={'CREAR CLIENTE'} errors={error}/>
-        <Toaster/>
+        <Toaster 
+        position="top-center"
+        reverseOrder= {false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+            className: '',
+            duration: 5000,
+            style:{
+                background: '#363636',
+                color: '#fff'
+            },
+            success: {
+                duration: 3000,
+                iconTheme: {
+                    primary: 'green',
+                    secondary: 'black'
+                
+                },
+            },
+        }}
+
+        
+        />
         </Container>
     )
 }
