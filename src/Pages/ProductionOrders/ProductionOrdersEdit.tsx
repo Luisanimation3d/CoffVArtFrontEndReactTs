@@ -10,6 +10,7 @@ import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import { useNavigate } from "react-router-dom";
 
 export const IncrementProducts = () => {
     const {
@@ -31,6 +32,7 @@ export const IncrementProducts = () => {
     const [cantidad, setCantidad] = useState('');
     const [productionOrders, setProductionOrders] = useState<SelectOption[]>([]);
     const [products, setProducts] = useState<SelectOption[]>([]);
+    const navigate = useNavigate()
 
 
     const headers: Column[] = [
@@ -236,6 +238,10 @@ export const IncrementProducts = () => {
             setSelectProduct(undefined);
             setCantidad('');
             alert('Empaquetado creado con éxito');
+            setTimeout(() => {
+                navigate(-1)
+            }, 500);
+
 
         } catch (error) {
             

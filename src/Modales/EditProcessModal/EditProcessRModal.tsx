@@ -17,6 +17,7 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
     const { data: processData, get: getProcess } = useFetch(API_URL);
     const [options, setOptions] = useState<SelectOption[]>([]);
+   
     useEffect(() => {
         get(`productionRequests/${id}?apikey=${API_KEY}`)
     }, []);
@@ -99,19 +100,28 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         
         return errors
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    
+       
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateForm();
-        if(Object.keys(errorsForm).length !== 0) {
-            setError(errorsForm)
-            return
+        if (Object.keys(errorsForm).length !== 0) {
+            setError(errorsForm);
+            return;
         }
         const requestBody = {
             processId: process?.value,
         };
-        console.log(requestBody)
-        put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
-        console.log(process,"aquí process")
+
+        try {
+            await put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody);
+            if(process?.value !== 3){
+                setIsModalOpen(false)
+            }
+        } catch (error) {
+            console.error('Error al actualizar el proceso:', error);
+            // Manejar el error aquí si es necesario
+        }
     };
     const handleSubmitRecived = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -123,9 +133,8 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         const requestBody = {
             receivedQuantity: formValues.receivedQuantity,
         };
-        console.log(requestBody)
         put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
-        console.log(process,"aquí intento 1")
+        
     };
     useEffect(()=> {
         if(data && !loading && !errorRegister){
