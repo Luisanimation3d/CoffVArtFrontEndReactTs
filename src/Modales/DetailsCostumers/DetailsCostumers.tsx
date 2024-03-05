@@ -1,10 +1,9 @@
-import React from 'react';
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useEffect, useState} from "react";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import {
   MDBCol,
   MDBContainer,

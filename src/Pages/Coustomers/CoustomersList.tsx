@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { API_KEY, API_URL } from "../../constantes";
-import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
+// import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
 import { createPortal } from "react-dom";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
@@ -106,10 +106,8 @@ export const Coustomers = () => {
                     isModalOpen && createPortal(
                         <>
                             {
-                                userToDetail ? (
+                                userToDetail && (
                                     <UserProfileComponent setIsModalOpen={setIsModalOpen} idUser={userToDetail}/>
-                                ):(
-                                    <CreateUserModal setIsModalOpen={setIsModalOpen} title={'Crear Cliente'}/>
                                 )
                             }
                         </>,
