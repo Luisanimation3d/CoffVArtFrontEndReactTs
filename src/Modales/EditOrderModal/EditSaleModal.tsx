@@ -7,6 +7,7 @@ import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import toast, { Toaster } from "react-hot-toast";
+import { Try } from "@mui/icons-material";
 
 
 export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
@@ -88,13 +89,19 @@ export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: 
         }
         return errors
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const requestBody = {
             state: registerForm?.state?.value,
         };
         console.log(requestBody)
-        put(`sales/${id}?apikey=${API_KEY}`, requestBody)
+        try{
+        await put(`sales/${id}?apikey=${API_KEY}`, requestBody)
+        setIsModalOpen(false)
+        }catch(error){
+            console.log(error)
+        }
+
         if(data.message == "Estado cambiado correctamente"){
             toast(data.message, {
                 icon: '👏',

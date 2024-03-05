@@ -82,6 +82,11 @@ export const Orders = () => {
     } else {
         dataOrdersFiltered = dataOrders;
     }
+    useEffect(() => {
+        if(!isModalOpenEdit){
+            get(`orders?apikey=${API_KEY}`);
+        }
+    }, [isModalOpenEdit]);
 
     const handleDelete = (row: {[key: string] : string | number}, type: string | number) => {
         if(type === 'Eliminar'){
@@ -96,6 +101,7 @@ export const Orders = () => {
             setIsModalOpenEdit(true);
         }
     }; 
+
     const options = [
         {
             label: 'Eliminar',
@@ -106,6 +112,7 @@ export const Orders = () => {
             icon: <FiShuffle/>
         }
     ];
+
 
     const [orderDetails, setOrderDetails] = useState<any[]>([]);
 
