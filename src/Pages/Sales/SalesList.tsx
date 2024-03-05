@@ -9,13 +9,14 @@ import { EditSale } from "../../Modales/EditOrderModal/EditSaleModal.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
 import { FiShuffle } from "react-icons/fi";
-
+import './SalesCss.css'
+import burdeoFullLogo from '../../assets/BurdeoFullLogo.png';
 export const Sales = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
     const [idEdit, setidEdit] = useState(0);
-    const { data, loading, error, get, del } = useFetch(API_URL)
+    const { data, loading, error, get, del } = useFetch(API_URL);
     const [dataSalesModify, setDataSalesModify] = useState<any>([])
     const [page, setPage] = useState<number>(1)
     useEffect(() => {
@@ -25,6 +26,8 @@ export const Sales = () => {
     useEffect(() => {
         get(`sales?apikey=${API_KEY}`);
     }, []);
+
+    
 
     const columnsSales: Column[] = [
         {
@@ -106,6 +109,11 @@ export const Sales = () => {
         const salesDetails= sale?.salesdetails?.map((salesDetail: any) => ({
             id: salesDetail.id,
             invoice: sale.invoice,
+            name: sale.coustumer.name,
+            address: sale.coustumer.address,
+            phone: sale.coustumer.phone,
+            document: sale.coustumer.document,
+            documentType: sale.coustumer.documentType,
             saleId: salesDetail.saleId,
             product: salesDetail.product.name,
             quantity: salesDetail.quantity,
@@ -115,6 +123,7 @@ export const Sales = () => {
         setSalesDetails(salesDetails);
         setIsModalOpen(true);
     };
+    
 
     return (
         <>
@@ -143,42 +152,59 @@ export const Sales = () => {
                 }
             </Container>
             {
-                isModalOpen && createPortal(
-                    <ModalContainer ShowModal={setIsModalOpen}>
-                        <Modal
-                            title={`Detalle de la orden # ${salesDetails[0]?.invoice}`}
-                            showModal={setIsModalOpen}
-                        >
-                            <Table
-                                columns={[
-                                    {
-                                        key: "invoice",
-                                        header: "Factura",
-                                    },
-                                    {
-                                        key: "product",
-                                        header: "Producto",
-                                    },
-                                    {
-                                        key: "quantity",
-                                        header: "Cantidad",
-                                    },
-                                    {
-                                        key: "value",
-                                        header: "Valor Unitario",
-                                    },
-                                    {
-                                        key: "total",
-                                        header: "Total",
-                                    },
-                                ]}
-                                data={salesDetails}
-                                onRowClick={() => null}
-                            />
-                        </Modal>
-                    </ModalContainer>,
-                    document.getElementById("modal") as HTMLElement)
-            }
+    isModalOpen && createPortal(
+        <ModalContainer ShowModal={setIsModalOpen}>
+            <Modal
+                showModal={setIsModalOpen}
+            >
+               <div className="invoice-container">
+                <div className="header">
+                    <img src={burdeoFullLogo} alt="Logo" style={{ maxWidth: '10%', height: 'auto' }} />
+                    <h1>Factura {salesDetails[0]?.invoice}</h1>
+                    <p></p>
+                </div>
+                <div className="client-info">
+                    <h2>Información del cliente</h2>
+                    <p>Nombre: {salesDetails[0]?.name}</p>
+                    <p>Dirección: {salesDetails[0]?.address}</p>
+                    <p>Teléfono: {salesDetails[0]?.phone}</p>
+                    <p>Documento: {salesDetails[0]?.documentType} {salesDetails[0]?.document}</p>
+                </div>
+                <div className="order-details">
+                    <h2>Detalles del pedido</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="invoice-table-header">Producto</th>
+                                <th className="invoice-table-header">Cantidad</th>
+                                <th className="invoice-table-header">Precio unitario</th>
+                                <th className="invoice-table-header">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {salesDetails.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="invoice-table-cell">{item.product}</td>
+                                    <td className="invoice-table-cell">{item.quantity}</td>
+                                    <td className="invoice-table-cell">{item.value}</td>
+                                    <td className="invoice-table-cell">{item.total}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td className="total-td" colSpan={3}>Total</td>
+                                <td className="total-tv">{salesDetails.reduce((acc, item) => acc + item.total, 0)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            </Modal>
+        </ModalContainer>,
+        document.getElementById("modal") as HTMLElement)
+}
+
         </>
     );
 };

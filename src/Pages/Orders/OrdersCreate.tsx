@@ -289,6 +289,14 @@ export const OrdersCreate = () => {
                     setTimeout(() => {
                         navigate(-1)
                     }, 2000);
+                }else if(data.msg == "La cantidad excede el stock del producto"){
+                    toast.error(data.msg, {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+
+                    }, 2000);
                 }
             }
 
