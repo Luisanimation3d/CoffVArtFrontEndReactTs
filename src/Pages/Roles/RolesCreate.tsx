@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import {useFetch} from "../../hooks/useFetch";
 import {FormField} from "../../types/Form";
-import {Form} from "../../components/Form/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
@@ -10,6 +9,7 @@ import styles from './Roles.module.css'
 import {API_KEY} from "../../constantes.ts";
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
+import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const RolesCreate = () => {
     const [step, setStep] = useState<number>(1)
@@ -87,8 +87,8 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
         <div style={{
             width: '50%'
         }}>
-            <Form fields={fields} onSubmit={handleSubmit}
-                  button={<Button text={'Continuar'} onClick={() => null} type={'SUBMIT'} autosize={false}/>}
+            <FormRedisign fields={fields} onSubmit={handleSubmit}
+                  button={'Continuar'}
                   errors={error}
             />
         </div>

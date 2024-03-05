@@ -96,6 +96,7 @@ export const Roles = () => {
                     setSearch={setSearch}
                     title={'Roles'}
                     loading={loading}
+                    createAction={() => navigate('/admin/roles/create')}
                     page={page}
                     setPage={setPage}
                     pagination={true}

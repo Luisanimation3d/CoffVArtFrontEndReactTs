@@ -1,15 +1,15 @@
 h1.titles__title__darkMode{
-    font-size: 3rem;
-    font-weight: bolder;
+    font-size: 1.5rem;
+    font-weight: 600;
     text-align: center;
-    color: #fffafb;
+    color: #cccccc;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
 }
 h1.titles__title__lightMode{
-    color: #000000;
-    font-size: 3rem;
-    font-weight: bolder;
+    color: #333333;
+    font-size: 1.5rem;
+    font-weight: 600;
     text-align: center;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
