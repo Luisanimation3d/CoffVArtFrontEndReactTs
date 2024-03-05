@@ -98,6 +98,7 @@ const EjemploVistaConDetalle = lazy(() => import('./Pages/EjemploVistaConDetalle
 
 // User Viws
 const Home = lazy(() => import('./Pages/Home/Home.tsx'));
+const Contactos = lazy (( ) => import ('./Pages/HomePage/Contactos.tsx'))
 const TiendaUser = lazy(() => import('./Pages/Catalogue/TiendaUser.tsx'));
 const MyProfile = lazy(() => import('./Pages/MyProfile/MyProfile.tsx'));
 const ProductDetailPage = lazy(() => import('./components/ProductDetailPage/ProductDetailPage.tsx'));
@@ -328,6 +329,11 @@ export default function App() {
                                             <Home/>
                                         </Suspense>
                                     }/>
+                                    <Route path={'contactos'} element={
+                                        <Suspense fallback={<h1>Cargando el componente de home</h1>}>
+                                            <Contactos/>
+                                        </Suspense>
+                                    }/>
                                     <Route path={'tiendaUser'} element={
                                         <Suspense fallback={<h1>Cargando el componente de tienda</h1>}>
                                             <TiendaUser/>
@@ -385,6 +391,7 @@ export default function App() {
                                             <ThanksCheckout/>
                                         </Suspense>
                                     }/>
+                                    
                                 </Route>
                             </Routes>
                         </HashRouter>

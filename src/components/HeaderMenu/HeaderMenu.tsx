@@ -33,6 +33,7 @@ export const HeaderMenu = () => {
         })
     }
 
+
     return (
         <>
             <div className="headerMenu__container">
@@ -51,7 +52,7 @@ export const HeaderMenu = () => {
                             <Link to={'/tiendaUser'} className={`headerMenu__menu--link`}>Tienda</Link>
                         </li>
                         <li className={`headerMenu__menu--item`}>
-                            <Link to={'/blog'} className={`headerMenu__menu--link`}>Contacto</Link>
+                            <Link to={'/Contactos '} className={`headerMenu__menu--link`}>Contacto</Link>
                         </li>
                         <li className={`headerMenu__menu--item`}>
                             <Link to={'/myshops'} className={`headerMenu__menu--link`}>Mis compras</Link>
