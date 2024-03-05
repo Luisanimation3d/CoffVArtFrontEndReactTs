@@ -8,98 +8,14 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {useEffect, useState} from "react";
 
+
 export const TiendaUser = () => {
 	const {data, loading, error, get} = useFetch(API_URL)
+	const [priceFilter, setPriceFilter] = useState<number | null>(null);
 	const [products, setProducts] = useState<Product[]>([])
 
     const images = [BannerBurdeo1, BannerBurdeo2];
-	// const productosTienda: Array<Product> = [
-	// 	{
-	// 		id: 1,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		link: '/producto/1'
-	// 	},
-	// 	{
-	// 		id: 2,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		link: '/producto/2'
-	// 	},
-	// 	{
-	// 		id: 3,
-  	// 		name: 'Burdeo Coffee',
-  	// 		price: 25000,
-  	// 		image: ProductImage,
-  	// 		description: 'Some',
-  	// 		category: 'Cafe',
-  	// 		discount: 50,
-  	// 		new: true,
-  	// 		link: '/some-link',
-	//
-	// 	},
-	// 	{
-	// 		id: 4,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		discount: 50,
-  	// 		new: true,
-  	// 		link: '/some-link',
-	// 	},
-	// 	{
-	// 		id: 5,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		discount: 50,
-  	// 		new: true,
-  	// 		link: '/some-link',
-	// 	},
-	// 	{
-	// 		id: 6,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		discount: 50,
-  	// 		new: true,
-  	// 		link: '/some-link',
-	// 	},
-	// 	{
-	// 		id: 7,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		discount: 50,
-  	// 		new: true,
-  	// 		link: '/some-link',
-	// 	},
-	// 	{
-	// 		id: 8,
-	// 		name: 'Burdeo Coffee',
-	// 		price: 25000,
-	// 		image: ProductImage,
-	// 		description: 'Some',
-	// 		category: 'Cafe',
-	// 		discount: 50,
-  	// 		new: true,
-  	// 		link: '/some-link',
-	// 	},
-	// ];
+	
 
 	useEffect(() => {
 		get(`products?apikey=${API_KEY}`)
@@ -132,12 +48,21 @@ export const TiendaUser = () => {
 					<div className='tiendaUser--filterContainer__filter'>
 						<div className='tiendaUser--filterContainer__filter__title'>
 							<h3>Filtros</h3>
-						</div>
-						<div className='tiendaUser--filterContainer__filter__content'>
-							{/* Aqui van los filtros */}
-						</div>
-					</div>
-				</div>
+							<div className='tiendaUser--filterContainer__filter__item'>
+                                    <label>Precio:</label>
+                                    <input
+                                        type='range'
+                                        min={0}
+                                        max={1000} // Ajusta el valor máximo según tus necesidades
+                                        step={10}
+                                        value={priceFilter ?? ''}
+                                        onChange={(e) => setPriceFilter(e.target.value === '' ? null : parseInt(e.target.value))}
+                                    />
+                                    <span>{priceFilter !== null ? `$${priceFilter}` : 'Todos'}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 				<div className='tiendaUser--productsContainer'>
 					<div className='tiendaContainer--row1Productos'></div>
 					<div className='tiendaContainer--row2Productos'>

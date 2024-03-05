@@ -50,3 +50,23 @@
 	letter-spacing: 2.5px;
 	text-transform: uppercase;
 }
+.tiendaUser--filterContainer__filter__item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tiendaUser--filterContainer__filter__item label {
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.tiendaUser--filterContainer__filter__item input {
+    width: 100%;
+}
+
+.tiendaUser--filterContainer__filter__item span {
+    font-size: 14px;
+    color: #777;
+}
