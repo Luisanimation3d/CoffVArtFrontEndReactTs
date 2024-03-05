@@ -125,13 +125,13 @@ export const ProductsEdit = () => {
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                name: data?.product.name,
-                amount: data?.product.amount,
-                stockMin: data?.product.stockMin,
-                stockMax: data?.product.stockMax,
-                unitPrice: data?.product.unitPrice,
-                amountSupply: data?.product.amountSupply,
-                description: data?.product.description,
+                name: data?.product?.name,
+                amount: data?.product?.amount,
+                stockMin: data?.product?.stockMin,
+                stockMax: data?.product?.stockMax,
+                unitPrice: data?.product?.unitPrice,
+                amountSupply: data?.product?.amountSupply,
+                description: data?.product?.description
             }
             setFormData(newValues)
         }
@@ -182,15 +182,16 @@ export const ProductsEdit = () => {
     };
 
     useEffect(() => {
-        if (data && !errorFetch) {
-            toast('Producto editado con éxito' , {
-                icon: '👏',
-                position: 'bottom-right'
-            })
-            
-            // navigate(-1)
-        }
-    }, [data, errorFetch]);
+		if (data.message == 'Producto actualizado correctamente' && !errorFetch) {
+			toast(data.message, {
+				icon: '👏',
+				position: 'bottom-right',
+			});
+			setTimeout(() => {
+				navigate(-1);
+			}, 2000);
+		}
+	}, [data, errorFetch]);
 
     return (
         <Container>
@@ -201,7 +202,28 @@ export const ProductsEdit = () => {
                 button={'Guardar'}
                 errors={error}
             />
-            <Toaster/>
+            <Toaster
+				position='top-center'
+				reverseOrder={false}
+				gutter={8}
+				containerClassName=''
+				containerStyle={{}}
+				toastOptions={{
+					className: '',
+					duration: 5000,
+					style: {
+						background: '#363636',
+						color: '#fff',
+					},
+					success: {
+						duration: 3000,
+						iconTheme: {
+							primary: 'green',
+							secondary: 'black',
+						},
+					},
+				}}
+			/>
         </Container>
     );
 };
