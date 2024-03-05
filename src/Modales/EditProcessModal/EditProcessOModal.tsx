@@ -6,6 +6,8 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate} from "react-router-dom";
+import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
+import { Container } from "react-bootstrap";
 
 export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const [process, setProcess] = useState<SelectOption | undefined>();
@@ -111,11 +113,10 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
                     padding: '1rem 2rem',
                 }}>
                     {
-                        <Form fields={formFieldsRegister} button={<Button text={title} type={'SUBMIT'}/>}
-                          onSubmit={handleSubmit}
-                          cancelButton={false}
-                          errors={error}
-                    />
+                        <Container>
+                            <FormRedisign fields={formFieldsRegister} onSubmit={handleSubmit} button={"Cambiar proceso"} errors={error} cancelButton={false}/>
+                        </Container>
+                        
                     }
                     
                 </div>
