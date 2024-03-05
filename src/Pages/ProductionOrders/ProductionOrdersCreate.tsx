@@ -50,17 +50,6 @@ export const ProductionOrdersCreate= ()=>{
     
     const productionOrderFields: FormField[] = [
       {
-          name: 'processId',
-          type: 'select',
-          label: 'Proceso',
-          placeholder: 'Proceso',
-          options:process,
-          value: formValues.processId as SelectOption|undefined,
-          onChange: (value) => setFormValues(prev=> ({...prev,processId:value})),
-          size: 'medium',
-          
-      },
-      {
           name: 'supply',
           type: 'select',
           label: 'insumo',

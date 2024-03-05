@@ -77,11 +77,16 @@ export const Companys = () => {
             setTimeout(() => {
                 get(`companys?apikey=${API_KEY}`);
             }, 500);
-        }
+        }else if (type === 'Editar'){
+            navigate(`/admin/Companys/edit/${row.id}`)}
     }
     const options = [
         {
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },
+        {
+            label: 'Editar',
             icon: <FiShuffle/>
         }
     ]

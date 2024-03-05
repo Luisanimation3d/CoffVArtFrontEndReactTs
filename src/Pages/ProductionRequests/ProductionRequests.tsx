@@ -90,6 +90,7 @@ export const ProductionRequests = () => {
           get(`productionRequests?apikey=${API_KEY}`);
         }
       }, [isModalOpen]);
+      
     const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
         
         if(type === 'Cambiar proceso'){
