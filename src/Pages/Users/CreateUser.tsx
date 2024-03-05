@@ -4,10 +4,12 @@ import {FormField, SelectOption} from "../../types/Form";
 import {useState, useEffect} from "react";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import toast, {Toaster} from "react-hot-toast";
 
 export const CreateUser = () => {
-    const [error, setError] = useState<{[key: string]: string}>({})
+    const [error, setError] = useState<{ [key: string]: string }>({})
+    const {data: dataUser, post: postUser, loading: loadingUser} = useFetch(API_URL);
     const navigate = useNavigate();
 
 
@@ -44,7 +46,7 @@ export const CreateUser = () => {
     }, []);
 
     useEffect(() => {
-        if(data?.roles?.rows){
+        if (data?.roles?.rows) {
             setOptionsRoles(data?.roles?.rows.map((role: any) => {
                 return {
                     label: role.name,
@@ -53,6 +55,12 @@ export const CreateUser = () => {
             }))
         }
     }, [data])
+
+    const validateIfNumber = (value: string) => {
+        if (value === '') return true;
+        const reg = new RegExp('^[0-9]+$');
+        return reg.test(value);
+    }
 
     const fields: FormField[] = [
         {
@@ -114,7 +122,7 @@ export const CreateUser = () => {
         {
             type: 'text',
             value: formData.phone,
-            onChange: (value: string) => setFormData({...formData, phone: value}),
+            onChange: (value: string) => setFormData(prev => ({...prev, phone: validateIfNumber(value) ? value : prev.phone})),
             label: 'Teléfono',
             name: 'phone',
             size: 'medium',
@@ -144,8 +152,8 @@ export const CreateUser = () => {
             size: 'medium',
         }
     ]
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
+
+    const validateForm = () => {
         let mensajeError = {}
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!formData.rol) {
@@ -155,42 +163,56 @@ export const CreateUser = () => {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
         if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 15) {
-            mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
+            mensajeError = {
+                ...mensajeError,
+                documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres'
+            };
         }
         if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15) {
-            mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras' };
+            mensajeError = {...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras'};
         }
         if (!formData.lastname || formData.lastname.trim().length < 3) {
-            mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
+            mensajeError = {...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras'};
         }
-        if (!formData.address || formData.address.trim().length < 10){
-            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 5 caracteres'}
+        if (!formData.address || formData.address.trim().length < 10) {
+            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}
         }
         if (!formData.phone || formData.phone.trim().length < 10 || formData.phone.trim().length > 12) {
-            mensajeError = { ...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres' };
+            mensajeError = {...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres'};
         }
         if (!formData.email || !emailRegex.test(formData.email)) {
-            mensajeError = { ...mensajeError, email: 'Ingrese un correo electrónico válido' };
+            mensajeError = {...mensajeError, email: 'Ingrese un correo electrónico válido'};
         }
-    
+
         if (!formData.password) {
             mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
         }
 
-        if (formData.password.trim().length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) { mensajeError = {...mensajeError, password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'}; 
+        if (formData.password.trim().length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) {
+            mensajeError = {
+                ...mensajeError,
+                password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'
+            };
         }
-        
+
         if (!formData.confirmPassword) {
             mensajeError = {...mensajeError, confirmPassword: 'La confirmación de contraseña es requerida'}
         }
         if (formData.password !== formData.confirmPassword) {
             mensajeError = {...mensajeError, confirmPassword: 'Las contraseñas no coinciden'}
         }
+
+        return mensajeError;
+    }
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const mensajeError = validateForm();
         if (Object.keys(mensajeError).length > 0) {
-            console.log('Mensaje de error', mensajeError)
-            setError(mensajeError)
-            return
+            console.log('Mensaje de error', mensajeError);
+            setError(mensajeError);
+            return;
         }
+    
         try {
             const requestBody = {
                 roleId: formData.rol?.value,
@@ -205,7 +227,7 @@ export const CreateUser = () => {
                 confirmPassword: formData.confirmPassword,
             };
             console.log('Datos del formulario', requestBody);
-
+    
             const response = await fetch(`https://coffvart-backend.onrender.com/api/users?apikey=${API_KEY}`, {
                 method: 'POST',
                 headers: {
@@ -213,25 +235,62 @@ export const CreateUser = () => {
                 },
                 body: JSON.stringify(requestBody)
             });
-            console.log('Respuesta del servidor', response);
-
-            if (!response.ok) {
-                console.error('Error al crear el usuario', response.statusText);
-                return;
+    
+            if (response) {
+                const data = await response.json();
+                if (data.message === "Usuario creado correctamente") {
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    });
+                    setTimeout(() => {
+                        navigate(-1);
+                    }, 2000);
+                } else if (data.msg === 'Este correo ya esta registrado') {
+                    toast.error("Este correo ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    });
+                } else if (data.msg === 'Este documento ya esta registrado') {
+                    toast.error("Este documento ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    });
+                }
             }
-            if(response.ok){
-                navigate('/admin/Users')
-            }
-            console.log('Usuario creado con éxito');
         } catch (error) {
             console.error('Error al crear el usuario', error);
         }
     };
+    
+
+    useEffect(() => {
+        if(dataUser?.message == "Usuario creado correctamente"){
+            toast(dataUser.message , {
+                icon: '👏',
+                position: 'bottom-right'
+            })
+            setTimeout(() => {
+                navigate(-1)
+            }, 2000);
+        }else if (dataUser.msg == 'Este correo ya esta registrado'){
+            toast.error("Este correo ya esta registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
+        }else if (dataUser.msg == 'Este documento ya esta registrado'){
+            toast.error("Este documento ya esta registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
+        }
+    }, [dataUser])
 
     return (
         <Container>
             <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Usuario'} title={'CREAr USUARIO'}
                           errors={error}/>
+            <Toaster/>
         </Container>
     )
 }

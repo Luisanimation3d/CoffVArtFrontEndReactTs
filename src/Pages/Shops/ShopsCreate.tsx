@@ -11,6 +11,9 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY} from "../../constantes.ts";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import { useDarkMode} from "../../context/DarkMode.tsx";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 
 
 export const ShopsCreate = () => {
@@ -32,6 +35,7 @@ export const ShopsCreate = () => {
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
     const [detalles, setDetalles] = useState<any[]>([]);
+    const navigate = useNavigate()
     const [factura, setFactura] = useState<string>('');
     const [selectProveedor, setSelectProveedor] = useState<SelectOption | undefined>(undefined);
     const [selectInsumo, setSelectInsumo] = useState<SelectOption | undefined>(undefined);
@@ -336,10 +340,17 @@ export const ShopsCreate = () => {
                 body: JSON.stringify(requestBody),
             });
 
-            if (!response.ok) {
-                alert('Error al crear la compra');
-                console.error('Error al crear la compra:', response.statusText);
-                return;
+            if(response){
+                const data = await response.json();
+                if(data.message == "Compra creada correctamente"){
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 2000);
+                }
             }
 
             setInvoice('');
@@ -353,7 +364,6 @@ export const ShopsCreate = () => {
             setDate('');
             setDescription('');
 
-            alert('Compra creada con éxito');
         } catch (error) {
             console.error('Error al crear la compra:', error);
             alert('Error al crear la compra');
@@ -369,6 +379,29 @@ export const ShopsCreate = () => {
                     {/* <Titles title={`factura N°${invoice}`} level={2} transform={'UPPERCASE'}/> */}
                     <Container>
                     <FormRedisign fields={fields} onSubmit={handleAddDetail} button={"Añadir insumo"} title={`factura N°${invoice}`} errors={error}/>
+                    <Toaster 
+                    position="top-center"
+                    reverseOrder= {false}
+                    gutter={8}
+                    containerClassName=""
+                    containerStyle={{}}
+                    toastOptions={{
+                        className: '',
+                        duration: 5000,
+                        style:{
+                            background: '#363636',
+                            color: '#fff'
+                        },
+                        success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black'
+                
+                        },
+                    },
+                }}
+             />
                     </Container>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

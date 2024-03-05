@@ -167,20 +167,21 @@ export const CustomersEdit = () => {
         if (!formData.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!formData.documentNumber || formData.documentNumber.length < 8 || formData.documentNumber.length > 15) {
+
+        if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 15) {
             mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
         
-        if (!formData.name || formData.name.length < 3 || formData.name.length > 15) {
+        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15) {
             mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras' };
         }
-        if (!formData.lastname || formData.lastname.length < 3 || formData.lastname.length > 15) {
+        if (!formData.lastname || formData.lastname.trim().length < 3) {
             mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
         }
-        if (!formData.address) {
-            mensajeError = {...mensajeError, address: 'La dirección es requerida'}
+        if (!formData.address || formData.address.trim().length < 10){
+            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}
         }
-        if (!formData.phone || formData.phone.length < 10 || formData.phone.length > 12) {
+        if (!formData.phone || formData.phone.trim().length < 10 || formData.phone.trim().length > 12) {
             mensajeError = { ...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres' };
         }
         if (!formData.email || !emailRegex.test(formData.email)) {
@@ -213,12 +214,19 @@ export const CustomersEdit = () => {
     };
 
     useEffect(() => {
-        if (data && !errorFetch) {
-            toast('Usuario editado con éxito' , {
+        if (data.message == 'Usuario actualizado correctamente' && !errorFetch) {
+            toast('Usuario actualizado correctamente' , {
                 icon: '👏',
                 position: 'bottom-right'
-            })
-            // navigate(-1)
+            });
+            setTimeout(() => {
+                navigate(-1);
+            },2000);
+        } else if(data.msg == 'Este correo ya esta registrado'){
+            toast.error("Este correo ya esta registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            });
         }
     }, [data, errorFetch]);
 
@@ -235,7 +243,30 @@ export const CustomersEdit = () => {
                 button={'Guardar'}
                 errors={error}
             />
-            <Toaster/>
+            <Toaster
+            position="top-center"
+            reverseOrder= {false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+                className: '',
+                duration: 5000,
+                style:{
+                    background: '#363636',
+                    color: '#fff'
+                },
+                success: {
+                    duration: 3000,
+                    iconTheme: {
+                        primary: 'green',
+                        secondary: 'black'
+                    
+                    },
+                },
+            }}
+            
+            />
         </Container>
     );
 };

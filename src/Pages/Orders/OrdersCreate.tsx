@@ -12,6 +12,8 @@ import {API_KEY} from "../../constantes.ts";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import { useDarkMode} from "../../context/DarkMode.tsx";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
+
 
 export const OrdersCreate = () => {
     const {
@@ -277,13 +279,25 @@ export const OrdersCreate = () => {
                 body: JSON.stringify(requestBody),
             });
 
-            if (!response.ok) {
-                alert('Error al crear el pedido');
-                console.error('Error al crear el pedido:', response.statusText);
-                return;
-            }
-            if(response.ok){
-                navigate('/admin/Orders')
+            if(response){
+                const data = await response.json();
+                if(data.message == "Pedido creado correctamente"){
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 2000);
+                }else if(data.msg == "La cantidad excede el stock del producto"){
+                    toast.error(data.msg, {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+
+                    }, 2000);
+                }
             }
 
             setSelectCliente(undefined);
@@ -294,7 +308,6 @@ export const OrdersCreate = () => {
             setProductos([]);
             setClientes([]);
 
-            alert('Pedido creado con éxito');
             
         } catch (error) {
             console.error('Error al crear el pedido:', error);
@@ -313,6 +326,30 @@ export const OrdersCreate = () => {
                         button={"Agregar"}
                         cancelButton={false}
                     />
+                    <Toaster 
+                    position="top-center"
+                    reverseOrder= {false}
+                    gutter={8}
+                    containerClassName=""
+                    containerStyle={{}}
+                    toastOptions={{
+                        className: '',
+                        duration: 5000,
+                        style:{
+                            background: '#363636',
+                            color: '#fff'
+                        },
+                        success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black'
+                
+                        },
+                    },
+                }}
+             />
+
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                     <Titles title={'Detalle del pedido'} level={2} transform={'UPPERCASE'}/>

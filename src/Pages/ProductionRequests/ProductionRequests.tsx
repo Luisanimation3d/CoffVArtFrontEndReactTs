@@ -22,7 +22,7 @@ export const ProductionRequests = () => {
     useEffect(() => {
         get(`productionRequests?apikey=${API_KEY}`);
     }, []);
-
+   
     const columnsProductionRequest: Column[] = [
         {
             key:'id',
@@ -85,18 +85,19 @@ export const ProductionRequests = () => {
     }else{
         dataProductionRequestsFiltered = dataProductionRequests
     }
+    useEffect(() => {
+        if (!isModalOpen) {
+          get(`productionRequests?apikey=${API_KEY}`);
+        }
+      }, [isModalOpen]);
+      
     const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
-        if(type === 'Cambiar estado'){
-            del(`productionRequest/${row.id}?apikey=${API_KEY}`);
-            setTimeout(() => {
-                get(`productionRequests?apikey=${API_KEY}`);
-            }, 500);
-            console.log(row,'row')
-        } 
+        
         if(type === 'Cambiar proceso'){
             setidEdit(row.id as number)
             setIsModalOpen(true)
         }
+        
     }
     const options = [
         /*{

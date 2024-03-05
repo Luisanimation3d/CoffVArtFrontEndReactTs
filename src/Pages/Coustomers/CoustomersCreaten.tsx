@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {API_KEY, API_URL} from '../../constantes';
 import {useFetch} from "../../hooks/useFetch.tsx";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 
 
 
@@ -170,7 +171,7 @@ export const CreateCoustomer = () => {
             mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
         }
         if (!formData.address || formData.address.trim().length < 10){
-            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 5 caracteres'}
+            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}
         }
 
         if (!formData.phone || formData.phone.trim().length < 10 || formData.phone.trim().length > 12) {
@@ -221,24 +222,60 @@ export const CreateCoustomer = () => {
                 },
                 body: JSON.stringify(requestBody)
             });
-            console.log('Respuesta del servidor', response);
-
-            if(!response.ok){
-                console.error('Error al crear el usuario', response.statusText);
-                return;
+            if(response){
+                const data = await response.json();
+                if(data.message == "Usuario creado correctamente"){
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 2000);
+                } else if (data.msg == 'Este correo ya esta registrado'){
+                    toast.error("Este correo ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                }else if (data.msg == 'Este documento ya esta registrado'){
+                    toast.error("Este documento ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                }
             }
-            if(response.ok){
-                navigate('/admin/Coustomers')
-            }
-            console.log('Usuario creado con éxito');
         }catch(error){
             console.error('Error al crear el usuario', error);
-        
         }
     };
     return (
         <Container>
             <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Cliente'} title={'CREAR CLIENTE'} errors={error}/>
+        <Toaster 
+        position="top-center"
+        reverseOrder= {false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+            className: '',
+            duration: 5000,
+            style:{
+                background: '#363636',
+                color: '#fff'
+            },
+            success: {
+                duration: 3000,
+                iconTheme: {
+                    primary: 'green',
+                    secondary: 'black'
+                
+                },
+            },
+        }}
+
+        
+        />
         </Container>
     )
 }

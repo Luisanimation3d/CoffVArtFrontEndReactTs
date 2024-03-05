@@ -1,0 +1,73 @@
+.invoice-container {
+    width: 800px;
+    margin: 20px auto;
+    font-family: sans-serif;
+  }
+  
+  .header {
+    background-color: rgb(214, 202, 176, 250);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    text-align: center;
+  }
+  
+  .header img {
+    max-width: 10%;
+    height: auto;
+  }
+  
+  .client-info {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .order-details {
+    padding: 10px;
+    margin-bottom: 20px; 
+  }
+  .invoice-table tfoot {
+    font-weight: bold;
+    margin-top: 20px; 
+  }
+  
+  .order-details table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .invoice-table-header,
+  .invoice-table-cell {
+    padding: 5px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .invoice-table-header th {
+    background-color: #f7f7f7;
+    font-weight: bold;
+  }
+  
+  .invoice-table tbody tr:nth-child(even) {
+    background-color: #f7f7f7;
+  }
+  
+  .invoice-table tbody tr:nth-child(odd) {
+    background-color: #fff;
+  }
+  
+  .invoice-table tfoot {
+    font-weight: bold;
+  }
+.total-td{
+    text-align: right;
+    padding-top: 20px;
+}
+.total-tv{
+    text-align: right;
+    margin-top: 10px;
+    margin: 10px 0 0;
+    padding-top: 20px;
+}

@@ -19,6 +19,7 @@ export const Suppliers = () => {
     const [supplierToEdit, setSupplierToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch(API_URL);
+    const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
     useEffect(() => {
         get(`suppliers?apikey=${API_KEY}`);
@@ -79,11 +80,17 @@ export const Suppliers = () => {
             setTimeout(() => {
                 get(`suppliers?apikey=${API_KEY}`);
             }, 500);
-        }
+        }else if (type === 'Editar'){
+           navigate(`/admin/Suppliers/edit/${row.id}`)
     }
+ }
     const options = [
         {
             label: 'Cambiar estado',
+            icon: <FiShuffle/>
+        },
+        {
+            label: 'Editar',
             icon: <FiShuffle/>
         }
     ]
@@ -97,10 +104,15 @@ export const Suppliers = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Proveedores'}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.users?.count / data?.options?.limit) || 1}
+                    pagination={true}
+                    dropDownOptions={options}
                     createAction={() => navigate('/admin/Suppliers/create')}
                     loading={loading}
                     callback={handleCallback}
-                    dropDownOptions={options}
+                    
                 />
                 {
                     isModalOpen && createPortal(

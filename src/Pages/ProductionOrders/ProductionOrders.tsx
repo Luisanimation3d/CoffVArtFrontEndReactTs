@@ -74,13 +74,13 @@ export const ProductionOrders = () => {
     }else{
         dataProductionOrdersFiltered = dataProductionOrders
     }
-    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
-        if(type === 'Cambiar estado'){
-            del(`productionOrders/${row.id}?apikey=${API_KEY}`);
-            setTimeout(() => {
-                get(`productionOrders?apikey=${API_KEY}`);
-            }, 500);
+    useEffect(() => {
+        if (!isModalOpenEdit) {
+          get(`productionOrders?apikey=${API_KEY}`);
         }
+      }, [isModalOpenEdit]);
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        
         if(type === 'Cambiar proceso'){
             setidEdit(row.id as number)
             setIsModalOpenEdit(true)

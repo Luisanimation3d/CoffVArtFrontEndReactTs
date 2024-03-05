@@ -3,11 +3,14 @@ import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {useState} from "react";
 import { API_KEY } from "../../constantes.ts";
+import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 
 export const CreateSupply = () => {
     const [error, setError] = useState<{}>({})
 
-
+    const navigate= useNavigate();
     const [formData, setFormData] = useState<{
         name: string,
         description: string,
@@ -65,11 +68,18 @@ export const CreateSupply = () => {
             });
             console.log('Respuesta del servidor', response);
 
-            if(!response.ok){
-                console.error('Error al crear el Insumo', response.statusText);
-                return;
+            if(response){
+                const data = await response.json();
+                if(data.message == "Insumo creado correctamente"){
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 2000);
+                }
             }
-            console.log('Insumo creado con éxito');
         }catch(error){
             console.error('Error al crear el Insumo', error);
         
@@ -79,6 +89,31 @@ export const CreateSupply = () => {
     return (
         <Container>
             <FormRedisign fields={fields} onSubmit={handleSubmit} button={'Registrar Insumo'} title={'Crear Insumo'} errors={error}/>
+            <Toaster 
+        position="top-center"
+        reverseOrder= {false}
+        gutter={8}
+        containerClassName=""
+        containerStyle={{}}
+        toastOptions={{
+            className: '',
+            duration: 5000,
+            style:{
+                background: '#363636',
+                color: '#fff'
+            },
+            success: {
+                duration: 3000,
+                iconTheme: {
+                    primary: 'green',
+                    secondary: 'black'
+                
+                },
+            },
+        }}
+
+        
+        />
         </Container>
     )
 }

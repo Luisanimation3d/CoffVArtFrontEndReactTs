@@ -10,8 +10,11 @@ import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
+import { useNavigate } from "react-router-dom";
+import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const IncrementProducts = () => {
+    const [error, setError] = useState<{[key: string]: string}>({})
     const {
         data: dataProducts,
         loading: loadingProducts,
@@ -31,6 +34,7 @@ export const IncrementProducts = () => {
     const [cantidad, setCantidad] = useState('');
     const [productionOrders, setProductionOrders] = useState<SelectOption[]>([]);
     const [products, setProducts] = useState<SelectOption[]>([]);
+    const navigate = useNavigate()
 
 
     const headers: Column[] = [
@@ -236,6 +240,10 @@ export const IncrementProducts = () => {
             setSelectProduct(undefined);
             setCantidad('');
             alert('Empaquetado creado con éxito');
+            setTimeout(() => {
+                navigate(-1)
+            }, 500);
+
 
         } catch (error) {
             
@@ -251,13 +259,9 @@ export const IncrementProducts = () => {
             <Titles title={'CREAR EMPAQUETADO'}/>
             <Container justify={'CENTER'} align={'TOP'} direction={'ROW'} gap={2}>
                 <div style={{width: '50%'}}>
-                    <Titles title={`N°${productionOrder}`} level={2} transform={'UPPERCASE'}/>
-                    <Form
-                        fields={fields}
-                        onSubmit={handleAddDetail}
-                        button={<Button text={'Agregar'} onClick={() => null} type={'SUBMIT'} fill={false}/>}
-                        cancelButton={false}
-                    />
+                <Container>
+                <FormRedisign fields={fields} onSubmit={handleAddDetail} button={"Agregar paquete"} title={`N°${productionOrder}`} errors={error}/> 
+                </Container>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                     <Titles title={'Detalle del Empaquetado'} level={2} transform={'UPPERCASE'}/>

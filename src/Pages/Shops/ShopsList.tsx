@@ -14,9 +14,11 @@ import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
 
 
+
 export const Shops = () => {
     const [search, setSearch] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataShopsModify, setDataShopsModify] = useState<any>([])
     const [dataToShow, setDataToShow] = useState<any[]>([])
     const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate();
@@ -54,14 +56,26 @@ export const Shops = () => {
     ];
 
     
+    useEffect(() => {
+        if(data?.shops?.rows){
+            const newSupplierData = data?.shops?.rows.map((shop: any) => {
+                return {
+                    ...shop,
+                    supplierId: shop?.supplier?.name
+                }
+            })
 
+            setDataShopsModify(newSupplierData)
+        }
+    }, [data]);
 
+    console.log(data)
 
-    const dataShops = data?.shops?.rows || [];
+    const dataShops = dataShopsModify || [];
     let dataShopsFiltered: any;
 
     if (search.length > 0) {
-        dataShopsFiltered = dataShops.filter((shops: any) =>
+        dataShopsFiltered = dataShopsModify.filter((shops: any) =>
                 shops.invoice.toLowerCase().includes(search.toLowerCase()) ||
                 shops.estado.toLowerCase().includes(search.toLowerCase())
         );
@@ -126,13 +140,14 @@ export const Shops = () => {
             <TableRedisign
                     columns={columnsShops}
                     data={dataShopsFiltered}
+                    onRowClick={getShopsDetails}
                     search={search}
                     setSearch={setSearch}
                     title={'Compras'}
                     createAction={() => navigate('/admin/shops/create')}
                     page={page || 1}
                     setPage={setPage}
-                    totalPages={Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1}
+                    totalPages={Math.ceil(data?.shops?.count / data?.options?.limit) || 1}
                     pagination={true}
                     loading={loading}
                     callback={handleCallback}

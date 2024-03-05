@@ -6,6 +6,8 @@ import {API_KEY, API_URL} from "../../constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate} from "react-router-dom";
+import { Container } from "react-bootstrap";
+import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const [formValues, setFormValues] = useState<{receivedQuantity:number}>({
@@ -17,6 +19,7 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
     const { data: processData, get: getProcess } = useFetch(API_URL);
     const [options, setOptions] = useState<SelectOption[]>([]);
+   
     useEffect(() => {
         get(`productionRequests/${id}?apikey=${API_KEY}`)
     }, []);
@@ -99,20 +102,30 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         
         return errors
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    
+       
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateForm();
-        if(Object.keys(errorsForm).length !== 0) {
-            setError(errorsForm)
-            return
+        if (Object.keys(errorsForm).length !== 0) {
+            setError(errorsForm);
+            return;
         }
         const requestBody = {
             processId: process?.value,
         };
-        console.log(requestBody)
-        put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
-        console.log(process,"aquí process")
+
+        try {
+            await put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody);
+            if(process?.value !== 3){
+                setIsModalOpen(false)
+            }
+        } catch (error) {
+            console.error('Error al actualizar el proceso:', error);
+            // Manejar el error aquí si es necesario
+        }
     };
+    
     const handleSubmitRecived = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateFormRecived();
@@ -123,10 +136,10 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         const requestBody = {
             receivedQuantity: formValues.receivedQuantity,
         };
-        console.log(requestBody)
         put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
-        console.log(process,"aquí intento 1")
+        setIsModalOpen(false)
     };
+    
     useEffect(()=> {
         if(data && !loading && !errorRegister){
             if(process?.value == 3){
@@ -150,17 +163,15 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
                 
                 {
                     !openView?(
-                        <Form fields={formFieldsRegister} button={<Button text={title} type={'SUBMIT'}/>}
-                          onSubmit={handleSubmit}
-                          cancelButton={false}
-                          errors={error}
-                    />
+                        <Container>
+                            <FormRedisign fields={formFieldsRegister} onSubmit={handleSubmit} button={"Cambiar proceso"} errors={error} cancelButton={false}/>
+                        </Container>
+                        
                     ):(
-                        <Form fields={formFieldsQuantity} button={<Button text={'Guardar Cantidad'} type={'SUBMIT'}/>}
-                          onSubmit={handleSubmitRecived}
-                          cancelButton={false}
-                          errors={error}
-                    />
+                        <Container>
+                            <FormRedisign fields={formFieldsQuantity} onSubmit={handleSubmitRecived} button={"Guardar cantidad"} errors={error} cancelButton={false}/>
+                        </Container>
+                        
                     )
                 }
                     

@@ -7,9 +7,10 @@ import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import toast, { Toaster } from "react-hot-toast";
+import { Try } from "@mui/icons-material";
 
 
-export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
+export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
         {
             value: 'pendiente',
@@ -29,12 +30,12 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
     const navigate = useNavigate()
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
     useEffect(() => {
-        get(`orders/${id}?apikey=${API_KEY}`)
+        get(`sales/${id}?apikey=${API_KEY}`)
     }, []);
     useEffect(() => {
         if (!loading) {
             const newValues = {
-                state: data?.orders?.state
+                state: data?.sales?.state
             }
             setRegisterForm(newValues)
         }
@@ -54,22 +55,23 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             value: registerForm.state,
             options: options,
             onChange: (o) => {
-                const currentStatus = data?.order?.state;
+                const currentStatus = data?.sale?.state;
                 let showAlert = false;
                 console.log(currentStatus);
                 console.log(o?.value, "value");
     
+                // Validar que solo se pueda poner en "Cancelado" si está en "Pendiente"
                 if (currentStatus === 'entregado' && o?.value === 'pendiente') {
                     showAlert = true;
                     toast.error('No puedes cambiar a pendiente si ya esta entregado')
-
                 } else if (currentStatus === 'entregado' && o?.value === 'enviado') {
                     showAlert = true;
                     toast.error('No puedes cambiar a enviado si ya está entregado');
-
                 } else {
                     showAlert = false;
                 }
+    
+                // Actualizar el formulario solo si no se ha mostrado ninguna alerta
                 if (!showAlert) {
                     setRegisterForm({
                         ...registerForm,
@@ -87,13 +89,19 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
         }
         return errors
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const requestBody = {
             state: registerForm?.state?.value,
         };
         console.log(requestBody)
-        put(`orders/${id}?apikey=${API_KEY}`, requestBody)
+        try{
+        await put(`sales/${id}?apikey=${API_KEY}`, requestBody)
+        setIsModalOpen(false)
+        }catch(error){
+            console.log(error)
+        }
+
         if(data.message == "Estado cambiado correctamente"){
             toast(data.message, {
                 icon: '👏',
@@ -114,13 +122,14 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                     width: '100%',
                     padding: '1rem 2rem',
                 }}>
+
                     <Container>
                     <FormRedisign fields={formFieldsRegister} button={'Cambiar proceso'}
                           onSubmit={handleSubmit }
                           cancelButton={false}
                           errors={error}
                           />
-                        <Toaster 
+                           <Toaster 
                         position="top-center"
                         reverseOrder= {false}
                         gutter={8}
@@ -143,7 +152,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                             },
                         }}  
                     />
-                    </Container>
+                        </Container>
                 </div>
             </Modal>
         </ModalContainer>
