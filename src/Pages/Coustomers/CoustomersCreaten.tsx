@@ -232,6 +232,16 @@ export const CreateCoustomer = () => {
                     setTimeout(() => {
                         navigate(-1)
                     }, 2000);
+                } else if (data.msg == 'Este correo ya esta registrado'){
+                    toast.error("Este correo ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                }else if (data.msg == 'Este documento ya esta registrado'){
+                    toast.error("Este documento ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
                 }
             }
         }catch(error){

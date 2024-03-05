@@ -204,30 +204,65 @@ export const CreateUser = () => {
 
         return mensajeError;
     }
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const mensajeError = validateForm();
         if (Object.keys(mensajeError).length > 0) {
-            console.log('Mensaje de error', mensajeError)
-            setError(mensajeError)
-            return
+            console.log('Mensaje de error', mensajeError);
+            setError(mensajeError);
+            return;
         }
-        const requestBody = {
-            roleId: formData.rol?.value,
-            documentType: formData.documentType?.value,
-            document: formData.documentNumber,
-            name: formData.name,
-            lastname: formData.lastname,
-            address: formData.address,
-            phone: formData.phone,
-            email: formData.email,
-            password: formData.password,
-            confirmPassword: formData.confirmPassword,
-        };
-        console.log('Datos del formulario', requestBody);
-
-        postUser(`users?apikey=${API_KEY}`, requestBody)
+    
+        try {
+            const requestBody = {
+                roleId: formData.rol?.value,
+                documentType: formData.documentType?.value,
+                document: formData.documentNumber,
+                name: formData.name,
+                lastname: formData.lastname,
+                address: formData.address,
+                phone: formData.phone,
+                email: formData.email,
+                password: formData.password,
+                confirmPassword: formData.confirmPassword,
+            };
+            console.log('Datos del formulario', requestBody);
+    
+            const response = await fetch(`https://coffvart-backend.onrender.com/api/users?apikey=${API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            });
+    
+            if (response) {
+                const data = await response.json();
+                if (data.message === "Usuario creado correctamente") {
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    });
+                    setTimeout(() => {
+                        navigate(-1);
+                    }, 2000);
+                } else if (data.msg === 'Este correo ya esta registrado') {
+                    toast.error("Este correo ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    });
+                } else if (data.msg === 'Este documento ya esta registrado') {
+                    toast.error("Este documento ya esta registrado", {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    });
+                }
+            }
+        } catch (error) {
+            console.error('Error al crear el usuario', error);
+        }
     };
+    
 
     useEffect(() => {
         if(dataUser?.message == "Usuario creado correctamente"){
@@ -237,7 +272,17 @@ export const CreateUser = () => {
             })
             setTimeout(() => {
                 navigate(-1)
-            }, 500);
+            }, 2000);
+        }else if (dataUser.msg == 'Este correo ya esta registrado'){
+            toast.error("Este correo ya esta registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
+        }else if (dataUser.msg == 'Este documento ya esta registrado'){
+            toast.error("Este documento ya esta registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
         }
     }, [dataUser])
 

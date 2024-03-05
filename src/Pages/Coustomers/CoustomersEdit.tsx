@@ -214,12 +214,19 @@ export const CustomersEdit = () => {
     };
 
     useEffect(() => {
-        if (data && !errorFetch) {
-            toast('Usuario editado con éxito' , {
+        if (data.message == 'Usuario actualizado correctamente' && !errorFetch) {
+            toast('Usuario actualizado correctamente' , {
                 icon: '👏',
                 position: 'bottom-right'
-            })
-            // navigate(-1)
+            });
+            setTimeout(() => {
+                navigate(-1);
+            },2000);
+        } else if(data.msg == 'Este correo ya esta registrado'){
+            toast.error("Este correo ya esta registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            });
         }
     }, [data, errorFetch]);
 
