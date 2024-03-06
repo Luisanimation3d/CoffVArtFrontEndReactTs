@@ -22,7 +22,7 @@ export const Orders = () => {
     const [dataOrdersModify, setDataOrdersModify] = useState<any>([])
 
 
-    const { data, loading, error, get, del } = useFetch("http://localhost:3000/api/")
+    const { data, loading, error, get, del } = useFetch(API_URL)
     const navigate = useNavigate()
     const [page, setPage] = useState<number>(1);
     useEffect(() => {

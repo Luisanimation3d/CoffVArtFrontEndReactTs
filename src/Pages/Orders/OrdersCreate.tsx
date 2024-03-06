@@ -109,20 +109,38 @@ export const OrdersCreate = () => {
     const handleAddDetail = (e: any) => {
         e.preventDefault();
 
+        
+
         if (!selectCliente) {
-            alert('Debe seleccionar un cliente antes de agregar productos');
+            toast.error("Debes seleccionar un cliente", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
+            setTimeout(() => {
+            }, 2000);        
             return;
         }
 
         if (!selectProducto) {
-            alert('Debe seleccionar un producto antes de agregar productos');
+            toast.error("Debes seleccionar un producto", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
+            setTimeout(() => {
+            }, 2000);             
             return;
         }
 
         if (!cantidad || parseInt(cantidad) <= 0) {
-            alert('Debe ingresar una cantidad válida antes de agregar productos');
+            toast.error("La cantidad debe ser mayor a 0", {
+                icon: '👎',
+                position: 'bottom-right'
+            })
+            setTimeout(() => {
+            }, 2000);             
             return;
         }
+
 
         const selectedProduct = dataProductos?.products?.rows?.find((product: any) => product.id === selectProducto?.value);
 
@@ -279,6 +297,7 @@ export const OrdersCreate = () => {
                 body: JSON.stringify(requestBody),
             });
 
+
             if(response){
                 const data = await response.json();
                 if(data.message == "Pedido creado correctamente"){
@@ -289,7 +308,7 @@ export const OrdersCreate = () => {
                     setTimeout(() => {
                         navigate(-1)
                     }, 2000);
-                }else if(data.msg == "La cantidad excede el stock del producto"){
+                }else if(data.msg == `La cantidad excede el stock del producto actual`){
                     toast.error(data.msg, {
                         icon: '👎',
                         position: 'bottom-right'
@@ -324,7 +343,7 @@ export const OrdersCreate = () => {
                         fields={fields}
                         onSubmit={handleAddDetail}
                         button={"Agregar"}
-                        cancelButton={false}
+                        cancelButton={true}
                     />
                     <Toaster 
                     position="top-center"

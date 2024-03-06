@@ -43,6 +43,11 @@ export const CartProvider = ({ children }: any) => {
     }, [state]);
 
     const addToCart = (item: any) => {
+
+        if(item.quantity > item.stock){
+            return;
+        }
+
         if(state.cart.find((product: any) => product.id === item.id)?.quantity >= state.cart.find((product: any) => product.id === item.id)?.stock){
             return;
         }
@@ -65,6 +70,7 @@ export const CartProvider = ({ children }: any) => {
         }else if(state.cart.find((product: any) => product.id === item.id)?.quantity == 10){
             return;
         }
+
         dispatch({
             type: 'ADD_TO_CART',
             payload: item,

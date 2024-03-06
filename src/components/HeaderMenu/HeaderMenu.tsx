@@ -54,9 +54,14 @@ export const HeaderMenu = () => {
                         <li className={`headerMenu__menu--item`}>
                             <Link to={'/Contactos '} className={`headerMenu__menu--link`}>Contacto</Link>
                         </li>
-                        <li className={`headerMenu__menu--item`}>
-                            <Link to={'/myshops'} className={`headerMenu__menu--link`}>Mis compras</Link>
-                        </li>
+                        {
+                            isAuthenticated && (
+                                <li className={`headerMenu__menu--item`}>
+                                    <Link to={'/myshops'} className={`headerMenu__menu--link`}>Mis compras</Link>
+                                </li>
+                            )
+                        }
+
                     </ul>
                 </nav>
                 <div className="headerMenu__options">
@@ -68,7 +73,7 @@ export const HeaderMenu = () => {
                     >
                         <FiUser className={`headerMenu__options--icon`}/>
                     </div>
-                    <div className="headerMenu__options--item headerMenu__options--cart" onClick={() => setShowMiniCart(true)}>
+                    <div className="headerMenu__options--item headerMenu__options--cart" id={'cartButton'} onClick={() => setShowMiniCart(true)}>
                         <FiShoppingCart className={`headerMenu__cart--icon`}/>
                         {
                             countProducts > 0 && countProducts < 10 ? (

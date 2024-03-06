@@ -4,7 +4,6 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 
 
-
 import './DetailsCss.css';
 import {
   MDBCol,
