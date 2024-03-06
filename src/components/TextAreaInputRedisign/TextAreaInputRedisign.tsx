@@ -7,15 +7,17 @@ type TextAreaInputProps = {
     label: string;
     name: string;
     size?: number;
-
+    type?: string;
+    placeholder?: string;
+    error?: boolean;
 }
 
-export const TextAreaInputRedisign = ({value, onChange, label, name, size = 1}: TextAreaInputProps) => {
+export const TextAreaInputRedisign = ({value, onChange, label, name, size = 1, error = false}: TextAreaInputProps) => {
 
     const {darkMode} = useDarkMode();
 
     return (
-        <div className={`${styles.container} ${darkMode ? styles.darkMode : styles.lightMode}`}
+        <div className={`${styles.container} ${darkMode ? styles.darkMode : styles.lightMode} ${error ? styles.error : ''}`}
              style={{height: `${size * 32}px`}}
         >
             <textarea

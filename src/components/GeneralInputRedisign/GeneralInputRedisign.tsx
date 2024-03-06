@@ -4,7 +4,7 @@ import styles from './GeneralInputRedisign.module.css';
 import {InputProps} from "../../types/Form";
 import {useDarkMode} from "../../context/DarkMode.tsx";
 
-export const GeneralInputRedisign = ({value, onChange, label, name, placeholder, size = 'large', type = 'text'}: InputProps) => {
+export const GeneralInputRedisign = ({value, onChange, label, name, placeholder, size = 'large', type = 'text', error = false}: InputProps) => {
     const {darkMode} = useDarkMode();
     const [showPassword, setShowPassword] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -19,6 +19,7 @@ export const GeneralInputRedisign = ({value, onChange, label, name, placeholder,
             size === 'medium' ? styles.medium : size === 'large' ? styles.large : ''
         }
         ${ darkMode ? styles.darkMode : styles.lightMode}
+        ${ error ? styles.error : '' }
         `}>
             <input className={styles.input} type={type} name={name} id={name} value={value}
                    onChange={e => onChange(e.target.value, e.target.name)} placeholder={placeholder || label} autoComplete={'off'}

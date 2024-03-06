@@ -8,6 +8,7 @@ type TextAreaInputProps = {
     placeholder?: string;
     options?: SelectOption[];
     multiple?: false;
+    error?: boolean;
 }
 
 export type InputProps = {
@@ -20,6 +21,7 @@ export type InputProps = {
     size: 'medium' | 'large';
     options?: SelectOption[],
     multiple?: false;
+    error?: boolean;
 }
 
 export type SelectOption = {
@@ -44,11 +46,25 @@ export type SelectProps = {
     placeholder?: string;
     type: 'select';
     label?: string;
-    name?: string;
+    name: string;
     size?: 'medium' | 'large';
+    error?: boolean;
 } & (MultipleSelectProps | SingleSelectProps)
 
-export type FormField = & (InputProps | SelectProps | TextAreaInputProps)
+export type FileInputProps = {
+    value: string | number | File | undefined;
+    onChange: (file: File, name: string) => void;
+    label: string;
+    name: string;
+    placeholder?: string;
+    size?: 'medium' | 'large';
+    type?: 'file';
+    options?: SelectOption[],
+    multiple?: false;
+    error?: boolean;
+}
+
+export type FormField = & (InputProps | SelectProps | TextAreaInputProps | FileInputProps)
 
 type Errors = {
     [key: string]: string;

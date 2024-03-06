@@ -1,7 +1,7 @@
 import { Button } from '../Button/Button';
 import {useNavigate} from "react-router-dom";
 
-import { FC } from 'react';
+import {FC, useState} from 'react';
 
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
@@ -15,11 +15,12 @@ export interface Product {
 	id: number;
 	name: string;
 	price: number;
-	image: string;
+	image: string[];
 	description: string;
 	category: string;
 	discount?: number;
 	new?: boolean;
+    stock?: number;
     link: string;
 }
 
@@ -28,6 +29,7 @@ interface ProductCardProps {
 }
 
 export const ProductCard: FC<ProductCardProps> = ({ product }) => {
+    const [imageToShow, setImageToShow] = useState<string>(product.image[0]);
     const { addToCart } = useCart();
     function handleAddToCart() {
         addToCart({ ...product, quantity: 1 });
@@ -54,13 +56,23 @@ export const ProductCard: FC<ProductCardProps> = ({ product }) => {
                 )}
             </div>
 
-            <button className='addFavorite'>
-                <AiOutlineHeart />
-                <AiFillHeart />
-            </button>
+            {/*<button className='addFavorite'>*/}
+            {/*    <AiOutlineHeart />*/}
+            {/*    <AiFillHeart />*/}
+            {/*</button>*/}
 
-            <div className={`productCard__image`}>
-                <img src={product.image} alt={product.name} />
+            <div className={`productCard__image`} onMouseEnter={()=>{
+                setTimeout(()=>{
+                    setImageToShow(product.image[1])
+                }, 300)
+            }}
+            onMouseLeave={()=>{
+                setTimeout(()=> {
+                    setImageToShow(product.image[0])
+                }, 300)
+            }}
+            >
+                <img src={imageToShow} alt={product.name} />
             </div>
             <div className={`productCard__info`}>
                 <h3 className='product__name'>{product.name}</h3>

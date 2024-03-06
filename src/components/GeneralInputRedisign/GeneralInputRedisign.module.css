@@ -7,6 +7,10 @@
     padding: 0 1rem;
 }
 
+.error{
+    border-color: #ff4757 !important;
+}
+
 .container.medium{
     width: 100%;
 }
@@ -39,6 +43,10 @@
     padding: 0 .25rem;
     font-weight: 600;
     transition: .3s ease-in-out;
+}
+
+.error .label{
+    color: #ff4757 !important;
 }
 
 .input:focus + .label {

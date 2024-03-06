@@ -5,7 +5,7 @@ import {FiX, FiChevronDown} from 'react-icons/fi';
 import styles from './SelectInputRedisign.module.css';
 import {useDarkMode} from "../../context/DarkMode.tsx";
 
-export const SelectInputRedisign = ({multiple, value, options, onChange, placeholder}: SelectProps) => {
+export const SelectInputRedisign = ({multiple, value, options, onChange, placeholder, error=false}: SelectProps) => {
     const {darkMode} = useDarkMode();
     const [isOpen, setIsOpen] = useState(false);
     const [highLightedIndex, setHighLightedIndex] = useState(0);
@@ -66,7 +66,7 @@ export const SelectInputRedisign = ({multiple, value, options, onChange, placeho
     }, [isOpen, highLightedIndex, options, selectOption]);
 
     return (
-        <div onBlur={() => setIsOpen(false)} onClick={() => setIsOpen(prev => !prev)} className={`${styles.container} ${darkMode ? styles.darkMode : styles.lightMode}`}
+        <div onBlur={() => setIsOpen(false)} onClick={() => setIsOpen(prev => !prev)} className={`${styles.container} ${darkMode ? styles.darkMode : styles.lightMode} ${error ? styles.error : ''}`}
              ref={containerRef}
              tabIndex={0}
         >

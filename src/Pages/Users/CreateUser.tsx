@@ -9,11 +9,11 @@ import toast, {Toaster} from "react-hot-toast";
 
 export const CreateUser = () => {
     const [error, setError] = useState<{ [key: string]: string }>({})
-    const {data: dataUser, post: postUser, loading: loadingUser} = useFetch(API_URL);
+    const {data: dataUser, post: postUser, loading: loadingUser, postFile: postFileUser} = useFetch(API_URL);
     const navigate = useNavigate();
 
 
-    const [formData, setFormData] = useState<{
+    const [formDataRegister, setFormDataRegister] = useState<{
         name: string,
         lastname: string,
         documentType: SelectOption | undefined,
@@ -24,6 +24,7 @@ export const CreateUser = () => {
         password: string,
         confirmPassword: string,
         rol: SelectOption | undefined,
+        image: string
     }>({
         name: '',
         lastname: '',
@@ -35,6 +36,7 @@ export const CreateUser = () => {
         password: '',
         confirmPassword: '',
         rol: undefined,
+        image: ''
     });
 
     const [optionsRoles, setOptionsRoles] = useState<SelectOption[]>([])
@@ -65,8 +67,8 @@ export const CreateUser = () => {
     const fields: FormField[] = [
         {
             type: 'select',
-            value: formData.rol,
-            onChange: (value: SelectOption | undefined) => setFormData({...formData, rol: value}),
+            value: formDataRegister.rol,
+            onChange: (value: SelectOption | undefined) => setFormDataRegister({...formDataRegister, rol: value}),
             label: 'Rol',
             name: 'rol',
             size: 'large',
@@ -75,8 +77,8 @@ export const CreateUser = () => {
         },
         {
             type: 'select',
-            value: formData.documentType,
-            onChange: (value: SelectOption | undefined) => setFormData({...formData, documentType: value}),
+            value: formDataRegister.documentType,
+            onChange: (value: SelectOption | undefined) => setFormDataRegister({...formDataRegister, documentType: value}),
             label: 'Tipo de documento',
             name: 'documentType',
             size: 'medium',
@@ -89,116 +91,129 @@ export const CreateUser = () => {
         },
         {
             type: 'text',
-            value: formData.documentNumber,
-            onChange: (value: string) => setFormData({...formData, documentNumber: value}),
+            value: formDataRegister.documentNumber,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, documentNumber: value}),
             label: 'Número de documento',
             name: 'documentNumber',
             size: 'medium',
         },
         {
             type: 'text',
-            value: formData.name,
-            onChange: (value: string) => setFormData({...formData, name: value}),
+            value: formDataRegister.name,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, name: value}),
             label: 'Nombre',
             name: 'name',
             size: 'medium',
         },
         {
             type: 'text',
-            value: formData.lastname,
-            onChange: (value: string) => setFormData({...formData, lastname: value}),
+            value: formDataRegister.lastname,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, lastname: value}),
             label: 'Apellido',
             name: 'lastname',
             size: 'medium',
         },
         {
             type: 'text',
-            value: formData.address,
-            onChange: (value: string) => setFormData({...formData, address: value}),
+            value: formDataRegister.address,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, address: value}),
             label: 'Dirección',
             name: 'address',
             size: 'medium',
         },
         {
             type: 'text',
-            value: formData.phone,
-            onChange: (value: string) => setFormData(prev => ({...prev, phone: validateIfNumber(value) ? value : prev.phone})),
+            value: formDataRegister.phone,
+            onChange: (value: string) => setFormDataRegister(prev => ({...prev, phone: validateIfNumber(value) ? value : prev.phone})),
             label: 'Teléfono',
             name: 'phone',
             size: 'medium',
         },
         {
             type: 'email',
-            value: formData.email,
-            onChange: (value: string) => setFormData({...formData, email: value}),
+            value: formDataRegister.email,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, email: value}),
             label: 'Correo electrónico',
             name: 'email',
             size: 'large',
         },
         {
             type: 'password',
-            value: formData.password,
-            onChange: (value: string) => setFormData({...formData, password: value}),
+            value: formDataRegister.password,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, password: value}),
             label: 'Contraseña',
             name: 'password',
             size: 'medium',
         },
         {
             type: 'password',
-            value: formData.confirmPassword,
-            onChange: (value: string) => setFormData({...formData, confirmPassword: value}),
+            value: formDataRegister.confirmPassword,
+            onChange: (value: string) => setFormDataRegister({...formDataRegister, confirmPassword: value}),
             label: 'Confirmar contraseña',
             name: 'confirmPassword',
             size: 'medium',
+        },
+        {
+            name: 'image',
+            label: 'Imagen',
+            type: 'file',
+            size: 'large',
+            value: formDataRegister.image,
+            onChange: (file: File) => {
+                setFormDataRegister({...formDataRegister, image: file.name})
+                const formData = new FormData();
+                formData.append('image', file);
+                postFileUser(`users/upload?apikey=${API_KEY}`, formData)
+            }
         }
     ]
 
     const validateForm = () => {
         let mensajeError = {}
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!formData.rol) {
+        if (!formDataRegister.rol) {
             mensajeError = {...mensajeError, rol: 'El rol es requerido'}
         }
-        if (!formData.documentType) {
+        if (!formDataRegister.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 15) {
+        if (!formDataRegister.documentNumber || formDataRegister.documentNumber.trim().length < 8 || formDataRegister.documentNumber.trim().length > 15) {
             mensajeError = {
                 ...mensajeError,
                 documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres'
             };
         }
-        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15) {
+        if (!formDataRegister.name || formDataRegister.name.trim().length < 3 || formDataRegister.name.trim().length > 15) {
             mensajeError = {...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras'};
         }
-        if (!formData.lastname || formData.lastname.trim().length < 3) {
+        if (!formDataRegister.lastname || formDataRegister.lastname.trim().length < 3) {
             mensajeError = {...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras'};
         }
-        if (!formData.address || formData.address.trim().length < 10) {
+        if (!formDataRegister.address || formDataRegister.address.trim().length < 10) {
             mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}
         }
-        if (!formData.phone || formData.phone.trim().length < 10 || formData.phone.trim().length > 12) {
+        if (!formDataRegister.phone || formDataRegister.phone.trim().length < 10 || formDataRegister.phone.trim().length > 12) {
             mensajeError = {...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres'};
         }
-        if (!formData.email || !emailRegex.test(formData.email)) {
+        if (!formDataRegister.email || !emailRegex.test(formDataRegister.email)) {
             mensajeError = {...mensajeError, email: 'Ingrese un correo electrónico válido'};
         }
 
-        if (!formData.password) {
+        if (!formDataRegister.password) {
             mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
         }
 
-        if (formData.password.trim().length < 8 || !/\d/.test(formData.password) || !/[!@#$%^&*]/.test(formData.password)) {
+        if (formDataRegister.password.trim().length < 8 || !/\d/.test(formDataRegister.password) || !/[!@#$%^&*]/.test(formDataRegister.password)) {
             mensajeError = {
                 ...mensajeError,
                 password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'
             };
         }
 
-        if (!formData.confirmPassword) {
+        if (!formDataRegister.confirmPassword) {
             mensajeError = {...mensajeError, confirmPassword: 'La confirmación de contraseña es requerida'}
         }
-        if (formData.password !== formData.confirmPassword) {
+        if (formDataRegister.password !== formDataRegister.confirmPassword) {
             mensajeError = {...mensajeError, confirmPassword: 'Las contraseñas no coinciden'}
         }
 
@@ -215,16 +230,16 @@ export const CreateUser = () => {
     
         try {
             const requestBody = {
-                roleId: formData.rol?.value,
-                documentType: formData.documentType?.value,
-                document: formData.documentNumber,
-                name: formData.name,
-                lastname: formData.lastname,
-                address: formData.address,
-                phone: formData.phone,
-                email: formData.email,
-                password: formData.password,
-                confirmPassword: formData.confirmPassword,
+                roleId: formDataRegister.rol?.value,
+                documentType: formDataRegister.documentType?.value,
+                document: formDataRegister.documentNumber,
+                name: formDataRegister.name,
+                lastname: formDataRegister.lastname,
+                address: formDataRegister.address,
+                phone: formDataRegister.phone,
+                email: formDataRegister.email,
+                password: formDataRegister.password,
+                confirmPassword: formDataRegister.confirmPassword,
             };
             console.log('Datos del formulario', requestBody);
     
