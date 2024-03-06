@@ -16,7 +16,7 @@
 }
 
 .permisoName {
-    color: #000;
+    color: #ccc;
     text-align: center;
     font-size: 1rem;
     font-style: normal;
@@ -76,12 +76,20 @@
 
 .permissionCard{
     display: flex;
-    border: 2px solid #9F212F;
     border-radius: 10px;
     padding: 0 1rem;
     align-items: center;
     justify-content: space-between;
     cursor: default;
+    transition: .3s ease-in-out;
+}
+
+.permissionCard--dark{
+    border: 2px solid #ccc;
+}
+
+.permissionCard--light{
+    border: 1px solid #1f1f1f;
 }
 
 .permissionCard:hover{
@@ -89,7 +97,6 @@
 }
 
 .permissionCardName{
-    color: #000;
     text-align: center;
     font-size: 1rem;
     font-style: normal;
@@ -97,6 +104,18 @@
     line-height: normal;
     letter-spacing: 1.6px;
     text-transform: uppercase;
+}
+
+.permissionCard--dark .permissionCardName{
+    color: #ccc;
+}
+
+.permissionCard--light .permissionCardName{
+    color: #1f1f1f;
+}
+
+.permissionCard:hover .permissionCardName{
+    color: #1f1f1f;
 }
 
 .permissionCardPrivilegesContainer{
@@ -119,7 +138,7 @@
     letter-spacing: 1.12px;
     text-transform: uppercase;
     border-radius: 50px;
-    background: #b9b9b9;
+    background: #f1f1f1;
     padding: 2px 1rem;
     cursor: pointer;
 }
@@ -132,6 +151,13 @@
 .permissionCard--active{
     background: #D6CAB0;
     border: 2px solid #D6CAB0;
+}
+
+.permissionCard--active.permissionCard--dark{
+    box-shadow: 6px 6px 10px -3px rgba(255, 255, 255, 0.3);
+}
+
+.permissionCard--active.permissionCard--light{
     box-shadow: 6px 6px 10px -3px rgba(0,0,0,0.3);
 }
 
