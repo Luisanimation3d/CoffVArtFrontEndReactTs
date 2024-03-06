@@ -152,4 +152,4 @@ export const AboutUs = () => {
   );
 };
 
-export default Home;
+export default AboutUs;
