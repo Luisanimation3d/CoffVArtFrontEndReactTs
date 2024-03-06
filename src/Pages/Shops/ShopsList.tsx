@@ -12,7 +12,9 @@ import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
-
+import './ShopsCss.css'
+import burdeoFullLogo from '../../assets/BurdeoFullLogo.png';
+import { Shop } from "@mui/icons-material";
 
 
 export const Shops = () => {
@@ -157,37 +159,51 @@ export const Shops = () => {
             {
                 isModalOpen && createPortal(
                     <ModalContainer ShowModal={setIsModalOpen}>
-                        <Modal
-                            title={`Detalle de Compra # ${shopsDetails[0]?.invoice}`}
-                            showModal={setIsModalOpen}
-                        >
-                            <Table
-                                columns={[
-                                    {
-                                        key: "invoice",
-                                        header: "Factura",
-                                    },
-                                    {
-                                        key: "supply",
-                                        header: "Insumo",
-                                    },
-                                    {
-                                        key: "quantity",
-                                        header: "Cantidad (Kg)",
-                                    },
-                                    {
-                                        key: "value",
-                                        header: "Valor Unitario",
-                                    },
-                                    {
-                                        key: "total",
-                                        header: "Total",
-                                    },
-                                ]}
-                                data={shopsDetails}
-                                onRowClick={() => null}
-                            />
-                        </Modal>
+                       <Modal
+                showModal={setIsModalOpen}
+            >
+               <div className="invoice-container">
+                <div className="header">
+                    <img src={burdeoFullLogo} alt="Logo" style={{ maxWidth: '10%', height: 'auto' }} />
+                    <h1>Factura {shopsDetails[0]?.invoice}</h1>
+                    <p></p>
+                </div>
+                <div className="client-info">
+                    <h2>Información de la compra</h2>
+                    <p>Factura: {shopsDetails[0]?.invoice}</p>
+                    <p>Insumo: {shopsDetails[0]?.supply}</p>
+                </div>
+                <div className="order-details">
+                    <h2>Detalles de la compra</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th className="invoice-table-header">Insumo</th>
+                                <th className="invoice-table-header">Cantidad</th>
+                                <th className="invoice-table-header">Precio unitario</th>
+                                <th className="invoice-table-header">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {shopsDetails.map((item, index) => (
+                                <tr key={index}>
+                                    <td className="invoice-table-cell">{item.supply}</td>
+                                    <td className="invoice-table-cell">{item.quantity}</td>
+                                    <td className="invoice-table-cell">{item.value}</td>
+                                    <td className="invoice-table-cell">{item.total}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td className="total-td" colSpan={3}>Total</td>
+                                <td className="total-tv">{shopsDetails.reduce((acc, item) => acc + item.total, 0)}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            </Modal>
                     </ModalContainer>,
                     document.getElementById("modal") as HTMLElement)
             }
