@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
 .home__container{
   display: flex;
   flex-direction: column;
@@ -26,6 +28,7 @@
   flex-direction: column;
   padding: 3rem 1rem;
   gap: 2rem;
+  margin-top: 5%;
 }
 
 .home__productsContainer h2{
@@ -73,7 +76,7 @@
 	width: 90%;
 }
 .card1, .card2  , .card3, .card4{
-	width: 700px;
+	width: 600px;
 	height: 600px;
 	background: #fff;
 	display: flex;
@@ -148,3 +151,40 @@
 	color: #fff;
 	box-shadow: 0 7px 10px rgba(0, 0, 0, 0.5);
 }
+.title-container {
+	position: relative;
+	text-align: center;
+  }
+  
+  .title-container h2 {
+	font-size: 2rem;
+	position: relative;
+	display: inline-block;
+	margin: 0 10px;
+	font-family: "Cinzel", serif;
+	
+  }
+  
+  .title-container h2::before,
+  .title-container h2::after {
+	content: "";
+	position: absolute;
+	top: 50%; 
+	width: 500%;
+	height: 1px;
+	background-color: #333; 
+  }
+  
+  .title-container h2::before {
+	left: -20px;
+	transform: translateX(-100%); 
+  }
+  
+  .title-container h2::after {
+	right: -20px;
+	transform: translateX(100%); 
+  }
+  .title-container p{
+	margin-top: 20px;
+	font-family: "Cinzel", serif;
+  }
