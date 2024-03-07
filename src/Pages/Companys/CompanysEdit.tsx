@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
-import {FormField, SelectOption} from '../../types/Form';
+import {FormField} from '../../types/Form';
 import {FormRedisign} from '../../components/FormRedisign/FormRedisign';
 import {API_KEY, API_URL} from '../../constantes';
 import {useParams, useNavigate} from 'react-router-dom';
@@ -12,8 +12,8 @@ export const CompanysEdit = () => {
 
     const {id} = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const [error, setError] = useState<{}>({})
-    const [tipo, setTipo] = useState<SelectOption | undefined>();
+    const [error, setError] = useState<{[key: string]: string}>({})
+    
 
 
 
@@ -63,11 +63,19 @@ export const CompanysEdit = () => {
             label: 'Teléfono',
             name: 'phone',
             size: 'large',
-        }
+        }// CAMBIAR CUANDO LA VALIDACION ESTÉ GLOBAL
+        /*{
+            type: 'text',
+            value: formData.phone,
+            onChange: (value: string) => setFormData(prev => ({...prev, phone:validateIfNumber(value)? value : prev.phone})),
+            label: 'Teléfono',
+            name: 'phone',
+            size: 'large',
+        }*/
     ]
 
 
-    const {data, loading, error: errorFetch, get, put} = useFetch(API_URL)
+    const {data, loading, get} = useFetch(API_URL)
 
     useEffect(() => {
         get(`companys/${id}?apikey=${API_KEY}`)
@@ -87,7 +95,7 @@ export const CompanysEdit = () => {
     }, [data]);
 
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
         if (!formData.name) {
@@ -102,30 +110,43 @@ export const CompanysEdit = () => {
         if (!formData.phone) {
             mensajeError = {...mensajeError, phone: 'El teléfono es requerido'}
         }
-        setError(mensajeError)
-        console.log(formData, 'esto lo voy a mandar')
-        const requestBody = {
-            name: formData.name,
-            email: formData.email,
-            address: formData.address,
-            phone: formData.phone,
-        };
-        console.log(requestBody, 'esto es lo que voy a mandar')
-        put(`companys/${id}?apikey=${API_KEY}`, requestBody)
-        navigate (-1)
-  
-    };
-
-    useEffect(() => {
-        if (data && !errorFetch) {
-            toast('Compañía editada con éxito' , {
-                icon: '👏',
-                position: 'bottom-right'
-            })
-            
-            // navigate(-1)
+        if(Object.keys(mensajeError).length > 0){
+            setError(mensajeError)
+            return
         }
-    }, [data, errorFetch]);
+        try{
+            const requestBody = {
+                name: formData.name,
+                email: formData.email,
+                address: formData.address,
+                phone: formData.phone,
+            }
+           const response = await fetch(`http://localhost:3000/api/companys/${id}?apikey=${API_KEY}`,{
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            if(response){
+            const data = await response.json()
+            if(data.message === 'Compañía editada con éxito'){
+                toast(data.message , {
+                    icon: '👏',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                    navigate(-1)
+                }, 2000);
+                
+            }
+        }
+        }
+        catch (error) {
+            console.log('Error:', error)
+        }
+   
+    };
 
     return (
         <Container>
@@ -136,7 +157,28 @@ export const CompanysEdit = () => {
                 button={'Guardar'}
                 errors={error}
             />
-            <Toaster/>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                gutter={8}
+                containerClassName=''
+                containerStyle={{}}
+                toastOptions={{
+                    className:'',
+                    duration: 5000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                        fontSize: '1.5em',
+                    },
+                    success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black',
+                        },
+                    },
+                }}/>
         </Container>
     );
 };

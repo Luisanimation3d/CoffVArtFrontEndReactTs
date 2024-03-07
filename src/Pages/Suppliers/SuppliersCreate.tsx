@@ -8,18 +8,27 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
+import toast, { Toaster } from 'react-hot-toast';
 
 export const SuppliersCreate = () => {
-    const [formValues, setFormValues] = useState<Record<string, string | number>>({
+    const [error, setError] = useState<{[key: string]: string}>({})
+    const [formValues, setFormValues] = useState<{
+        name: string,
+        nit: string,
+        coffeType: string,
+        address: string,
+        phone: string,
+        quality: string,
+    }>({
         name: '',
         nit: '',
         coffeType: '',
         address: '',
         phone: '',
         quality: '',
-    })
+    });
+    
 
-    const {post, loading, error} = useFetch(API_URL);
     const navigate = useNavigate()
     const supplierFields: FormField[] = [
         {
@@ -60,7 +69,7 @@ export const SuppliersCreate = () => {
         },
         {
             name: 'phone',
-            type: 'text',
+            type: 'number',
             label: 'Teléfono',
             placeholder: '300 000 00 00',
             value: formValues['phone'] !== undefined ? String(formValues['phone']) : '',
@@ -85,6 +94,30 @@ export const SuppliersCreate = () => {
     };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        let mensajeError = {}
+        if (formValues.name == '') {
+            mensajeError = {...mensajeError, name: 'El nombre es requerido'}
+        }
+        if (!formValues.nit) {
+            mensajeError = {...mensajeError, nit: 'El NIT es requerido'}
+        }
+        if (!formValues.coffeType) {
+            mensajeError = {...mensajeError, coffeType: 'El tipo de café es requerido'}
+        }
+        if (!formValues.address) {
+            mensajeError = {...mensajeError, address: 'La dirección es requerida'}
+        }
+        if (!formValues.phone) {
+            mensajeError = {...mensajeError, phone: 'El teléfono es requerido'}
+        }
+        if (!formValues.quality) {
+            mensajeError = {...mensajeError, quality: 'La calidad es requerida'}
+        }
+        if (Object.keys(mensajeError).length > 0) {
+            console.log('Mensaje de error', mensajeError)
+            setError(mensajeError)
+            return
+        }
         try {
             const requestBody = {
                 name: formValues.name,
@@ -96,11 +129,52 @@ export const SuppliersCreate = () => {
             };
             console.log('Datos del formulario:', requestBody);
 
-            post(`suppliers?apikey=${API_KEY}`, requestBody)
-            console.log(loading, error)
-            console.log('proveedor creado con éxito');
-            navigate(-1);
+            const response = await fetch(`http://localhost:3000/api/suppliers?apikey=${API_KEY}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                if (response){
+                    const data = await response.json();
+                    if (data.message == "Proveedor creado correctamente") {
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                     navigate(-1)
+                    }, 2000);
 
+
+                }else if (data.error == `El NIT ya está registrado`){
+                    toast.error(data.error, {
+                        icon: '😞',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        
+                        }, 2000);
+                }else if (data.error == `El NIT no es valido example:00000000-0`){
+                    toast.error(data.error, {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        
+                        }, 2000);
+                }
+                else if (data.error == `El teléfono no es valido`){
+                    toast.error(data.error, {
+                        icon: '👎',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        
+                        }, 2000);
+                }
+                }
 
         } catch (error) {
             console.error('Error al crear el proveedor', error);
@@ -112,7 +186,31 @@ export const SuppliersCreate = () => {
             fields={supplierFields} 
             onSubmit={handleSubmit} 
             button={'Registrar Proveedor'} 
-            title={'Crear Proveedor'}/>
+            title={'Crear Proveedor'}
+            errors={error}/>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                gutter={8}
+                containerClassName=""
+                containerStyle={{}}
+                toastOptions={{
+                    className: '',
+                    duration: 5000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                        fontSize: '1.5rem',
+                    },
+                    success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black'
+                        },
+                    },
+                }}
+            />
         </Container>
         /*<Form
             title='Crear proveedor'
