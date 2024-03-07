@@ -116,7 +116,7 @@ export const CompanysCreate = () => {
             };
             console.log('Datos del formulario:', requestBody);
 
-            const response = await fetch(`http://localhost:3000/api/companys?apikey=${API_KEY}`,{
+            const response = await fetch(`${API_URL}companys?apikey=${API_KEY}`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -165,6 +165,13 @@ export const CompanysCreate = () => {
                     }, 2000);
                 }else if(data.name == "El campo solo debe contener letras"){
                     toast.error('No se permiten espacios en los campos', {
+                        icon: '😞',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                    }, 2000);
+                }else if(data.phone== "El campo no debe contener espacios"){
+                    toast.error('El campo no debe contener espacios', {
                         icon: '😞',
                         position: 'bottom-right'
                     })
