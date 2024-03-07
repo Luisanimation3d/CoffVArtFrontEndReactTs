@@ -130,7 +130,7 @@ export const CompanysEdit = () => {
             })
             if(response){
             const data = await response.json()
-            if(data.message === 'Compañía editada con éxito'){
+            if(data.message === 'Compañía editada correctamente'){
                 toast(data.message , {
                     icon: '👏',
                     position: 'bottom-right'

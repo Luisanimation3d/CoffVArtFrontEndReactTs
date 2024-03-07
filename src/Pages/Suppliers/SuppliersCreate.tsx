@@ -1,6 +1,4 @@
 import {FormField} from '../../types/Form'
-import {Button} from '../../components/Button/Button'
-import {Form} from '../../components/Form/Form';
 import {API_KEY, API_URL} from '../../constantes';
 import {useFetch} from '../../hooks/useFetch';
 import {useState} from 'react';
@@ -11,7 +9,9 @@ import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import toast, { Toaster } from 'react-hot-toast';
 
 export const SuppliersCreate = () => {
-    const [error, setError] = useState<{[key: string]: string}>({})
+    const [error, setError] = useState<{[key: string]: string}>({}) 
+    const navigate = useNavigate()
+
     const [formValues, setFormValues] = useState<{
         name: string,
         nit: string,
@@ -29,7 +29,7 @@ export const SuppliersCreate = () => {
     });
     
 
-    const navigate = useNavigate()
+  
     const supplierFields: FormField[] = [
         {
             name: 'name',
@@ -45,8 +45,8 @@ export const SuppliersCreate = () => {
             type: 'text',
             label: 'NIT',
             placeholder: '10122012334-5',
-            value: formValues['nit'] !== undefined ? String(formValues['nit']) : '',
-            onChange: (value) => handleInputChange('nit', value),
+            value: formValues.nit,
+            onChange: (value: string) => setFormValues({...formValues, nit: value}),
             size: 'medium'
         },
         {
@@ -54,8 +54,8 @@ export const SuppliersCreate = () => {
             type: 'text',
             label: 'Tipo de café',
             placeholder: 'pergamino',
-            value: formValues['coffeType'] !== undefined ? String(formValues['coffeType']) : '',
-            onChange: (value) => handleInputChange('coffeType', value),
+            value: formValues.coffeType,
+            onChange: (value: string) => setFormValues({...formValues, coffeType: value}),
             size: 'medium'
         },
         {
@@ -63,26 +63,35 @@ export const SuppliersCreate = () => {
             type: 'text',
             label: 'Dirección',
             placeholder: 'Cra 00 # 00 - 00',
-            value: formValues['address'] !== undefined ? String(formValues['address']) : '',
-            onChange: (value) => handleInputChange('address', value),
+            value: formValues.address,
+            onChange: (value: string) => setFormValues({...formValues, address: value}),
             size: 'medium'
         },
         {
             name: 'phone',
-            type: 'number',
+            type: 'text',
             label: 'Teléfono',
             placeholder: '300 000 00 00',
-            value: formValues['phone'] !== undefined ? String(formValues['phone']) : '',
-            onChange: (value) => handleInputChange('phone', value),
+            value: formValues.phone,
+            onChange: (value: string) => setFormValues({...formValues, phone: value}),
             size: 'medium'
-        },
+        },//CAMBIAR CUANDO LA FUNCION SEA GLOBAL
+       /* {
+            name: 'phone',
+            type: 'text',
+            label: 'Teléfono',
+            placeholder: '300 000 00 00',
+            value: formValues.phone,
+            onChange: (value: string) => setFormValues(prev => ({...prev, phone: validateIfNumber(value) ? value : prev.phone})),
+            size: 'medium'
+        },*/
         {
             name: 'quality',
             type: 'text',
             label: 'Calidad',
             placeholder: 'Premiun',
-            value: formValues['quality'] !== undefined ? String(formValues['quality']) : '',
-            onChange: (value) => handleInputChange('quality', value),
+            value: formValues.quality,
+            onChange: (value: string) => setFormValues({...formValues, quality: value}),
             size: 'medium'
         },
     ];
