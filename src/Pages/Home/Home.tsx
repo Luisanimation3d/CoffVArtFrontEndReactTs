@@ -141,14 +141,17 @@ export const Home = () => {
             <SliderBanner images={[Burdeo8, Burdeo6, Burdeo16]} autoPlayInterval={2500} />
           </div>
   
-          <div className="home__productsContainer">
-            <h2 className='h2-title'>Burdeo</h2>
+        <div className="home__productsContainer">
+        <div className="title-container">
+            <h2>Burdeo Café de Origen</h2>
+            <p>Desde nuestras fincas o las de los mejores productores del país.</p>
+        </div>
             <div className="home__productsCards">
-              {products?.map((producto) => (
-                <ProductCard key={producto.id} product={producto} />
-              ))}
-            </div>
-          </div>
+            {products?.map((producto) => (
+              <ProductCard key={producto.id} product={producto} />
+            ))}
+        </div>
+      </div>
   
           <div className="sectionbannerone">
             <div className="wrapper">
