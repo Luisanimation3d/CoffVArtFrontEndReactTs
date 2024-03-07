@@ -1,5 +1,6 @@
-import BannerBurdeo1 from '../../assets/BannerBurdeo1.png';
-import BannerBurdeo2 from '../../assets/BannerBurdeo2.png';
+import Burdeo6 from '../../assets/Burdeo6.jpg'
+import Burdeo8 from '../../assets/Burdeo8.jpg'
+import Burdeo16 from '../../assets/Burdeo16.jpg'
 import ProductImage from '../../assets/product.jpg';
 import coffeeGif from '../../assets/descargar.gif';
 import { SliderBanner } from "../../components/SliderBanner/SliderBanner.tsx";
@@ -132,7 +133,7 @@ export const Home = () => {
       {isCupAnimationComplete && (
         <div ref={homeContentRef} className="home__content" style={{ opacity: 0 }}>
           <div className="home__bannerContainer">
-            <SliderBanner images={[BannerBurdeo1, BannerBurdeo2]} autoPlayInterval={2500} />
+            <SliderBanner images={[Burdeo8, Burdeo6, Burdeo16 ]} autoPlayInterval={2500} />
           </div>
 
           <div className="home__productsContainer">
@@ -144,9 +145,25 @@ export const Home = () => {
             </div>
           </div>
           <div className="sectionbannerone">
-            <SectionBanner img='https://images.unsplash.com/photo-1459755486867-b55449bb39ff?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />
+            <div className='cards'>
+                <div className='cardb card1'>
+                  <div className='card-container'>
+                    <img className='img-banner' src={Burdeo16} alt="" />
+                  </div>
+                </div>
+                <div className='cardb card2'>
+                  <div className='card-container'>
+                    <img className= 'img-banner' src={Burdeo16} alt="" />
+                </div>
+                </div>
+                <div className='cardb card3'> 
+                  <div className='card-container'>
+                    <img className= 'img-banner' src={Burdeo16} alt="" />
+                  </div>
+                  </div>
+                </div>
+            </div>
           </div>
-        </div>
       )}
     </div>
   );

@@ -174,9 +174,9 @@ form .selectControl.active select:not(:focus) ~ label {
 }
 
 .formController__error{
-    color: #9f212f;
+    color: #ff4757;
     font-size: 0.8rem;
-    font-weight: lighter;
+    /*font-weight: lighter;*/
 }
 
 .formControllerContainer--large{

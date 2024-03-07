@@ -84,8 +84,8 @@ export const AboutUs = () => {
 
     gsap.set(cupRef.current, { opacity: 0, scale: 0 });
 
-    timeline.to(cupRef.current, { opacity: 1, scale: 1, duration: 0.4});
-    timeline.to(cupRef.current, { opacity: 0, scale: 0, duration: 0.4 }, '+=1.8');
+    timeline.to(cupRef.current, { opacity: 1, scale: 1, duration: 0});
+    timeline.to(cupRef.current, { opacity: 0, scale: 0, duration: 0 }, '+=0');
 
     timeline.play();
   }, []);
@@ -152,4 +152,4 @@ export const AboutUs = () => {
   );
 };
 
-export default Home;
+export default AboutUs;

@@ -8,6 +8,7 @@ import {GeneralInputRedisign} from "../GeneralInputRedisign/GeneralInputRedisign
 import {SelectInputRedisign} from "../SelectInputRedisign/SelectInputRedisign.tsx";
 import {TextAreaInputRedisign} from "../TextAreaInputRedisign/TextAreaInputRedisign.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
+import {FileInput} from "../FileInputRedisign/FileInputRedisign.tsx";
 
 export const FormRedisign: FC<FormProps> = ({
                                         title,
@@ -63,7 +64,18 @@ export const FormRedisign: FC<FormProps> = ({
                                         className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
                                         key={index}>
                                         <GeneralInputRedisign key={index} value={value} onChange={onChange} label={label} name={name}
-                                               size={size} type={type}/>
+                                               size={size} type={type} error={errors && !!errors[name]}/>
+                                        {errors && errors[name] && (
+                                            <span className="formController__error">{errors[name]}</span>
+                                        )}
+                                    </div>
+                                );
+                            }
+                            case "file": {
+                                return (
+                                    <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
+                                         key={index}>
+                                        <FileInput onChange={onChange as (file: File, name: string) => void} label={label} name={name} value={value} error={errors && !!errors[name]}/>
                                         {errors && errors[name] && (
                                             <span className="formController__error">{errors[name]}</span>
                                         )}
@@ -74,16 +86,24 @@ export const FormRedisign: FC<FormProps> = ({
                                 return multiple ? (
                                     <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
                                          key={index}>
-                                        <SelectInputRedisign key={index} type={type} options={options} onChange={onChange}
-                                                value={value}
-                                                placeholder={placeholder} size={size} multiple/>
+                                        <SelectInputRedisign key={index} type={type} name={name} options={options} onChange={onChange}
+                                                             value={value}
+                                                             error={errors && !!errors[name]}
+                                                             placeholder={placeholder} size={size} multiple/>
+                                        {errors && errors[name] && (
+                                            <span className="formController__error">{errors[name]}</span>
+                                        )}
                                     </div>
                                 ) : (
                                     <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
                                          key={index}>
-                                        <SelectInputRedisign key={index} type={type} options={options} onChange={onChange}
-                                                value={value}
-                                                placeholder={placeholder}/>
+                                        <SelectInputRedisign key={index} name={name} type={type} options={options} onChange={onChange}
+                                                             value={value}
+                                                             error={errors && !!errors[name]}
+                                                             placeholder={placeholder}/>
+                                        {errors && errors[name] && (
+                                            <span className="formController__error">{errors[name]}</span>
+                                        )}
                                     </div>
                                 );
                             }
@@ -94,7 +114,7 @@ export const FormRedisign: FC<FormProps> = ({
                                     }} key={index}>
                                         <TextAreaInputRedisign key={index} type={type} value={value as string} onChange={onChange}
                                                        label={label} name={name} placeholder={placeholder}
-                                                       size={size as number}/>
+                                                       size={size as number} error={errors && !!errors[name]}/>
                                         {errors && errors[name] && (
                                             <span className="formController__error">{errors[name]}</span>
                                         )}

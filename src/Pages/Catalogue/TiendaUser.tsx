@@ -21,13 +21,15 @@ export const TiendaUser = () => {
 		get(`products?apikey=${API_KEY}`)
 	}, [])
 
+	const urlImagen = 'https://images.unsplash.com/photo-1708747496569-b38b4abaa58f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+
 	useEffect(() => {
 		if (data?.products) {
 			const productsArray = data?.products?.rows.map((product: any) => ({
 				id: product.id,
 				name: product.name,
 				price: product.unitPrice,
-				image: ProductImage,
+				image: [ProductImage, urlImagen],
 				description: product.description,
 				link: `/producto/${product.id}`,
 				new: new Date(product.createdAt) > new Date(new Date().setDate(new Date().getDate() - 7)),

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './SideBarRedisign.module.css';
-import { useLocation } from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 
 import userImage from '../../assets/userImage.png';
 import {
@@ -223,7 +223,7 @@ export const SideBarMenuRedisignDesktop = ({
 			</span>
 			<span className={styles.header__options}>
 				<FiSettings />
-				<span className={styles.header__options__title}>Settings</span>
+				<Link to={'/admin/my-profile'} className={styles.header__options__title}>Mi perfil</Link>
 			</span>
 		</header>
 	);
@@ -485,11 +485,18 @@ const SideBarMenuRedisignItemSubItem = ({
 						<li className={`${styles.header__submenu__item}`} key={index}>
 							<NavLink
 								to={item.link}
-								className={`${styles.header__submenu__link} ${
-									item.title === 'Payments'
-										? styles.header__submenu__link__active
-										: ''
-								}`}
+								// className={`${styles.header__submenu__link} ${
+								// 	item.title === 'Payments'
+								// 		? styles.header__submenu__link__active
+								// 		: ''
+								// }`}
+
+								className={({ isActive }) =>
+									isActive
+										? `${styles.header__submenu__link} ${styles.header__submenu__link__active
+								}`
+										: `${styles.header__submenu__link}`
+								}
 							>
 								{item.title}
 							</NavLink>

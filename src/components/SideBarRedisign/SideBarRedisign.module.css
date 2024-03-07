@@ -350,6 +350,10 @@
     color: #ccc;
 }
 
+.darkmode__header__container .header__options__title{
+    color: #ccc;
+}
+
 /* Light Mode */
 
 .lightmode__header__container{
@@ -407,6 +411,10 @@
 }
 
 .lightmode__header__container .header__options{
+    color: #121212;
+}
+
+.lightmode__header__container .header__options__title{
     color: #121212;
 }
 
@@ -569,6 +577,15 @@
     transition: .3s;
 }
 
+.header__options__title{
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    position: relative;
+    transition: .3s;
+}
+
 .header__container__mobile .header__options__action{
     cursor: pointer;
 }
@@ -614,6 +631,10 @@
 }
 
 .header__container__mobile__darkMode .header__options{
+    color: #ccc;
+}
+
+.header__container__mobile__darkMode .header__options__title{
     color: #ccc;
 }
 
@@ -670,6 +691,10 @@
 }
 
 .header__container__mobile__lightMode .header__options{
+    color: #121212;
+}
+
+.header__container__mobile__lightMode .header__options__title{
     color: #121212;
 }
 
