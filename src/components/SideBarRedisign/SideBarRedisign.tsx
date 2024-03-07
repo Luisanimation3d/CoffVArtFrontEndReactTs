@@ -18,7 +18,7 @@ import { useDarkMode } from '../../context/DarkMode.tsx';
 import { MenuItemsProps } from '../../types/MenuBar';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.tsx';
-import { API_KEY, API_URL } from '../../constantes.ts';
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch.tsx';
 
 export const SideBarMenuRedisign = ({
@@ -447,18 +447,33 @@ const SideBarMenuRedisignItemSubItem = ({
 }) => {
 	const [showSubmenu, setShowSubmenu] = useState(false);
 
+	const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
 	useEffect(() => {
 		if (!toggleMenu) {
 			setShowSubmenu(false);
 		}
 	}, [toggleMenu]);
 
+	useEffect(() => {
+		window.addEventListener('resize', () => {
+			setWindowWidth(window.innerWidth);
+		});
+		return () => {
+			window.removeEventListener('resize', () => {
+				setWindowWidth(window.innerWidth);
+			});
+		};
+	}, []);
+
+	console.log(windowWidth, 'windowWidth')
+
 	return (
 		<>
 			<li
 				className={`${styles.header__item__submenu__container}`}
 				style={{
-					minHeight: showSubmenu ? `${subItems.length * 50 + 50}px` : '50px',
+					minHeight: windowWidth > 768 && windowWidth <= 1500 ? showSubmenu ? `${subItems.length * 37.5 + 37.5}px` : '37.5px' :  showSubmenu ? `${subItems.length * 50 + 50}px` : '50px',
 				}}
 			>
 				<div

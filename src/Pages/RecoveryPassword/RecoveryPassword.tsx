@@ -7,7 +7,7 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 
 import styles from './RecoveryPassword.module.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
 
 export const SendEmail = () => {

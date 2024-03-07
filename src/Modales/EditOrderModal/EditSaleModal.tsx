@@ -2,7 +2,7 @@ import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";

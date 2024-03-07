@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
-import { API_KEY } from "../../constantes.ts";
+import { API_KEY } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Processes = () => {

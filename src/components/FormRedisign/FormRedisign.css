@@ -187,6 +187,14 @@ form .selectControl.active select:not(:focus) ~ label {
     width: calc(50% - 8px);
 }
 
+.container__buttons__formRedisign{
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row-reverse;
+    width: 100%;
+}
 
 .form__button__to__send{
     display: flex;
@@ -197,6 +205,7 @@ form .selectControl.active select:not(:focus) ~ label {
     border-radius: .5rem;
     cursor: pointer;
     transition: .3s;
+    width: 100%;
 }
 
 .form__button__to__cancel{
@@ -208,6 +217,7 @@ form .selectControl.active select:not(:focus) ~ label {
     border-radius: .5rem;
     cursor: pointer;
     transition: .3s;
+    width: 100%;
 }
 
 /* Dark Mode */

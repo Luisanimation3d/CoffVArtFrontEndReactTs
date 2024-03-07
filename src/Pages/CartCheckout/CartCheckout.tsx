@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {Form} from "../../components/Form/Form.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
 
 export const CartCheckout = () => {

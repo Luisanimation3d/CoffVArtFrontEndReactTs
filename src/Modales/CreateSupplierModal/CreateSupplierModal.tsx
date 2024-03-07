@@ -1,7 +1,7 @@
 import { FormField } from '../../types/Form'
 import { Button } from '../../components/Button/Button'
 import { Form } from '../../components/Form/Form';
-import { API_KEY, API_URL } from '../../constantes';
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
@@ -87,11 +87,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
             size: 'medium'
         },
     ];
-    const validateIfNumber = (value: string) => {
-        if (value.length === 0) return true
-        const regex = new RegExp('^[0-9]+$')
-        return regex.test(value)
-    }
 
 
     const validateForm = () => {

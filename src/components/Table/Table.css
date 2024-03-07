@@ -35,7 +35,7 @@
 }
 
 .table__container .table__row:nth-child(even){
-    background-color: #e5ddd4;
+    background-color: #1f1f1f;
 }
 
 .table__container .table__row--diabled{

@@ -4,7 +4,7 @@ import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
-import { API_KEY, API_URL } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { EditSale } from "../../Modales/EditOrderModal/EditSaleModal.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";

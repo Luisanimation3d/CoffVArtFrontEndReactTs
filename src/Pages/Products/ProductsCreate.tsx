@@ -2,7 +2,7 @@ import { Container } from '../../components/Container/Container.tsx';
 import { FormRedisign } from '../../components/FormRedisign/FormRedisign.tsx';
 import { FormField } from '../../types/Form';
 import { useState } from 'react';
-import { API_KEY } from '../../constantes.ts';
+import { API_KEY } from '../../utils/constantes.ts';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
