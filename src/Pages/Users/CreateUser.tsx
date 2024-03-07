@@ -6,10 +6,11 @@ import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {useNavigate} from "react-router-dom";
 import toast, {Toaster} from "react-hot-toast";
+import {validateIfNumber} from "../../helpers/validateIfNumber.helper.ts";
 
 export const CreateUser = () => {
     const [error, setError] = useState<{ [key: string]: string }>({})
-    const {data: dataUser, post: postUser, loading: loadingUser, postFile: postFileUser} = useFetch(API_URL);
+    const {data: dataUser, postFile: postFileUser} = useFetch(API_URL);
     const navigate = useNavigate();
 
 
@@ -57,12 +58,6 @@ export const CreateUser = () => {
             }))
         }
     }, [data])
-
-    const validateIfNumber = (value: string) => {
-        if (value === '') return true;
-        const reg = new RegExp('^[0-9]+$');
-        return reg.test(value);
-    }
 
     const fields: FormField[] = [
         {

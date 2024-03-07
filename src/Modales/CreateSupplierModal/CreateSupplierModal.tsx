@@ -87,11 +87,6 @@ export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}
             size: 'medium'
         },
     ];
-    const validateIfNumber = (value: string) => {
-        if (value.length === 0) return true
-        const regex = new RegExp('^[0-9]+$')
-        return regex.test(value)
-    }
 
 
     const validateForm = () => {

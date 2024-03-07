@@ -6,6 +6,7 @@ import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import Swal from "sweetalert2";
+import {validateIfNumber} from "../../helpers/validateIfNumber.helper.ts";
 
 export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: { setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const {data, post, error: errorRegister} = useFetch(API_URL)
@@ -109,12 +110,6 @@ export const CreateProductModal = ({setIsModalOpen, title = 'Crear Producto'}: {
             size: 'large',
         },
     ]
-
-    const validateIfNumber = (value: string) => {
-        if (value.length === 0) return true
-        const regex = new RegExp('^[0-9]+$')
-        return regex.test(value)
-    }
 
 
     const validateForm = () => {

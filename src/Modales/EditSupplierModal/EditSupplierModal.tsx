@@ -80,11 +80,6 @@ export const SuppliersEditModal= ({setIsModalOpen, title = 'Editar Proveedor', i
     // ...
 
 // ...
-const validateIfNumber = (value: string) => {
-    if (value.length === 0) return true
-    const regex = new RegExp('^[0-9]+$')
-    return regex.test(value) 
-}
 
     const validateForm = () => {
         const errors: any = {}
