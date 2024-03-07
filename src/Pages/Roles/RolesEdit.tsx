@@ -8,7 +8,7 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {useParams, useNavigate} from "react-router-dom";
 
 import styles from './Roles.module.css'
-import {API_KEY} from "../../constantes.ts";
+import {API_KEY} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
 
 export const RolesEdit = () => {

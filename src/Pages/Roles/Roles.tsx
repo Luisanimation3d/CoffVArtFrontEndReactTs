@@ -5,10 +5,11 @@ import {Container} from "../../components/Container/Container";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useFetch} from "../../hooks/useFetch";
 import {createPortal} from "react-dom";
-import {API_KEY} from "../../constantes";
+import {API_KEY} from "../../utils/constantes.ts";
 import {Button} from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
+import styles from './Roles.module.css';
 
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
@@ -19,7 +20,7 @@ export const Roles = () => {
     const navigate = useNavigate()
     const [page, setPage] = useState<number>(1)
     const [dataToShow, setDataToShow] = useState<any[]>([])
-    const [idRolToModify, setIdRolToModify] = useState<number|null>(null)
+    const [idRolToModify, setIdRolToModify] = useState<number | null>(null)
     useEffect(() => {
         get(`roles?apikey=${API_KEY}&page=${page}`)
     }, [page]);
@@ -68,18 +69,38 @@ export const Roles = () => {
                 privilege: nameRol[0],
             }
         })
-        setDataModal(dataModalRol)
+
+        const reduceData = dataModalRol?.reduce((acc: any, item: any) => {
+            const index = acc.findIndex((accItem: any) => accItem.permission === item.permission)
+
+            if (index !== -1) {
+                return acc;
+            }
+
+            return [
+                ...acc, {
+                    id: item.id,
+                    permission: item.permission,
+                    privilege: dataModalRol.map(privilege => privilege.permission === item.permission ? (<span className={styles.itemPrivilegeItemList}>{privilege.privilege}</span>) : null).filter((item: any) => item !== null),
+                }
+            ]
+
+        }, [])
+        console.log(reduceData, 'ReduceData')
+
+        setDataModal(reduceData)
         setIsModalOpen(true)
     }
 
-    useEffect(()=>{
-        if(data?.roles?.rows){
-            const newData = data?.roles?.rows?.map((item: any)=>({
+    useEffect(() => {
+        if (data?.roles?.rows) {
+            const newData = data?.roles?.rows?.map((item: any) => ({
                 ...item,
-                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'} onClick={(e: any) => {
-                    e.stopPropagation()
-                    handleDelete(e.target?.parentNode.parentNode.dataset.key)
-                }}/>
+                State: <Button text={item.state ? 'Activo' : 'Inactivo'} autosize={false} type={'BUTTON'}
+                               onClick={(e: any) => {
+                                   e.stopPropagation()
+                                   handleDelete(e.target?.parentNode.parentNode.dataset.key)
+                               }}/>
             }))
 
             setDataToShow(newData)
@@ -97,6 +118,7 @@ export const Roles = () => {
                     title={'Roles'}
                     loading={loading}
                     createAction={() => navigate('/admin/roles/create')}
+                    onRowClick={handleRowClick}
                     page={page}
                     setPage={setPage}
                     pagination={true}

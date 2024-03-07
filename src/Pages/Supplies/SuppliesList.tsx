@@ -10,7 +10,7 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { SupplyEditModal } from "../../Modales/EditSupplyModal/EditSupplyModal.tsx";
-import { API_KEY } from "../../constantes";
+import { API_KEY } from "../../utils/constantes.ts";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
 

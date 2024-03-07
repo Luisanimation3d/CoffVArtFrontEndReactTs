@@ -7,7 +7,7 @@ import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
-import { API_KEY, API_URL } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import {EditProcessRModal } from "../../Modales/EditProcessModal/EditProcessRModal.tsx";
 import { createPortal } from "react-dom";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";

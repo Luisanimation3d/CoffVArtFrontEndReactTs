@@ -8,7 +8,7 @@ import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY} from "../../constantes.ts";
+import {API_KEY} from "../../utils/constantes.ts";
 
 export const EjemploVistaConDetalle = () => {
     const {data, loading, error, get} = useFetch('https://coffvart-backend.onrender.com/api/')

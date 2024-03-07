@@ -1,5 +1,5 @@
 import {FormField} from '../../types/Form'
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import {useFetch} from '../../hooks/useFetch';
 import {useState} from 'react';
 import React from 'react';

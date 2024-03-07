@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {Column} from "../../types/Table";
 import {Container} from "../../components/Container/Container.tsx";
 import {createPortal} from "react-dom";

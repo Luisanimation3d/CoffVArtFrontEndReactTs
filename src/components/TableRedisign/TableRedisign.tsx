@@ -4,6 +4,7 @@ import React, {useEffect, useId, useRef, useState} from "react";
 import {Pagination} from "../Pagination/Pagination.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
 import { handleDownloadExcel } from '../../helpers/downloadExcel.ts';
+import {statesTable} from "../../utils/statesTable.ts";
 
 
 type ColumnType = {
@@ -33,6 +34,8 @@ interface TableProps {
 
 export const TableRedisign = ({ columns, data, onRowClick, callback, title, search, setSearch, dropDownOptions, page, setPage, totalPages, pagination, loading, createAction} : TableProps) => {
 
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
     const {darkMode} = useDarkMode();
 
     const [expandedRow, setExpandedRow] = useState<{
@@ -52,14 +55,6 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
     }
 
     const idKey = useId();
-
-    useEffect(() => {
-        document.addEventListener('click', handleDocumentClick);
-
-        return () => {
-            document.removeEventListener('click', handleDocumentClick);
-        };
-    }, []);
     
     const dataToDownload = (datos) => {
         const dataToDownload = datos?.map((row, index) => {
@@ -87,6 +82,20 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
         return dataToDownloadWithHeaders;
     }
 
+    useEffect(() => {
+        document.addEventListener('click', handleDocumentClick);
+
+        return () => {
+            document.removeEventListener('click', handleDocumentClick);
+        };
+    }, []);
+
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            setWindowWidth(window.innerWidth);
+        });
+    }, []);
+
     return (
         <>
             <div
@@ -97,7 +106,7 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                             createAction && (
                                 <>
                                     <button
-                                        className={`${styles.table__header__action__button}`}
+                                        className={`${styles.table__header__action__button} ${styles.table__header__action__button__create}`}
                                         onClick={createAction}
                                     >
                                         <FiPlus/>
@@ -117,13 +126,28 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                     <h3 className={`${styles.table__header__title}`}>
                         {title}
                     </h3>
-                    <div className={`${styles.table__header__search__container}`}>
-                        <label htmlFor="search__input__table"
-                               className={`${styles.table__header__search__label}`}><FiSearch/></label>
-                        <input type="text" placeholder="Search" id={`search__input__table`}
-                               className={`${styles.table__header__search__input}`} value={search}
-                               onChange={e => setSearch(e.target.value)}/>
-                    </div>
+                    {
+                        windowWidth > 768 && (
+                            <div className={`${styles.table__header__search__container}`}>
+                                <label htmlFor="search__input__table"
+                                       className={`${styles.table__header__search__label}`}><FiSearch/></label>
+                                <input type="text" placeholder="Search" id={`search__input__table`}
+                                       className={`${styles.table__header__search__input}`} value={search}
+                                       onChange={e => setSearch(e.target.value)}/>
+                            </div>
+                        )
+                    }
+                    {
+                        windowWidth <= 768 && (
+                            <button
+                                className={`${styles.table__header__action__button}`}
+                                onClick={() => handleDownloadExcel(dataToDownload(data), title || 'data', title || 'data')}
+                            >
+                                <FiSearch/>
+                                <span className={`${styles.create__tooltip}`}>Descargar informe</span>
+                            </button>
+                        )
+                    }
                 </div>
                 <div className={`${styles.table__content__container}`}>
                     <table className={`${styles.table__content__table}`}>
@@ -189,7 +213,8 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                                                     column.key === 'state' ? (
                                                                         <td className={`${styles.table__content__tbody__item}`} key={index}>
                                                                             <span
-                                                                                className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' || row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' || row[column.key].toLocaleString().toUpperCase() == 'TOSTANDO' || row[column.key].toLocaleString().toUpperCase() == 'EMPAQUETADO' ? styles.table__content__status__pending : row[column.key] == 'Approved' || row[column.key].toLocaleString().toUpperCase() == 'FINALIZADO' || row[column.key].toLocaleString().toUpperCase() == 'RECIBIDO' ? styles.table__content__status__approved : row[column.key] == 'Declined' || row[column.key].toLocaleString().toUpperCase() == 'CANCELADO' ? styles.table__content__status__declined : row[column.key].toLocaleString().toUpperCase() == 'ENVIADO' || row[column.key].toLocaleString().toUpperCase() == 'DESGASIFICASION' ? styles.table__content__status__onHold : ''}`} key={index}>
+                                                                                // className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' || row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' || row[column.key].toLocaleString().toUpperCase() == 'TOSTANDO' || row[column.key].toLocaleString().toUpperCase() == 'EMPAQUETADO' ? styles.table__content__status__pending : row[column.key] == 'Approved' || row[column.key].toLocaleString().toUpperCase() == 'FINALIZADO' || row[column.key].toLocaleString().toUpperCase() == 'RECIBIDO' ? styles.table__content__status__approved : row[column.key] == 'Declined' || row[column.key].toLocaleString().toUpperCase() == 'CANCELADO' ? styles.table__content__status__declined : row[column.key].toLocaleString().toUpperCase() == 'ENVIADO' || row[column.key].toLocaleString().toUpperCase() == 'DESGASIFICASION' ? styles.table__content__status__onHold : ''}`} key={index}>
+                                                                                className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : statesTable.blue.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__onHold : statesTable.green.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__approved : statesTable.red.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__declined : statesTable.orange.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__pending : ''}`} key={index}>
                                                                                 {
                                                                                     handleStateRow(row[column.key]) ? row[column.key] ? 'Activo' : 'Inactivo' : row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' ? 'Pendiente' : row[column.key].toLocaleString().toUpperCase() == 'APROBADO' ? 'Aprobado' : row[column.key].toLocaleString().toUpperCase() == 'RECHAZADO' ? 'Rechazado' : row[column.key]
                                                                                 }
@@ -257,6 +282,10 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                     <Pagination page={page as number} setPage={setPage as (page: number) => void} totalPages={totalPages as number}/>
                 )
             }
+
+            <button className={styles.button__create__mobile}>
+                <FiPlus/>
+            </button>
         </>
     )
 }

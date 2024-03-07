@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { Button } from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
-import { API_KEY, API_URL } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { createPortal } from "react-dom";
 import { CompanysCreateModal } from "../../Modales/CreateCompanyModal/CreateCompanyModal.tsx";

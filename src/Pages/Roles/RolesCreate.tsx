@@ -6,10 +6,11 @@ import {Container} from "../../components/Container/Container.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
 
 import styles from './Roles.module.css'
-import {API_KEY} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
+import {useDarkMode} from "../../context/DarkMode.tsx";
 
 export const RolesCreate = () => {
     const [step, setStep] = useState<number>(1)
@@ -19,7 +20,7 @@ export const RolesCreate = () => {
         permissions?: number[]
     }>({})
     return (
-        <Container align={'CENTER'} justify={'CENTER'}>
+        <Container align={'CENTER'} justify={'CENTER'} className={styles.container}>
             <Titles title={'Crear rol'} level={2} transform={'UPPERCASE'}/>
             <Titles title={`Paso ${step} de 2`} level={5} transform={'UPPERCASE'}/>
             {
@@ -84,9 +85,7 @@ const RolesCreateStepOne = ({changeStep, valueForm, setValueForm}: {
         changeStep(2)
     }
     return (
-        <div style={{
-            width: '50%'
-        }}>
+        <div className={styles.containerFormStepOne}>
             <FormRedisign fields={fields} onSubmit={handleSubmit}
                   button={'Continuar'}
                   errors={error}
@@ -100,7 +99,10 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
     valueForm: { name?: string, description?: string, permissions?: number[] },
     setValueForm: (value: any) => void
 }) => {
-    const {data, loading, error, get, post} = useFetch('https://coffvart-backend.onrender.com/api/')
+
+    const {darkMode} = useDarkMode()
+
+    const {data, loading, error, get, post} = useFetch(API_URL)
     const [permissionsPrivileges, setPermissionsPrivileges] = useState<any[]>([])
     const [selectedPrivileges, setSelectedPrivileges] = useState<any[]>([])
     const navigate = useNavigate()
@@ -230,7 +232,7 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
                 {
                     permissionsPrivileges?.map((permissionPrivilege: any, index: number) => {
                         return <div key={index}
-                                    className={`${styles.permissionCard} ${verifySelectedPrivilegesByPermission(permissionPrivilege) ? styles['permissionCard--active'] : ''}`}>
+                                    className={`${styles.permissionCard} ${verifySelectedPrivilegesByPermission(permissionPrivilege) ? styles['permissionCard--active'] : ''} ${darkMode ? styles['permissionCard--dark'] : styles['permissionCard--light']}`}>
                             <h3 className={styles.permissionCardName}>{permissionPrivilege.name}</h3>
                             <div className={styles.permissionCardPrivilegesContainer}>
                                 {
@@ -252,7 +254,7 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
                     })
                 }
             </div>
-            <Container align={'CENTER'} justify={'CENTER'} direction={'ROW'}>
+            <Container align={'CENTER'} justify={'CENTER'} direction={'ROW'} className={styles.buttonContainer}>
                 <Button text={'Atrás'} onClick={() => changeStep(1)} type={'BUTTON'} autosize={true} fill={false}/>
                 <Button text={'Registrar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true} disabled={selectedPrivileges?.length === 0}/>
             </Container>

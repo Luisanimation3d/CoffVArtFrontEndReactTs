@@ -10,7 +10,7 @@ import {useAuth} from "../../context/AuthContext.tsx";
 
 import "./SideBarMenu.css";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 
 export const SideBarMenu: FC<SideBarMenuProps> = ({
                                                       items

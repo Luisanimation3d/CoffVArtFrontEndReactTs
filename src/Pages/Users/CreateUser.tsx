@@ -2,7 +2,7 @@ import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {useState, useEffect} from "react";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {useNavigate} from "react-router-dom";
 import toast, {Toaster} from "react-hot-toast";

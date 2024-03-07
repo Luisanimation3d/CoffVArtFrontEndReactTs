@@ -400,7 +400,7 @@ export default function App() {
                                 </Route>
                             </Routes>
                         </HashRouter>
-                        <LabelView/>
+                        {/*<LabelView/>*/}
                     </CartProvider>
                 </DarkModeProvider>
             </AuthProvider>
