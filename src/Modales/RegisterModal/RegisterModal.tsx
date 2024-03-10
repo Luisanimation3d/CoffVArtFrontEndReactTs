@@ -8,7 +8,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 
 import ImageRegister from '../../assets/RegisterImage.png'
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
 
 export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) => {

@@ -3,7 +3,7 @@ import { Container } from "../../components/Container/Container";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
-import { API_KEY, API_URL } from "../../constantes";
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
 // import { CreateUserModal } from "../../Modales/CreateUserModal/CreateUserModal";
 import { createPortal } from "react-dom";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";

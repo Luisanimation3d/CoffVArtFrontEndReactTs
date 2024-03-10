@@ -1,5 +1,5 @@
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import styles from './Register.module.css';
@@ -8,6 +8,7 @@ import {Button} from "../../components/Button/Button.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
+import {validateIfNumber} from "../../helpers/validateIfNumber.helper.ts";
 
 export const Register = () => {
     const navigate = useNavigate();
@@ -46,11 +47,6 @@ export const Register = () => {
     ];
 
     const [error, setError] = useState<{ [key: string]: string }>({});
-    const validateIfNumber = (value: string) => {
-        if (value === '') return true;
-        const reg = new RegExp('^[0-9]+$');
-        return reg.test(value);
-    }
     const formFieldsRegister: FormField[] = [
         {
             name: 'name',

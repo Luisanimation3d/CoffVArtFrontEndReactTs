@@ -3,7 +3,7 @@ import {useFetch} from '../../hooks/useFetch';
 import {FormField} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
 import {Form} from '../../components/Form/Form';
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import {useParams, useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Modal, ModalContainer } from '../../components/Modal/Modal';
@@ -80,11 +80,6 @@ export const SuppliersEditModal= ({setIsModalOpen, title = 'Editar Proveedor', i
     // ...
 
 // ...
-const validateIfNumber = (value: string) => {
-    if (value.length === 0) return true
-    const regex = new RegExp('^[0-9]+$')
-    return regex.test(value) 
-}
 
     const validateForm = () => {
         const errors: any = {}

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
 import {FormField} from '../../types/Form';
 import {FormRedisign} from '../../components/FormRedisign/FormRedisign';
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import {useParams, useNavigate} from 'react-router-dom';
 import {Container} from "../../components/Container/Container.tsx";
 import toast, {Toaster} from "react-hot-toast";
@@ -121,7 +121,7 @@ export const CompanysEdit = () => {
                 address: formData.address,
                 phone: formData.phone,
             }
-           const response = await fetch(`http://localhost:3000/api/companys/${id}?apikey=${API_KEY}`,{
+           const response = await fetch(`${API_URL}companys/${id}?apikey=${API_KEY}`,{
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -139,6 +139,35 @@ export const CompanysEdit = () => {
                     navigate(-1)
                 }, 2000);
                 
+            }else if(data.error == "El correo no es valido"){
+                toast.error(data.error, {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                }, 2000);
+            }
+            else if(data.error == "El teléfono no es valido"){
+                toast.error(data.error, {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                }, 2000);
+            }else if(data.name == "El campo solo debe contener letras"){
+                toast.error('No se permiten espacios en los campos', {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                }, 2000);
+            }else if(data.phone== "El campo no debe contener espacios"){
+                toast.error('El campo no debe contener espacios', {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                }, 2000);
             }
         }
         }

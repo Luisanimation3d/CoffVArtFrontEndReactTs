@@ -8,9 +8,9 @@ import gsap from 'gsap';
 import './AboutUs.css';
 import { useEffect, useRef, useState } from 'react';
 import { SectionBanner } from '../../components/SectionBanner/SectionBanner.tsx';
-import { API_KEY, API_URL } from '../../constantes.ts';
-import { useFetch } from '../../hooks/useFetch.tsx';
-import { Product } from '../../types/ProductCard';
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
+import {useFetch} from "../../hooks/useFetch.tsx";
+import {Product} from "../../types/ProductCard";
 
 // gsap.registerPlugin(ScrollTrigger);
 // const boxDOMEL = document.createElement("div");
@@ -158,7 +158,7 @@ export const AboutUs = () => {
 								DeepL.com
 							</p>
 						</section>
-            
+
 						<section className='rowAbout'>
 							<p className='rowAbout__paragraph left'>
 								Nuestra empresa familiar ha estado comprometida con la

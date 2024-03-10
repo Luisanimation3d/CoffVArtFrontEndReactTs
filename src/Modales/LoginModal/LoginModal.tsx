@@ -9,7 +9,7 @@ import {useAuth} from '../../context/AuthContext.tsx'
 
 import styles from './LoginModal.module.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
 
 export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => {

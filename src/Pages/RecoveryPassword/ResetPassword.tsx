@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useEffect, useState} from "react";
 import {FormField} from "../../types/Form";
 import {Container} from "../../components/Container/Container.tsx";

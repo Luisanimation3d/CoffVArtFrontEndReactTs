@@ -3,7 +3,7 @@ import { useFetch } from '../../hooks/useFetch';
 import { FormField, SelectOption } from '../../types/Form';
 import { Button } from '../../components/Button/Button';
 import { Form } from '../../components/Form/Form';
-import { API_KEY } from '../../constantes';
+import { API_KEY } from '../../utils/constantes.ts';
 import React from 'react';
 
 
