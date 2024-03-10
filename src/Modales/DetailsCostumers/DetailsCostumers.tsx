@@ -67,10 +67,28 @@ export const UserProfileComponent= ({setIsModalOpen, title = 'Informacion del us
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
+                    <MDBCardText>Apellido:</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText>{userData?.user.lastname}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
                     <MDBCardText>Documento:</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText>{userData?.document} {userData?.documentType}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Correo:</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText>{userData?.user.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />

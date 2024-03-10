@@ -100,7 +100,8 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                 position: 'bottom-right'
             })
             setTimeout(() => {
-                navigate(-1)
+                setIsModalOpen(false);
+                navigate('/Orders')
             }, 2000);
         }
     };

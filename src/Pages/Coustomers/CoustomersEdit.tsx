@@ -222,8 +222,13 @@ export const CustomersEdit = () => {
             setTimeout(() => {
                 navigate(-1);
             },2000);
-        } else if(data.msg == 'Este correo ya esta registrado'){
-            toast.error("Este correo ya esta registrado", {
+        } else if(data.msg == 'Este correo ya está registrado' && !errorFetch) {
+            toast.error("Este correo ya está registrado", {
+                icon: '👎',
+                position: 'bottom-right'
+            });
+        } else if (data.msg == 'Este documento ya está registrado' && !errorFetch) {
+            toast.error("Este documento ya está registrado", {
                 icon: '👎',
                 position: 'bottom-right'
             });
