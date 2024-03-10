@@ -146,13 +146,7 @@ export const Home = () => {
             <h2>Burdeo Café de Origen</h2>
             <p>Desde nuestras fincas o las de los mejores productores del país.</p>
         </div>
-            <div className="home__productsCards">
-            {products?.map((producto) => (
-              <ProductCard key={producto.id} product={producto} />
-            ))}
-        </div>
       </div>
-  
           <div className="sectionbannerone">
             <div className="wrapper">
               <div className="card1 cardb">
