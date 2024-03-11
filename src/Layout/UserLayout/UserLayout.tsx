@@ -1,7 +1,8 @@
-import {HeaderMenu} from "../../components/HeaderMenu/HeaderMenu.tsx";
+// import {HeaderMenu} from "../../components/HeaderMenu/HeaderMenu.tsx";
 import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {UserFooter} from "../../components/Footer/Footer";
 import {useEffect} from "react";
+import {HeaderMenuRedisign} from "../../components/HeaderMenuRedisign/HeaderMenuRedisign.tsx";
 
 export const UserLayout = () => {
     const location = useLocation()
@@ -13,13 +14,15 @@ export const UserLayout = () => {
     }, []);
     return (
         <>
-            <HeaderMenu/>
+            {/*<HeaderMenu/>*/}
+            <HeaderMenuRedisign/>
             <div className="userLayout__mainContent" style={{
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '100vh',
                 height: '100%',
-                overflow: 'auto',
+                overflow: 'hidden',
+                overflowY: 'auto',
             }}>
                 <div style={{
                     flex: '1',

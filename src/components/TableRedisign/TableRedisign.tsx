@@ -3,7 +3,7 @@ import {FiDownload, FiMoreVertical, FiPlus, FiSearch} from "react-icons/fi";
 import React, {useEffect, useId, useRef, useState} from "react";
 import {Pagination} from "../Pagination/Pagination.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
-import { handleDownloadExcel } from '../../helpers/downloadExcel.ts';
+import {handleDownloadExcel} from '../../helpers/downloadExcel.ts';
 import {statesTable} from "../../utils/statesTable.ts";
 
 
@@ -14,9 +14,9 @@ type ColumnType = {
 
 interface TableProps {
     columns: ColumnType[];
-    data: {[key: string]: string | number}[];
-    onRowClick?: (row: {[key: string]: string | number}) => void;
-    callback?: (row: {[key: string]: string | number}, type: string) => void;
+    data: { [key: string]: string | number }[];
+    onRowClick?: (row: { [key: string]: string | number }) => void;
+    callback?: (row: { [key: string]: string | number }, type: string) => void;
     title?: string;
     search: string;
     setSearch: (search: string) => void;
@@ -32,7 +32,22 @@ interface TableProps {
     createAction?: () => void;
 }
 
-export const TableRedisign = ({ columns, data, onRowClick, callback, title, search, setSearch, dropDownOptions, page, setPage, totalPages, pagination, loading, createAction} : TableProps) => {
+export const TableRedisign = ({
+                                  columns,
+                                  data,
+                                  onRowClick,
+                                  callback,
+                                  title,
+                                  search,
+                                  setSearch,
+                                  dropDownOptions,
+                                  page,
+                                  setPage,
+                                  totalPages,
+                                  pagination,
+                                  loading,
+                                  createAction
+                              }: TableProps) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -45,7 +60,7 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
     const dropdownRef: React.MutableRefObject<HTMLDivElement> | React.MutableRefObject<any> = useRef(null);
 
     const handleDocumentClick = (e: any) => {
-        if(expandedRow?.id !== undefined || e.target !== dropdownRef?.current){
+        if (expandedRow?.id !== undefined || e.target !== dropdownRef?.current) {
             setExpandedRow({})
         }
     };
@@ -55,10 +70,14 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
     }
 
     const idKey = useId();
-    
+
     const dataToDownload = (datos) => {
         const dataToDownload = datos?.map((row, index) => {
-            const newRow = {...row,id: index + 1, state: typeof row.state === 'boolean' ? row.state ? 'Activo' : 'Inactivo' : row.state};
+            const newRow = {
+                ...row,
+                id: index + 1,
+                state: typeof row.state === 'boolean' ? row.state ? 'Activo' : 'Inactivo' : row.state
+            };
             return newRow;
         });
 
@@ -67,10 +86,10 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
             for (const key in row) {
                 columns.map(column => {
                     if (column.key === key) {
-                        if(column.key === 'id') {
+                        if (column.key === 'id') {
                             // colocar el nombre # en vez de id
                             newRow['#'] = row[key];
-                        }else{
+                        } else {
                             newRow[column.header] = row[key];
                         }
                     }
@@ -115,9 +134,9 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                                 </>
                             )
                         }
-                        <button 
+                        <button
                             className={`${styles.table__header__action__button}`}
-                            onClick={() => handleDownloadExcel(dataToDownload(data), title || 'data', title || 'data')}    
+                            onClick={() => handleDownloadExcel(dataToDownload(data), title || 'data', title || 'data')}
                         >
                             <FiDownload/>
                             <span className={`${styles.create__tooltip}`}>Descargar informe</span>
@@ -155,7 +174,8 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                         <tr className={`${styles.table__content__thead__row}`}>
                             {
                                 columns.map((column, index) => (
-                                    column.key === 'id' ? (<th key={index} className={`${styles.table__content__thead__item}`}></th>) : (
+                                    column.key === 'id' ? (
+                                        <th key={index} className={`${styles.table__content__thead__item}`}></th>) : (
                                         <th key={index}
                                             className={`${styles.table__content__thead__item}`}>{column.header}</th>)
                                 ))
@@ -177,100 +197,105 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
                         <tbody className={`${styles.table__content__tbody}`}>
                         {
                             loading ? (
-                                <>
-                                    <tr className={`${styles.table__content__tbody__row}`}>
-                                        <td colSpan={7} className={`${styles.table__content__tbody__noData}`}>
-                                            Obteniendo datos...
-                                        </td>
-                                    </tr>
-                                </>
-                            ) :
-                            !data || data.length === 0 ? (
-                                <>
-                                    <tr className={`${styles.table__content__tbody__row}`}>
-                                        <td colSpan={7} className={`${styles.table__content__tbody__noData}`}>
-                                            No se encontraron datos
-                                        </td>
-                                    </tr>
-                                </>
-                            ) : (
-                                <>
-                                    {
-                                        data?.map((row, globalIndex) => (
-                                            <>
-                                                <tr 
-                                                    key={globalIndex} 
-                                                    onClick={() => onRowClick && onRowClick(row)}
-                                                    className={`${styles.table__content__tbody__row} ${onRowClick ? styles.table__content__tbody__row__click : ''}`} 
-                                                    data-key={row.id}>
-                                                    {
-                                                        columns.map((column, index) => (
-                                                            <>
-                                                                {
-                                                                    column.key === 'id' ? (
-                                                                            <td className={`${styles.table__content__tbody__item}`} key={index}>{globalIndex + 1}</td>
-                                                                    ) :
-                                                                    column.key === 'state' ? (
-                                                                        <td className={`${styles.table__content__tbody__item}`} key={index}>
+                                    <>
+                                        <tr className={`${styles.table__content__tbody__row}`}>
+                                            <td colSpan={7} className={`${styles.table__content__tbody__noData}`}>
+                                                Obteniendo datos...
+                                            </td>
+                                        </tr>
+                                    </>
+                                ) :
+                                !data || data.length === 0 ? (
+                                    <>
+                                        <tr className={`${styles.table__content__tbody__row}`}>
+                                            <td colSpan={7} className={`${styles.table__content__tbody__noData}`}>
+                                                No se encontraron datos
+                                            </td>
+                                        </tr>
+                                    </>
+                                ) : (
+                                    <>
+                                        {
+                                            data?.map((row, globalIndex) => (
+                                                <>
+                                                    <tr
+                                                        key={globalIndex}
+                                                        onClick={() => onRowClick && onRowClick(row)}
+                                                        className={`${styles.table__content__tbody__row} ${onRowClick ? styles.table__content__tbody__row__click : ''}`}
+                                                        data-key={row.id}>
+                                                        {
+                                                            columns.map((column, index) => (
+                                                                <>
+                                                                    {
+                                                                        column.key === 'id' ? (
+                                                                                <td className={`${styles.table__content__tbody__item}`}
+                                                                                    key={index}>{globalIndex + 1}</td>
+                                                                            ) :
+                                                                            column.key === 'state' ? (
+                                                                                <td className={`${styles.table__content__tbody__item}`}
+                                                                                    key={index}>
                                                                             <span
                                                                                 // className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : row[column.key] == 'Pending' || row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' || row[column.key].toLocaleString().toUpperCase() == 'TOSTANDO' || row[column.key].toLocaleString().toUpperCase() == 'EMPAQUETADO' ? styles.table__content__status__pending : row[column.key] == 'Approved' || row[column.key].toLocaleString().toUpperCase() == 'FINALIZADO' || row[column.key].toLocaleString().toUpperCase() == 'RECIBIDO' ? styles.table__content__status__approved : row[column.key] == 'Declined' || row[column.key].toLocaleString().toUpperCase() == 'CANCELADO' ? styles.table__content__status__declined : row[column.key].toLocaleString().toUpperCase() == 'ENVIADO' || row[column.key].toLocaleString().toUpperCase() == 'DESGASIFICASION' ? styles.table__content__status__onHold : ''}`} key={index}>
-                                                                                className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : statesTable.blue.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__onHold : statesTable.green.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__approved : statesTable.red.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__declined : statesTable.orange.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__pending : ''}`} key={index}>
+                                                                                className={`${handleStateRow(row[column.key]) ? row[column.key] ? styles.table__content__status__approved : styles.table__content__status__declined : statesTable.blue.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__onHold : statesTable.green.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__approved : statesTable.red.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__declined : statesTable.orange.includes(row[column.key].toLocaleString().toUpperCase()) ? styles.table__content__status__pending : ''}`}
+                                                                                key={index}>
                                                                                 {
                                                                                     handleStateRow(row[column.key]) ? row[column.key] ? 'Activo' : 'Inactivo' : row[column.key].toLocaleString().toUpperCase() == 'PENDIENTE' ? 'Pendiente' : row[column.key].toLocaleString().toUpperCase() == 'APROBADO' ? 'Aprobado' : row[column.key].toLocaleString().toUpperCase() == 'RECHAZADO' ? 'Rechazado' : row[column.key]
                                                                                 }
                                                                             </span>
-                                                                        </td>
-                                                                    ) : (
-                                                                        <td className={`${styles.table__content__tbody__item}`} key={index}>{row[column.key]}</td>
-                                                                    )
-                                                                }
-                                                            </>
-                                                        ))
+                                                                                </td>
+                                                                            ) : (
+                                                                                <td className={`${styles.table__content__tbody__item}`}
+                                                                                    key={index}>{row[column.key]}</td>
+                                                                            )
+                                                                    }
+                                                                </>
+                                                            ))
 
-                                                    }
-                                                    {
-                                                        callback && dropDownOptions && (
-                                                            <>
-                                                                <td className={`${styles.table__content__tbody__item}`}>
-                                                                    <button className={`${styles.table__content__tbody__button}`}
+                                                        }
+                                                        {
+                                                            callback && dropDownOptions && (
+                                                                <>
+                                                                    <td className={`${styles.table__content__tbody__item}`}>
+                                                                        <button
+                                                                            className={`${styles.table__content__tbody__button}`}
                                                                             onClick={(e) => {
                                                                                 e.stopPropagation();
                                                                                 setExpandedRow(prev => prev.id === row.id ? {} : row)
                                                                             }}>
-                                                                        <FiMoreVertical/></button>
-                                                                    {
-                                                                        expandedRow.id === row.id && (
-                                                                            <div
-                                                                                className={`${styles.table__content__tbody__dropdown__container}`}
-                                                                                ref={dropdownRef}
-                                                                                onClick={e => {
-                                                                                    e.stopPropagation()
-                                                                                }}
-                                                                            >
-                                                                                <ul className={`${styles.table__content__tbody__dropdown}`}>
-                                                                                    {
-                                                                                        dropDownOptions.map((option, index) => (
-                                                                                            <li key={index}
-                                                                                                className={`${styles.table__content__tbody__dropdown__item}`}
-                                                                                                onClick={() => callback(row, option.label)}>
-                                                                                                {option.icon}{option.label}
-                                                                                            </li>
-                                                                                        ))
-                                                                                    }
-                                                                                </ul>
-                                                                            </div>
-                                                                        )
-                                                                    }
-                                                                </td>
-                                                            </>
-                                                        )
-                                                    }
-                                                </tr>
-                                            </>
-                                        ))
-                                    }
-                                </>
-                            )
+                                                                            <FiMoreVertical/></button>
+                                                                        {
+                                                                            expandedRow.id === row.id && (
+                                                                                <div
+                                                                                    className={`${styles.table__content__tbody__dropdown__container}`}
+                                                                                    ref={dropdownRef}
+                                                                                    onClick={e => {
+                                                                                        e.stopPropagation()
+                                                                                    }}
+                                                                                >
+                                                                                    <ul className={`${styles.table__content__tbody__dropdown}`}>
+                                                                                        {
+                                                                                            dropDownOptions.map((option, index) => (
+                                                                                                <li key={index}
+                                                                                                    className={`${styles.table__content__tbody__dropdown__item}`}
+                                                                                                    onClick={() => callback(row, option.label)}>
+                                                                                                    {option.icon}{option.label}
+                                                                                                </li>
+                                                                                            ))
+                                                                                        }
+                                                                                    </ul>
+                                                                                </div>
+                                                                            )
+                                                                        }
+                                                                    </td>
+                                                                </>
+                                                            )
+                                                        }
+                                                    </tr>
+                                                </>
+                                            ))
+                                        }
+                                    </>
+                                )
                         }
                         </tbody>
                     </table>
@@ -279,13 +304,18 @@ export const TableRedisign = ({ columns, data, onRowClick, callback, title, sear
 
             {
                 pagination && (
-                    <Pagination page={page as number} setPage={setPage as (page: number) => void} totalPages={totalPages as number}/>
+                    <Pagination page={page as number} setPage={setPage as (page: number) => void}
+                                totalPages={totalPages as number}/>
+                )
+            }
+            {
+                createAction && (
+                    <button className={styles.button__create__mobile} onClick={createAction}>
+                        <FiPlus/>
+                    </button>
                 )
             }
 
-            <button className={styles.button__create__mobile}>
-                <FiPlus/>
-            </button>
         </>
     )
 }
