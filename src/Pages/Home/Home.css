@@ -1,190 +1,208 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
 
-.home__container{
-  display: flex;
-  flex-direction: column;
+.home__container {
+    display: flex;
+    flex-direction: column;
 }
 
-.box{
-  height: 100px;
-  width: 100px;
-  background-color: brown;
-  position:absolute;
-  left: 50vw;
-  top: 50vh;
+.box {
+    height: 100px;
+    width: 100px;
+    background-color: brown;
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
 }
 
-.home__bannerContainer{
-  width: 100%;
-  height: 750px;
-  position: relative;
+.home__bannerContainer {
+    width: 100%;
+    height: 750px;
+    position: relative;
 }
 
-.home__productsContainer{
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  padding: 3rem 1rem;
-  gap: 2rem;
-  margin-top: 5%;
+.home__productsContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    padding: 3rem 1rem;
+    gap: 2rem;
+    margin-top: 5%;
 }
 
-.home__productsContainer h2{
-  text-align: center;
-  font-size: 2rem;
+.home__productsContainer h2 {
+    text-align: center;
+    font-size: 2rem;
 }
 
-.home__productsContainer .home__productsCards{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+.home__productsContainer .home__productsCards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
+
 .cup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cup img {
-  width: 300px;
-  height: auto; 
-}
-*{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    width: 300px;
+    height: auto;
 }
 
-.sectionbannerone{
-  display: grid;
-  height: 100vh;
-  place-items: center;
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.sectionbannerone {
+    display: grid;
+    padding: 1rem 0;
+    place-items: center;
 
 }
-.img-banner{
-  width: 100%;
-  display: block;
+
+.img-banner {
+    width: 100%;
+    display: block;
 }
+
 .wrapper {
-	display: flex;
-	justify-content: center;
-  align-items: center;
-	width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 500px), 1fr));
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*flex-wrap: wrap;*/
+    width: 100%;
 }
-.card1, .card2  , .card3, .card4{
-	width: 600px;
-	height: 600px;
-	background: #fff;
-	display: flex;
-	align-items: flex-end;
-	padding: 2rem 1rem;
-	position: relative;
-	transition: 0.5s all ease-in-out;
+
+.card1, .card2, .card3, .card4 {
+    width: 100%;
+    aspect-ratio: 1/1;
+    /*height: 600px;*/
+    background: #fff;
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem 1rem;
+    position: relative;
+    transition: 0.5s all ease-in-out;
 }
 
 .cardb:hover {
-	transform: translateY(-10px);
+    transform: translateY(-10px);
 }
+
 .cardb::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background: linear-gradient(to bottom, rgba(13, 36, 63, 0.3), rgba(13, 36, 63, 1));
-	z-index: 2;
-	opacity: 0;
-	transition: 0.5s all;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(13, 36, 63, 0.3), rgba(13, 36, 63, 1));
+    z-index: 2;
+    opacity: 0;
+    transition: 0.5s all;
 }
+
 .cardb:hover::before {
-	opacity: 1;
+    opacity: 1;
 }
 
 .cardb img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
-	position: absolute;
-	top: 0;
-	left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
+
 .cardb .info {
-	position: relative;
-	color: #fff;
-	z-index: 3;
-	opacity: 0;
-	transform: translateY(30px);
-	transition: 0.5s all;
+    position: relative;
+    color: #fff;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.5s all;
 }
+
 .cardb:hover .info {
-	opacity: 1;
-	transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .cardb .info h1 {
-	line-height: 40px;
-	margin-bottom: 10px;
+    line-height: 40px;
+    margin-bottom: 10px;
 }
+
 .cardb .info p {
-	font-size: 15px;
-	letter-spacing: 1px;
-	margin-bottom: 20px;
+    font-size: 15px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
 }
+
 .cardb.info .btn {
-	background: #fff;
-	padding: 0.5rem 1rem;
-	color: #000;
-	font-size: 12px;
-	cursor: pointer;
-	border-radius: 20px;
-	text-decoration: none;
-	font-weight: bold;
-	transition: .4s ease-in-out;
+    background: #fff;
+    padding: 0.5rem 1rem;
+    color: #000;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: .4s ease-in-out;
 }
+
 .cardb .info .btn:hover {
-	background: #fc5185;
-	color: #fff;
-	box-shadow: 0 7px 10px rgba(0, 0, 0, 0.5);
+    background: #fc5185;
+    color: #fff;
+    box-shadow: 0 7px 10px rgba(0, 0, 0, 0.5);
 }
+
 .title-container {
-	position: relative;
-	text-align: center;
-  }
-  
-  .title-container h2 {
-	font-size: 2rem;
-	position: relative;
-	display: inline-block;
-	margin: 0 10px;
-	font-family: "Cinzel", serif;
-	
-  }
-  
-  .title-container h2::before,
-  .title-container h2::after {
-	content: "";
-	position: absolute;
-	top: 50%; 
-	width: 500%;
-	height: 1px;
-	background-color: #333; 
-  }
-  
-  .title-container h2::before {
-	left: -20px;
-	transform: translateX(-100%); 
-  }
-  
-  .title-container h2::after {
-	right: -20px;
-	transform: translateX(100%); 
-  }
-  .title-container p{
-	margin-top: 20px;
-	font-family: "Cinzel", serif;
-  }
+    position: relative;
+    text-align: center;
+}
+
+.title-container h2 {
+    font-size: 2rem;
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+    font-family: "Cinzel", serif;
+
+}
+
+.title-container h2::before,
+.title-container h2::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 500%;
+    height: 1px;
+    background-color: #333;
+}
+
+.title-container h2::before {
+    left: -20px;
+    transform: translateX(-100%);
+}
+
+.title-container h2::after {
+    right: -20px;
+    transform: translateX(100%);
+}
+
+.title-container p {
+    margin-top: 20px;
+    font-family: "Cinzel", serif;
+}
