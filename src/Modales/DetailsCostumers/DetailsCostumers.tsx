@@ -26,7 +26,7 @@ export const UserProfileComponent= ({setIsModalOpen, title = 'Informacion del us
 
     useEffect(() => {
         if(data?.coustomers){
-            setUserData(data?.coustomers)
+            setUserData(data.coustomers);
         }
     }, [data]);
      console.log("UserProfileComponent - User Data:", userData);
@@ -88,7 +88,7 @@ export const UserProfileComponent= ({setIsModalOpen, title = 'Informacion del us
                     <MDBCardText>Correo:</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText>{userData?.user.email}</MDBCardText>
+                  <MDBCardText>{userData?.user.lastname}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
