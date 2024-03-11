@@ -99,10 +99,6 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                 icon: '👏',
                 position: 'bottom-right'
             })
-            setTimeout(() => {
-                setIsModalOpen(false);
-                navigate('/Orders')
-            }, 2000);
         }
     };
     if (loading) {
