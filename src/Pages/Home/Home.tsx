@@ -147,7 +147,7 @@ export const Home = () => {
             <p>Desde nuestras fincas o las de los mejores productores del país.</p>
         </div>
       </div>
-          <div className="sectionbannerone">
+          <div className="sectionbanneroneHome">
             <div className="wrapper">
               <div className="card1 cardb">
                 <img src={Burdeo11} alt="" />
