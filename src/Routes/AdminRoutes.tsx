@@ -1,11 +1,12 @@
-import { MenuItemsProps, SideBarMenuItemProps } from "../types/MenuBar";
-import { FiHome, FiCoffee, FiShoppingBag, FiShoppingCart, FiSettings, FiUsers, FiGrid, FiBarChart } from "react-icons/fi";
+import {MenuItemsProps, SideBarMenuItemProps} from "../types/MenuBar";
+import {FiHome, FiCoffee, FiShoppingBag, FiShoppingCart, FiSettings, FiUsers, FiGrid, FiBarChart} from "react-icons/fi";
 
-import { useAuth } from "../context/AuthContext.tsx";
+import {useAuth} from "../context/AuthContext.tsx";
+import {User} from "../types/AuthContext";
 
 export const useRutasAdmin = () => {
 
-    const { user } = useAuth();
+    const {user} = useAuth();
 
     // const adminToCompare: MenuItemsProps = [
     //     {
@@ -103,20 +104,20 @@ export const useRutasAdmin = () => {
     const adminToCompare: MenuItemsProps = [
         {
             type: 'menu',
-            icon: <FiHome />,
+            icon: <FiHome/>,
             title: 'Ir a la tienda',
             link: '/'
         },
         {
             type: 'menu',
             title: 'Dashboard',
-            icon: <FiBarChart />,
+            icon: <FiBarChart/>,
             link: 'dashboard'
         },
         {
             type: 'subMenu',
             title: 'Configuración',
-            icon: <FiSettings />,
+            icon: <FiSettings/>,
             subItems: [
                 {
                     title: 'Roles',
@@ -127,7 +128,7 @@ export const useRutasAdmin = () => {
         {
             type: 'subMenu',
             title: 'Usuarios',
-            icon: <FiUsers />,
+            icon: <FiUsers/>,
             subItems: [
                 {
                     title: 'Usuarios',
@@ -138,7 +139,7 @@ export const useRutasAdmin = () => {
         {
             type: 'subMenu',
             title: 'Compras',
-            icon: <FiShoppingBag />,
+            icon: <FiShoppingBag/>,
             subItems: [
                 {
                     title: 'Proveedores',
@@ -157,7 +158,7 @@ export const useRutasAdmin = () => {
         {
             type: 'subMenu',
             title: 'Producción',
-            icon: <FiCoffee />,
+            icon: <FiCoffee/>,
             subItems: [
                 {
                     title: 'Ordenes de Producción',
@@ -180,7 +181,7 @@ export const useRutasAdmin = () => {
         {
             type: 'subMenu',
             title: 'Ventas',
-            icon: <FiShoppingCart />,
+            icon: <FiShoppingCart/>,
             subItems: [
                 {
                     title: 'Clientes',
@@ -198,13 +199,45 @@ export const useRutasAdmin = () => {
         }
     ]
 
-    const AdminRoutes = adminToCompare?.filter((item) => {
-        return user?.permissions?.find((permission) => {
-            return permission.includes(item.title)
-        })
+    const {permissions} = user as User;
+
+    const filteredAdminToCompare: MenuItemsProps = adminToCompare.map((menuItem) => {
+
+            if (menuItem.type === 'menu') {
+                if (permissions.some(permission => menuItem.title.toLowerCase().includes(permission.split(' ')[1].toLowerCase()))) {
+                    return menuItem;
+                } else {
+                    return null;
+                }
+            } else if (menuItem.type === 'subMenu') {
+                const subMenuFiltered = menuItem.subItems.filter((subItem) => {
+                    if (permissions.some(permission => subItem.title.toLowerCase().includes(permission.split(' ')[1].toLowerCase()))) {
+                        return subItem;
+                    } else {
+                        return null;
+                    }
+                })
+                if (subMenuFiltered.length > 0) {
+                    return {
+                        ...menuItem,
+                        subItems: subMenuFiltered
+                    }
+                } else {
+                    return null;
+                }
+            }
+        }
+    ).filter((menuItem) => menuItem !== null && menuItem !== undefined);
+
+    filteredAdminToCompare.unshift({
+        type: 'menu',
+        icon: <FiHome/>,
+        title: 'Ir a la tienda',
+        link: '/'
     })
 
     return {
-        AdminRoutes: adminToCompare
+        AdminRoutes: filteredAdminToCompare
+        // AdminRoutes
     }
 }
