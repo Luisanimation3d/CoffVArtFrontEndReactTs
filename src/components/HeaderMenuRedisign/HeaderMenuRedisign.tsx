@@ -115,9 +115,14 @@ const UserHeaderRedisignDesktop = () => {
                             onClick={e => e.stopPropagation()} placeholder="Search"/>
                         <FiSearch/>
                     </button>
-                    <button className={`${styles.action__button}`}>
-                        <img className={`${styles.action__user__image}`} src={userImage} alt="User"/>
-                        {/*<FiUser/>*/}
+                    <button className={`${styles.action__button}`} onClick={handleClick}>
+                        {
+                            isAuthenticated ? (
+                                <img className={`${styles.action__user__image}`} src={userImage} alt="User"/>
+                            ) : (
+                                <FiUser/>
+                            )
+                        }
                     </button>
                     <button className={`${styles.action__button}`} id={'cartButton'}
                             onClick={() => setShowMiniCart(true)}>
@@ -143,22 +148,44 @@ const UserHeaderRedisignDesktop = () => {
 
             {showModal &&
                 createPortal(
-                    search.includes('login') ? (
+                    searchPath.includes('login') ? (
                         <LoginModal showModal={setShowModal}/>
-                    ) : search.includes('register') ? (
+                    ) : searchPath.includes('register') ? (
                         // <Register showModal={setShowModal}/>
                         <RegisterModal showModal={setShowModal}/>
                     ) : null,
                     document.querySelector('#modal') as HTMLElement
-                )}
+                )
+            }
         </>
     )
 }
 
 export const UserHeaderRedisignMobile = () => {
 
-    const [showMenu, setShowMenu] = useState(false)
+    const [showMenu, setShowMenu] = useState(true)
     const [closeMenu, setCloseMenu] = useState(false)
+
+    const {cart} = useCart()
+    const {isAuthenticated} = useAuth()
+    const countProducts = cart?.length
+    const [showMiniCart, setShowMiniCart] = useState<boolean>(false)
+    const location = useLocation()
+    const {search: searchPath, pathname} = location
+    const navigate = useNavigate()
+    const [showModal, setShowModal] = useState<boolean>(false)
+
+    const handleClick = () => {
+        if (isAuthenticated) {
+            navigate('/admin/my-profile')
+            return
+        }
+        setShowModal(true)
+        navigate({
+            pathname,
+            search: 'login'
+        })
+    }
 
     useEffect(() => {
         setCloseMenu(true)
@@ -178,9 +205,28 @@ export const UserHeaderRedisignMobile = () => {
                     <img src={logoBurdeo} alt="Logo Burdeo"/>
                 </div>
                 <div className={`${styles.header__actions__mobile}`}>
-                    <button className={`${styles.action__button}`}><FiSearch/></button>
-                    <button className={`${styles.action__button}`}><FiUser/></button>
-                    <button className={`${styles.action__button}`}><FiShoppingCart/></button>
+                    <button className={`${styles.action__button}`} onClick={handleClick}>
+                        {
+                            isAuthenticated ? (
+                                <img className={`${styles.action__user__image}`} src={userImage} alt="User"/>
+                            ) : (
+                                <FiUser/>
+                            )
+                        }
+                    </button>
+                    <button className={`${styles.action__button}`} id={'cartButton'}
+                            onClick={() => setShowMiniCart(true)}>
+                        <FiShoppingCart/>
+                        {
+                            countProducts > 0 && countProducts < 10 ? (
+                                <span className={`${styles.headerMenu__cart__counter}`}>{countProducts}</span>
+                            ) : (
+                                countProducts > 9 && (
+                                    <span className={`${styles.headerMenu__cart__counter}`}>9+</span>
+                                )
+                            )
+                        }
+                    </button>
                 </div>
             </header>
             {
@@ -196,17 +242,58 @@ export const UserHeaderRedisignMobile = () => {
                         }}>
                             <FiX/>
                         </button>
+
                         <ul className={styles.menu__items__mobile}>
-                            <li className={`${styles.menu__item__mobile}`}><a
-                                className={`${styles.menu__item__link__mobile}`} href="#">Home</a></li>
-                            <li className={`${styles.menu__item__mobile}`}><a
-                                className={`${styles.menu__item__link__mobile}`} href="#">About</a></li>
-                            <li className={`${styles.menu__item__mobile}`}><a
-                                className={`${styles.menu__item__link__mobile}`} href="#">Services</a></li>
-                            <li className={`${styles.menu__item__mobile}`}><a
-                                className={`${styles.menu__item__link__mobile}`} href="#">Contact</a></li>
+                            <li className={`${styles.menu__item__mobile}`}>
+                                <NavLink
+                                    className={({isActive}) => isActive ? `${styles.menu__item__link__mobile} ${styles.menu__item__link__mobile__active}` : `${styles.menu__item__link__mobile}`}
+                                    to="/home">Inicio</NavLink>
+                            </li>
+                            <li className={`${styles.menu__item__mobile}`}>
+                                <NavLink
+                                    className={({isActive}) => isActive ? `${styles.menu__item__link__mobile} ${styles.menu__item__link__mobile__active}` : `${styles.menu__item__link__mobile}`}
+                                    to="/nosotros">Nosotros</NavLink>
+                            </li>
+                            <li className={`${styles.menu__item__mobile}`}>
+                                <NavLink
+                                    className={({isActive}) => isActive ? `${styles.menu__item__link__mobile} ${styles.menu__item__link__mobile__active}` : `${styles.menu__item__link__mobile}`}
+                                    to="/tiendaUser">Tienda</NavLink>
+                            </li>
+                            <li className={`${styles.menu__item__mobile}`}>
+                                <NavLink
+                                    className={({isActive}) => isActive ? `${styles.menu__item__link__mobile} ${styles.menu__item__link__mobile__active}` : `${styles.menu__item__link__mobile}`}
+                                    to="/Contactos">Contacto</NavLink>
+                            </li>
+                            {
+                                isAuthenticated && (
+                                    <li className={`${styles.menu__item__mobile}`}>
+                                        <NavLink
+                                            className={({isActive}) => isActive ? `${styles.menu__item__link__mobile} ${styles.menu__item__link__mobile__active}` : `${styles.menu__item__link__mobile}`}
+                                            to="/myshops">Mis compras</NavLink>
+                                    </li>
+                                )
+                            }
                         </ul>
                     </div>
+                )
+            }
+
+            {showMiniCart &&
+                createPortal(
+                    <MiniCart setShowMiniCart={setShowMiniCart}/>,
+                    document.querySelector('#modal') as HTMLElement
+                )
+            }
+
+            {showModal &&
+                createPortal(
+                    searchPath.includes('login') ? (
+                        <LoginModal showModal={setShowModal}/>
+                    ) : searchPath.includes('register') ? (
+                        // <Register showModal={setShowModal}/>
+                        <RegisterModal showModal={setShowModal}/>
+                    ) : null,
+                    document.querySelector('#modal') as HTMLElement
                 )
             }
         </>

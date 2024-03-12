@@ -4,7 +4,6 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: var(--z-index--miniCart);
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
@@ -43,7 +42,7 @@
     font-size: 32px;
     font-style: normal;
     font-weight: 500;
-    line-height: 0px; /* 0% */
+    line-height: 0; /* 0% */
     text-transform: uppercase;
 }
 
@@ -92,7 +91,7 @@
     font-size: 16px;
     font-style: normal;
     font-weight: bold;
-    line-height: 0px; /* 0% */
+    line-height: 0; /* 0% */
     text-transform: uppercase;
     color: #9f212f;
 }
@@ -107,7 +106,7 @@
     flex-direction: column;
     gap: 1rem;
     background: #faf6ef;
-    box-shadow: 0px -11px 12px -4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 -11px 12px -4px rgba(0, 0, 0, 0.25);
     z-index: 999;
     bottom: 0;
 }
@@ -119,7 +118,7 @@
     width: 100%;
     color: #000;
     text-align: center;
-    font-family: Montserrat;
+    font-family: Montserrat, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -133,7 +132,7 @@
     width: 100%;
     color: #9f212f;
     text-align: center;
-    font-family: Montserrat;
+    font-family: Montserrat, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -148,7 +147,7 @@
     margin-bottom: 1rem;
     color: #000;
     text-align: center;
-    font-family: Montserrat;
+    font-family: Montserrat, sans-serif;
     font-size: 32px;
     font-style: normal;
     font-weight: 700;
@@ -181,5 +180,34 @@
     }
     100% {
         opacity: 1;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .miniCart--container {
+        width: 100%;
+    }
+    .miniCart--header h3{
+        font-size: 1.5rem;
+    }
+    .miniCart--footerTotal {
+        font-size: 1.5rem;
+    }
+    .miniCart--footerSubTotal{
+        font-size: 1rem;
+    }
+    :global(.miniCartProductCard--container) :global(.miniCartProductCard--info) :global(.miniCartProductCard--productName){
+        font-size: 1.2rem;
+    }
+    :global(.miniCartProductCard--container) {
+        max-height: 110px !important;
+    }
+
+    :global(.miniCartProductCard--brand), :global(.miniCartProductCard--unitPriceInfo){
+        font-size: .7rem !important;
+    }
+
+    :global(.miniCartProductCard--quantity){
+        font-size: 1.5rem !important;
     }
 }
