@@ -6,6 +6,7 @@ import {CartProvider} from "./context/CartContext.tsx";
 import {DarkModeProvider} from "./context/DarkMode.tsx";
 import {ProtectedRoutes} from "./Routes/ProtectedRoutes.tsx";
 import OrderProducts from "./Pages/ProductionOrders/ProductionOrdersEdit.tsx";
+import {NotFound} from "./Pages/NotFound/NotFound.tsx";
 // import {LoaderLayout} from "./components/Loaders/LoaderLayout.tsx";
 
 // import {Supplies} from "./Pages/Supplies/SuppliesList.tsx";
@@ -127,7 +128,7 @@ export default function App() {
                                             <AdminLayout/>
                                         </Suspense>
                                     }>
-                                        <Route path={'*'} element={<div>error</div>}/>
+                                        <Route path={'*'} element={<NotFound/>}/>
                                         <Route path={'dashboard'} element={
                                             <Suspense fallback={<h1>Cargando el componente de dashboard</h1>}>
                                                 <Dashboard/>
@@ -319,7 +320,7 @@ export default function App() {
                                         }/>
                                     </Route>
                                 </Route>
-                                <Route path={'*'} element={<div>error</div>}/>
+                                <Route path={'*'} element={<NotFound/>}/>
                                 <Route path={'/'} element={
                                     <Suspense fallback={<h1>Cargando el componente de user</h1>}>
                                         <UserLayout/>

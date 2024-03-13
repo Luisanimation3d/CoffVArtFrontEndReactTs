@@ -466,8 +466,6 @@ const SideBarMenuRedisignItemSubItem = ({
 		};
 	}, []);
 
-	console.log(windowWidth, 'windowWidth')
-
 	return (
 		<>
 			<li

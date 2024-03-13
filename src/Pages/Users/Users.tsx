@@ -91,6 +91,8 @@ export default function User() {
     const handleCallback = (user: {[key: string]: string | number}, type: string) => {
         if (type === 'Cambiar estado') {
             handleDelete(user?.id)
+        }else if(type === 'Editar'){
+            navigate(`/admin/Coustomer/edit/${user?.id}`)
         }
     }
 

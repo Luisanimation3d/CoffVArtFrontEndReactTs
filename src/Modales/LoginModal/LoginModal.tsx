@@ -27,6 +27,8 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
 
     const {data, loading, error: errorLogin, post, get} = useFetch(API_URL)
 
+    console.log(errorLogin)
+
     const [error, setError] = useState<{ [key: string]: string }>({});
 
     const [loginForm, setLoginForm] = useState({
@@ -87,8 +89,8 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         // extract the error from the response
         if (errorLogin) {
             const newError: any = {
-                email: errorLogin || '',
-                password: errorLogin || '',
+                email: errorLogin?.msg || '',
+                password: errorLogin?.msg || '',
             }
             setError(newError);
         }
