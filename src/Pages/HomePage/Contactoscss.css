@@ -54,9 +54,10 @@ body {
 }
 
 .data > p > i {
-    color:crimson;
+    color:rgb(192, 26, 26);
     margin-right: 10px;
     font-size:25px;
+    opacity: 80%;
 }
 
 
@@ -70,9 +71,10 @@ body {
     text-decoration: none;
     width: 40px;
     height: 40px;
-    background: crimson;
+    background: rgba(127, 23, 52,0.5);
     text-align: center;
     transition: .1s;
+
 }
 
 .links > a > i {
@@ -118,7 +120,7 @@ form {
 
 .input-box > input:focus,
 .input-box > textarea:focus {
-    border-bottom:3px solid crimson;
+    border-bottom:3px solid rgb(127, 23, 52);
     animation: shake .2s;
 }
 
@@ -153,7 +155,7 @@ form > button {
     width: 100%;
     padding: 10px;
     outline: none;
-    background: crimson;
+    background: rgb(143, 114, 71);
     color:#fff;
     border:none;
     transition: .1s;
@@ -163,7 +165,7 @@ form > button {
 
 form > button:hover,
 .links > a:hover {
-    background: rgb(172, 16, 47);
+    background: rgb(127, 23, 52);
 }
 
 @keyframes shake { 
