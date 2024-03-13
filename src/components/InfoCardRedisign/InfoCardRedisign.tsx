@@ -8,67 +8,21 @@ interface InfoCardProps {
     darkMode: boolean;
     direction?: any;
     [x: string]: any;
+    titulo: string;
+    productoMasVendido?: string;
+    cantidadMasVendida?: number;
+    productoMenosVendido?: string;
+    cantidadMenosVendida?: number;
+    totalVentasmes?: number;
 }
 
-export const InfoCardRedisign = ({darkMode, direction = 'column', ...props}: InfoCardProps) => {
-
-    const [userDataSale, setUserDataSale] = useState<any>({});
-    const { data, get } = useFetch(API_URL);
-
-    useEffect(() => {
-        get(`sales?apikey=${API_KEY}`);
-    }, []);
-
-    useEffect(() => {
-        if(data?.sales){
-            setUserDataSale(data?.sales);
-        }
-    }, [data]);
-    console.log('InfoCardRedisign - userDataSale:', userDataSale);
-
-let totalVentasMes = 0;
-  let productosVendidosTotales: any = {};
-  let productoMasVendido: string | undefined;
-  let cantidadMasVendida: number | undefined;
-  let productoMenosVendido: string | undefined;
-  let cantidadMenosVendida: number | undefined;
-
-  if (userDataSale.rows) {
-    userDataSale.rows.forEach((sale: any) => {
-      totalVentasMes += sale.total;
-
-      sale.salesdetails.forEach((detail: any) => {
-        const productName = detail.product.name;
-
-        
-        if (productosVendidosTotales[productName]) {
-          productosVendidosTotales[productName] += detail.quantity;
-        } else {
-          productosVendidosTotales[productName] = detail.quantity;
-        }
-      });
-    });
-
-    const productosOrdenados = Object.keys(productosVendidosTotales).sort(
-      (a, b) => productosVendidosTotales[b] - productosVendidosTotales[a]
-    );
-
-
-    productoMasVendido = productosOrdenados[0];
-    cantidadMasVendida = productosVendidosTotales[productoMasVendido];
-
-
-    productoMenosVendido = productosOrdenados[productosOrdenados.length - 1];
-    cantidadMenosVendida = productosVendidosTotales[productoMenosVendido];
-  }
-
-    
+export const InfoCardRedisign = ({darkMode, direction = 'column', titulo, productoMasVendido, cantidadMasVendida, productoMenosVendido, cantidadMenosVendida, totalVentasmes, ...props}: InfoCardProps) => {
 
     return (
         <div
             className={`${styles.infoCard__container} ${darkMode ? styles.infoCard__container__darkMode : styles.infoCard__container__lightMode}`} {...props}>
             <div className={`${styles.infoCard__header}`}>
-                <h2 className={`${styles.infoCard__header__title}`}>Total de Ventas del Mes</h2>
+                <h2 className={`${styles.infoCard__header__title}`}>{titulo}</h2>
                 <span className={`${styles.infoCard__header__icon}`}>
                     <FiMoreHorizontal/>
                 </span>
@@ -77,7 +31,7 @@ let totalVentasMes = 0;
                 <div className={`${styles.infoCard__body__data}`}>
                     <div className={`${styles.infoCard__body__data__container}`}>
                         <span className={`${styles.infoCard__body__data__price}`}>
-                            ${Intl.NumberFormat('es-CO').format(totalVentasMes)}
+                            ${Intl.NumberFormat('es-CO').format(totalVentasmes || 0)}
                         </span>
                         <div className={`${styles.infoCard__body__data__content}`}>
                             <h3 className={`${styles.infoCard__body__data__title}`}>{productoMasVendido}</h3>
