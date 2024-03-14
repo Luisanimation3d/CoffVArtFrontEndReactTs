@@ -9,8 +9,10 @@ import {EditUsersModal} from "../../Modales/EditUsersModal/EditUsersModal.tsx";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiPenTool, FiShuffle} from "react-icons/fi";
 import {useNavigate} from "react-router-dom";
+import { useAuth } from "../../context/AuthContext.tsx";
 
 export default function User() {
+    const {user} = useAuth();
     const [search, setSearch] = useState<string>('')
     const [userToEdit, setUserToEdit] = useState<number | null>(null)
     // const {data, loading, error, get} = useFetch(API_URL)
@@ -115,6 +117,8 @@ export default function User() {
         }
     }, [userToEdit]);
 
+    console.log(user, 'Usuario')
+
     return (
         <>
             <Container align={'center'} justify={'TOP'}>
@@ -132,7 +136,7 @@ export default function User() {
                    callback={handleCallback}
                    loading={loading}
                    onRowClick={row => alert(row.name)}
-                   createAction={() => navigate('/admin/users/create')}
+                   createAction={user?.permissions?.includes("post usuarios") ? () => navigate('/admin/users/create') : undefined}
                />
                 {
                     isModalOpen && createPortal(

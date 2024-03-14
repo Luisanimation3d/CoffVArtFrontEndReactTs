@@ -199,7 +199,12 @@ export const useRutasAdmin = () => {
         }
     ]
 
-    const {permissions} = user as User;
+    if (!user) {
+        return {
+            AdminRoutes: adminToCompare
+        }
+    }
+    const {permissions} = user;
 
     const filteredAdminToCompare: MenuItemsProps = adminToCompare.map((menuItem) => {
 
