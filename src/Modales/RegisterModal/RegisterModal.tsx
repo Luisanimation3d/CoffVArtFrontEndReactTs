@@ -10,6 +10,7 @@ import ImageRegister from '../../assets/RegisterImage.png'
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
+import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) => {
     const location = useLocation();
@@ -125,8 +126,12 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
             label: 'Tipo de documento',
             placeholder: 'Tipo de documento',
             value: registerForm.documentType,
-            options: documentTypeOptions,
             onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
+            options: [
+                {label: 'Cédula de ciudadanía', value: 'CC'},
+                {label: 'Cédula de extranjería', value: 'CE'},
+                {label: 'Pasaporte', value: 'PA'},
+            ]
         },
         {
             name: 'document',
@@ -146,47 +151,44 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
         });
     };
 
-    const validateForm = () => {
-        const errors: { [key: string]: string } = {};
-        if (!registerForm.name) {
-            errors.name = 'Ingrese su nombre';
-        }
-        if (!registerForm.lastname) {
-            errors.lastname = 'Ingrese su apellido';
-        }
-        if (!registerForm.address) {
-            errors.address = 'Ingrese su dirección';
-        }
-        if (!registerForm.phone) {
-            errors.phone = 'Ingrese su teléfono';
-        }
-        if (!registerForm.email) {
-            errors.email = 'Ingrese su email';
-        }
-        if (!registerForm.password) {
-            errors.password = 'Ingrese su contraseña';
-        }
-        if (!registerForm.confirmPassword) {
-            errors.confirmPassword = 'Confirme su contraseña';
-        }
-        if (registerForm.password !== registerForm.confirmPassword) {
-            errors.confirmPassword = 'Las contraseñas no coinciden';
-            errors.password = 'Las contraseñas no coinciden';
-        }
-        if (!registerForm.documentType) {
-            errors.documentType = 'Seleccione un tipo de documento';
-        }
-        if (!registerForm.document) {
-            errors.document = 'Ingrese su documento';
-        }
-        return errors;
-    }
-
     const handleSubmit = (e: any) => {
         e.preventDefault();
-        setError({})
-        const errors = validateForm();
-        if (Object.keys(errors).length === 0) {
+        let mensajeError = {}
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!registerForm.name || registerForm.name.trim().length < 3 || registerForm.name.trim().length > 15 || !/^[a-zA-Z\s]+$/.test(registerForm.name)) {
+           mensajeError = {...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras y no debe contener caracteres especiales'}
+        }
+        if (!registerForm.lastname || registerForm.lastname.trim().length < 3 || !/^[a-zA-Z\s]+$/.test(registerForm.lastname)) {
+            mensajeError = {...mensajeError, lastname: 'El apellido debe tener al menos 3 letras y no debe contener caracteres especiales'}
+        }
+        if (!registerForm.address || registerForm.address.trim().length < 10) {
+            mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}
+        }
+        if (!registerForm.phone || registerForm.phone.trim().length < 10 || registerForm.phone.trim().length > 12) {
+            mensajeError = { ...mensajeError, phone: 'El teléfono debe tener entre 10 y 12 caracteres' };
+        }
+        if (!registerForm.email || !emailRegex.test(registerForm.email)){
+            mensajeError = { ...mensajeError, email: 'Ingrese un correo electrónico válido' };
+        }
+        if (!registerForm.password) {
+            mensajeError = {...mensajeError, password: 'La contraseña es requerida'}
+        }
+        if (registerForm.password.trim().length < 8 || !/\d/.test(registerForm.password) || !/[!@#$%^&*]/.test(registerForm.password)) { mensajeError = {...mensajeError, password: 'La contraseña debe tener al menos 8 caracteres, incluir al menos un número y un carácter especial'}; 
+        }
+        if (!registerForm.confirmPassword) {
+            mensajeError = {...mensajeError, confirmPassword: 'La confirmación de contraseña es requerida'}
+        }
+        if (registerForm.password !== registerForm.confirmPassword) {
+            mensajeError = {...mensajeError, confirmPassword: 'Las contraseñas no coinciden'}
+        }
+        if (!registerForm.documentType) {
+            mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
+        }
+        if (!registerForm.document || registerForm.document.trim().length < 8 || registerForm.document.trim().length > 15) {
+            mensajeError = { ...mensajeError, document: 'El número de documento debe tener entre 8 y 15 caracteres' };
+        }
+
+        if (Object.keys(mensajeError).length === 0) {
             const dataToSend = {
                 ...registerForm,
                 documentType: registerForm.documentType?.value,
@@ -194,7 +196,7 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
             post(`users?apikey=${API_KEY}`, {...dataToSend, roleId: 1})
         } else {
             console.log('Formulario inválido');
-            setError(errors);
+            setError(mensajeError);
         }
     }
 
@@ -215,7 +217,7 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
             <ModalContainer ShowModal={showModal}>
                 <Modal showModal={showModal} xColor={'#9f212f'} className={`${styles.RegisterModal}`}>
                     <div className={`${styles.formContainer}`}>
-                        <Form
+                        <FormRedisign
                             fields={formFieldsRegister}
                             button={<Button text={'Crear una cuenta'} type={'SUBMIT'} fill={false} autosize={false}/>}
                             onSubmit={handleSubmit}
