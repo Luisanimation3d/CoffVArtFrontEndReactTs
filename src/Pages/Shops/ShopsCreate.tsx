@@ -125,7 +125,7 @@ export const ShopsCreate = () => {
             placeholder: 'Cantidad (Kg)',
             size: 'large',
             value: cantidad,
-            onChange: setCantidad
+            onChange: (value: string) => setCantidad(value === '' || parseInt(value) < 0 ? '' : value)
         },
         {
             name: 'unitPrice',
@@ -134,7 +134,7 @@ export const ShopsCreate = () => {
             placeholder: 'Precio Unitario',
             size: 'large',
             value: unitPrice,
-            onChange: setUnitPrice
+            onChange: value => setUnitPrice(value === '' || parseFloat(value) < 0 ? '' : value)
         },
         {
             name: 'date',
