@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import ProductImage from '../../assets/product.jpg';
+import ProductImage from '../../assets/productFront.jpg';
 import { Product } from '../../components/ProductCard/ProductCard.tsx';
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { API_KEY, API_URL } from "../../utils/constantes.ts";

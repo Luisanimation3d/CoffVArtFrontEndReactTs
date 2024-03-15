@@ -33,7 +33,7 @@ export const CreateProduct = () => {
 			onChange: (value: string) => setFormData({ ...formData, name: value }),
 			label: 'Nombre',
 			name: 'name',
-			size: 'medium',
+			size: 'large',
 		},
 		{
 			type: 'number',
@@ -103,7 +103,7 @@ export const CreateProduct = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		let mensajeError = {};
-		if (!formData.name) {
+		if (!formData.name || formData.name.trim().length < 1 || !/^[a-zA-Z\s]+$/.test(formData.name)) {
 			mensajeError = { ...mensajeError, name: 'El nombre es requerido' };
 		}
 		if (!formData.stockMin) {
@@ -130,7 +130,7 @@ export const CreateProduct = () => {
 				amountSupply: 'La cantidad de insumos es requerida',
 			};
 		}
-		if (!formData.description) {
+		if (!formData.description || formData.description.trim().length < 1 || !/^[a-zA-Z\s]+$/.test(formData.description)) {
 			mensajeError = {
 				...mensajeError,
 				description: 'La descripción es requerida',
