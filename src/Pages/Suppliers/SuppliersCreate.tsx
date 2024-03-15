@@ -110,8 +110,8 @@ export const SuppliersCreate = () => {
         if (!formValues.nit) {
             mensajeError = {...mensajeError, nit: 'El NIT es requerido'}
         }
-        if (!formValues.coffeType) {
-            mensajeError = {...mensajeError, coffeType: 'El tipo de café es requerido'}
+        if (!formValues.coffeType || !/^[a-zA-Z\s]+$/.test(formValues.coffeType)) {
+            mensajeError = {...mensajeError, coffeType: 'El tipo de café es requerido y incluir caracteres especiales'}
         }
         if (!formValues.address) {
             mensajeError = {...mensajeError, address: 'La dirección es requerida'}
@@ -138,7 +138,7 @@ export const SuppliersCreate = () => {
             };
             console.log('Datos del formulario:', requestBody);
 
-            const response = await fetch(`http://localhost:3000/api/suppliers?apikey=${API_KEY}`, {
+            const response = await fetch(`https://coffvart-backend.onrender.com/api/suppliers?apikey=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

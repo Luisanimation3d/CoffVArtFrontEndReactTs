@@ -252,7 +252,7 @@ export const ShopsCreate = () => {
     // }, []);
 
     useEffect(() => {
-        getInsumos(`supplies?apikey=${API_KEY}`);
+        getInsumos(`suppliesActive?apikey=${API_KEY}`);
         getProveedores(`suppliers?apikey=${API_KEY}`);
     }, []);
 

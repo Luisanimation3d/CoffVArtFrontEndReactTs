@@ -12,7 +12,6 @@ export const CreateProduct = () => {
 
 	const [formData, setFormData] = useState<{
 		name: string;
-		amount: string;
 		stockMin: string;
 		stockMax: string;
 		unitPrice: string;
@@ -20,7 +19,6 @@ export const CreateProduct = () => {
 		description: string;
 	}>({
 		name: '',
-		amount: '',
 		stockMin: '',
 		stockMax: '',
 		unitPrice: '',
@@ -35,18 +33,6 @@ export const CreateProduct = () => {
 			onChange: (value: string) => setFormData({ ...formData, name: value }),
 			label: 'Nombre',
 			name: 'name',
-			size: 'medium',
-		},
-		{
-			type: 'number',
-			value: formData.amount,
-			onChange: (value: string) =>
-				setFormData((prev) => ({
-					...formData,
-					amount: validateIfNumber(value) ? value : prev.amount,
-				})),
-			label: 'Cantidad',
-			name: 'amount',
 			size: 'medium',
 		},
 		{
@@ -120,9 +106,6 @@ export const CreateProduct = () => {
 		if (!formData.name) {
 			mensajeError = { ...mensajeError, name: 'El nombre es requerido' };
 		}
-		if (!formData.amount) {
-			mensajeError = { ...mensajeError, amount: 'La cantidad es requerida' };
-		}
 		if (!formData.stockMin) {
 			mensajeError = {
 				...mensajeError,
@@ -161,7 +144,6 @@ export const CreateProduct = () => {
 		try {
 			const requestBody = {
 				name: formData.name,
-				amount: formData.amount,
 				stockMin: formData.stockMin,
 				stockMax: formData.stockMax,
 				unitPrice: formData.unitPrice,
