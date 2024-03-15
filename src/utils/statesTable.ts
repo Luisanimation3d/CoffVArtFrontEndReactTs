@@ -1,7 +1,8 @@
 export const statesTable = {
     blue: [
         "ENVIADO",
-        "DESGASIFICASION"
+        "DESGASIFICACION",
+        "Desgasificacion"
     ],
     green: [
         true,

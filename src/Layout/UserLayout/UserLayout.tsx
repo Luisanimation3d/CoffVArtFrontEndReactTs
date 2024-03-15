@@ -3,6 +3,7 @@ import {Outlet, useLocation, useNavigate} from "react-router-dom";
 import {UserFooter} from "../../components/Footer/Footer";
 import {useEffect} from "react";
 import {HeaderMenuRedisign} from "../../components/HeaderMenuRedisign/HeaderMenuRedisign.tsx";
+import {FooterRedisignDesktop} from "../../components/FooterRedisign/FooterRedisign.tsx";
 
 export const UserLayout = () => {
     const location = useLocation()
@@ -21,8 +22,8 @@ export const UserLayout = () => {
                 flexDirection: 'column',
                 minHeight: '100vh',
                 height: '100%',
-                overflow: 'hidden',
-                overflowY: 'auto',
+                // overflow: 'hidden',
+                // overflowY: 'auto',
             }}>
                 <div style={{
                     flex: '1',
@@ -30,6 +31,7 @@ export const UserLayout = () => {
                     <Outlet/>
                 </div>
                 <UserFooter/>
+                {/*<FooterRedisignDesktop/>*/}
             </div>
         </>
     )

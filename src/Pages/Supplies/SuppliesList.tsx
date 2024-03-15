@@ -87,7 +87,7 @@ export const Supplies = () => {
                     dropDownOptions={options}
                     createAction={() => navigate('/admin/supplys/create')}
                     loading={loading}
-                    onRowClick={row => alert(row.name)}
+                    // onRowClick={row => alert(row.name)}
                     callback={handleCallback}
                 />
                 {

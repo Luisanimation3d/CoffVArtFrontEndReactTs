@@ -153,7 +153,7 @@ console.log(data)
                     search={search}
                     setSearch={setSearch}
                     createAction={() => navigate('/admin/Orders/create')}
-                    title="Ordenes"
+                    title="Pedidos"
                     page={page}
                     setPage={setPage}
                     callback={handleDelete}

@@ -124,7 +124,7 @@ export const AboutUs = () => {
 						<section className='rowAbout'>
 							{/* <img src={AboutRowImageOne} alt="" /> */}
 							<div className='rowAbout__text'>
-								<h2>Nosotros?</h2>
+								<h2>Nosotros</h2>
 								<p className='rowAbout__paragraph'>
 									Burdeo Coffee es una empresa familiar joven y enérgica
 									dedicada a la producción y venta de café en grano alta
@@ -137,8 +137,7 @@ export const AboutUs = () => {
 									tés y otros para satisfacer todas las necesidades y gustos de
 									nuestros clientes. En Estamos orgullosos de ofrecer un
 									producto excepcional y esperamos compartir nuestra pasión por
-									el café. Traducción realizada con la versión gratuita del
-									traductor DeepL.com
+									el café.
 								</p>
 							</div>
 						</section>
@@ -154,8 +153,6 @@ export const AboutUs = () => {
 								de productos. Tanto si es un experto en café como si simplemente
 								café para empezar el día, tenemos algo para todos los gustos.
 								para todos los gustos. Gracias por elegir Burdeo Coffee.
-								Traducción realizada con la versión gratuita del traductor
-								DeepL.com
 							</p>
 						</section>
 
@@ -173,8 +170,7 @@ export const AboutUs = () => {
 								tés y otros productos de café para satisfacer todas las
 								necesidades y gustos de nuestros clientes. Estamos orgullosos de
 								ofrecer un un producto excepcional y esperamos poder compartir
-								nuestra pasión por el café con usted. Traducción realizada con
-								la versión gratuita del traductor DeepL.com
+								nuestra pasión por el café con usted.
 							</p>
 							{/* <img src={AboutRowImageTwo} alt="" /> */}
 						</section>

@@ -117,7 +117,7 @@
     font-size: .8rem;
     font-weight: 600;
     padding: .8rem 1rem;
-    text-align: center;
+    text-align: left;
 }
 
 .table__content__thead__item:first-child {
