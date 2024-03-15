@@ -57,7 +57,7 @@ export const ProductionRequestsCreate = () => {
     const {data:datacompany,get:getCompanys} = useFetch(API_URL);
 
     useEffect(() => {
-        getCompanys('companys?apikey=' + API_KEY)
+        getCompanys('companysActive?apikey=' + API_KEY)
     }, []);
     useEffect(() => {
         const companyOptions = datacompany?.companys?.rows?.map((item: any) => ({
@@ -153,13 +153,28 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             const data = await response.json();
             if(data.message == "Solicitud P. creada correctamente"){
                 toast(data.message,{
-                    icon: ':)',
+                    icon: '👏',
                     position: 'bottom-right'
                 })
                 setTimeout(()=> {
                     navigate(-1)
                 },2000);
-            }
+            }else if (data.error == `La cantidad de insumo supera el stock`){
+                toast.error(data.error, {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                    
+            }, 2000);}
+            else if (data.error == `La cantidad de insumos no puede ser menor que 0`){
+                        toast.error(data.error, {
+                            icon: '😞',
+                            position: 'bottom-right'
+                        })
+                        setTimeout(() => {
+                            
+                            }, 2000);}
         }
 
         } catch (error) {

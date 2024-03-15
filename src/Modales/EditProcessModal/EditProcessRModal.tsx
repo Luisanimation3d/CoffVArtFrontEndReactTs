@@ -114,7 +114,6 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         const requestBody = {
             processId: process?.value,
         };
-        console.log(requestBody);
 
         try {
             await put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody);
@@ -137,7 +136,6 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         const requestBody = {
             receivedQuantity: formValues.receivedQuantity,
         };
-        console.log(requestBody)
         put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
         setIsModalOpen(false)
     };

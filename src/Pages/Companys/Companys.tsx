@@ -19,6 +19,7 @@ export const Companys = () => {
     const [companyToEdit, setCompanyToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const {data,loading,error,get,del} = useFetch(API_URL)
+    const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -99,6 +100,10 @@ export const Companys = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Compañias'}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.companys?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     createAction={() => navigate('/admin/Companys/create')}
                     loading={loading}
                     callback={handleCallback}

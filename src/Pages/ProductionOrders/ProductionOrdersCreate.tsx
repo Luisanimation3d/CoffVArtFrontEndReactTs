@@ -103,13 +103,28 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             const data = await response.json();
             if(data.message == "Orden P. creada correctamente"){
                 toast(data.message,{
-                    icon:':)',
+                    icon:'👏',
                     position: 'bottom-right'
                 })
                 setTimeout(()=>{
                     navigate(-1)
                 },2000);
-            }
+            }else if (data.error == `La cantidad de insumo supera el stock`){
+                toast.error(data.error, {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                    
+            }, 2000);}
+            else if (data.error == `La cantidad de insumos no puede ser menor que 0`){
+                        toast.error(data.error, {
+                            icon: '😞',
+                            position: 'bottom-right'
+                        })
+                        setTimeout(() => {
+                            
+                            }, 2000);}
         }
         } catch (error) {
             console.error('Error al crear la solicitud de producción', error);
