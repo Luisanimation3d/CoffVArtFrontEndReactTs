@@ -40,10 +40,10 @@ export const CreateSupply = () => {
     const handleSubmit= async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         let mensajeError = {}
-        if (!formData.name || formData.name.trim().length < 4 || !/^[a-zA-Z\s]+$/.test(formData.name)) {
+        if (!formData.name || formData.name.trim().length < 4 || !/^[a-zA-Z\u00C0-\u017F\s]+$/.test(formData.name)) {
             mensajeError = {...mensajeError, name: 'El nombre es requerido'}
         }
-        if (!formData.description || formData.description.trim().length < 5 || !/^[a-zA-Z\s]+$/.test(formData.description)){
+        if (!formData.description || formData.description.trim().length < 5 || !/^[a-zA-Z\u00C0-\u017F\s]+$/.test(formData.description)){
             mensajeError = {...mensajeError, description: 'La descripción es requerida'}
         }
         if (Object.keys(mensajeError).length > 0) {

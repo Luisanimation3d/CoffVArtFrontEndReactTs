@@ -10,6 +10,7 @@ import {Button} from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import styles from './Roles.module.css';
+import {FiPenTool} from "react-icons/fi";
 
 export const Roles = () => {
     const [search, setSearch] = useState<string>('')
@@ -56,6 +57,12 @@ export const Roles = () => {
         setTimeout(() => {
             get(`roles?apikey=${API_KEY}`)
         }, 500)
+    }
+
+    const handleOption = (row: {[key:string] : string | number}, type: string) => {
+        if (type === 'Editar') {
+            navigate(`/admin/roles/edit/${row.id}`)
+        }
     }
 
     const handleRowClick = (row: any) => {
@@ -120,6 +127,13 @@ export const Roles = () => {
                     createAction={() => navigate('/admin/roles/create')}
                     onRowClick={handleRowClick}
                     page={page}
+                    dropDownOptions={[
+                        {
+                            label: 'Editar',
+                            icon: <FiPenTool/>,
+                        }
+                    ]}
+                    callback={handleOption}
                     setPage={setPage}
                     pagination={true}
                     totalPages={Math.ceil(data?.roles?.count / data?.options?.limit) || 1}

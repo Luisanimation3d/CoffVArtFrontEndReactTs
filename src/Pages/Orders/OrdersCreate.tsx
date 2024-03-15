@@ -276,7 +276,7 @@ export const OrdersCreate = () => {
         const requestBody = {
             code: factura,
             coustumerId: selectCliente?.value,
-            state: 'pendiente',
+            state: 'Pendiente',
             total: subTotal + iva,
             Productdetails: detalles.map((detalle) => ({
                 orderId: detalle.id,

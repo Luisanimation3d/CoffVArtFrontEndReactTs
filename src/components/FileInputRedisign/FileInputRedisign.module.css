@@ -3,13 +3,13 @@
     align-items: center;
     min-height: 3rem;
     position: relative;
-    border: 2px solid #86A8CF;
+    border: 2px solid #d6cab0;
     border-radius: .25rem;
     padding: 0 1rem;
 }
 
 .container:has(.input:focus) {
-    border-color: #86A8CF;
+    border-color: #9F212F;
 }
 
 .container.medium{
@@ -25,8 +25,8 @@
     outline: none;
     font-size: 1rem;
     border: none;
-    background: #121212;
-    color: #fff;
+    background: #fff;
+    color: #1f1f1f;
     transition: .3s ease-in-out;
 }
 
@@ -36,12 +36,12 @@
 
 .label {
     position: absolute;
-    top: 0;
+    top: -2px;
     transform: translateY(-50%);
-    color: #86A8CF;
+    color: #d6cab0;
     pointer-events: none;
     font-size: .8rem;
-    background: #121212;
+    background: #fff;
     padding: 0 .25rem;
     font-weight: 600;
     transition: .3s ease-in-out;
@@ -50,9 +50,9 @@
 .input:focus + .label {
     top: 0;
     font-size: .8rem;
-    color: #86A8CF;
+    color: #9F212F;
 }
 
 .input:focus {
-    border-color: #86A8CF;
+    border-color: #9F212F;
 }

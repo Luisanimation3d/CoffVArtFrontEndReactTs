@@ -50,7 +50,7 @@ export const SendEmail = () => {
 
     useEffect(() => {
         if (errorPost){
-            setError({email: errorPost})
+            setError({email: errorPost.msg})
         }
     }, [errorPost]);
 

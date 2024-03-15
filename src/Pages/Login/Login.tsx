@@ -75,10 +75,10 @@ export const Login = () => {
 
     useEffect(() => {
         // extract the error from the response
-        if (errorLogin) {
+        if (errorLogin?.msg) {
             const newError: any = {
-                email: errorLogin || '',
-                password: errorLogin || '',
+                email: errorLogin.msg || '',
+                password: errorLogin.msg || '',
             }
             setError(newError);
         }

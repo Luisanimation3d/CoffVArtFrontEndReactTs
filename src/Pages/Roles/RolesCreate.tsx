@@ -11,6 +11,7 @@ import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 export const RolesCreate = () => {
     const [step, setStep] = useState<number>(1)
@@ -212,17 +213,13 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
         post(`roles?apikey=${API_KEY}`, newValues)
             console.log(loading, error)
         if (!loading && !error) {
-            Swal.fire({
-                title: 'Rol editado correctamente',
-                icon: 'success',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#0098DA',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate(-1)
-                }
+            toast.success('Rol creado correctamente', {
+                duration: 4000,
+                position: 'bottom-right',
             })
+            setTimeout(() => {
+                navigate('/admin/roles')
+            }, 2000)
         }
     }
 
@@ -257,6 +254,7 @@ const RolesCreateStepTwo = ({changeStep, valueForm, setValueForm}: {
             <Container align={'CENTER'} justify={'CENTER'} direction={'ROW'} className={styles.buttonContainer}>
                 <Button text={'Atrás'} onClick={() => changeStep(1)} type={'BUTTON'} autosize={true} fill={false}/>
                 <Button text={'Registrar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true} disabled={selectedPrivileges?.length === 0}/>
+                <Toaster/>
             </Container>
         </>
     )
