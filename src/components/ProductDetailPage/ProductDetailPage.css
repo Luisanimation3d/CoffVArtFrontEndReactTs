@@ -1,5 +1,5 @@
 .product-detail-container {
-    max-width: 1200px;
+    max-width: 1630px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ddd;
@@ -38,17 +38,17 @@
 }
 
 .product-title {
-    font-size: 24px;
+    font-size: 50px;
     margin-bottom: 10px;
 }
 
 .product-description {
-    font-size: 16px;
-    margin-bottom: 15px;
+    font-size: 25px;
+    margin-bottom: 25px;
 }
 
 .product-price {
-    font-size: 18px;
+    font-size: 30px;
     margin-bottom: 15px;
 }
 
@@ -64,7 +64,7 @@ select {
 }
 
 .add-to-cart-button {
-    background-color: #4caf50;
+    background-color: #d6cab0;
     color: #fff;
     padding: 10px;
     border: none;
