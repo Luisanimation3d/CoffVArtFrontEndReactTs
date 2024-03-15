@@ -95,8 +95,9 @@ export const ProductDetailPage = () => {
                     </div>
                     <div className="product-info">
                         <h1 className="product-title">{product.name}</h1>
-                        <p className="product-description">{product.description}</p>
                         <p className="product-price">${product.price}</p>
+                        <p className="product-description">{product.description}</p>
+                        <p className="product-description">Cantidad:</p>
                         <div className={`selectorQuantityContainer`}>
                             <button onClick={handleSubtractQuantity}><FiMinus/></button>
                             <span>{quantity}</span>

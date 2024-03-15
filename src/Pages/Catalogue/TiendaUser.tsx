@@ -50,8 +50,8 @@ export const TiendaUser = () => {
 				<div className='tiendaUser--filterContainer'>
 					<div className='tiendaUser--filterContainer__filter'>
 						<div className='tiendaUser--filterContainer__filter__title'>
-							<h3>Filtros</h3>
-							<div className='tiendaUser--filterContainer__filter__item'>
+							<h3>Productos</h3>
+							{/* <div className='tiendaUser--filterContainer__filter__item'>
                                     <label>Precio:</label>
                                     <input
                                         type='range'
@@ -62,7 +62,7 @@ export const TiendaUser = () => {
                                         onChange={(e) => setPriceFilter(e.target.value === '' ? null : parseInt(e.target.value))}
                                     />
                                     <span>{priceFilter !== null ? `$${priceFilter}` : 'Todos'}</span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
