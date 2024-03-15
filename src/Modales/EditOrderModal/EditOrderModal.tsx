@@ -59,11 +59,11 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                 console.log(currentStatus);
                 console.log(o?.value, "value");
     
-                if (currentStatus === 'entregado' && o?.value === 'pendiente') {
+                if (currentStatus === 'Entregado' && o?.value === 'Pendiente') {
                     showAlert = true;
                     toast.error('No puedes cambiar a pendiente si ya esta entregado')
 
-                } else if (currentStatus === 'entregado' && o?.value === 'enviado') {
+                } else if (currentStatus === 'Entregado' && o?.value === 'Enviado') {
                     showAlert = true;
                     toast.error('No puedes cambiar a enviado si ya está entregado');
 

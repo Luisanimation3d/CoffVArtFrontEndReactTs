@@ -75,6 +75,11 @@ export const Sales = () => {
     } else {
         dataSalesFiltered = dataSales;
     }
+    useEffect(() => {
+        if(!isModalOpenEdit){
+            get(`sales?apikey=${API_KEY}`);
+        }
+    }, [isModalOpenEdit]);
 
 
     const handleCallback= (row: {[key : string] : string | number}, type: string | number) => {	

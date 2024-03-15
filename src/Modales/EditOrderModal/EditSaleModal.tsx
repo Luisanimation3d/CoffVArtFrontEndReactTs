@@ -61,10 +61,10 @@ export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: 
                 console.log(o?.value, "value");
     
                 // Validar que solo se pueda poner en "Cancelado" si está en "Pendiente"
-                if (currentStatus === 'entregado' && o?.value === 'pendiente') {
+                if (currentStatus === 'Entregado' && o?.value === 'Pendiente') {
                     showAlert = true;
                     toast.error('No puedes cambiar a pendiente si ya esta entregado')
-                } else if (currentStatus === 'entregado' && o?.value === 'enviado') {
+                } else if (currentStatus === 'Entregado' && o?.value === 'Enviado') {
                     showAlert = true;
                     toast.error('No puedes cambiar a enviado si ya está entregado');
                 } else {
@@ -95,12 +95,7 @@ export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: 
             state: registerForm?.state?.value,
         };
         console.log(requestBody)
-        try{
-        await put(`sales/${id}?apikey=${API_KEY}`, requestBody)
-        setIsModalOpen(false)
-        }catch(error){
-            console.log(error)
-        }
+         put(`sales/${id}?apikey=${API_KEY}`, requestBody)
 
         if(data.message == "Estado cambiado correctamente"){
             toast(data.message, {
