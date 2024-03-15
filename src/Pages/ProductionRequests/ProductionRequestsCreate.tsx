@@ -1,6 +1,6 @@
 import { FormField, SelectOption} from '../../types/Form'
 
-import { API_KEY, API_URL } from '../../constantes';
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
@@ -32,7 +32,7 @@ export const ProductionRequestsCreate = () => {
 
     const {data:datasupplie,get:getSupplies} = useFetch(API_URL);
     useEffect(()=>{
-        getSupplies('supplies?apikey='+API_KEY)
+        getSupplies('suppliesActive?apikey='+API_KEY)
     },[]);
     useEffect(()=>{
         const supplieOptions = datasupplie?.supplies?.rows?.map((item: any)=>({

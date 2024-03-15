@@ -27,7 +27,7 @@ export const OrdersCreate = () => {
         loading: loadingClientes,
         error: errorClientess,
         get: getClientes
-    } = useFetch('https://coffvart-backend.onrender.com/api/')
+    } = useFetch('http://localhost:3000/api/')
     // const { POST } = useFetch ('https://coffvart-backend.onrender.com/api/')
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
@@ -212,7 +212,7 @@ export const OrdersCreate = () => {
 
     useEffect(() => {
         getProductos(`products?apikey=${API_KEY}`);
-        getClientes(`coustumers?apikey=${API_KEY}`);
+        getClientes(`coustumersActive?apikey=${API_KEY}`);
     }, []);
 
     useEffect(() => {

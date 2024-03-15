@@ -161,20 +161,20 @@ export const useRutasAdmin = () => {
             icon: <FiCoffee/>,
             subItems: [
                 {
-                    title: 'Ordenes de Producción',
-                    link: 'ProductionOrders',
-                },
-                {
-                    title: 'Solicitudes de Producción',
-                    link: 'ProductionRequests',
+                    title: 'Compañias',
+                    link: 'Companys',
                 },
                 {
                     title: 'Productos',
                     link: 'Products',
                 },
                 {
-                    title: 'Compañias',
-                    link: 'Companys',
+                    title: 'Solicitudes de Producción',
+                    link: 'ProductionRequests',
+                },
+                {
+                    title: 'Ordenes de Producción',
+                    link: 'ProductionOrders',
                 }
             ]
         },
