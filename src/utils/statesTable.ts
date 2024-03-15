@@ -6,7 +6,8 @@ export const statesTable = {
     green: [
         true,
         'FINALIZADO',
-        'RECIBIDO'
+        'RECIBIDO',
+        'ENTREGADO'
     ],
     red: [
         false,

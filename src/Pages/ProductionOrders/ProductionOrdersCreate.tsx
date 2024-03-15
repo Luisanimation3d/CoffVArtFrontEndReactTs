@@ -1,4 +1,4 @@
-import { FormField, SelectOption} from '../../types/Form'
+import { FormField, SelectOption} from '../../types/Form';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
