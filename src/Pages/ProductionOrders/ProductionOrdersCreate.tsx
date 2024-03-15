@@ -1,5 +1,5 @@
 import { FormField, SelectOption} from '../../types/Form'
-import { API_KEY, API_URL } from '../../constantes';
+import { API_KEY, API_URL } from '../../utils/constantes';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import { Container } from '../../components/Container/Container';

@@ -27,7 +27,7 @@ export const OrdersCreate = () => {
         loading: loadingClientes,
         error: errorClientess,
         get: getClientes
-    } = useFetch('http://localhost:3000/api/')
+    } = useFetch('https://coffvart-backend.onrender.com/api/')
     // const { POST } = useFetch ('https://coffvart-backend.onrender.com/api/')
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
