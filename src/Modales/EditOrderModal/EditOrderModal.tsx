@@ -12,15 +12,15 @@ import toast, { Toaster } from "react-hot-toast";
 export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
         {
-            value: 'pendiente',
+            value: 'Pendiente',
             label: 'Pendiente',
         },
         {
-            value: 'enviado',
+            value: 'Enviado',
             label: 'Enviando',
         },
         {
-            value: 'entregado',
+            value: 'Entregado',
             label: 'Entregado',
         },
     ];

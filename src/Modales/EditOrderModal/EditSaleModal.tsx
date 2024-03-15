@@ -13,15 +13,15 @@ import { Try } from "@mui/icons-material";
 export const EditSale = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
         {
-            value: 'pendiente',
+            value: 'Pendiente',
             label: 'Pendiente',
         },
         {
-            value: 'enviado',
+            value: 'Enviado',
             label: 'Enviando',
         },
         {
-            value: 'entregado',
+            value: 'Entregado',
             label: 'Entregado',
         },
     ];
