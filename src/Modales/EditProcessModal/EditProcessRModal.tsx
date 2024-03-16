@@ -38,6 +38,17 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
           setOptions(process);
         }
       }, [processData]);
+      useEffect(() => {
+        if (processData?.processes?.rows) {
+            const processOptions = processData?.processes?.rows
+                .filter((process: any) => process.id > data?.ProductionRequest?.processId)
+                .map((process: any) => ({
+                    label: process.name,
+                    value: process.id,
+                }));
+            setOptions(processOptions);
+        }
+    }, [processData, data?.productionOrder?.processId]);
 
     useEffect(() => {
         if (!loading) {

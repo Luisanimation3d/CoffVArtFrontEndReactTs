@@ -11,6 +11,7 @@ import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../constantes.ts";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const IncrementProducts = () => {
@@ -228,10 +229,17 @@ export const IncrementProducts = () => {
                 body: JSON.stringify(requestBody),
             });
 
-            if (!response.ok) {
-                alert('Error al crear el empaquetado');
-                console.error('Error al crear el empaquetado:', response.statusText);
-                return;
+            if (response) {
+                    const data = await response.json();
+                    if(data.message == "Empaquetado creado correctamente"){
+                        toast(data.message,{
+                            icon:'👏',
+                            position: 'bottom-right'
+                        })
+                        setTimeout(()=>{
+                            navigate(-1)
+                        },2000);
+                    }
             }
 
             setProductionOrder('');
@@ -239,10 +247,6 @@ export const IncrementProducts = () => {
             setProducts([]);
             setSelectProduct(undefined);
             setCantidad('');
-            alert('Empaquetado creado con éxito');
-            setTimeout(() => {
-                navigate(-1)
-            }, 500);
 
 
         } catch (error) {
@@ -261,6 +265,29 @@ export const IncrementProducts = () => {
                 <div style={{width: '50%'}}>
                 <Container>
                 <FormRedisign fields={fields} onSubmit={handleAddDetail} button={"Agregar paquete"} title={`N°${productionOrder}`} errors={error}/> 
+                <Toaster 
+                    position="top-center"
+                    reverseOrder= {false}
+                    gutter={8}
+                    containerClassName=""
+                    containerStyle={{}}
+                    toastOptions={{
+                        className: '',
+                        duration: 5000,
+                        style:{
+                            background: '#363636',
+                            color: '#fff'
+                        },
+                        success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black'
+                
+                        },
+                    },
+                }}
+             />
                 </Container>
                 </div>
                 <div style={{width: '50%', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
