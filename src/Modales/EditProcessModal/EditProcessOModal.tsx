@@ -32,6 +32,17 @@ export const EditProcessOModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
           setOptions(process);
         }
       }, [processData]);
+      useEffect(() => {
+        if (processData?.processes?.rows) {
+            const processOptions = processData?.processes?.rows
+                .filter((process: any) => process.id > data?.productionOrder?.processId)
+                .map((process: any) => ({
+                    label: process.name,
+                    value: process.id,
+                }));
+            setOptions(processOptions);
+        }
+    }, [processData, data?.productionOrder?.processId]);
     useEffect(() => {
         if (!loading) {
             const newValues = {
