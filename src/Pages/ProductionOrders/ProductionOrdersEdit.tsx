@@ -239,7 +239,22 @@ export const IncrementProducts = () => {
                         setTimeout(()=>{
                             navigate(-1)
                         },2000);
-                    }
+                    }else if (data.msg == `La cantidad actualizada no es válida`){
+                        toast.error(data.msg, {
+                            icon: '😞',
+                            position: 'bottom-right'
+                        })
+                        setTimeout(() => {
+                            
+                    }, 2000);}
+                    else if (data.msg == `La cantidad excede el insumo disponible `){
+                        toast.error(data.msg, {
+                            icon: '😞',
+                            position: 'bottom-right'
+                        })
+                        setTimeout(() => {
+                            
+                    }, 2000);}
             }
 
             setProductionOrder('');

@@ -8,6 +8,7 @@ import {Button} from "../../components/Button/Button.tsx";
 import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
+import toast, { Toaster } from 'react-hot-toast';
 
 export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const [formValues, setFormValues] = useState<{receivedQuantity:number}>({
@@ -23,6 +24,9 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     useEffect(() => {
         get(`productionRequests/${id}?apikey=${API_KEY}`)
     }, []);
+    useEffect(() => {
+        const quantity = data?.ProductionRequest?.quantity;
+    }, [data]);
 
     useEffect(() => {
         setOpenView(false)
@@ -137,18 +141,53 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         }
     };
     
-    const handleSubmitRecived = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmitRecived =  async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const errorsForm = validateFormRecived();
         if(Object.keys(errorsForm).length !== 0) {
             setError(errorsForm)
             return
         }
+        try{ 
         const requestBody = {
             receivedQuantity: formValues.receivedQuantity,
         };
-        put(`productionRequests/${id}?apikey=${API_KEY}`, requestBody)
-        setIsModalOpen(false)
+        const response = await fetch (`${API_URL}productionRequests/${id}?apikey=${API_KEY}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requestBody)
+        });
+        if(response){
+            const data = await response.json();
+            if(data.message == "Cantidad de insumo recibida correctamente"){
+                toast(data.message,{
+                    icon:'👏',
+                    position: 'bottom-right'
+                })
+                setTimeout(()=>{
+                    setIsModalOpen(false)
+                },2000);
+            }else if (data.error == `La cantidad de insumo recibida no puede ser menor que 0`){
+                toast.error(data.error, {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })}
+
+                else if (data.error == `La cantidad recibida no puede superar el insumo enviado`){
+                   console.log(data, "aqui data")
+                    toast.error(`${data.error} - Cantidad Actual: ${data.quantity}`, {
+                        
+                        icon: '😞',
+                        position: 'bottom-right'
+                    });
+                
+        }
+    }}
+     catch (error) {
+        console.error('Error al crear la solicitud de producción', error);
+    }
     };
     
     useEffect(()=> {
@@ -176,11 +215,35 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
                     !openView?(
                         <Container>
                             <FormRedisign fields={formFieldsRegister} onSubmit={handleSubmit} button={"Cambiar proceso"} errors={error} cancelButton={false}/>
+                        
                         </Container>
                         
                     ):(
                         <Container>
                             <FormRedisign fields={formFieldsQuantity} onSubmit={handleSubmitRecived} button={"Guardar cantidad"} errors={error} cancelButton={false}/>
+                            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                gutter={8}
+                containerClassName=''
+                containerStyle={{}}
+                toastOptions={{
+                    className:'',
+                    duration: 5000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                        fontSize: '1.5em',
+                    },
+                    success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black',
+                        },
+                    },
+                }}
+            />
                         </Container>
                         
                     )
