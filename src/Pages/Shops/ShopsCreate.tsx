@@ -57,14 +57,6 @@ export const ShopsCreate = () => {
 
     const headers: Column[] = [
         {
-            key: 'id',
-            header: 'ID',
-        },
-        {
-            key: 'invoice',
-            header: 'Factura',
-        },
-        {
             key: 'insumo',
             header: 'Insumo',
         },
@@ -365,6 +357,11 @@ export const ShopsCreate = () => {
                     setTimeout(() => {
                         navigate(-1)
                     }, 2000);
+                }else if (data.msg == 'La factura ya esta registrada'){
+                    toast.error("La factura ya esta registrada", {
+                        icon: '❌',
+                        position: 'bottom-right'
+                    })
                 }
             }
 
