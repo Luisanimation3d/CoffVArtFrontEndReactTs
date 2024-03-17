@@ -131,7 +131,8 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
                 {label: 'Cédula de ciudadanía', value: 'CC'},
                 {label: 'Cédula de extranjería', value: 'CE'},
                 {label: 'Pasaporte', value: 'PA'},
-            ]
+            ],
+            size: 'large',
         },
         {
             name: 'document',

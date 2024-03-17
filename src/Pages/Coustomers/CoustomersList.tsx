@@ -44,7 +44,7 @@ export const Coustomers = () => {
     if (search.length > 0) {
         dataCoustumersFiltered = dataCoustumers.filter((coustumer: any) =>
             coustumer.name.toLowerCase().includes(search.toLowerCase()) ||
-            coustumer.document.toString().includes(search)
+            coustumer.document.toString().includes(search) || coustumer.documentType.toString().includes(search) || coustumer.phone.toString().includes(search) || coustumer.address.toString().includes(search) || coustumer.state.toString().includes(search)
         );
     } else {
         dataCoustumersFiltered = dataCoustumers;
