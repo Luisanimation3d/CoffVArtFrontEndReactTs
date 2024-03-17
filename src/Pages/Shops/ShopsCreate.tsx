@@ -8,7 +8,11 @@ import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
+<<<<<<< HEAD
 import {API_KEY} from "../../constantes.ts";
+=======
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
+>>>>>>> 19caed4 (ARREGLE TODO EL PUTO PROYECTO)
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import { useDarkMode} from "../../context/DarkMode.tsx";
 import toast, { Toaster } from "react-hot-toast";
@@ -24,13 +28,13 @@ export const ShopsCreate = () => {
         loading: loadingInsumos,
         error: errorInsumos,
         get: getInsumos
-    } = useFetch('https://coffvart-backend.onrender.com/api/')
+    } = useFetch(API_URL)
     const {
         data: dataProveedores,
         loading: loadingProveedores,
         error: errorProveedores,
         get: getProveedores
-    } = useFetch('https://coffvart-backend.onrender.com/api/')
+    } = useFetch(API_URL)
     // const { POST } = useFetch ('https://coffvart-backend.onrender.com/api/')
 
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')

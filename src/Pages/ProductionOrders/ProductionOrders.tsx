@@ -20,12 +20,14 @@ export const ProductionOrders = () => {
     const [orderToCreate, setOrderToCreate] = useState(false)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+    const [page, setPage] = useState<number>(1)
     const { data, loading, error, get, del } = useFetch(API_URL);
     const [dataProductionOrdersModify, setDataProductionOrdersModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {
-        get(`productionOrders?apikey=${API_KEY}`);
-    }, []);
+
+        get(`productionOrders?apikey=${API_KEY}&page=${page}`);
+    }, [page]);
     const columnsProductionOrders: Column[] = [
         {
             key:'id',
@@ -122,6 +124,10 @@ export const ProductionOrders = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Ordenes de Producción'}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.productionOrders?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     createAction={() => navigate('/admin/ProductionOrders/create')}
                     loading={loading}
                     callback={handleCallback}

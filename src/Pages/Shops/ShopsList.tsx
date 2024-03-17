@@ -22,7 +22,7 @@ export const Shops = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataShopsModify, setDataShopsModify] = useState<any>([])
     const [dataToShow, setDataToShow] = useState<any[]>([])
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/')
+    const { data, loading, error, get, del } = useFetch(API_URL)
     const navigate = useNavigate();
     const [page, setPage] = useState<number>(1)
 

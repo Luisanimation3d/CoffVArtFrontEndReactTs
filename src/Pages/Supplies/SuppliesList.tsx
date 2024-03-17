@@ -10,7 +10,11 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { SupplyEditModal } from "../../Modales/EditSupplyModal/EditSupplyModal.tsx";
+<<<<<<< HEAD
 import { API_KEY } from "../../constantes";
+=======
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
+>>>>>>> 19caed4 (ARREGLE TODO EL PUTO PROYECTO)
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
 
@@ -19,7 +23,7 @@ export const Supplies = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [supplyToEdit, setSupplyToEdit] = useState<number|null>(null)
     const [dataToShow, setDataToShow] = useState<any[]>([])
-    const { data, loading, error, get, del } = useFetch('https://coffvart-backend.onrender.com/api/');
+    const { data, loading, error, get, del } = useFetch(API_URL);
     const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
 
