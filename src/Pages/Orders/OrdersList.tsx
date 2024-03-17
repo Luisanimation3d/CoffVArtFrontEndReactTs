@@ -5,7 +5,7 @@ import {Table} from "../../components/Table/Table.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import { useNavigate } from "react-router-dom";
-import { API_KEY, API_URL } from "../../constantes.ts";
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { EditOrder } from "../../Modales/EditOrderModal/EditOrderModal.tsx";
 import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
@@ -153,7 +153,7 @@ console.log(data)
                     search={search}
                     setSearch={setSearch}
                     createAction={() => navigate('/admin/Orders/create')}
-                    title="Ordenes"
+                    title="Pedidos"
                     page={page}
                     setPage={setPage}
                     callback={handleDelete}

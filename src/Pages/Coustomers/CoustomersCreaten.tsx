@@ -2,7 +2,7 @@ import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {useEffect, useState} from "react";
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import {useFetch} from "../../hooks/useFetch.tsx";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
@@ -164,11 +164,11 @@ export const CreateCoustomer = () => {
         if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 15) {
             mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
-        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15) {
-            mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras' };
+        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15 || !/^[a-zA-Z\s]+$/.test(formData.name)) {
+            mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras y no debe contener caractres especiales' };
         }
-        if (!formData.lastname || formData.lastname.trim().length < 3) {
-            mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras' };
+        if (!formData.lastname || formData.lastname.trim().length < 3 ||!/^[a-zA-Z\s]+$/.test(formData.lastname)) {
+            mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras y no debe contener caracteres especiales' };
         }
         if (!formData.address || formData.address.trim().length < 10){
             mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}

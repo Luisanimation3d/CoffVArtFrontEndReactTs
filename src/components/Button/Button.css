@@ -49,7 +49,6 @@
     transition: all .3s ease-in-out;
     position: relative;
     overflow: hidden;
-    margin-top: 10px;
 }
 
 .dark-mode__outline.btn--outline {

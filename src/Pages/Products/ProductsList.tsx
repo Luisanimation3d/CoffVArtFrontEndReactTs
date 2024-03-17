@@ -7,7 +7,7 @@ import { SearchInput } from "../../components/SearchInput/SearchInput";
 import { Button } from "../../components/Button/Button";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
-import { API_KEY } from "../../constantes";
+import { API_KEY } from "../../utils/constantes.ts";
 import { CreateProductModal } from "../../Modales/CreateProductModal/CreateProductModal";
 import { ProductEditModal } from "../../Modales/EditProductModal/EditProductModal.tsx";
 import { createPortal } from "react-dom";

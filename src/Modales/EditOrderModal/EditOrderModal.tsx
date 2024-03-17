@@ -2,7 +2,7 @@ import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
@@ -12,15 +12,15 @@ import toast, { Toaster } from "react-hot-toast";
 export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id: number , setIsModalOpen: (value: boolean) => void, title?: string}) => {
     const options: SelectOption[] = [
         {
-            value: 'pendiente',
+            value: 'Pendiente',
             label: 'Pendiente',
         },
         {
-            value: 'enviado',
+            value: 'Enviado',
             label: 'Enviando',
         },
         {
-            value: 'entregado',
+            value: 'Entregado',
             label: 'Entregado',
         },
     ];
@@ -59,11 +59,11 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                 console.log(currentStatus);
                 console.log(o?.value, "value");
     
-                if (currentStatus === 'entregado' && o?.value === 'pendiente') {
+                if (currentStatus === 'Entregado' && o?.value === 'Pendiente') {
                     showAlert = true;
                     toast.error('No puedes cambiar a pendiente si ya esta entregado')
 
-                } else if (currentStatus === 'entregado' && o?.value === 'enviado') {
+                } else if (currentStatus === 'Entregado' && o?.value === 'Enviado') {
                     showAlert = true;
                     toast.error('No puedes cambiar a enviado si ya está entregado');
 
@@ -99,9 +99,6 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
                 icon: '👏',
                 position: 'bottom-right'
             })
-            setTimeout(() => {
-                navigate(-1)
-            }, 2000);
         }
     };
     if (loading) {

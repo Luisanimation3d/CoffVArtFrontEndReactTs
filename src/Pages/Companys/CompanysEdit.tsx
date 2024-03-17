@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
 import {FormField} from '../../types/Form';
 import {FormRedisign} from '../../components/FormRedisign/FormRedisign';
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import {useParams, useNavigate} from 'react-router-dom';
 import {Container} from "../../components/Container/Container.tsx";
 import toast, {Toaster} from "react-hot-toast";
@@ -12,10 +12,7 @@ export const CompanysEdit = () => {
 
     const {id} = useParams<{ id: string }>()
     const navigate = useNavigate()
-    const [error, setError] = useState<{[key: string]: string}>({})
-    
-
-
+    const [error, setError] = useState<{ [key: string]: string }>({})
 
 
     const [formData, setFormData] = useState<{
@@ -23,7 +20,7 @@ export const CompanysEdit = () => {
         email: string,
         address: string,
         phone: string,
-        
+
     }>({
         name: '',
         email: '',
@@ -89,7 +86,7 @@ export const CompanysEdit = () => {
                 address: data?.company?.address,
                 phone: data?.company?.phone,
             }
-            
+
             setFormData(newValues)
         }
     }, [data]);
@@ -110,48 +107,75 @@ export const CompanysEdit = () => {
         if (!formData.phone) {
             mensajeError = {...mensajeError, phone: 'El teléfono es requerido'}
         }
-        if(Object.keys(mensajeError).length > 0){
+        if (Object.keys(mensajeError).length > 0) {
             setError(mensajeError)
             return
         }
-        try{
+        try {
             const requestBody = {
                 name: formData.name,
                 email: formData.email,
                 address: formData.address,
                 phone: formData.phone,
             }
-           const response = await fetch(`http://localhost:3000/api/companys/${id}?apikey=${API_KEY}`,{
+            const response = await fetch(`${API_URL}companys/${id}?apikey=${API_KEY}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(requestBody)
             })
-            if(response){
-            const data = await response.json()
-            if(data.message === 'Compañía editada correctamente'){
-                toast(data.message , {
-                    icon: '👏',
-                    position: 'bottom-right'
-                })
-                setTimeout(() => {
-                    navigate(-1)
-                }, 2000);
-                
+            if (response) {
+                const data = await response.json()
+                if (data.message === 'Compañía editada correctamente') {
+                    toast(data.message, {
+                        icon: '👏',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 2000);
+
+                } else if (data.error == "El correo no es valido") {
+                    toast.error(data.error, {
+                        icon: '😞',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                    }, 2000);
+                } else if (data.error == "El teléfono no es valido") {
+                    toast.error(data.error, {
+                        icon: '😞',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                    }, 2000);
+                } else if (data.name == "El campo solo debe contener letras") {
+                    toast.error('No se permiten espacios en los campos', {
+                        icon: '😞',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                    }, 2000);
+                } else if (data.phone == "El campo no debe contener espacios") {
+                    toast.error('El campo no debe contener espacios', {
+                        icon: '😞',
+                        position: 'bottom-right'
+                    })
+                    setTimeout(() => {
+                    }, 2000);
+                }
             }
-        }
-        }
-        catch (error) {
+        } catch (error) {
             console.log('Error:', error)
         }
-   
+
     };
 
     return (
         <Container>
             <FormRedisign
-                title='Editar Proveedor'
+                title='Editar Compañia'
                 fields={fields}
                 onSubmit={handleSubmit}
                 button={'Guardar'}
@@ -164,7 +188,7 @@ export const CompanysEdit = () => {
                 containerClassName=''
                 containerStyle={{}}
                 toastOptions={{
-                    className:'',
+                    className: '',
                     duration: 5000,
                     style: {
                         background: '#363636',

@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {useFetch} from '../../hooks/useFetch';
 import {FormField} from '../../types/Form';
 import {FormRedisign} from '../../components/FormRedisign/FormRedisign';
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import {useParams, useNavigate} from 'react-router-dom';
 import {Container} from "../../components/Container/Container.tsx";
 import toast, {Toaster} from "react-hot-toast";
@@ -88,7 +88,7 @@ export const SuppliersEdit = () => {
 
     useEffect(() => {
         get(`suppliers/${id}?apikey=${API_KEY}`)
-    }, [get, id]);
+    }, []);
 
     useEffect(() => {
         if (!loading) {
@@ -134,7 +134,7 @@ export const SuppliersEdit = () => {
             phone: formData.phone,
             quality: formData.quality,
         }
-        const response = await fetch(`http://localhost:3000/api/suppliers/${id}?apikey=${API_KEY}`, {
+        const response = await fetch(`https://coffvart-backend.onrender.com/api/suppliers/${id}?apikey=${API_KEY}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

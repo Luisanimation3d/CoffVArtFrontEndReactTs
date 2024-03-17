@@ -69,6 +69,7 @@
 .table__header__title {
     font-size: 1.5rem;
     font-weight: 600;
+    text-align: center;
 }
 
 .table__header__search__container {
@@ -441,8 +442,42 @@
     border-bottom-color: #fff;
 }
 
+.button__create__mobile{
+    display:none;
+}
+
 @media screen and (max-width: 768px) {
     .table__container {
         max-height: 80%;
+    }
+
+    .table__header__action__button__create{
+        display: none;
+    }
+
+    .button__create__mobile{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        border-radius: 50%;
+        cursor: pointer;
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        font-size: 1.5rem;
+        transition: .3s;
+    }
+
+    .table__container__darkMode ~ .button__create__mobile{
+        color: #ccc;
+        background: #121212;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .table__container__lightMode ~ .button__create__mobile{
+        color: #333;
+        background: #f5f6fa;
+        border: 1px solid rgba(0, 0, 0, 0.1);
     }
 }

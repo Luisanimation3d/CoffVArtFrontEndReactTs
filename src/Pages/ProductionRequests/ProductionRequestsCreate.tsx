@@ -1,31 +1,38 @@
 import { FormField, SelectOption} from '../../types/Form'
-import { Button } from '../../components/Button/Button'
-import { Form } from '../../components/Form/Form';
-import { API_KEY, API_URL } from '../../constantes';
+
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
+import toast,{ Toaster } from 'react-hot-toast';
 
 export const ProductionRequestsCreate = () => {
-    const [formValues, setFormValues] = useState<Record<string, string | number | SelectOption | undefined>>({
-        dateOfDispatch: '',
+    const [formValues,setFormValues] = useState<{
+        companyId: SelectOption | undefined,
+        dateOfDispatch: string,
+        supplieId: SelectOption | undefined,
+        quantity: string,
+        processId: SelectOption | undefined,
+    }>({
+        companyId:undefined,
+        dateOfDispatch:'',
+        supplieId:undefined,
         quantity: '',
-        supply: undefined,
-        companyId: undefined,
-        process: undefined,
-    })
+        processId:undefined,
+    });
+
+    const [error, setError] = useState<{[key: string]: string}>({})
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
     const [process, setprocess] = useState<SelectOption[]>([]);
     const [company, setcompany] = useState<SelectOption[]>([]);
-    const { post, loading, error } = useFetch(API_URL);
     const navigate = useNavigate();
 
     const {data:datasupplie,get:getSupplies} = useFetch(API_URL);
     useEffect(()=>{
-        getSupplies('supplies?apikey='+API_KEY)
+        getSupplies('suppliesActive?apikey='+API_KEY)
     },[]);
     useEffect(()=>{
         const supplieOptions = datasupplie?.supplies?.rows?.map((item: any)=>({
@@ -50,7 +57,7 @@ export const ProductionRequestsCreate = () => {
     const {data:datacompany,get:getCompanys} = useFetch(API_URL);
 
     useEffect(() => {
-        getCompanys('companys?apikey=' + API_KEY)
+        getCompanys('companysActive?apikey=' + API_KEY)
     }, []);
     useEffect(() => {
         const companyOptions = datacompany?.companys?.rows?.map((item: any) => ({
@@ -80,8 +87,8 @@ export const ProductionRequestsCreate = () => {
         type: 'date',
         label: 'Fecha de envio',
         placeholder: '20/11/2023',
-        value: formValues['dateOfDispatch'] !== undefined ? String(formValues['dateOfDispatch']): '',
-        onChange: (value) => handleInputChange('dateOfDispatch', value),
+        value: formValues.dateOfDispatch,
+        onChange: (value: string) => setFormValues({...formValues, dateOfDispatch:value}),
         size: 'medium'
     },
     {
@@ -99,21 +106,33 @@ export const ProductionRequestsCreate = () => {
         type: 'number',
         label: 'Cantidad (Kg)',
         placeholder: '200',
-        value: formValues['quantity'] !== undefined ? String(formValues['quantity']): '',
-        onChange: (value) => handleInputChange('quantity', value),
+        value: formValues.quantity,
+        onChange: (value: string) => setFormValues({...formValues,quantity:value}),
         size: 'medium'
     },
     
    
 ];
-const handleInputChange = (name: string, value: string | number) => {
-    setFormValues(prevValues => ({
-        ...prevValues,
-        [name]: value
-    }));
-};
 const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    let mensajeError = {}
+    if(formValues.dateOfDispatch === ''){
+        mensajeError = {...mensajeError, dateOfDispatch: 'La fecha de envio es requerida'}
+    }
+    if(formValues.quantity === ''){
+        mensajeError = {...mensajeError, quantity: 'La cantidad es requerida'}
+    }
+    if(formValues.companyId === undefined){
+        mensajeError = {...mensajeError, companyId: 'La compañía es requerida'}
+    }
+    if(formValues.supplieId === undefined){
+        mensajeError = {...mensajeError, supplieId: 'El insumo es requerido'}
+    }
+    if(Object.keys(mensajeError).length>0){
+        console.log('Error en el formulario:',mensajeError)
+        setError(mensajeError)
+        return
+    }
     try {
         const requestBody = {
             dateOfDispatch: formValues.dateOfDispatch,
@@ -122,11 +141,41 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             supplieId: (formValues.supplieId as SelectOption)?.value as number,   
             companyId: (formValues.companyId as SelectOption)?.value as number,
         }; console.log('Datos del formulario:', requestBody);
-
-            post(`productionRequests?apikey=${API_KEY}`, requestBody)
-            console.log(loading, error)
-            console.log('solicitud de producción creada con éxito');
-            navigate(-1);
+        
+        const response = await fetch (`${API_URL}productionRequests?apikey=${API_KEY}`,{
+            method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+        });
+        if(response){
+            const data = await response.json();
+            if(data.message == "Solicitud P. creada correctamente"){
+                toast(data.message,{
+                    icon: '👏',
+                    position: 'bottom-right'
+                })
+                setTimeout(()=> {
+                    navigate(-1)
+                },2000);
+            }else if (data.error == `La cantidad de insumo supera el stock`){
+                toast.error(data.error, {
+                    icon: '😞',
+                    position: 'bottom-right'
+                })
+                setTimeout(() => {
+                    
+            }, 2000);}
+            else if (data.error == `La cantidad de insumos no puede ser menor que 0`){
+                        toast.error(data.error, {
+                            icon: '😞',
+                            position: 'bottom-right'
+                        })
+                        setTimeout(() => {
+                            
+                            }, 2000);}
+        }
 
         } catch (error) {
             console.error('Error al crear la solicitud de producción', error);
@@ -138,12 +187,37 @@ const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
             fields={productionRequestFields} 
             onSubmit={handleSubmit} 
             button={'Registrar Solicitud'} 
-            title={'Crear Solicitud de Producción'}/>
+            title={'Crear Solicitud de Producción'}
+            errors= {error}
+            />
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+                gutter={8}
+                containerClassName=''
+                containerStyle={{}}
+                toastOptions={{
+                    className:'',
+                    duration: 5000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                        fontSize: '1.5em',
+                    },
+                    success: {
+                        duration: 3000,
+                        iconTheme: {
+                            primary: 'green',
+                            secondary: 'black',
+                        },
+                    },
+                }}
+            />
         </Container>
         /*<Form
             title='Crear solicitud de producción'
             fields={productionRequestFields}
-            onSubmit={handleSubmit}
+            onSubmit={handleSubmit} 
             button={<Button text='Crear solicitud de producción' onClick={() => handleSubmit} fill={true}
                             type={'SUBMIT'}/>}
         />*/

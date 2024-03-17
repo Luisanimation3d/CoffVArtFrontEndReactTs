@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import ButtonStepper from "../../components/Order/ShopState.tsx";
 import { useFetch } from '../../hooks/useFetch.tsx';
-import { API_KEY, API_URL } from '../../constantes.ts';
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useAuth} from '../../context/AuthContext.tsx';
 import { useNavigate } from "react-router-dom";
 import './Myshops.css';

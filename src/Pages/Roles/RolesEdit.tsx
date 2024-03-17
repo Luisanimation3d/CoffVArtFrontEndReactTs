@@ -8,8 +8,10 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {useParams, useNavigate} from "react-router-dom";
 
 import styles from './Roles.module.css'
-import {API_KEY} from "../../constantes.ts";
+import {API_KEY} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
+import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
+import toast, {Toaster} from "react-hot-toast";
 
 export const RolesEdit = () => {
     const {id} = useParams<{ id: string }>()
@@ -123,8 +125,8 @@ const RolesEditStepOne = ({changeStep, valueForm, setValueForm}: {
         <div style={{
             width: '50%'
         }}>
-            <Form fields={fields} onSubmit={handleSubmit}
-                  button={<Button text={'Continuar'} onClick={() => null} type={'SUBMIT'} autosize={false}/>}
+            <FormRedisign fields={fields} onSubmit={handleSubmit}
+                  button={'Continuar'}
                   errors={error}
             />
         </div>
@@ -254,17 +256,13 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
         setValueForm(newValues)
         put(`roles/${id}?apikey=${API_KEY}`, newValues)
         if (!loading && !error) {
-            Swal.fire({
-                title: 'Rol editado correctamente',
-                icon: 'success',
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: '#0098DA',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    navigate(-1)
-                }
+            toast.success('Rol editado correctamente', {
+                duration: 4000,
+                position: 'bottom-right',
             })
+            setTimeout(() => {
+                navigate('/admin/roles')
+            }, 2000)
         }
     }
 
@@ -301,6 +299,7 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
                 <Button text={'Editar Rol'} onClick={handleSubmit} type={'BUTTON'} autosize={true}
                         disabled={selectedPrivileges?.length === 0}/>
                 <Button text={'Cancelar'} onClick={() => navigate(-1)} type={'BUTTON'} autosize={true} fill={false}/>
+                <Toaster/>
             </Container>
         </>
     )

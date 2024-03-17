@@ -1,11 +1,12 @@
-import BannerBurdeo1 from '../../assets/BannerBurdeo1.png';
-import BannerBurdeo2 from '../../assets/BannerBurdeo2.png';
-import ProductImage from '../../assets/product.jpg';
+import BannerBurdeo1 from '../../assets/bannerproduct1.jpg';
+import BannerBurdeo2 from '../../assets/bannerproduct2.jpg';
+import ProductImage from '../../assets/productFront.jpg';
+import ProductImage2 from '../../assets/productBack.jpg';
 import {SliderBanner} from "../../components/SliderBanner/SliderBanner.tsx";
 import { Product, ProductCard } from '../../components/ProductCard/ProductCard.tsx';
 import '../Catalogue/TiendaUser.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useEffect, useState} from "react";
 
 
@@ -21,7 +22,7 @@ export const TiendaUser = () => {
 		get(`products?apikey=${API_KEY}`)
 	}, [])
 
-	const urlImagen = 'https://images.unsplash.com/photo-1708747496569-b38b4abaa58f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+
 
 	useEffect(() => {
 		if (data?.products) {
@@ -29,7 +30,7 @@ export const TiendaUser = () => {
 				id: product.id,
 				name: product.name,
 				price: product.unitPrice,
-				image: [ProductImage, urlImagen],
+				image: [ProductImage, ProductImage2],
 				description: product.description,
 				link: `/producto/${product.id}`,
 				new: new Date(product.createdAt) > new Date(new Date().setDate(new Date().getDate() - 7)),
@@ -49,8 +50,8 @@ export const TiendaUser = () => {
 				<div className='tiendaUser--filterContainer'>
 					<div className='tiendaUser--filterContainer__filter'>
 						<div className='tiendaUser--filterContainer__filter__title'>
-							<h3>Filtros</h3>
-							<div className='tiendaUser--filterContainer__filter__item'>
+							<h3>Productos</h3>
+							{/* <div className='tiendaUser--filterContainer__filter__item'>
                                     <label>Precio:</label>
                                     <input
                                         type='range'
@@ -61,7 +62,7 @@ export const TiendaUser = () => {
                                         onChange={(e) => setPriceFilter(e.target.value === '' ? null : parseInt(e.target.value))}
                                     />
                                     <span>{priceFilter !== null ? `$${priceFilter}` : 'Todos'}</span>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>

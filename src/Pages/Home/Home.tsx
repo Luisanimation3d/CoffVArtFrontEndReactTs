@@ -1,6 +1,11 @@
 import Burdeo6 from '../../assets/Burdeo6.jpg'
 import Burdeo8 from '../../assets/Burdeo8.jpg'
 import Burdeo16 from '../../assets/Burdeo16.jpg'
+import Burdeo11 from '../../assets/Burdeo11.jpg'
+import Burdeo06 from '../../assets/Burdeo06.jpg'
+import Burdeo21 from '../../assets/Burdeo21.jpg'
+import Burdeo01 from '../../assets/Burdeo01.jpg'
+
 import ProductImage from '../../assets/product.jpg';
 import coffeeGif from '../../assets/descargar.gif';
 import { SliderBanner } from "../../components/SliderBanner/SliderBanner.tsx";
@@ -10,7 +15,7 @@ import './Home.css';
 import { ProductCard } from "../../components/ProductCard/ProductCard.tsx";
 import { useEffect, useRef, useState } from 'react';
 import { SectionBanner } from '../../components/SectionBanner/SectionBanner.tsx';
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {Product} from "../../types/ProductCard";
 
@@ -129,44 +134,58 @@ export const Home = () => {
           <img src={coffeeGif} alt="Coffe Cup" />
         </div>
       )}
-
+  
       {isCupAnimationComplete && (
         <div ref={homeContentRef} className="home__content" style={{ opacity: 0 }}>
           <div className="home__bannerContainer">
-            <SliderBanner images={[Burdeo8, Burdeo6, Burdeo16 ]} autoPlayInterval={2500} />
+            <SliderBanner images={[Burdeo8, Burdeo6, Burdeo16]} autoPlayInterval={2500} />
           </div>
-
-          <div className="home__productsContainer">
-            <h2>Burdeo</h2>
-            <div className="home__productsCards">
-              {products?.map((producto) => (
-                <ProductCard key={producto.id} product={producto} />
-              ))}
+  
+        <div className="home__productsContainer">
+        <div className="title-container">
+            <h2>Burdeo Café de Origen</h2>
+            <p>Desde nuestras fincas o las de los mejores productores del país.</p>
+        </div>
+      </div>
+          <div className="sectionbanneroneHome">
+            <div className="wrapper">
+              <div className="card1 cardb">
+                <img src={Burdeo11} alt="" />
+                <div className="info">
+                  <h1>Origenes: El corazon de nuestro café</h1>
+                  <p></p>
+                  <a href="#" className="btn">
+                    Read More
+                  </a>
+                </div>
+              </div>
+  
+              <div className="card2 cardb">
+                <img src={Burdeo06} alt="" />
+                <div className="info">
+                  <h1>Pergamino: Aromas Reveladores de Nuestra Tierra</h1>
+                  <p></p>
+                  <a href="#" className="btn">
+                    Read More
+                  </a>
+                </div>
+              </div>
+  
+              <div className="card3 cardb">
+                <img src={Burdeo21}alt="" />
+                <div className="info">
+                  <h1>Guardianes de la Cosecha: Manos Que Tejen Historias en Cada Grano</h1>
+                  <p></p>
+                  <a href="#" className="btn">
+                    Read More
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="sectionbannerone">
-            <div className='cards'>
-                <div className='cardb card1'>
-                  <div className='card-container'>
-                    <img className='img-banner' src={Burdeo16} alt="" />
-                  </div>
-                </div>
-                <div className='cardb card2'>
-                  <div className='card-container'>
-                    <img className= 'img-banner' src={Burdeo16} alt="" />
-                </div>
-                </div>
-                <div className='cardb card3'> 
-                  <div className='card-container'>
-                    <img className= 'img-banner' src={Burdeo16} alt="" />
-                  </div>
-                  </div>
-                </div>
-            </div>
-          </div>
+        </div>
       )}
     </div>
   );
-};
-
+}
 export default Home;

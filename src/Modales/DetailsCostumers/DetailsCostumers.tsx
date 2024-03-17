@@ -1,7 +1,7 @@
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import {useEffect, useState} from "react";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 
 
 import './DetailsCss.css';
@@ -26,7 +26,7 @@ export const UserProfileComponent= ({setIsModalOpen, title = 'Informacion del us
 
     useEffect(() => {
         if(data?.coustomers){
-            setUserData(data?.coustomers)
+            setUserData(data?.coustomers);
         }
     }, [data]);
      console.log("UserProfileComponent - User Data:", userData);
@@ -67,10 +67,28 @@ export const UserProfileComponent= ({setIsModalOpen, title = 'Informacion del us
                 <hr />
                 <MDBRow>
                   <MDBCol sm="3">
+                    <MDBCardText>Apellido:</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText>{userData?.user?.lastname}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
                     <MDBCardText>Documento:</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
                     <MDBCardText>{userData?.document} {userData?.documentType}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>Correo:</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                  <MDBCardText>{userData?.user?.email}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />

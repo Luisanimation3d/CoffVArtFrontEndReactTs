@@ -9,7 +9,7 @@ import {useAuth} from '../../context/AuthContext.tsx'
 
 import styles from './LoginModal.module.css';
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import Swal from "sweetalert2";
 
 export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => {
@@ -26,6 +26,8 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
     }
 
     const {data, loading, error: errorLogin, post, get} = useFetch(API_URL)
+
+    console.log(errorLogin)
 
     const [error, setError] = useState<{ [key: string]: string }>({});
 
@@ -87,8 +89,8 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         // extract the error from the response
         if (errorLogin) {
             const newError: any = {
-                email: errorLogin || '',
-                password: errorLogin || '',
+                email: errorLogin?.msg || '',
+                password: errorLogin?.msg || '',
             }
             setError(newError);
         }

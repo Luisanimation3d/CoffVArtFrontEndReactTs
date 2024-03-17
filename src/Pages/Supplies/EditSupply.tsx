@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFetch } from '../../hooks/useFetch';
 import { FormField, SelectOption } from '../../types/Form';
 import { FormRedisign } from '../../components/FormRedisign/FormRedisign';
-import { API_KEY, API_URL } from '../../constantes';
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container } from '../../components/Container/Container.tsx';
 import toast, { Toaster } from 'react-hot-toast';
@@ -60,14 +60,16 @@ export const SuppliesEdit = () => {
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		let mensajeError = {};
-		if (!formData.name) {
-			mensajeError = { ...mensajeError, name: 'El nombre es requerido' };
-		}
-		if (!formData.description) {
-			mensajeError = {
-				...mensajeError,
-				description: 'La descripción es requerida',
-			};
+		if (!formData.name || formData.name.trim().length < 4 || !/^[a-zA-Z\s]+$/.test(formData.name)) {
+            mensajeError = {...mensajeError, name: 'El nombre es requerido'}
+        }
+        if (!formData.description || formData.description.trim().length < 5 || !/^[a-zA-Z\s]+$/.test(formData.description)){
+            mensajeError = {...mensajeError, description: 'La descripción es requerida'}
+        }
+		if (Object.keys(mensajeError).length > 0) {
+			console.log('Mensaje de error', mensajeError)
+			setError(mensajeError)
+			return
 		}
 		console.log(formData, 'esto lo voy a mandar');
 		const requestBody = {

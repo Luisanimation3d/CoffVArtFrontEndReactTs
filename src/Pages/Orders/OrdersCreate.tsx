@@ -8,7 +8,7 @@ import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {API_KEY} from "../../constantes.ts";
+import {API_KEY} from "../../utils/constantes.ts";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import { useDarkMode} from "../../context/DarkMode.tsx";
 import { useNavigate } from "react-router-dom";
@@ -212,7 +212,7 @@ export const OrdersCreate = () => {
 
     useEffect(() => {
         getProductos(`products?apikey=${API_KEY}`);
-        getClientes(`coustumers?apikey=${API_KEY}`);
+        getClientes(`coustumersActive?apikey=${API_KEY}`);
     }, []);
 
     useEffect(() => {
@@ -276,7 +276,7 @@ export const OrdersCreate = () => {
         const requestBody = {
             code: factura,
             coustumerId: selectCliente?.value,
-            state: 'pendiente',
+            state: 'Pendiente',
             total: subTotal + iva,
             Productdetails: detalles.map((detalle) => ({
                 orderId: detalle.id,

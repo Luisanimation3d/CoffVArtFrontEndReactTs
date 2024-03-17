@@ -2,14 +2,15 @@ import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {useState, useEffect} from "react";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {useNavigate} from "react-router-dom";
 import toast, {Toaster} from "react-hot-toast";
+import {validateIfNumber} from "../../helpers/validateIfNumber.helper.ts";
 
 export const CreateUser = () => {
     const [error, setError] = useState<{ [key: string]: string }>({})
-    const {data: dataUser, post: postUser, loading: loadingUser, postFile: postFileUser} = useFetch(API_URL);
+    const {data: dataUser, postFile: postFileUser} = useFetch(API_URL);
     const navigate = useNavigate();
 
 
@@ -57,12 +58,6 @@ export const CreateUser = () => {
             }))
         }
     }, [data])
-
-    const validateIfNumber = (value: string) => {
-        if (value === '') return true;
-        const reg = new RegExp('^[0-9]+$');
-        return reg.test(value);
-    }
 
     const fields: FormField[] = [
         {
@@ -183,11 +178,11 @@ export const CreateUser = () => {
                 documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres'
             };
         }
-        if (!formDataRegister.name || formDataRegister.name.trim().length < 3 || formDataRegister.name.trim().length > 15) {
-            mensajeError = {...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras'};
+        if (!formDataRegister.name || formDataRegister.name.trim().length < 3 || formDataRegister.name.trim().length > 15 ||!/^[a-zA-Z\s]+$/.test(formDataRegister.name) ) {
+            mensajeError = {...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras y no debe contener caracteres especiales'};
         }
-        if (!formDataRegister.lastname || formDataRegister.lastname.trim().length < 3) {
-            mensajeError = {...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras'};
+        if (!formDataRegister.lastname || formDataRegister.lastname.trim().length < 3 || !/^[a-zA-Z\s]+$/.test(formDataRegister.lastname)) {
+            mensajeError = {...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras y no debe contener caracteres especiales'};
         }
         if (!formDataRegister.address || formDataRegister.address.trim().length < 10) {
             mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}

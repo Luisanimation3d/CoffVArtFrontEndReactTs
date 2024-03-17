@@ -8,11 +8,7 @@ import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
-<<<<<<< HEAD
-import {API_KEY} from "../../constantes.ts";
-=======
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
->>>>>>> 19caed4 (ARREGLE TODO EL PUTO PROYECTO)
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import { useDarkMode} from "../../context/DarkMode.tsx";
 import toast, { Toaster } from "react-hot-toast";
@@ -129,7 +125,7 @@ export const ShopsCreate = () => {
             placeholder: 'Cantidad (Kg)',
             size: 'large',
             value: cantidad,
-            onChange: setCantidad
+            onChange: (value: string) => setCantidad(value === '' || parseInt(value) < 0 ? '' : value)
         },
         {
             name: 'unitPrice',
@@ -138,7 +134,7 @@ export const ShopsCreate = () => {
             placeholder: 'Precio Unitario',
             size: 'large',
             value: unitPrice,
-            onChange: setUnitPrice
+            onChange: value => setUnitPrice(value === '' || parseFloat(value) < 0 ? '' : value)
         },
         {
             name: 'date',
@@ -163,26 +159,41 @@ export const ShopsCreate = () => {
     
         const handleAddDetail = (e: any) => {
             e.preventDefault();
-
+            let mensajeError = {};
             if (!invoice) {
-                alert('Debe ingresar el número de factura antes de agregar insumos');
-                return;
+                mensajeError = { ...mensajeError, invoice: 'La factura debe tener al menos un número o una letra' };
             }
             if (!selectInsumo) {
-                alert('Debe seleccionar un insumo antes de agregar a la tabla');
-                return;
+                    toast("Debe seleccionar un insumo", {
+                        icon: '❌',
+                        position: 'bottom-right'
+                    })
             }
     
             if (!selectProveedor) {
-                alert('Debe seleccionar un proveedor antes de agregar insumos');
-                return;
+                toast("Debe seleccionar un proveedor", {
+                    icon: '❌',
+                    position: 'bottom-right'
+                })
             }
     
             if (!cantidad || parseInt(cantidad) <= 0) {
-                alert('Debe ingresar una cantidad válida antes de agregar insumos');
+                mensajeError = { ...mensajeError, cantidad: 'Debe poner una cantidad' };
+            }
+            if (!unitPrice || parseFloat(unitPrice) <= 0) {
+                mensajeError = { ...mensajeError, unitPrice: 'Debe poner un precio' };
+            }
+            if (!date) {
+                mensajeError = { ...mensajeError, date: 'Debe seleccionar una fecha' };
+            }
+            if (!description) {
+                mensajeError = { ...mensajeError, description: 'Debe poner una descripción' };
+            }
+            if (Object.keys(mensajeError).length > 0) {
+                console.log('Mensaje de error', mensajeError);
+                setError(mensajeError);
                 return;
             }
-
 
         //const selectedSupply = dataInsumos?.supplies?.rows?.find((supplies: any) => supplies.id === selectedSupply?.value)
 
@@ -256,7 +267,7 @@ export const ShopsCreate = () => {
     // }, []);
 
     useEffect(() => {
-        getInsumos(`supplies?apikey=${API_KEY}`);
+        getInsumos(`suppliesActive?apikey=${API_KEY}`);
         getProveedores(`suppliers?apikey=${API_KEY}`);
     }, []);
 

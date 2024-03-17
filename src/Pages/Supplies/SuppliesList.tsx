@@ -10,11 +10,7 @@ import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 import { useFetch } from "../../hooks/useFetch";
 import { SupplyEditModal } from "../../Modales/EditSupplyModal/EditSupplyModal.tsx";
-<<<<<<< HEAD
-import { API_KEY } from "../../constantes";
-=======
 import { API_KEY, API_URL } from "../../utils/constantes.ts";
->>>>>>> 19caed4 (ARREGLE TODO EL PUTO PROYECTO)
 import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
 import {FiShuffle} from "react-icons/fi";
 
@@ -91,7 +87,7 @@ export const Supplies = () => {
                     dropDownOptions={options}
                     createAction={() => navigate('/admin/supplys/create')}
                     loading={loading}
-                    onRowClick={row => alert(row.name)}
+                    // onRowClick={row => alert(row.name)}
                     callback={handleCallback}
                 />
                 {

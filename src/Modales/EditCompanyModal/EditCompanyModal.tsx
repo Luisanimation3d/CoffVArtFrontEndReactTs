@@ -3,7 +3,7 @@ import {useFetch} from '../../hooks/useFetch';
 import {FormField} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
 import {Form} from '../../components/Form/Form';
-import {API_KEY, API_URL} from '../../constantes';
+import {API_KEY, API_URL} from '../../utils/constantes.ts';
 import Swal from 'sweetalert2';
 import { Modal, ModalContainer } from '../../components/Modal/Modal';
 

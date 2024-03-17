@@ -2,7 +2,7 @@ import { Container } from '../../components/Container/Container.tsx';
 import { FormRedisign } from '../../components/FormRedisign/FormRedisign.tsx';
 import { FormField } from '../../types/Form';
 import { useState } from 'react';
-import { API_KEY } from '../../constantes.ts';
+import { API_KEY } from '../../utils/constantes.ts';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,7 +12,6 @@ export const CreateProduct = () => {
 
 	const [formData, setFormData] = useState<{
 		name: string;
-		amount: string;
 		stockMin: string;
 		stockMax: string;
 		unitPrice: string;
@@ -20,7 +19,6 @@ export const CreateProduct = () => {
 		description: string;
 	}>({
 		name: '',
-		amount: '',
 		stockMin: '',
 		stockMax: '',
 		unitPrice: '',
@@ -35,19 +33,7 @@ export const CreateProduct = () => {
 			onChange: (value: string) => setFormData({ ...formData, name: value }),
 			label: 'Nombre',
 			name: 'name',
-			size: 'medium',
-		},
-		{
-			type: 'number',
-			value: formData.amount,
-			onChange: (value: string) =>
-				setFormData((prev) => ({
-					...formData,
-					amount: validateIfNumber(value) ? value : prev.amount,
-				})),
-			label: 'Cantidad',
-			name: 'amount',
-			size: 'medium',
+			size: 'large',
 		},
 		{
 			type: 'number',
@@ -117,11 +103,8 @@ export const CreateProduct = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		let mensajeError = {};
-		if (!formData.name) {
+		if (!formData.name || formData.name.trim().length < 1 || !/^[a-zA-Z\u00C0-\u017F\s]+$/.test(formData.name)) {
 			mensajeError = { ...mensajeError, name: 'El nombre es requerido' };
-		}
-		if (!formData.amount) {
-			mensajeError = { ...mensajeError, amount: 'La cantidad es requerida' };
 		}
 		if (!formData.stockMin) {
 			mensajeError = {
@@ -147,7 +130,7 @@ export const CreateProduct = () => {
 				amountSupply: 'La cantidad de insumos es requerida',
 			};
 		}
-		if (!formData.description) {
+		if (!formData.description || formData.description.trim().length < 1 || !/^[a-zA-Z\u00C0-\u017F\s]+$/.test(formData.description)) {
 			mensajeError = {
 				...mensajeError,
 				description: 'La descripción es requerida',
@@ -161,7 +144,6 @@ export const CreateProduct = () => {
 		try {
 			const requestBody = {
 				name: formData.name,
-				amount: formData.amount,
 				stockMin: formData.stockMin,
 				stockMax: formData.stockMax,
 				unitPrice: formData.unitPrice,

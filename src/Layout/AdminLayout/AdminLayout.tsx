@@ -5,7 +5,7 @@ import './AdminLayout.css';
 import {SideBarMenuRedisign} from "../../components/SideBarRedisign/SideBarRedisign.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
 import {FiLogOut} from "react-icons/fi";
-import {API_KEY, API_URL} from "../../constantes.ts";
+import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
 import {SideBarMenu} from "../../components/SideBarMenu/SideBarMenu.tsx";
