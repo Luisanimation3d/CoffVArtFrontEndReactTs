@@ -107,10 +107,6 @@ export const Orders = () => {
 
     const options = [
         {
-            label: 'Eliminar',
-            icon: <FiShuffle/>
-        },
-        {
             label: 'Cambiar proceso',
             icon: <FiShuffle/>
         }

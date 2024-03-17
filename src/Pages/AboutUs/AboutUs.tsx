@@ -1,5 +1,13 @@
 import BannerBurdeo1 from '../../assets/nosotros1.jpg';
-import BannerBurdeo2 from '../../assets/nosotros2.jpg';
+import Burdeo20 from '../../assets/Burdeo20.jpg'
+import Burdeo14 from '../../assets/Burdeo14.jpg'
+import Burdeo17 from '../../assets/Burdeo17.jpg'
+import Burdeo19 from '../../assets/Burdeo19.jpg'
+
+
+
+
+
 
 import coffeeGif from '../../assets/descargar.gif';
 import { SliderBanner } from '../../components/SliderBanner/SliderBanner.tsx';
@@ -116,71 +124,53 @@ export const AboutUs = () => {
 				>
 					<div className='home__bannerContainer'>
 						<SliderBanner
-							images={[BannerBurdeo1, BannerBurdeo2]}
+							images={[BannerBurdeo1, Burdeo19]}
 							autoPlayInterval={2500}
 						/>
 					</div>
-					<div className='contentAbout'>
-						<section className='rowAbout'>
-							{/* <img src={AboutRowImageOne} alt="" /> */}
-							<div className='rowAbout__text'>
-								<h2>Nosotros</h2>
-								<p className='rowAbout__paragraph'>
-									Burdeo Coffee es una empresa familiar joven y enérgica
-									dedicada a la producción y venta de café en grano alta
-									calidad. Nos esforzamos por ofrecer a nuestros clientes la
-									mejor calidad y sabor en cada taza de café preparada en casa.
-									Para lograrlo buscamos los mejores granos de café de las más
-									exclusivas de América Latina y los procesamos con esmero para
-									obtener obtener un sabor único y delicioso. Además de nuestro
-									café café en grano, también ofrecemos una amplia variedad de
-									tés y otros para satisfacer todas las necesidades y gustos de
-									nuestros clientes. En Estamos orgullosos de ofrecer un
-									producto excepcional y esperamos compartir nuestra pasión por
-									el café.
-								</p>
-							</div>
-						</section>
-						<section className='rowAbout'>
-							<p className='rowAbout__paragraph right'>
-								En Burdeo Coffee, nos dedicamos a proporcionar a nuestros
-								clientes una experiencia cafetera de la mayor calidad posible.
-								Desde el abastecimiento de nuestros granos hasta el proceso de
-								tostado y envasado, prestamos prestamos atención a cada detalle
-								para garantizar que nuestro café puede ser. Nos esforzamos
-								constantemente por mejorar e innovar, y y siempre buscamos
-								nuevos y excitantes sabores que añadir a nuestra a nuestra línea
-								de productos. Tanto si es un experto en café como si simplemente
-								café para empezar el día, tenemos algo para todos los gustos.
-								para todos los gustos. Gracias por elegir Burdeo Coffee.
-							</p>
-						</section>
+					<section className='hero'>
+  					<div className='heading'>
+  					</div>
+  					<div className='container'>
+    				<div className='hero-container'>
+      					<h2>Origenes: El corazon de nuestro café</h2>
+      					<p>Sumérgete en la esencia de nuestra pasión por el café a través de las imágenes que capturan la belleza de nuestras fincas. Desde las majestuosas montañas hasta los tranquilos valles, cada foto es un testimonio de nuestro arraigado compromiso con la calidad y la tradición. Bienvenidos a un viaje visual que revela el cuidado y la dedicación meticulosa detrás de cada taza, donde cada detalle refleja nuestro amor por el café y el respeto por la tierra que lo cultiva. Adéntrate en este universo sensorial que celebra la naturaleza, el sabor y la autenticidad.</p>
+    				</div>
+    				<div className='hero-image'>
+      				<img src={Burdeo14} id='image1' alt='Coffe Cup' />
+    				</div>
+  					</div>
+				</section>
+				<section className='hero'>
+  				<div className='heading'>
+  				</div>
+  				<div className='container'>
+    			<div className='hero-image'>
+      				<img src={Burdeo17} id='image2' alt='Coffe Cup' />
+    			</div>
+    			<div className='hero-container'>
+     			 <h2>Guardianes de la Cosecha: Manos Que Tejen Historias en Cada Grano</h2>
+      				<p>En nuestras fincas, los recolectores de café son los auténticos protagonistas. Con manos laboriosas y dedicadas, no solo cosechan granos, sino que entretejen historias que se fusionan con nuestra marca. El compromiso diario de estos guardianes de la cosecha va más allá de la recolección; es un acto de pasión y tradición que da vida a cada grano. Cada taza que disfrutas es un tributo a estas manos que, con cada movimiento, tejen historias en cada sorbo, transmitiendo el alma y el cuidado que dedicamos a nuestro café.</p>
+    			</div>
+  				</div>
+			</section>
+			<section className='hero'>
+  			<div className='heading'>
+  			</div>
+  			<div className='container'>
+    		<div className='hero-container'>
+      			<h2>Pergamino: Aromas Reveladores de Nuestra Tierra</h2>
+      			<p>Déjate llevar por los evocadores aromas de nuestro café, Pergamino. Cada taza es un viaje a través de los paisajes más preciados de nuestras fincas, desde las altas montañas hasta los valles serenos. Descubre el sabor único de la tierra en cada sorbo, una expresión de nuestro compromiso con la excelencia y la pasión por el café. Bienvenidos a una experiencia donde los aromas revelan la verdadera esencia de nuestra tierra. Disfruta de cada momento como un tributo a la naturaleza y al café que nos une.</p>
+    		</div>
+    		<div className='hero-image'>
+      		<img src={Burdeo20} id='image3' alt='Coffe Cup' />
+    		</div>
+  			</div>
+		</section>
+</div>
+	)}
+</div>
 
-						<section className='rowAbout'>
-							<p className='rowAbout__paragraph left'>
-								Nuestra empresa familiar ha estado comprometida con la
-								excelencia desde nuestros nuestros inicios. Nos esforzamos por
-								ofrecer a nuestros clientes los mejores granos de café de las
-								plantaciones de café más exclusivas de América Latina y
-								procesarlos cuidadosamente para obtener un sabor único y
-								delicioso. Nuestros granos de café son perfectos para quienes
-								disfrutan de la experiencia de preparar su propio café en casa y
-								buscan un producto un producto de alta calidad. Además de
-								nuestro café en grano, también ofrecemos una amplia variedad de
-								tés y otros productos de café para satisfacer todas las
-								necesidades y gustos de nuestros clientes. Estamos orgullosos de
-								ofrecer un un producto excepcional y esperamos poder compartir
-								nuestra pasión por el café con usted.
-							</p>
-							{/* <img src={AboutRowImageTwo} alt="" /> */}
-						</section>
-					</div>
-					<div className='sectionbannerone'>
-						<SectionBanner img='https://images.unsplash.com/photo-1459755486867-b55449bb39ff?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' />
-					</div>
-				</div>
-			)}
-		</div>
 	);
 };
 

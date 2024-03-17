@@ -118,8 +118,13 @@ export const Register = () => {
             label: 'Tipo de documento',
             placeholder: 'Tipo de documento',
             value: registerForm.documentType,
-            options: documentTypeOptions,
             onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
+            options: [
+                {label: 'Cédula de ciudadanía', value: 'CC'},
+                {label: 'Cédula de extranjería', value: 'CE'},
+                {label: 'Pasaporte', value: 'PA'},
+            ],
+            size: 'large',
         },
         {
             name: 'document',
