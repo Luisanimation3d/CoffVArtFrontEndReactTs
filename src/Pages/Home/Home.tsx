@@ -156,7 +156,7 @@ export const Home = () => {
                   <h1>Origenes: El corazon de nuestro café</h1>
                   <p></p>
                   <a href="#" className="btn">
-                    Read More
+                    Leer más
                   </a>
                 </div>
               </div>
@@ -167,7 +167,7 @@ export const Home = () => {
                   <h1>Pergamino: Aromas Reveladores de Nuestra Tierra</h1>
                   <p></p>
                   <a href="#" className="btn">
-                    Read More
+                    Leer más
                   </a>
                 </div>
               </div>
@@ -178,7 +178,7 @@ export const Home = () => {
                   <h1>Guardianes de la Cosecha: Manos Que Tejen Historias en Cada Grano</h1>
                   <p></p>
                   <a href="#" className="btn">
-                    Read More
+                    Leer más
                   </a>
                 </div>
               </div>
