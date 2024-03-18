@@ -17,6 +17,7 @@ export const ProductionRequests = () => {
     const [search, setSearch] = useState<string>('');
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const { data, loading, error, get, del } = useFetch(API_URL);
+    const [page, setPage] = useState<number>(1)
     const [dataProductionRequestsModify, setDataProductionRequestsModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {
@@ -75,12 +76,12 @@ export const ProductionRequests = () => {
     //const dataProductionRequests= data?.ProductionRequests?.rows|| [];
     let dataProductionRequestsFiltered: any;
 
-    if(search.length > 0){
+    if(search !=''){
         dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>  
-           productionRequest.id.toLowerCase().includes(search.toLowerCase()) 
-        || productionRequest.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
-        || productionRequest.quantity
-        || productionRequest.state.toLowerCase().includes(search.toLowerCase())
+           productionRequest.id?.toLowerCase().includes(search.toLowerCase()) 
+        || productionRequest.dateOfDispatch?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.quantity?.tolowerCase().includes(search.toLowerCase()) 
+        || productionRequest.state?.toLowerCase().includes(search.toLowerCase())
         )
     }else{
         dataProductionRequestsFiltered = dataProductionRequests
@@ -119,6 +120,10 @@ export const ProductionRequests = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Solicitudes de Producción'}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.productionRequests?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     createAction={() => navigate('/admin/ProductionRequests/create')}
                     loading={loading}
                     callback={handleCallback}
