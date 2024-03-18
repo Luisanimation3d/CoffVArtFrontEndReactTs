@@ -1,6 +1,9 @@
-import {createContext, useContext, useEffect, useReducer} from "react";
-import {AuthContextProps, AuthState, AuthActionValues, User} from "../types/AuthContext.d";
-import {authReducer} from "./reducers/authReducer";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { AuthContextProps, AuthState, AuthActionValues, User } from "../types/AuthContext.d";
+import { authReducer } from "./reducers/authReducer";
+import {useFetch} from '../hooks/useFetch';
+import {API_KEY, API_URL} from "../utils/constantes.ts";
+
 
 const initialState: AuthState = {
     user: null,
@@ -8,7 +11,7 @@ const initialState: AuthState = {
     loading: true,
     error: null,
     isAuthenticated: false,
-    updateUser: () => {},
+    updateUser: () => { },
 };
 
 export const AuthContext = createContext<AuthContextProps>({
@@ -16,18 +19,21 @@ export const AuthContext = createContext<AuthContextProps>({
     token: null,
     loading: true,
     error: null,
-    login: () => {},
-    logout: () => {},
+    login: () => { },
+    logout: () => { },
 
     isAuthenticated: false,
-    updateUser: () => {},
+    updateUser: () => { },
 })
 
 export const useAuth = () => {
     return useContext(AuthContext);
 }
 
-export const AuthProvider = ({children}: any) => {
+export const AuthProvider = ({ children }: any) => {
+
+    const {data, error, get} = useFetch(API_URL);
+
     const [state, dispatch] = useReducer(authReducer, initialState, () => {
         const localData = localStorage.getItem("auth");
         return localData ? JSON.parse(localData) : initialState;
@@ -42,12 +48,12 @@ export const AuthProvider = ({children}: any) => {
             user,
             token,
         }
-        if(user && token) localStorage.setItem("auth", JSON.stringify(payload));
-        dispatch({type: AuthActionValues.LOGIN, payload});
+        if (user && token) localStorage.setItem("auth", JSON.stringify(payload));
+        dispatch({ type: AuthActionValues.LOGIN, payload });
     }
 
     const logout = () => {
-        dispatch({type: AuthActionValues.LOGOUT, payload: null});
+        dispatch({ type: AuthActionValues.LOGOUT, payload: null });
         localStorage.removeItem("auth");
     }
 
@@ -61,8 +67,36 @@ export const AuthProvider = ({children}: any) => {
         document: string,
         documentType: string,
     }) => {
-        dispatch({type: AuthActionValues.UPDATE_USER, payload: user});
+        dispatch({ type: AuthActionValues.UPDATE_USER, payload: user });
     }
+
+    const validateToken = (token: string) => {
+        if(state.isAuthenticated){
+            get(`login/validateToken?apikey=${API_KEY}`)
+        }
+    }
+
+    useEffect(() => {
+        const token = state.token;
+        if (token) {
+            validateToken(token);
+        }
+
+        const interval = setInterval(() => {
+            const token = state.token;
+            if (token) {
+                validateToken(token);
+            }
+        }, 60000);
+
+        return () => clearInterval(interval);
+    }, [state.token]);
+
+    useEffect(() => {
+        if (error) {
+            logout();
+        }
+    }, [error])
 
     return (
         <AuthContext.Provider value={{

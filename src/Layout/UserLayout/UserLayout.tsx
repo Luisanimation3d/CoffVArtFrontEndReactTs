@@ -1,5 +1,5 @@
 // import {HeaderMenu} from "../../components/HeaderMenu/HeaderMenu.tsx";
-import {Outlet, useLocation, useNavigate} from "react-router-dom";
+import {Outlet, useLocation, useNavigate, Navigate} from "react-router-dom";
 import {UserFooter} from "../../components/Footer/Footer";
 import {useEffect} from "react";
 import {HeaderMenuRedisign} from "../../components/HeaderMenuRedisign/HeaderMenuRedisign.tsx";
@@ -13,6 +13,13 @@ export const UserLayout = () => {
             navigate('/home')
         }
     }, []);
+
+    useEffect(() => {
+        if(!isAuthenticated){
+            return <Navigate to='/'/>
+        }
+    }, [isAuthenticated])
+
     return (
         <>
             {/*<HeaderMenu/>*/}

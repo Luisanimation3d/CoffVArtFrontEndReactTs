@@ -1,4 +1,5 @@
-import {Outlet, useNavigate} from "react-router-dom";
+import {useEffect} from 'react';
+import {Outlet, useNavigate, Navigate} from "react-router-dom";
 import {useRutasAdmin} from "../../Routes/AdminRoutes";
 
 import './AdminLayout.css';
@@ -13,7 +14,7 @@ import {SideBarMenu} from "../../components/SideBarMenu/SideBarMenu.tsx";
 export const AdminLayout = () => {
     const {AdminRoutes} = useRutasAdmin();
     const {darkMode} = useDarkMode();
-    const {logout} = useAuth();
+    const {logout, isAuthenticated} = useAuth();
     const navigate = useNavigate();
     const { get: logoutGet } = useFetch(API_URL);
 
@@ -25,7 +26,11 @@ export const AdminLayout = () => {
         }, 500);
     };
 
-
+    useEffect(() => {
+        if(!isAuthenticated){
+            return <Navigate to='/'/>
+        }
+    }, [isAuthenticated])
 
     return (
         <div className={`adminLayout__mainContainer`}>
