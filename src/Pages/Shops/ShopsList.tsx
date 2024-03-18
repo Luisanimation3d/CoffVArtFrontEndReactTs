@@ -14,7 +14,7 @@ import { TableRedisign } from '../../components/TableRedisign/TableRedisign.tsx'
 import { FiShuffle } from 'react-icons/fi';
 import './ShopsCss.css';
 import burdeoFullLogo from '../../assets/BurdeoFullLogo.png';
-import { Shop } from '@mui/icons-material';
+import { CellTower, Shop } from '@mui/icons-material';
 
 export const Shops = () => {
 	const [search, setSearch] = useState<string>('');
@@ -45,6 +45,15 @@ export const Shops = () => {
 		{
 			key: 'total',
 			header: 'Total',
+			render: (cell: string | number) =>{
+				return (
+						cell.toLocaleString('es-CO', {
+							style: 'currency',
+							currency: 'COP',
+							minimumFractionDigits: 0,
+						})
+				)
+			},
 		},
 		{
 			key: 'date',

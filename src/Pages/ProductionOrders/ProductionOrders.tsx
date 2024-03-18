@@ -40,6 +40,15 @@ export const ProductionOrders = () => {
         {
             key: 'quantity',
             header: 'Cantidad',
+            render: (cell: string | number) => {
+                if (cell !== null) {
+                    return cell.toLocaleString('es-CO', {
+                        minimumFractionDigits: 0,
+                    }) + ` gr`;
+                } else {
+                    return '0';
+                }
+            }
         },
         {
             key: 'state',
