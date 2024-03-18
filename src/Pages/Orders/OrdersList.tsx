@@ -80,7 +80,7 @@ export const Orders = () => {
     if (search.length > 0) {
         dataOrdersFiltered = dataOrdersModify.filter((order:any) =>
                 order.code.toLowerCase().includes(search) ||
-                order.state.toLowerCase().includes(search.toLowerCase())
+                order.state.toLowerCase().includes(search.toLowerCase()) || order.coustumer.name.toLowerCase().includes(search.toLowerCase())
         );
     } else {
         dataOrdersFiltered = dataOrders;
@@ -202,15 +202,27 @@ console.log(data)
                                 <tr key={index}>
                                     <td className="invoice-table-cell">{item.product}</td>
                                     <td className="invoice-table-cell">{item.quantity}</td>
-                                    <td className="invoice-table-cell">{item.value}</td>
-                                    <td className="invoice-table-cell">{item.total}</td>
+                                    <td className="invoice-table-cell">{item.value.toLocaleString('es-CO' , {
+                                        style: 'currency',
+                                        currency: 'COP',
+                                        minimumFractionDigits: 0,
+                                    })}</td>
+                                    <td className="invoice-table-cell">{item.total.toLocaleString('es-CO' , {
+                                        style: 'currency',
+                                        currency: 'COP',
+                                        minimumFractionDigits: 0,
+                                    })}</td>
                                 </tr>
                             ))}
                         </tbody>
                         <tfoot>
                             <tr>
                                 <td className="total-td" colSpan={3}>Total</td>
-                                <td className="total-tv">{orderDetails.reduce((acc, item) => acc + item.total, 0)}</td>
+                                <td className="total-tv">{orderDetails.reduce((acc, item) => acc + item.total, 0).toLocaleString('es-CO', {
+                                    style: 'currency',
+                                    currency: 'COP',
+                                    minimumFractionDigits: 0,
+                                })}</td>
                             </tr>
                         </tfoot>
                     </table>
