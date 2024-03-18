@@ -172,6 +172,11 @@ export const CreateUser = () => {
         if (!formDataRegister.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
+        if (formDataRegister.documentType?.value === 'CC') {
+            if (!/^\d+$/.test(formDataRegister.documentNumber)) {
+                mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe contener solo números' };
+            }
+        }
         if (!formDataRegister.documentNumber || formDataRegister.documentNumber.trim().length < 8 || formDataRegister.documentNumber.trim().length > 15) {
             mensajeError = {
                 ...mensajeError,

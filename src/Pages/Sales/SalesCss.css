@@ -1,73 +1,83 @@
+/* Contenedor principal de la factura */
 .invoice-container {
-    width: 800px;
-    margin: 20px auto;
-    font-family: sans-serif;
-  }
-  
-  .header {
-    background-color: rgb(214, 202, 176, 250);
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    text-align: center;
-  }
-  
-  .header img {
-    max-width: 10%;
-    height: auto;
-  }
-  
-  .client-info {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .order-details {
-    padding: 10px;
-    margin-bottom: 20px; 
-  }
-  .invoice-table tfoot {
-    font-weight: bold;
-    margin-top: 20px; 
-  }
-  
-  .order-details table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  
-  .invoice-table-header,
-  .invoice-table-cell {
-    padding: 5px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .invoice-table-header th {
-    background-color: #f7f7f7;
-    font-weight: bold;
-  }
-  
-  .invoice-table tbody tr:nth-child(even) {
-    background-color: #f7f7f7;
-  }
-  
-  .invoice-table tbody tr:nth-child(odd) {
-    background-color: #fff;
-  }
-  
-  .invoice-table tfoot {
-    font-weight: bold;
-  }
-.total-td{
-    text-align: right;
-    padding-top: 20px;
+  width: 800px;
+  margin: 0px auto;
+  font-family: Arial, sans-serif;
+  background-color: #fff; /* Cambiado el color de fondo */
+  border: 1px solid #ddd; /* Añadido borde */
+  border-radius: 5px; /* Añadido borde redondeado */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Añadida sombra */
 }
-.total-tv{
-    text-align: right;
-    margin-top: 10px;
-    margin: 10px 0 0;
-    padding-top: 20px;
+
+/* Encabezado de la factura */
+.header {
+  background-color: rgb(214, 202, 176, 250);
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  border-top-left-radius: 5px; /* Añadido borde redondeado */
+  border-top-right-radius: 5px; /* Añadido borde redondeado */
+}
+
+.header img {
+  max-width: 100px; /* Ajustado tamaño de la imagen */
+  height: auto;
+}
+
+/* Información del cliente */
+.client-info {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Detalles del pedido */
+.order-details {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.order-details table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Estilos de la tabla de la factura */
+.invoice-table-header,
+.invoice-table-cell {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.invoice-table-header th {
+  background-color: #f7f7f7;
+  font-weight: bold;
+}
+
+.invoice-table tbody tr:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+.invoice-table tfoot {
+  font-weight: bold;
+}
+
+.total-td {
+  text-align: right;
+  font-weight: bold;
+  font-size: 30px;
+  margin: 10px 0 0;
+  padding-top: 20px;
+}
+
+.total-tv {
+  text-align: right;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: 10px;
+  margin: 10px 0 0;
+  padding-top: 20px;
+  border-bottom: 1px solid #ccc; /* Línea sutil debajo del texto */
 }

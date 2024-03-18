@@ -161,7 +161,12 @@ export const CreateCoustomer = () => {
         if (!formData.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 15) {
+        if (formData.documentType?.value === 'CC') {
+            if (!/^\d+$/.test(formData.documentNumber)) {
+                mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe contener solo números' };
+            }
+        }
+        if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 10) {
             mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
         if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15 || !/^[a-zA-Z\s]+$/.test(formData.name)) {

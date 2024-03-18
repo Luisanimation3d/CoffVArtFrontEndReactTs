@@ -1,10 +1,11 @@
 import Burdeo6 from '../../assets/Burdeo6.jpg'
 import Burdeo8 from '../../assets/Burdeo8.jpg'
-import Burdeo16 from '../../assets/Burdeo16.jpg'
 import Burdeo11 from '../../assets/Burdeo11.jpg'
 import Burdeo06 from '../../assets/Burdeo06.jpg'
 import Burdeo21 from '../../assets/Burdeo21.jpg'
-import Burdeo01 from '../../assets/Burdeo01.jpg'
+import Burdeo13 from '../../assets/Burdeo13.jpg'
+
+
 
 import ProductImage from '../../assets/product.jpg';
 import coffeeGif from '../../assets/descargar.gif';
@@ -138,7 +139,7 @@ export const Home = () => {
       {isCupAnimationComplete && (
         <div ref={homeContentRef} className="home__content" style={{ opacity: 0 }}>
           <div className="home__bannerContainer">
-            <SliderBanner images={[Burdeo8, Burdeo6, Burdeo16]} autoPlayInterval={2500} />
+            <SliderBanner images={[Burdeo8, Burdeo6, Burdeo13]} autoPlayInterval={2500} />
           </div>
   
         <div className="home__productsContainer">
@@ -155,7 +156,7 @@ export const Home = () => {
                   <h1>Origenes: El corazon de nuestro café</h1>
                   <p></p>
                   <a href="#" className="btn">
-                    Read More
+                    Leer más
                   </a>
                 </div>
               </div>
@@ -166,7 +167,7 @@ export const Home = () => {
                   <h1>Pergamino: Aromas Reveladores de Nuestra Tierra</h1>
                   <p></p>
                   <a href="#" className="btn">
-                    Read More
+                    Leer más
                   </a>
                 </div>
               </div>
@@ -177,7 +178,7 @@ export const Home = () => {
                   <h1>Guardianes de la Cosecha: Manos Que Tejen Historias en Cada Grano</h1>
                   <p></p>
                   <a href="#" className="btn">
-                    Read More
+                    Leer más
                   </a>
                 </div>
               </div>

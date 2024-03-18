@@ -118,8 +118,13 @@ export const Register = () => {
             label: 'Tipo de documento',
             placeholder: 'Tipo de documento',
             value: registerForm.documentType,
-            options: documentTypeOptions,
             onChange: (value: SelectOption | undefined) => setRegisterForm({...registerForm, documentType: value}),
+            options: [
+                {label: 'Cédula de ciudadanía', value: 'CC'},
+                {label: 'Cédula de extranjería', value: 'CE'},
+                {label: 'Pasaporte', value: 'PA'},
+            ],
+            size: 'large',
         },
         {
             name: 'document',
@@ -127,7 +132,7 @@ export const Register = () => {
             label: 'Documento',
             placeholder: 'Documento',
             value: registerForm.document,
-            onChange: (value: string) => setRegisterForm({...registerForm, document: validateIfNumber(value) ? value : registerForm.document}),
+            onChange: (value: string) => setRegisterForm({...registerForm, document: value}),
             size: 'large',
         }
     ]
@@ -205,7 +210,12 @@ export const Register = () => {
         if (!registerForm.documentType) {
             mensajeError = {...mensajeError, documentType: 'El tipo de documento es requerido'}
         }
-        if (!registerForm.document || registerForm.document.trim().length < 8 || registerForm.document.trim().length > 15) {
+        if (registerForm.documentType?.value === 'CC') {
+            if (!/^\d+$/.test(registerForm.document)) {
+                mensajeError = { ...mensajeError, document: 'El número de documento debe contener solo números' };
+            }
+        }
+        if (!registerForm.document || registerForm.document.trim().length < 8 || registerForm.document.trim().length > 10) {
             mensajeError = { ...mensajeError, document: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
         if (Object.keys(mensajeError).length === 0) {

@@ -103,7 +103,7 @@ export const CreateProduct = () => {
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		let mensajeError = {};
-		if (!formData.name || formData.name.trim().length < 1 || !/^[a-zA-Z\u00C0-\u017F\s]+$/.test(formData.name)) {
+		if (!formData.name || formData.name.trim().length < 1 || !/^[a-zA-Z\d\u00C0-\u017F\s]+$/.test(formData.name)) {
 			mensajeError = { ...mensajeError, name: 'El nombre es requerido' };
 		}
 		if (!formData.stockMin) {
@@ -130,7 +130,7 @@ export const CreateProduct = () => {
 				amountSupply: 'La cantidad de insumos es requerida',
 			};
 		}
-		if (!formData.description || formData.description.trim().length < 1 || !/^[a-zA-Z\u00C0-\u017F\s]+$/.test(formData.description)) {
+		if (!formData.description || formData.description.trim().length < 1 || !/^[a-zA-Z\d\u00C0-\u017F\s]+$/.test(formData.description)) {
 			mensajeError = {
 				...mensajeError,
 				description: 'La descripción es requerida',

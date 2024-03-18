@@ -1,16 +1,9 @@
+
+
 .home__container{
     display: flex;
     flex-direction: column;
-}
-
-.box{
-    height: 100px;
-    width: 100px;
-    background-color: brown;
-    position:absolute;
-    left: 50vw;
-    top: 50vh;
-}
+  }
 
 .home__bannerContainer{
     width: 100%;
@@ -18,85 +11,136 @@
     position: relative;
 }
 
-.home__productsContainer{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 3rem 1rem;
-    gap: 2rem;
-}
-
-.home__productsContainer h2{
-    text-align: center;
-    font-size: 2rem;
-}
-
-.home__productsContainer .home__productsCards{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-.cup {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .cup img {
-    width: 400px;
-    height: auto; 
-  }
-
   .sectionbannerone{
     width: 100%;
     height: 300px;
   }
-  .contentAbout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 70%;
+
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif
+}
+
+.hero {
+  background-color: #f8f8f8;
+  overflow: hidden;
+}
+
+.heading h1 {
+  color: #7e1300;
+  font-size: 55px;
+  text-align: center;
+  margin-top: 35px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  margin: 65px auto;
+}
+
+.hero-container{
+  flex:1;
+  width: 600px;
+  margin: 0px 25px;
+  animation: fadeInUp 4s ease;
+  }
+
+.hero-image {
+  flex: 1;
+  width: 600px;
+  margin: 0px 25px;
+  animation: fadeInRight 5s ease;
+}
+.hero-container h2 {
+  font-size: 38px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.hero-container p {
+  font-size: 24px;
+  line-height: 1.5;
+  margin-bottom: 40px;
+  color: #666;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 2s ease;
+}
+#image1:hover {
+  content: url('../../assets/Burdeo03.jpg');
+  transform: scale(1.1);
+  
+}
+#image2:hover {
+  content: url('../../assets/Burdeo18.jpg');
+  transform: scale(1.1);
+}
+#image3:hover {
+  content: url('../../assets/Burdeo10.jpg');
+  transform: scale(1.1);
+
+}
+
+@media screen and  (max-width: 768px){
+  .container{
     flex-direction: column;
-    margin: 0 auto;
-    padding: 6rem;
-    gap: 6rem;
+    width: 100%;
+    margin: 0px;
+    padding: 0px 40px;
   }
-  
-  .contentAbout .rowAbout {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 3.25rem;
+  .hero{
+    margin: 0px;
   }
-  
-  .contentAbout .rowAbout .rowAbout__text {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 3rem;
+  .hero-container{
+    width: 100%;
+    margin: 35px 0px;
+
   }
-  
-  .contentAbout .rowAbout .rowAbout__text h2 {
-    color: #000;
-    font-size: 2rem;
-    font-style: normal;
-    font-weight: 800;
-    line-height: 2rem;
-    letter-spacing: 4px;
-    text-transform: uppercase;
+  .hero-image{
+    width: 100%;
+    margin: 0px;
   }
-  
-  .rowAbout__paragraph {
-    color: #000;
+  .heading h1{
+    font-size: 40px;
+    margin-top: 30px;
+  }
+  .hero-container h2{
+    font-size: 30px;
+  }
+  .hero-container p{
     font-size: 20px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 32px;
-    letter-spacing: 2.5px;
-    text-align: justify;
   }
+  #first-image {
+    order: 2;
+  }
+}
+@keyframes fadeInUp{
+  0%{
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+@keyframes fadeInRight{
+  0%{
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100%{
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
