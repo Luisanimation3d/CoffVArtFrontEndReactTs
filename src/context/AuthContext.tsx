@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { AuthContextProps, AuthState, AuthActionValues, User } from "../types/AuthContext.d";
 import { authReducer } from "./reducers/authReducer";
-import {useFetch} from '../hooks/useFetch';
-import {API_KEY, API_URL} from "../utils/constantes.ts";
+import { useFetch } from '../hooks/useFetch';
+import { API_KEY, API_URL } from "../utils/constantes.ts";
 
 
 const initialState: AuthState = {
@@ -32,7 +32,7 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: any) => {
 
-    const {data, error, get} = useFetch(API_URL);
+    const { error, post } = useFetch(API_URL);
 
     const [state, dispatch] = useReducer(authReducer, initialState, () => {
         const localData = localStorage.getItem("auth");
@@ -68,29 +68,46 @@ export const AuthProvider = ({ children }: any) => {
         documentType: string,
     }) => {
         dispatch({ type: AuthActionValues.UPDATE_USER, payload: user });
+        setTimeout(() => {
+            setInterval(() => {
+                isTokenValidateSuscription();
+            }, 60000);
+        }, 1000);
     }
 
     const validateToken = (token: string) => {
-        if(state.isAuthenticated){
-            get(`login/validateToken?apikey=${API_KEY}`)
+        if (state.isAuthenticated) {
+            post(`login/validateToken?apikey=${API_KEY}`, {
+                token
+            })
         }
     }
 
-    useEffect(() => {
-        const token = state.token;
-        if (token) {
-            validateToken(token);
-        }
+    // useEffect(() => {
+    //     if (state.isAuthenticated) {
+    //         const token = state.token;
+    //         if (token) {
+    //             validateToken(token);
+    //         }
 
-        const interval = setInterval(() => {
+    //         const interval = setInterval(() => {
+    //             const token = state.token;
+    //             if (token) {
+    //                 validateToken(token);
+    //             }
+    //         }, 60000);
+    //         return () => clearInterval(interval);
+    //     }
+    // }, [state.token]);
+
+    const isTokenValidateSuscription = () => {
+        if (state.isAuthenticated) {
             const token = state.token;
             if (token) {
                 validateToken(token);
             }
-        }, 60000);
-
-        return () => clearInterval(interval);
-    }, [state.token]);
+        }
+    }
 
     useEffect(() => {
         if (error) {
