@@ -141,6 +141,7 @@ export const SuppliersEdit = () => {
             },
             body: JSON.stringify(requestBody),
         })
+        console.log("respuesta:",requestBody)
         if(response){
             const data = await response.json()
             if(data.message == "Proveedor editado correctamente"){
@@ -151,6 +152,11 @@ export const SuppliersEdit = () => {
                 setTimeout(() => {
                     navigate(-1)
                 }, 2000);
+            }else if(data.quality == "El campo solo debe contener letras"){
+                toast.error('El campo solo debe contener letras', {
+                    icon: '👎',
+                    position: 'bottom-right'
+                })
             }
         }
     }

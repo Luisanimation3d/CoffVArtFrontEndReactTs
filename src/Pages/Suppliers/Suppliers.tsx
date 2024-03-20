@@ -18,8 +18,8 @@ export const Suppliers = () => {
     const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
     useEffect(() => {
-        get(`suppliers?apikey=${API_KEY}`);
-    }, []);
+        get(`suppliers?apikey=${API_KEY}&page=${page}`);
+    }, [page]);
     const columnsSuppliers: Column[] = [
         {
             key: 'id',
@@ -62,6 +62,7 @@ export const Suppliers = () => {
     if(search != ''){
         dataSuppliersFiltered = dataSuppliers?.filter((supplier:any )=>
         supplier.nit?.toLowerCase().includes(search.toLowerCase() )
+        || supplier.name?.toLowerCase().includes(search.toLowerCase() )
         || supplier.coffeType?.toLowerCase().includes(search.toLowerCase() )
         || supplier.address?.toLowerCase().includes(search.toLowerCase() )
         || supplier.phone?.toLowerCase().includes(search.toLowerCase() )

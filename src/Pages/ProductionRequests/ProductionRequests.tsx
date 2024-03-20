@@ -22,8 +22,8 @@ export const ProductionRequests = () => {
 		useState<any>([]);
 	const navigate = useNavigate();
 	useEffect(() => {
-		get(`productionRequests?apikey=${API_KEY}`);
-	}, []);
+		get(`productionRequests?apikey=${API_KEY}&page=${page}`);
+	}, [page]);
 
 	const columnsProductionRequest: Column[] = [
 		{
@@ -131,7 +131,7 @@ export const ProductionRequests = () => {
                     title={'Solicitudes de Producción'}
                     page={page || 1}
                     setPage={setPage}
-                    totalPages={Math.ceil(data?.productionRequests?.count / data?.options?.limit) || 1}
+                    totalPages={Math.ceil(data?.ProductionRequests?.count / data?.options?.limit) || 1}
                     pagination={true}
                     createAction={() => navigate('/admin/ProductionRequests/create')}
                     loading={loading}
