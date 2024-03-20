@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
 import {createPortal} from "react-dom";
 import {Column} from "../../types/Table";
-import {Table} from "../../components/Table/Table.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
 import { useNavigate } from "react-router-dom";
@@ -22,7 +21,7 @@ export const Orders = () => {
     const [dataOrdersModify, setDataOrdersModify] = useState<any>([])
 
 
-    const { data, loading, error, get, del } = useFetch(API_URL)
+    const { data,get, del } = useFetch(API_URL)
     const navigate = useNavigate()
     const [page, setPage] = useState<number>(1);
     useEffect(() => {
