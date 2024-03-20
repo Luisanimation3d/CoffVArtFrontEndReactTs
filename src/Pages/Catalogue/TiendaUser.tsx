@@ -19,7 +19,7 @@ export const TiendaUser = () => {
 	
 
 	useEffect(() => {
-		get(`products?apikey=${API_KEY}`)
+		get(`productsActive?apikey=${API_KEY}`)
 	}, [])
 
 

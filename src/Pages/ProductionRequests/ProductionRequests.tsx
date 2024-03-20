@@ -1,86 +1,96 @@
-import {Column} from "../../types/Table";
-import {Table} from "../../components/Table/Table.tsx";
-import {Titles} from "../../components/Titles/Titles.tsx";
-import {Container} from "../../components/Container/Container.tsx";
-import {useEffect, useState} from "react";
-import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/Button/Button.tsx";
-import { useFetch } from "../../hooks/useFetch.tsx";
-import { API_KEY, API_URL } from "../../utils/constantes.ts";
-import {EditProcessRModal } from "../../Modales/EditProcessModal/EditProcessRModal.tsx";
-import { createPortal } from "react-dom";
-import {TableRedisign} from "../../components/TableRedisign/TableRedisign.tsx";
-import {FiShuffle} from "react-icons/fi";
+import { Column } from '../../types/Table';
+import { Table } from '../../components/Table/Table.tsx';
+import { Titles } from '../../components/Titles/Titles.tsx';
+import { Container } from '../../components/Container/Container.tsx';
+import { useEffect, useState } from 'react';
+import { SearchInput } from '../../components/SearchInput/SearchInput.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '../../components/Button/Button.tsx';
+import { useFetch } from '../../hooks/useFetch.tsx';
+import { API_KEY, API_URL } from '../../utils/constantes.ts';
+import { EditProcessRModal } from '../../Modales/EditProcessModal/EditProcessRModal.tsx';
+import { createPortal } from 'react-dom';
+import { TableRedisign } from '../../components/TableRedisign/TableRedisign.tsx';
+import { FiShuffle } from 'react-icons/fi';
 
 export const ProductionRequests = () => {
-    const [search, setSearch] = useState<string>('');
-    const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const { data, loading, error, get, del } = useFetch(API_URL);
-    const [dataProductionRequestsModify, setDataProductionRequestsModify] = useState<any>([])
-    const navigate = useNavigate()
-    useEffect(() => {
-        get(`productionRequests?apikey=${API_KEY}`);
-    }, []);
-   
-    const columnsProductionRequest: Column[] = [
-        {
-            key:'id',
-            header:'Número de Solicitud',
-        },
-        {
-            key: 'supplie',
-            header: 'Insumo',
-        },
-        {
-            key: 'quantity',
-            header: 'Cantidad',
-        },
-        {
-            key: 'company',
-            header: 'Compañia',
-        },
-        {
-            key: 'dateOfDispatch',
-            header: 'Fecha de Envio',
-        },
-        
-        {
-            key: 'state',
-            header: 'Proceso',
-        },    
-    ]
+	const [search, setSearch] = useState<string>('');
+	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+	const { data, loading, error, get, del } = useFetch(API_URL);
+    const [page, setPage] = useState<number>(1)
+	const [dataProductionRequestsModify, setDataProductionRequestsModify] =
+		useState<any>([]);
+	const navigate = useNavigate();
+	useEffect(() => {
+		get(`productionRequests?apikey=${API_KEY}`);
+	}, []);
 
-    useEffect(() => {
-        if(data?.ProductionRequests?.rows){
-            console.log('Entra')
-            const newProductionRequestsData = data?.ProductionRequests?.rows.map((productionRequest: any) => {
-                return {
-                    ...productionRequest,
-                    state: productionRequest?.process?.name,
-                    supplie: productionRequest?.supply?.name,
-                    company: productionRequest?.company?.name,
-                    dateOfDispatch: productionRequest.dateOfDispatch.substring(0, 10),
-                    
-                }
-            })
+	const columnsProductionRequest: Column[] = [
+		{
+			key: 'id',
+			header: 'Número de Solicitud',
+		},
+		{
+			key: 'supplie',
+			header: 'Insumo',
+		},
+		{
+			key: 'quantity',
+			header: 'Cantidad',
+			render: (cell: string | number) => {
+				return (
+					cell.toLocaleString('es-CO', {
+						minimumFractionDigits: 0,
+					}) + ` kg`
+				);
+			},
+		},
+		{
+			key: 'company',
+			header: 'Compañia',
+		},
+		{
+			key: 'dateOfDispatch',
+			header: 'Fecha de Envio',
+		},
 
-            setDataProductionRequestsModify(newProductionRequestsData)
-        }
-    }, [data]);
-    const [idEdit, setidEdit]= useState(0)
+		{
+			key: 'state',
+			header: 'Proceso',
+		},
+	];
 
-    const dataProductionRequests = dataProductionRequestsModify || []
+	useEffect(() => {
+		if (data?.ProductionRequests?.rows) {
+			console.log('Entra');
+			const newProductionRequestsData = data?.ProductionRequests?.rows.map(
+				(productionRequest: any) => {
+					return {
+						...productionRequest,
+						state: productionRequest?.process?.name,
+						supplie: productionRequest?.supply?.name,
+						company: productionRequest?.company?.name,
+						dateOfDispatch: productionRequest.dateOfDispatch.substring(0, 10),
+					};
+				}
+			);
 
-    //const dataProductionRequests= data?.ProductionRequests?.rows|| [];
-    let dataProductionRequestsFiltered: any;
+			setDataProductionRequestsModify(newProductionRequestsData);
+		}
+	}, [data]);
+	const [idEdit, setidEdit] = useState(0);
 
-    if(search.length > 0){
-        dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>  
-           productionRequest.id.toLowerCase().includes(search.toLowerCase()) 
-        || productionRequest.dateOfDispatch.toLowerCase().includes(search.toLowerCase())
-        || productionRequest.quantity
-        || productionRequest.state.toLowerCase().includes(search.toLowerCase())
+	const dataProductionRequests = dataProductionRequestsModify || [];
+
+	//const dataProductionRequests= data?.ProductionRequests?.rows|| [];
+	let dataProductionRequestsFiltered: any;
+
+    if(search !=''){
+        dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>
+           productionRequest.id?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.dateOfDispatch?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.quantity?.tolowerCase().includes(search.toLowerCase())
+        || productionRequest.process?.toLowerCase().includes(search.toLowerCase())
         )
     }else{
         dataProductionRequestsFiltered = dataProductionRequests
@@ -119,6 +129,10 @@ export const ProductionRequests = () => {
                     search={search}
                     setSearch={setSearch}
                     title={'Solicitudes de Producción'}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.productionRequests?.count / data?.options?.limit) || 1}
+                    pagination={true}
                     createAction={() => navigate('/admin/ProductionRequests/create')}
                     loading={loading}
                     callback={handleCallback}

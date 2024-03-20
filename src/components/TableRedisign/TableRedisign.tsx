@@ -10,6 +10,7 @@ import {statesTable} from "../../utils/statesTable.ts";
 type ColumnType = {
     key: string;
     header: string;
+    render?: (value: string | number) => string | number;
 }
 
 interface TableProps {
@@ -245,7 +246,9 @@ export const TableRedisign = ({
                                                                                 </td>
                                                                             ) : (
                                                                                 <td className={`${styles.table__content__tbody__item}`}
-                                                                                    key={index}>{row[column.key]}</td>
+                                                                                    key={index}>
+                                                                                    {column.render ? column.render(row[column.key]) : row[column.key]}
+                                                                                </td>
                                                                             )
                                                                     }
                                                                 </>

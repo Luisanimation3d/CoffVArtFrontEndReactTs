@@ -42,6 +42,13 @@ export const Sales = () => {
 		{
 			key: 'total',
 			header: 'Total',
+			render: (cell: string | number) => {
+				return cell.toLocaleString('es-CO', {
+					style: 'currency',
+					currency: 'COP',
+					minimumFractionDigits: 0,
+				});
+			},
 		},
 		{
 			key: 'state',

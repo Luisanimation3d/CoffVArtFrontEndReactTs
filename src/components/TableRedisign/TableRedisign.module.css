@@ -155,6 +155,7 @@
     color: #ff9f43;
     background: rgba(255, 159, 67, 0.3);
     padding: .5rem 1rem;
+    font-weight: bold;
     border-radius: .5rem;
     display: flex;
     align-items: center;
@@ -178,6 +179,7 @@
     background: rgba(46, 213, 115, 0.3);
     padding: .5rem 1rem;
     border-radius: .5rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -200,6 +202,7 @@
     background: rgba(255, 71, 87, 0.3);
     padding: .5rem 1rem;
     border-radius: .5rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -222,6 +225,7 @@
     background: rgba(27, 168, 242, 0.3);
     padding: .5rem 1rem;
     border-radius: .5rem;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
