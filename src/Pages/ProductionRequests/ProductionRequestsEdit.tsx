@@ -5,7 +5,7 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const EditProductionRequestModal = ({ id, setIsModalOpen, title = 'Cambiar proceso'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const options: SelectOption[] = [

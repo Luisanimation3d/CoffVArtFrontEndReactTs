@@ -1,11 +1,11 @@
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
-import {Titles} from "../../components/Titles/Titles.tsx";
+//import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useEffect, useState} from "react";
-import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
+//import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/Button/Button.tsx";
+//import { Button } from "../../components/Button/Button.tsx";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { Modal, ModalContainer } from "../../components/Modal/Modal.tsx";
@@ -21,7 +21,7 @@ export const ProductionOrders = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
     const [page, setPage] = useState<number>(1)
-    const { data, loading, error, get, del } = useFetch(API_URL);
+    const { data, loading, get } = useFetch(API_URL);
     const [dataProductionOrdersModify, setDataProductionOrdersModify] = useState<any>([])
     const navigate = useNavigate()
     useEffect(() => {

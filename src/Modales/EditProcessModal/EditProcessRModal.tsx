@@ -3,9 +3,7 @@ import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
-import {Form} from "../../components/Form/Form.tsx";
-import {Button} from "../../components/Button/Button.tsx";
-import { useNavigate} from "react-router-dom";
+///import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import toast, { Toaster } from 'react-hot-toast';
@@ -15,7 +13,7 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
         receivedQuantity: 0,
     })
     const [process, setProcess] = useState<SelectOption | undefined>();
-    const navigate = useNavigate(); 
+//    const navigate = useNavigate(); 
     const [openView,setOpenView]= useState<boolean>(false);
     const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
     const { data: processData, get: getProcess } = useFetch(API_URL);
@@ -24,9 +22,9 @@ export const EditProcessRModal = ({id,setIsModalOpen, title = 'Cambiar proceso'}
     useEffect(() => {
         get(`productionRequests/${id}?apikey=${API_KEY}`)
     }, []);
-    useEffect(() => {
-        const quantity = data?.ProductionRequest?.quantity;
-    }, [data]);
+ //   useEffect(() => {
+ //       const quantity = data?.ProductionRequest?.quantity;
+   // }, [data]);
 
     useEffect(() => {
         setOpenView(false)

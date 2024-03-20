@@ -5,7 +5,7 @@ import {Container} from "../../components/Container/Container.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
-import {Form} from "../../components/Form/Form.tsx";
+//import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
@@ -15,7 +15,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 
 export const IncrementProducts = () => {
-    const [error, setError] = useState<{[key: string]: string}>({})
+    const [error] = useState<{[key: string]: string}>({})
     const {
         data: dataProducts,
         loading: loadingProducts,

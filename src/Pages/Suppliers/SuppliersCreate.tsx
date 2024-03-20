@@ -1,6 +1,5 @@
 import {FormField} from '../../types/Form'
 import {API_KEY, API_URL} from '../../utils/constantes.ts';
-import {useFetch} from '../../hooks/useFetch';
 import {useState} from 'react';
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -138,7 +137,7 @@ export const SuppliersCreate = () => {
             };
             console.log('Datos del formulario:', requestBody);
 
-            const response = await fetch(`https://coffvart-backend.onrender.com/api/suppliers?apikey=${API_KEY}`, {
+            const response = await fetch(`${API_URL}suppliers?apikey=${API_KEY}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
