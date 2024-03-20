@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { Column } from '../../types/Table';
-import { Table } from '../../components/Table/Table.tsx';
-import { Container } from '../../components/Container/Container.tsx';
-import { Modal, ModalContainer } from '../../components/Modal/Modal.tsx';
-import { useNavigate } from 'react-router-dom';
-import { API_KEY, API_URL } from '../../utils/constantes.ts';
-import { useFetch } from '../../hooks/useFetch.tsx';
-import { EditOrder } from '../../Modales/EditOrderModal/EditOrderModal.tsx';
-import { TableRedisign } from '../../components/TableRedisign/TableRedisign.tsx';
-import { FiShuffle } from 'react-icons/fi';
+import {useState, useEffect} from "react";
+import {createPortal} from "react-dom";
+import {Column} from "../../types/Table";
+import {Container} from "../../components/Container/Container.tsx";
+import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
+import { useNavigate } from "react-router-dom";
+import { API_KEY, API_URL } from "../../utils/constantes.ts";
+import { useFetch } from "../../hooks/useFetch.tsx";
+import { EditOrder } from "../../Modales/EditOrderModal/EditOrderModal.tsx";
+import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
+import { FiShuffle } from "react-icons/fi";
 import burdeoFullLogo from '../../assets/BurdeoFullLogo.png';
 import './../Sales/SalesCss.css';
 
@@ -20,12 +19,15 @@ export const Orders = () => {
 	const [idEdit, setidEdit] = useState(0);
 	const [dataOrdersModify, setDataOrdersModify] = useState<any>([]);
 
-	const { data, loading, error, get, del } = useFetch(API_URL);
-	const navigate = useNavigate();
-	const [page, setPage] = useState<number>(1);
-	useEffect(() => {
-		get(`orders?apikey=${API_KEY}&page=${page}`);
-	}, [page]);
+
+    const { data,get, del } = useFetch(API_URL)
+    const navigate = useNavigate()
+    const [page, setPage] = useState<number>(1);
+    useEffect(() => {
+        get(`orders?apikey=${API_KEY}&page=${page}`)
+    }, [page]);
+
+
 
 	useEffect(() => {
 		get(`orders?apikey=${API_KEY}`);

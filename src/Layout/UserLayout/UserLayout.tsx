@@ -1,11 +1,13 @@
 // import {HeaderMenu} from "../../components/HeaderMenu/HeaderMenu.tsx";
-import {Outlet, useLocation, useNavigate, Navigate} from "react-router-dom";
-import {UserFooter} from "../../components/Footer/Footer";
-import {useEffect} from "react";
-import {HeaderMenuRedisign} from "../../components/HeaderMenuRedisign/HeaderMenuRedisign.tsx";
-import {FooterRedisignDesktop} from "../../components/FooterRedisign/FooterRedisign.tsx";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { UserFooter } from "../../components/Footer/Footer";
+import { useEffect } from "react";
+import { HeaderMenuRedisign } from "../../components/HeaderMenuRedisign/HeaderMenuRedisign.tsx";
+// import { FooterRedisignDesktop } from "../../components/FooterRedisign/FooterRedisign.tsx";
+// import { useAuth } from "../../context/AuthContext";
 
 export const UserLayout = () => {
+    // const { isAuthenticated } = useAuth()
     const location = useLocation()
     const navigate = useNavigate()
     useEffect(() => {
@@ -14,16 +16,12 @@ export const UserLayout = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if(!isAuthenticated){
-            return <Navigate to='/'/>
-        }
-    }, [isAuthenticated])
+    // if (!isAuthenticated) return <Navigate to='/' />
 
     return (
         <>
             {/*<HeaderMenu/>*/}
-            <HeaderMenuRedisign/>
+            <HeaderMenuRedisign />
             <div className="userLayout__mainContent" style={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -35,9 +33,9 @@ export const UserLayout = () => {
                 <div style={{
                     flex: '1',
                 }}>
-                    <Outlet/>
+                    <Outlet />
                 </div>
-                <UserFooter/>
+                <UserFooter />
                 {/*<FooterRedisignDesktop/>*/}
             </div>
         </>
