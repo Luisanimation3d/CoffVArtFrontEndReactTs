@@ -60,13 +60,13 @@ export const Companys = () => {
     const dataCompanys = data?.companys?.rows || [];
     let dataCompanysFiltered: any[];
 
-    if(search.length > 0){
-        dataCompanysFiltered = dataCompanys.filter((company:any) =>
-           company.name.toLowerCase().includes(search.toLowerCase()) 
-        || company.address.toLowerCase().includes(search.toLowerCase())
-        || company.nit.toLowerCase().includes(search.toLowerCase())
-        || company.phone.toLowerCase().includes(search.toLowerCase())
-        || company.email.toLowerCase().includes(search.toLowerCase())
+    if(search!=''){
+        dataCompanysFiltered = dataCompanys?.filter((company:any) =>
+           company.name?.toLowerCase().includes(search.toLowerCase()) 
+        || company.address?.toLowerCase().includes(search.toLowerCase())
+        || company.nit?.toLowerCase().includes(search.toLowerCase())
+        || company.phone?.toLowerCase().includes(search.toLowerCase())
+        || company.email?.toLowerCase().includes(search.toLowerCase())
         );
     }else{
         dataCompanysFiltered = dataCompanys;

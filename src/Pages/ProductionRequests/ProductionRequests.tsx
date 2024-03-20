@@ -17,6 +17,7 @@ export const ProductionRequests = () => {
 	const [search, setSearch] = useState<string>('');
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const { data, loading, error, get, del } = useFetch(API_URL);
+    const [page, setPage] = useState<number>(1)
 	const [dataProductionRequestsModify, setDataProductionRequestsModify] =
 		useState<any>([]);
 	const navigate = useNavigate();
@@ -84,74 +85,73 @@ export const ProductionRequests = () => {
 	//const dataProductionRequests= data?.ProductionRequests?.rows|| [];
 	let dataProductionRequestsFiltered: any;
 
-	if (search.length > 0) {
-		dataProductionRequestsFiltered =
-			dataProductionRequestsModify?.productionRequests?.rows.filter(
-				(productionRequest: any) =>
-					productionRequest.id.toLowerCase().includes(search.toLowerCase()) ||
-					productionRequest.dateOfDispatch
-						.toLowerCase()
-						.includes(search.toLowerCase()) ||
-					productionRequest.quantity ||
-					productionRequest.state.toLowerCase().includes(search.toLowerCase())
-			);
-	} else {
-		dataProductionRequestsFiltered = dataProductionRequests;
-	}
-	useEffect(() => {
-		if (!isModalOpen) {
-			get(`productionRequests?apikey=${API_KEY}`);
-		}
-	}, [isModalOpen]);
-
-	const handleCallback = (
-		row: { [key: string]: string | number },
-		type: string | number
-	) => {
-		if (type === 'Cambiar proceso') {
-			setidEdit(row.id as number);
-			setIsModalOpen(true);
-		}
-	};
-	const options = [
-		/*{
+    if(search !=''){
+        dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>
+           productionRequest.id?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.dateOfDispatch?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.quantity?.tolowerCase().includes(search.toLowerCase())
+        || productionRequest.process?.toLowerCase().includes(search.toLowerCase())
+        )
+    }else{
+        dataProductionRequestsFiltered = dataProductionRequests
+    }
+    useEffect(() => {
+        if (!isModalOpen) {
+          get(`productionRequests?apikey=${API_KEY}`);
+        }
+      }, [isModalOpen]);
+      
+    const handleCallback = (row: {[key : string] : string | number}, type: string | number) => {
+        
+        if(type === 'Cambiar proceso'){
+            setidEdit(row.id as number)
+            setIsModalOpen(true)
+        }
+        
+    }
+    const options = [
+        /*{
             label: 'Cambiar estado',
             icon: <FiShuffle/>
         },*/
-		{
-			label: 'Cambiar proceso',
-			icon: <FiShuffle />,
-		},
-	];
-
-	return (
-		<>
-			<Container align={'CENTER'} justify={'TOP'}>
-				<TableRedisign
-					columns={columnsProductionRequest}
-					data={dataProductionRequestsFiltered}
-					search={search}
-					setSearch={setSearch}
-					title={'Solicitudes de Producción'}
-					createAction={() => navigate('/admin/ProductionRequests/create')}
-					loading={loading}
-					callback={handleCallback}
-					dropDownOptions={options}
-				/>
-				{isModalOpen &&
-					createPortal(
-						<>
-							<EditProcessRModal
-								id={idEdit}
-								setIsModalOpen={setIsModalOpen}
-								title='Cambiar proceso'
-							/>
-						</>,
-						document.getElementById('modal') as HTMLElement
-					)}
-			</Container>
-		</>
-	);
-};
+        {
+            label: 'Cambiar proceso',
+            icon: <FiShuffle/>
+        }
+    ]
+    
+    return(
+        <>
+        <Container align={'CENTER'} justify={'TOP'}>
+        <TableRedisign
+                    columns={columnsProductionRequest}
+                    data={dataProductionRequestsFiltered}
+                    search={search}
+                    setSearch={setSearch}
+                    title={'Solicitudes de Producción'}
+                    page={page || 1}
+                    setPage={setPage}
+                    totalPages={Math.ceil(data?.productionRequests?.count / data?.options?.limit) || 1}
+                    pagination={true}
+                    createAction={() => navigate('/admin/ProductionRequests/create')}
+                    loading={loading}
+                    callback={handleCallback}
+                    dropDownOptions={options}
+                />
+            {
+                    isModalOpen && createPortal(
+                        <>
+                            <EditProcessRModal
+                            id= {idEdit}
+                            setIsModalOpen={setIsModalOpen}
+                            title="Cambiar proceso"/>
+                        </>,
+                        document.getElementById('modal') as HTMLElement
+                    )
+                }
+        </Container>
+    </>
+    )
+}
 
 export default ProductionRequests;

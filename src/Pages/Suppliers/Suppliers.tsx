@@ -63,13 +63,13 @@ export const Suppliers = () => {
 
     let dataSuppliersFiltered: any[];
 
-    if(search.length > 0){
-        dataSuppliersFiltered = dataSuppliers.filter((supplier:any )=>
-        supplier.nit.toLowerCase().includes(search.toLowerCase() )
-        || supplier.coffeType.toLowerCase().includes(search.toLowerCase() )
-        || supplier.address.toLowerCase().includes(search.toLowerCase() )
-        || supplier.phone.toLowerCase().includes(search.toLowerCase() )
-        || supplier.quality.toLowerCase().includes(search.toLowerCase() )
+    if(search != ''){
+        dataSuppliersFiltered = dataSuppliers?.filter((supplier:any )=>
+        supplier.nit?.toLowerCase().includes(search.toLowerCase() )
+        || supplier.coffeType?.toLowerCase().includes(search.toLowerCase() )
+        || supplier.address?.toLowerCase().includes(search.toLowerCase() )
+        || supplier.phone?.toLowerCase().includes(search.toLowerCase() )
+        || supplier.quality?.toLowerCase().includes(search.toLowerCase() )
         )
     }else{
         dataSuppliersFiltered = dataSuppliers;
@@ -106,7 +106,7 @@ export const Suppliers = () => {
                     title={'Proveedores'}
                     page={page || 1}
                     setPage={setPage}
-                    totalPages={Math.ceil(data?.users?.count / data?.options?.limit) || 1}
+                    totalPages={Math.ceil(data?.suppliers?.count / data?.options?.limit) || 1}
                     pagination={true}
                     dropDownOptions={options}
                     createAction={() => navigate('/admin/Suppliers/create')}
