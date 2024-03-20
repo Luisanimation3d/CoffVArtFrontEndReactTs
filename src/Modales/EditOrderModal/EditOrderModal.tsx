@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
-import { useNavigate} from "react-router-dom";
 import { Container } from "react-bootstrap";
 import { FormRedisign } from "../../components/FormRedisign/FormRedisign.tsx";
 import toast, { Toaster } from "react-hot-toast";
@@ -24,10 +23,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             label: 'Entregado',
         },
     ];
-    const [IsModalAlert, setIsModalAlert] = useState(false)
-    const [state, setProcess] = useState<SelectOption | undefined>();
-    const navigate = useNavigate()
-    const {data, put, get, loading, error: errorRegister} = useFetch(API_URL)
+    const {data, put, get, loading} = useFetch(API_URL)
     useEffect(() => {
         get(`orders/${id}?apikey=${API_KEY}`)
     }, []);
@@ -80,13 +76,6 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             size: 'large',
         }
     ];
-    const validateForm = () => {
-        const errors: any = {}
-        if (!registerForm.state) {
-            errors.state = 'El estado es requerido'
-        }
-        return errors
-    }
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const requestBody = {

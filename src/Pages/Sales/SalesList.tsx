@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Column } from '../../types/Table';
-import { Table } from '../../components/Table/Table.tsx';
 import { Container } from '../../components/Container/Container.tsx';
 import { Modal, ModalContainer } from '../../components/Modal/Modal.tsx';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
@@ -16,9 +15,9 @@ export const Sales = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
 	const [idEdit, setidEdit] = useState(0);
-	const { data, loading, error, get, del } = useFetch(API_URL);
+	const { data, loading, get, del } = useFetch(API_URL);
 	const [dataSalesModify, setDataSalesModify] = useState<any>([]);
-	const [page, setPage] = useState<number>(1);
+	const [page] = useState<number>(1);
 	useEffect(() => {
 		get(`sales?apikey=${API_KEY}&page=${page}`);
 	}, [page]);
