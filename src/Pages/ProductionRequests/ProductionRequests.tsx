@@ -1,11 +1,11 @@
 import { Column } from '../../types/Table';
-import { Table } from '../../components/Table/Table.tsx';
-import { Titles } from '../../components/Titles/Titles.tsx';
+//import { Table } from '../../components/Table/Table.tsx';
+//import { Titles } from '../../components/Titles/Titles.tsx';
 import { Container } from '../../components/Container/Container.tsx';
 import { useEffect, useState } from 'react';
-import { SearchInput } from '../../components/SearchInput/SearchInput.tsx';
+//import { SearchInput } from '../../components/SearchInput/SearchInput.tsx';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/Button/Button.tsx';
+//import { Button } from '../../components/Button/Button.tsx';
 import { useFetch } from '../../hooks/useFetch.tsx';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { EditProcessRModal } from '../../Modales/EditProcessModal/EditProcessRModal.tsx';
@@ -16,7 +16,7 @@ import { FiShuffle } from 'react-icons/fi';
 export const ProductionRequests = () => {
 	const [search, setSearch] = useState<string>('');
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-	const { data, loading, error, get, del } = useFetch(API_URL);
+	const { data, loading, get } = useFetch(API_URL);
     const [page, setPage] = useState<number>(1)
 	const [dataProductionRequestsModify, setDataProductionRequestsModify] =
 		useState<any>([]);

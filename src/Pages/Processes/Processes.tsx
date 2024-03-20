@@ -4,15 +4,15 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useEffect, useState} from "react";
 import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
-import { Button } from "../../components/Button/Button.tsx";
-import {useNavigate} from "react-router-dom";
+//import {useNavigate} from "react-router-dom";
 import { API_KEY } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 
 export const Processes = () => {
     const [search, setSearch] = useState<string>('');
     const {data,loading,error,get,del} = useFetch('https://coffvart-backend.onrender.com/api/')
-    const navigate = useNavigate();
+
+//    const navigate = useNavigate();
 
     useEffect(()=>{
         get(`processes?apikey=${API_KEY}`);

@@ -1,11 +1,7 @@
 import {Column} from "../../types/Table";
-import {Table} from "../../components/Table/Table.tsx";
-import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useEffect, useState} from "react";
-import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/Button/Button.tsx";
 import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { SuppliersCreateModal } from "../../Modales/CreateSupplierModal/CreateSupplierModal.tsx";
@@ -18,7 +14,7 @@ export const Suppliers = () => {
     const [search, setSearch] = useState<string>('');
     const [supplierToEdit, setSupplierToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const { data, loading, error, get, del } = useFetch(API_URL);
+    const { data, loading, get, del } = useFetch(API_URL);
     const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
     useEffect(() => {
