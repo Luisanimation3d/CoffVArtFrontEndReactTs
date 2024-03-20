@@ -1,18 +1,15 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
-import ButtonStepper from "../../components/Order/ShopState.tsx";
 import { useFetch } from '../../hooks/useFetch.tsx';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useAuth} from '../../context/AuthContext.tsx';
-import { useNavigate } from "react-router-dom";
+import { NotShops } from '../NotShops/NotShops.tsx';
 import './Myshops.css';
 
 
 export const MiComponente= ()=> {
-  const navigate= useNavigate()  
   const [salesDetails, setSalesDetails] = useState([]);
   const [expandedCard, setExpandedCard] = useState(null);
-  const {data, error, get, loading} = useFetch(API_URL);
+  const {data, get} = useFetch(API_URL);
 
   const {user}= useAuth();
   const coustomerId = 6 
@@ -52,46 +49,51 @@ export const MiComponente= ()=> {
 
   return (
     <div className='container'>
-      {salesDetails.map((sale: any) => (
-        <div
-          key={sale.id}
-          className={`sale-container ${expandedCard === sale.id ? 'expanded' : ''}`}
-          onClick={() => handleCardClick(sale.id)}
-        >
-          <div className="header">
-            <h2>Factura N° {sale.invoice}</h2>
-          <h2 className="total-amount">$ {sale.total}</h2>
-          </div>
-          {expandedCard === sale.id && (
-            <div className="info-container">
-              <div className="customer-info">
-                <h3>Información del Cliente</h3>
-                <p>Nombre: {sale.coustumer.name}</p>
-              </div>
-              <div className="purchase-info">
-                {getSalesDetails(sale).map((detail: any) => (
-                  <li key={detail.id}>
-                    <p>
-                      <strong>Producto:</strong> {detail.product}
-                    </p>
-                    <p>
-                      <strong>Cantidad:</strong> {detail.quantity}
-                    </p>
-                    <p>
-                      <strong>Valor Unitario:</strong> $ {detail.value}
-                    </p>
-                    <p>
-                      <strong>Estado del Envío:</strong> {sale.state}
-                    </p>
-                  </li>
-                ))}
-              </div>
+      {salesDetails.length === 0 ? (
+        <NotShops/>
+      ) : (
+        salesDetails.map((sale: any) => (
+          <div
+            key={sale.id}
+            className={`sale-container ${expandedCard === sale.id ? 'expanded' : ''}`}
+            onClick={() => handleCardClick(sale.id)}
+          >
+            <div className="header">
+              <h2>Factura N° {sale.invoice}</h2>
+              <h2 className="total-amount">$ {sale.total}</h2>
             </div>
-          )}
-        </div>
-      ))}
+            {expandedCard === sale.id && (
+              <div className="info-container">
+                <div className="customer-info">
+                  <h3>Información del Cliente</h3>
+                  <p>Nombre: {sale.coustumer.name}</p>
+                </div>
+                <div className="purchase-info">
+                  {getSalesDetails(sale).map((detail: any) => (
+                    <li key={detail.id}>
+                      <p>
+                        <strong>Producto:</strong> {detail.product}
+                      </p>
+                      <p>
+                        <strong>Cantidad:</strong> {detail.quantity}
+                      </p>
+                      <p>
+                        <strong>Valor Unitario:</strong> $ {detail.value}
+                      </p>
+                      <p>
+                        <strong>Estado del Envío:</strong> {sale.state}
+                      </p>
+                    </li>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))
+      )}
     </div>
-  );
+  ); 
+  
   
 };
 
