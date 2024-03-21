@@ -1,10 +1,6 @@
 import {Column} from "../../types/Table";
-import {Table} from "../../components/Table/Table.tsx";
-import {Titles} from "../../components/Titles/Titles.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useEffect, useState} from "react";
-import {SearchInput} from "../../components/SearchInput/SearchInput.tsx";
-import { Button } from "../../components/Button/Button.tsx";
 import {useNavigate} from "react-router-dom";
 import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
@@ -18,13 +14,13 @@ export const Companys = () => {
     const [search, setSearch] = useState<string>('');
     const [companyToEdit, setCompanyToEdit] = useState<number|null>(null)
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-    const {data,loading,error,get,del} = useFetch(API_URL)
+    const {data,loading,get,del} = useFetch(API_URL)
     const [page, setPage] = useState<number>(1)
     const navigate = useNavigate();
 
     useEffect(()=>{
-        get(`companys?apikey=${API_KEY}`);
-    },[]);
+        get(`companys?apikey=${API_KEY}&page=${page}`);
+    },[page]);
     
     const columnsCompanys: Column[] = [
         {
