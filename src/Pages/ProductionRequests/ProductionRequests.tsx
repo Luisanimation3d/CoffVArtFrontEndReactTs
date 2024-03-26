@@ -81,16 +81,19 @@ export const ProductionRequests = () => {
 	const [idEdit, setidEdit] = useState(0);
 
 	const dataProductionRequests = dataProductionRequestsModify || [];
+    console.log(dataProductionRequests,'dataProductionRequests')
 
 	//const dataProductionRequests= data?.ProductionRequests?.rows|| [];
-	let dataProductionRequestsFiltered: any;
+	let dataProductionRequestsFiltered: any[];
 
-    if(search !=''){
-        dataProductionRequestsFiltered = dataProductionRequestsModify?.productionRequests?.rows.filter((productionRequest:any )=>
-           productionRequest.id?.toLowerCase().includes(search.toLowerCase())
+    if(search.length > 0){
+        dataProductionRequestsFiltered = dataProductionRequests.filter((productionRequest:any )=>
+
+           productionRequest.supplie?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.company?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.state?.toLowerCase().includes(search.toLowerCase())
         || productionRequest.dateOfDispatch?.toLowerCase().includes(search.toLowerCase())
-        || productionRequest.quantity?.tolowerCase().includes(search.toLowerCase())
-        || productionRequest.process?.toLowerCase().includes(search.toLowerCase())
+        || productionRequest.quantity?.toString().includes(search.toLowerCase())
         )
     }else{
         dataProductionRequestsFiltered = dataProductionRequests
