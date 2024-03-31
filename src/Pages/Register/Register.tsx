@@ -3,8 +3,8 @@ import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import styles from './Register.module.css';
-import {Form} from "../../components/Form/Form.tsx";
-import {Button} from "../../components/Button/Button.tsx";
+// import {Form} from "../../components/Form/Form.tsx";
+// import {Button} from "../../components/Button/Button.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
@@ -36,16 +36,16 @@ export const Register = () => {
         document: '',
     });
 
-    const documentTypeOptions: SelectOption[] = [
-        {
-            value: 'CC',
-            label: 'CC',
-        },
-        {
-            value: 'TI',
-            label: 'TI',
-        }
-    ];
+    // const documentTypeOptions: SelectOption[] = [
+    //     {
+    //         value: 'CC',
+    //         label: 'CC',
+    //     },
+    //     {
+    //         value: 'TI',
+    //         label: 'TI',
+    //     }
+    // ];
 
     const [error, setError] = useState<{ [key: string]: string }>({});
     const formFieldsRegister: FormField[] = [
@@ -141,41 +141,41 @@ export const Register = () => {
         navigate('/user/Login');
     }
 
-    const validateForm = () => {
-        const errors: { [key: string]: string } = {};
-        if (!registerForm.name) {
-            errors.name = 'Ingrese su nombre';
-        }
-        if (!registerForm.lastname) {
-            errors.lastname = 'Ingrese su apellido';
-        }
-        if (!registerForm.address) {
-            errors.address = 'Ingrese su dirección';
-        }
-        if (!registerForm.phone) {
-            errors.phone = 'Ingrese su teléfono';
-        }
-        if (!registerForm.email) {
-            errors.email = 'Ingrese su email';
-        }
-        if (!registerForm.password) {
-            errors.password = 'Ingrese su contraseña';
-        }
-        if (!registerForm.confirmPassword) {
-            errors.confirmPassword = 'Confirme su contraseña';
-        }
-        if (registerForm.password !== registerForm.confirmPassword) {
-            errors.confirmPassword = 'Las contraseñas no coinciden';
-            errors.password = 'Las contraseñas no coinciden';
-        }
-        if (!registerForm.documentType) {
-            errors.documentType = 'Seleccione un tipo de documento';
-        }
-        if (!registerForm.document) {
-            errors.document = 'Ingrese su documento';
-        }
-        return errors;
-    }
+    // const validateForm = () => {
+    //     const errors: { [key: string]: string } = {};
+    //     if (!registerForm.name) {
+    //         errors.name = 'Ingrese su nombre';
+    //     }
+    //     if (!registerForm.lastname) {
+    //         errors.lastname = 'Ingrese su apellido';
+    //     }
+    //     if (!registerForm.address) {
+    //         errors.address = 'Ingrese su dirección';
+    //     }
+    //     if (!registerForm.phone) {
+    //         errors.phone = 'Ingrese su teléfono';
+    //     }
+    //     if (!registerForm.email) {
+    //         errors.email = 'Ingrese su email';
+    //     }
+    //     if (!registerForm.password) {
+    //         errors.password = 'Ingrese su contraseña';
+    //     }
+    //     if (!registerForm.confirmPassword) {
+    //         errors.confirmPassword = 'Confirme su contraseña';
+    //     }
+    //     if (registerForm.password !== registerForm.confirmPassword) {
+    //         errors.confirmPassword = 'Las contraseñas no coinciden';
+    //         errors.password = 'Las contraseñas no coinciden';
+    //     }
+    //     if (!registerForm.documentType) {
+    //         errors.documentType = 'Seleccione un tipo de documento';
+    //     }
+    //     if (!registerForm.document) {
+    //         errors.document = 'Ingrese su documento';
+    //     }
+    //     return errors;
+    // }
 
     const handleSubmit = (e: any) => {
         e.preventDefault();

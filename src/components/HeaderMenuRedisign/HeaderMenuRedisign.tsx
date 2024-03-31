@@ -97,24 +97,24 @@ const UserHeaderRedisignDesktop = () => {
                     </ul>
                 </nav>
                 <div className={`${styles.header__actions}`}>
-                    {/*<button className={`${styles.action__button} ${styles.action__search}`} onClick={() => {*/}
-                    {/*    if (search.length > 0 && isSearchActive) {*/}
-                    {/*        console.log(search)*/}
-                    {/*    } else {*/}
-                    {/*        setIsSearchActive(prev => !prev)*/}
-                    {/*    }*/}
-                    {/*}} onBlur={e => {*/}
-                    {/*    if (e.relatedTarget === null) {*/}
-                    {/*        setIsSearchActive(false)*/}
-                    {/*    }*/}
+                    <button className={`${styles.action__button} ${styles.action__search}`} onClick={() => {
+                        if (search.length > 0 && isSearchActive) {
+                            console.log(search)
+                        } else {
+                            setIsSearchActive(prev => !prev)
+                        }
+                    }} onBlur={e => {
+                        if (e.relatedTarget === null) {
+                            setIsSearchActive(false)
+                        }
 
-                    {/*}}>*/}
-                    {/*    <input*/}
-                    {/*        className={`${styles.action__input} ${isSearchActive ? styles.action__input__active : styles.action__input__inactive}`}*/}
-                    {/*        type="text" value={search} onChange={e => setSearch(e.target.value)}*/}
-                    {/*        onClick={e => e.stopPropagation()} placeholder="Search"/>*/}
-                    {/*    <FiSearch/>*/}
-                    {/*</button>*/}
+                    }}>
+                        <input
+                            className={`${styles.action__input} ${isSearchActive ? styles.action__input__active : styles.action__input__inactive}`}
+                            type="text" value={search} onChange={e => setSearch(e.target.value)}
+                            onClick={e => e.stopPropagation()} placeholder="Search"/>
+                        <FiSearch/>
+                    </button>
                     <button className={`${styles.action__button}`} onClick={handleClick}>
                         {
                             isAuthenticated ? (

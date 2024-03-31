@@ -61,14 +61,14 @@ export const Form: FC<FormProps> = ({
                                 return multiple ? (
                                     <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
                                          key={index}>
-                                        <Select key={index} type={type} options={options} onChange={onChange}
+                                        <Select name={name} key={index} type={type} options={options} onChange={onChange}
                                                 value={value}
                                                 placeholder={placeholder} size={size} multiple/>
                                     </div>
                                 ) : (
                                     <div className={`formControllerContainer ${size === 'large' ? 'formControllerContainer--large' : 'formControllerContainer--medium'}`}
                                          key={index}>
-                                        <Select key={index} type={type} options={options} onChange={onChange}
+                                        <Select name={name} key={index} type={type} options={options} onChange={onChange}
                                                 value={value}
                                                 placeholder={placeholder}/>
                                     </div>
@@ -79,7 +79,7 @@ export const Form: FC<FormProps> = ({
                                     <div className="formControllerContainer" style={{
                                         width: '100%'
                                     }} key={index}>
-                                        <TextAreaInput key={index} type={type} value={value} onChange={onChange}
+                                        <TextAreaInput key={index} type={type} value={value as string} onChange={onChange}
                                                        label={label} name={name} placeholder={placeholder}
                                                        size={size as number}/>
                                         {errors && errors[name] && (
