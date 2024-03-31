@@ -31,6 +31,7 @@ interface TableProps {
     totalPages?: number;
     loading?: boolean;
     createAction?: () => void;
+    itemsPerPage?: number;
 }
 
 export const TableRedisign = ({
@@ -47,7 +48,8 @@ export const TableRedisign = ({
                                   totalPages,
                                   pagination,
                                   loading,
-                                  createAction
+                                  createAction,
+                                  itemsPerPage = 10
                               }: TableProps) => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -101,6 +103,17 @@ export const TableRedisign = ({
 
         return dataToDownloadWithHeaders;
     }
+
+    const dataPaginate = data.reduce((acc: { [key: number]: { [key: string]: string | number }[] }, value, index) => {
+        if (index % itemsPerPage === 0) {
+            acc[index / itemsPerPage + 1] = data.slice(index, index + itemsPerPage);
+        }
+        return acc;
+    }, []);
+
+    const totalPaginationPages = Math.ceil(data.length / itemsPerPage);
+
+    console.log(data.length, 'Total')
 
     useEffect(() => {
         document.addEventListener('click', handleDocumentClick);
@@ -206,7 +219,7 @@ export const TableRedisign = ({
                                         </tr>
                                     </>
                                 ) :
-                                !data || data.length === 0 ? (
+                                !dataPaginate[page] || dataPaginate[page].length === 0 ? (
                                     <>
                                         <tr className={`${styles.table__content__tbody__row}`}>
                                             <td colSpan={7} className={`${styles.table__content__tbody__noData}`}>
@@ -217,7 +230,7 @@ export const TableRedisign = ({
                                 ) : (
                                     <>
                                         {
-                                            data?.map((row, globalIndex) => (
+                                            dataPaginate[page]?.map((row, globalIndex) => (
                                                 <>
                                                     <tr
                                                         key={globalIndex}
@@ -308,7 +321,7 @@ export const TableRedisign = ({
             {
                 pagination && (
                     <Pagination page={page as number} setPage={setPage as (page: number) => void}
-                                totalPages={totalPages as number}/>
+                                totalPages={totalPaginationPages}/>
                 )
             }
             {

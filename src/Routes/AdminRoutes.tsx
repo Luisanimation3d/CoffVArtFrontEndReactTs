@@ -236,6 +236,13 @@ export const useRutasAdmin = () => {
 
     filteredAdminToCompare.unshift({
         type: 'menu',
+        title: 'Dashboard',
+        icon: <FiBarChart/>,
+        link: 'dashboard'
+    })
+
+    filteredAdminToCompare.unshift({
+        type: 'menu',
         icon: <FiHome/>,
         title: 'Ir a la tienda',
         link: '/'
