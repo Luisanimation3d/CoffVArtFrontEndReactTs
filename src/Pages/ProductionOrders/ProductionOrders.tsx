@@ -62,8 +62,10 @@ export const ProductionOrders = () => {
             const newProductionOrdersData = data?.productionOrders?.rows.map((productionOrder: any) => {
                 return {
                     ...productionOrder,
+                    id: productionOrder.id,
                     state: productionOrder?.process?.name,
                     supplie: productionOrder?.supply?.name,
+                    quantity: productionOrder?.quantity,
                     productionRId: productionOrder?.productionRequest?.requestNumber
                 }
             })
@@ -74,13 +76,13 @@ export const ProductionOrders = () => {
     const [idEdit, setidEdit]= useState(0)
 
     const dataProductionOrders= dataProductionOrdersModify|| [];
-    let dataProductionOrdersFiltered: any;
+    let dataProductionOrdersFiltered: any[];
 
     if(search.length > 0){
         dataProductionOrdersFiltered = dataProductionOrders.filter((productionOrder:any )=> 
-        productionOrder.orderNumber.toLowerCase().includes(search.toLowerCase()) 
-        || productionOrder.quantity
-        || productionOrder.process.toLowerCase().includes(search.toLowerCase())
+         productionOrder.supplie.toLowerCase().includes(search.toLowerCase())
+        || productionOrder.quantity.toString().includes(search.toLowerCase())
+        || productionOrder.state.toLowerCase().includes(search.toLowerCase())
         )
     }else{
         dataProductionOrdersFiltered = dataProductionOrders
