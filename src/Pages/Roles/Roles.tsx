@@ -23,8 +23,8 @@ export const Roles = () => {
     const [dataToShow, setDataToShow] = useState<any[]>([])
     const [idRolToModify, setIdRolToModify] = useState<number | null>(null)
     useEffect(() => {
-        get(`roles?apikey=${API_KEY}&page=${page}`)
-    }, [page]);
+        get(`roles?apikey=${API_KEY}&limit=ALL}`)
+    }, []);
     const columnsRoles: Column[] = [
         {
             key: 'id',

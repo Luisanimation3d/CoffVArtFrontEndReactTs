@@ -17,14 +17,14 @@ export const Sales = () => {
 	const [idEdit, setidEdit] = useState(0);
 	const { data, loading, get, del } = useFetch(API_URL);
 	const [dataSalesModify, setDataSalesModify] = useState<any>([]);
-	const [page] = useState<number>(1);
+	const [page, setPage] = useState<number>(1);
 	useEffect(() => {
-		get(`sales?apikey=${API_KEY}&page=${page}`);
-	}, [page]);
-
-	useEffect(() => {
-		get(`sales?apikey=${API_KEY}`);
+		get(`sales?apikey=${API_KEY}&limit=ALL`);
 	}, []);
+
+	// useEffect(() => {
+	// 	get(`sales?apikey=${API_KEY}`);
+	// }, []);
 
 	const columnsSales: Column[] = [
 		{
@@ -148,6 +148,8 @@ export const Sales = () => {
 					title={'Ventas'}
 					loading={loading}
 					callback={handleCallback}
+					page={page}
+					setPage={setPage}
 					dropDownOptions={options}
 					totalPages={
 						Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1

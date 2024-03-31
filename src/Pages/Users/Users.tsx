@@ -25,8 +25,8 @@ export default function User() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        get(`users?apikey=${API_KEY}&page=${page}`)
-    }, [page]);
+        get(`users?apikey=${API_KEY}&limit=ALL`)
+    }, []);
 
     const columnsUsers: Column[] = [
         {
