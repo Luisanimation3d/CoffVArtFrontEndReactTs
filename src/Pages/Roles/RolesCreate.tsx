@@ -8,7 +8,6 @@ import {Titles} from "../../components/Titles/Titles.tsx";
 import styles from './Roles.module.css'
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useNavigate} from "react-router-dom";
-import Swal from "sweetalert2";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
 import toast, {Toaster} from "react-hot-toast";

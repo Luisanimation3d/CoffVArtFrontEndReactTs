@@ -17,11 +17,11 @@ export const Roles = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [dataModal, setDataModal] = useState<any>({})
     const [nameRol, setNameRol] = useState<string>('')
-    const {data, loading, error, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
+    const {data, loading, get, del} = useFetch('https://coffvart-backend.onrender.com/api/')
     const navigate = useNavigate()
     const [page, setPage] = useState<number>(1)
-    const [dataToShow, setDataToShow] = useState<any[]>([])
-    const [idRolToModify, setIdRolToModify] = useState<number | null>(null)
+    const [_, setDataToShow] = useState<any[]>([])
+    // const [idRolToModify, setIdRolToModify] = useState<number | null>(null)
     useEffect(() => {
         get(`roles?apikey=${API_KEY}&limit=ALL}`)
     }, []);
@@ -88,7 +88,7 @@ export const Roles = () => {
                 ...acc, {
                     id: item.id,
                     permission: item.permission,
-                    privilege: dataModalRol.map(privilege => privilege.permission === item.permission ? (<span className={styles.itemPrivilegeItemList}>{privilege.privilege}</span>) : null).filter((item: any) => item !== null),
+                    privilege: dataModalRol.map((privilege: {permission: string, privilege: string, id: number}) => privilege.permission === item.permission ? (<span className={styles.itemPrivilegeItemList}>{privilege.privilege}</span>) : null).filter((item: any) => item !== null),
                 }
             ]
 

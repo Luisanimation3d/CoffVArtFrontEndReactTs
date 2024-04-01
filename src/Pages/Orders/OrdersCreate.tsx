@@ -35,9 +35,11 @@ export const OrdersCreate = () => {
     const [factura, setFactura] = useState<string>('');
     const [selectCliente, setSelectCliente] = useState<SelectOption | undefined>(undefined);
     const [selectProducto, setSelectProducto] = useState<SelectOption | undefined>(undefined);
-    const [nombre, setNombre] = useState('');
+    const nombre = useState('');
+    const setNombre = nombre[1]
     const [cantidad, setCantidad] = useState('');
-    const [descripcion, setDescripcion] = useState('');
+    const descripcion = useState('');
+    const setDescripcion = descripcion[1];
     const [subTotal, setSubTotal] = useState(0);
     const [iva, setIva] = useState(0);
     const [precio, setPrecio] = useState(0);

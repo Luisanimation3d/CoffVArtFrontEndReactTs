@@ -1,10 +1,6 @@
 import { Column } from '../../types/Table';
-import { Table } from '../../components/Table/Table';
-import { Titles } from '../../components/Titles/Titles';
 import { Container } from '../../components/Container/Container';
 import { useState, useEffect } from 'react';
-import { SearchInput } from '../../components/SearchInput/SearchInput';
-import { Button } from '../../components/Button/Button';
 import { CreateSupplyModal } from '../../Modales/CreateSupplyModal/CreateSupplyModal';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
@@ -18,8 +14,8 @@ export const Supplies = () => {
 	const [search, setSearch] = useState<string>('');
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [supplyToEdit, setSupplyToEdit] = useState<number | null>(null);
-	const [dataToShow, setDataToShow] = useState<any[]>([]);
-	const { data, loading, error, get, del } = useFetch(API_URL);
+	// const [dataToShow, setDataToShow] = useState<any[]>([]);
+	const { data, loading, get, del } = useFetch(API_URL);
 	const [page, setPage] = useState<number>(1);
 	const navigate = useNavigate();
 

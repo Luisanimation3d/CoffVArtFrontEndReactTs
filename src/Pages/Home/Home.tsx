@@ -13,7 +13,6 @@ import gsap from 'gsap';
 import './Home.css';
 import { ProductCard } from '../../components/ProductCard/ProductCard.tsx';
 import { useEffect, useRef, useState } from 'react';
-import { SectionBanner } from '../../components/SectionBanner/SectionBanner.tsx';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch.tsx';
 import { Product } from '../../types/ProductCard';

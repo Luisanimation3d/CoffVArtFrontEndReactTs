@@ -106,7 +106,7 @@ export const IncrementProducts = () => {
                 return;
             }
 
-            const selectedProductionOrder = dataPO?.productionOrders?.rows.find((order: any) => order.id === selectProductionOrder.value);
+            const selectedProductionOrder = dataPO?.productionOrders?.rows.find((order: any) => order.id === selectProductionOrder?.value);
 
             if (!selectedProductionOrder) {
                 alert('Debe seleccionar una orden de produccion antes de agregar a la tabla');
@@ -204,7 +204,7 @@ export const IncrementProducts = () => {
             alert('Debe agregar al menos un producto antes de crear la orden de producción');
             return;
         }
-        let id = detalles[0]
+        // let id = detalles[0]
 
         const requestBody = {
             productionOrderId: selectProductionOrder?.value,

@@ -1,6 +1,6 @@
 import {Container} from "../../components/Container/Container.tsx";
 import {FormRedisign} from "../../components/FormRedisign/FormRedisign.tsx";
-import {FormField, SelectOption} from "../../types/Form";
+import {FormField} from "../../types/Form";
 import {useState} from "react";
 import { API_KEY } from "../../utils/constantes.ts";
 import toast, { Toaster } from "react-hot-toast";

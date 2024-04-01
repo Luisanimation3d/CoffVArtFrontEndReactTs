@@ -1,5 +1,5 @@
 import  { useState } from 'react';
-import { useFetch } from '../../hooks/useFetch';
+// import { useFetch } from '../../hooks/useFetch';
 import { FormField, SelectOption } from '../../types/Form';
 import { Button } from '../../components/Button/Button';
 import { Form } from '../../components/Form/Form';
@@ -39,16 +39,16 @@ export const CustomersCreate = () => {
         email: '',
         address: '',
     })
-    const [valueForm, setValueForm] = useState<{
-        name?: string,
-        documentType?: string,
-        document?: number[],
-        phone?: string,
-        email?: string,
-        address?: string,
-    }>({})
+    // const [valueForm, setValueForm] = useState<{
+    //     name?: string,
+    //     documentType?: string,
+    //     document?: number[],
+    //     phone?: string,
+    //     email?: string,
+    //     address?: string,
+    // }>({})
 
-    const { post } = useFetch(' ');
+    // const { post } = useFetch(' ');
     const [error, setError] = useState<{}>({})
 
     const customerFields: FormField[] = [

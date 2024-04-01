@@ -21,7 +21,7 @@ export const ProductionOrdersCreate= ()=>{
 
     const [error, setError] = useState<{[key: string]: string}>({})
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
-    const [process, setprocess] = useState<SelectOption[]>([]);
+    const [_, setprocess] = useState<SelectOption[]>([]);
     const navigate = useNavigate();
 
     const {data:datasupplie,get:getSupplies} = useFetch(API_URL);

@@ -11,8 +11,8 @@ import {useEffect, useState} from "react";
 
 
 export const TiendaUser = () => {
-	const {data, loading, error, get} = useFetch(API_URL)
-	const [priceFilter, setPriceFilter] = useState<number | null>(null);
+	const {data, get} = useFetch(API_URL)
+	// const [priceFilter, setPriceFilter] = useState<number | null>(null);
 	const [products, setProducts] = useState<Product[]>([])
 
     const images = [BannerBurdeo1, BannerBurdeo2];

@@ -5,16 +5,11 @@ import {Pagination} from "../Pagination/Pagination.tsx";
 import {useDarkMode} from "../../context/DarkMode.tsx";
 import {handleDownloadExcel} from '../../helpers/downloadExcel.ts';
 import {statesTable} from "../../utils/statesTable.ts";
+import {Column} from "../../types/Table";
 
-
-type ColumnType = {
-    key: string;
-    header: string;
-    render?: (value: string | number) => string | number;
-}
 
 interface TableProps {
-    columns: ColumnType[];
+    columns: Column[];
     data: { [key: string]: string | number }[];
     onRowClick?: (row: { [key: string]: string | number }) => void;
     callback?: (row: { [key: string]: string | number }, type: string) => void;
@@ -45,7 +40,7 @@ export const TableRedisign = ({
                                   dropDownOptions,
                                   page,
                                   setPage,
-                                  totalPages,
+                                  // totalPages,
                                   pagination,
                                   loading,
                                   createAction,
@@ -74,8 +69,8 @@ export const TableRedisign = ({
 
     const idKey = useId();
 
-    const dataToDownload = (datos) => {
-        const dataToDownload = datos?.map((row, index) => {
+    const dataToDownload = (datos: any) => {
+        const dataToDownload = datos?.map((row: any, index: number) => {
             const newRow = {
                 ...row,
                 id: index + 1,
@@ -84,8 +79,8 @@ export const TableRedisign = ({
             return newRow;
         });
 
-        const dataToDownloadWithHeaders = dataToDownload.map(row => {
-            const newRow = {};
+        const dataToDownloadWithHeaders = dataToDownload.map((row: any) => {
+            const newRow: {[key:string]:any} = {};
             for (const key in row) {
                 columns.map(column => {
                     if (column.key === key) {
@@ -104,7 +99,7 @@ export const TableRedisign = ({
         return dataToDownloadWithHeaders;
     }
 
-    const dataPaginate = data.reduce((acc: { [key: number]: { [key: string]: string | number }[] }, value, index) => {
+    const dataPaginate = data.reduce((acc: { [key: number]: { [key: string]: string | number }[] }, _, index) => {
         if (index % itemsPerPage === 0) {
             acc[index / itemsPerPage + 1] = data.slice(index, index + itemsPerPage);
         }
@@ -219,7 +214,7 @@ export const TableRedisign = ({
                                         </tr>
                                     </>
                                 ) :
-                                !dataPaginate[page] || dataPaginate[page].length === 0 ? (
+                                !dataPaginate[page as number] || dataPaginate[page as number].length === 0 ? (
                                     <>
                                         <tr className={`${styles.table__content__tbody__row}`}>
                                             <td colSpan={7} className={`${styles.table__content__tbody__noData}`}>
@@ -230,7 +225,7 @@ export const TableRedisign = ({
                                 ) : (
                                     <>
                                         {
-                                            dataPaginate[page]?.map((row, globalIndex) => (
+                                            dataPaginate[page as number]?.map((row, globalIndex) => (
                                                 <>
                                                     <tr
                                                         key={globalIndex}

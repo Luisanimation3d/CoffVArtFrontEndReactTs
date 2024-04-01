@@ -4,13 +4,12 @@ import {FormField} from '../../types/Form';
 import {Button} from '../../components/Button/Button';
 import {Form} from '../../components/Form/Form';
 import {API_KEY, API_URL} from '../../utils/constantes.ts';
-import {useParams, useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 
 export const SupplyEditModal= ({setIsModalOpen, title = 'Editar Insumo', idSupply, setIdEdit}: { setIsModalOpen: (value: boolean) => void, title?: string, idSupply: number, setIdEdit: (value: number | null) => void }) => {
-    const {data, get, put, error: errorEdit} = useFetch(API_URL)
+    const {data, put, error: errorEdit} = useFetch(API_URL)
     const {data: dataSupply, get: getSupply} = useFetch(API_URL)
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [editForm, setEditForm] = useState<{

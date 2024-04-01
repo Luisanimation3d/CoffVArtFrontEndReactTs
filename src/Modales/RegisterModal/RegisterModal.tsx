@@ -1,6 +1,5 @@
 import {FormField, SelectOption} from "../../types/Form";
 import {Modal, ModalContainer} from "../../components/Modal/Modal.tsx";
-import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
 import {useEffect, useState} from "react";
 import styles from './RegisterModal.module.css';
@@ -38,17 +37,6 @@ export const RegisterModal = ({showModal}: { showModal: (e: boolean) => void }) 
         documentType: undefined,
         document: '',
     });
-
-    const documentTypeOptions: SelectOption[] = [
-        {
-            value: 'CC',
-            label: 'CC',
-        },
-        {
-            value: 'TI',
-            label: 'TI',
-        }
-    ];
 
     const [error, setError] = useState<{ [key: string]: string }>({});
     const validateIfNumber = (value: string) => {

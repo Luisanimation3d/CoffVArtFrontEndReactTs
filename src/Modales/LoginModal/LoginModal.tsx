@@ -25,7 +25,7 @@ export const LoginModal = ({showModal}: { showModal: (e: boolean) => void }) => 
         })
     }
 
-    const {data, loading, error: errorLogin, post, get} = useFetch(API_URL)
+    const {data, error: errorLogin, post, get} = useFetch(API_URL)
 
     console.log(errorLogin)
 

@@ -26,7 +26,7 @@ export const ProductionRequestsCreate = () => {
 
     const [error, setError] = useState<{[key: string]: string}>({})
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
-    const [process, setprocess] = useState<SelectOption[]>([]);
+    const [_, setprocess] = useState<SelectOption[]>([]);
     const [company, setcompany] = useState<SelectOption[]>([]);
     const navigate = useNavigate();
 

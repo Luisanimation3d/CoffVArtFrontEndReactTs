@@ -10,7 +10,7 @@ import {API_KEY, API_URL} from "../../utils/constantes.ts";
 export const EditMyProfile = ({setShowModal}: {
     setShowModal: (value: boolean) => void
 }) => {
-    const {data, loading,get} = useFetch(API_URL);
+    const {data,get} = useFetch(API_URL);
     const [formDataRegister, setFormDataRegister] = useState<{
         name: string,
         lastname: string,

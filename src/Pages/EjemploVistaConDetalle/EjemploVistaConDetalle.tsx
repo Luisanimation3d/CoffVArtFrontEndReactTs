@@ -41,9 +41,8 @@ export const EjemploVistaConDetalle = () => {
     const handleSelect = (option: SelectOption | undefined) => {
         setSelect(option)
         setNombre(option?.label || '')
-        const data: any[] = []
 
-        setNombre(option?.value || '')
+        setNombre(option?.value as string || '')
     }
 
     const fields: FormField[] = [

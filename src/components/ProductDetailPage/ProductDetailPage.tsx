@@ -10,7 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import { FiMinus, FiPlus } from 'react-icons/fi';
 
 export const ProductDetailPage = () => {
-	const { data, loading, error, get } = useFetch(API_URL);
+	const { data, get } = useFetch(API_URL);
 	const [product, setProduct] = useState<Product | null>(null);
 	const [quantity, setQuantity] = useState(1);
 
@@ -64,9 +64,9 @@ export const ProductDetailPage = () => {
 		}
 	}, [data]);
 
-	const handleQuantityChange = (e) => {
-		setQuantity(parseInt(e.target.value, 10));
-	};
+	// const handleQuantityChange = (e) => {
+	// 	setQuantity(parseInt(e.target.value, 10));
+	// };
 
 	const handleAddQuantity = () => {
 		if (!product) return;
@@ -94,7 +94,7 @@ export const ProductDetailPage = () => {
 					<div className='product-image-container'>
 						<img
 							className='product-image'
-							src={product.image}
+							src={product.image as string}
 							alt={product.name}
 						/>
 					</div>
