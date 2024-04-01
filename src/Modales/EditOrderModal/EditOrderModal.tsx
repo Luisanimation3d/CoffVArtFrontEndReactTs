@@ -35,7 +35,7 @@ export const EditOrder = ({id,setIsModalOpen, title = 'Cambiar proceso' }: { id:
             setRegisterForm(newValues)
         }
     }, [data]);
-    const [error, setError] = useState<{ [key: string]: string }>({})
+    const [error, _] = useState<{ [key: string]: string }>({})
     const [registerForm, setRegisterForm] = useState<{
         state: SelectOption | undefined,
     }>({

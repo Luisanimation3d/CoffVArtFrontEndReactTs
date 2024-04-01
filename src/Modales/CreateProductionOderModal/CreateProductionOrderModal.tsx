@@ -5,7 +5,6 @@ import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden de producción'}:
@@ -18,7 +17,6 @@ export const ProductionOrderCreateModal = ({setIsModalOpen, title = 'Crear Orden
     const [supplie, setsupplie] = useState<SelectOption[]>([]);
     const [process, setprocess] = useState<SelectOption[]>([]);
     const { post, loading, error } = useFetch(API_URL);
-    const navigate = useNavigate();
 
     const {data:datasupplie,get:getSupplies} = useFetch(API_URL);
     useEffect(()=>{

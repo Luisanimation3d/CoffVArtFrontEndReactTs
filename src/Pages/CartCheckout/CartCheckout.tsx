@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useCart} from "../../context/CartContext.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
 import {Button} from "../../components/Button/Button.tsx";
-import {CartProductCard} from "../../components/ProductCard/ProductCard.tsx";
+// import {CartProductCard} from "../../components/ProductCard/ProductCard.tsx";
 import {useEffect, useState} from "react";
 import {FormField, SelectOption} from "../../types/Form";
 import {Form} from "../../components/Form/Form.tsx";
@@ -15,7 +15,7 @@ export const CartCheckout = () => {
     const navigate = useNavigate()
     const {cart, clearCart} = useCart()
     const {isAuthenticated, user} = useAuth()
-    const {data, loading, error: errorLogin, post} = useFetch(API_URL)
+    const {data, post} = useFetch(API_URL)
     const [formValidation, setFormValidation] = useState<boolean>(false)
     const [errorForm, setErrorForm] = useState<{ [key: string]: string }>({})
     const [formInfo, setFormInfo] = useState<{

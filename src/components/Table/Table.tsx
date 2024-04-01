@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import { TableProps } from '../../types/Table';
 import { FiEdit2, FiMoreVertical, FiTrash2 } from 'react-icons/fi';
 import './Table.css';
@@ -121,7 +121,7 @@ export const Table: FC<TableProps> = ({
           ))}
         </tbody>
       </table>
-      {pagination && <Pagination page={page} setPage={setPage} totalPages={totalPages} />}
+      {pagination && <Pagination page={page as number} setPage={setPage as (value: number) => void} totalPages={totalPages as number} />}
     </>
   );
 };

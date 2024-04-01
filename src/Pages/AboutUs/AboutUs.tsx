@@ -15,10 +15,8 @@ import gsap from 'gsap';
 // import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './AboutUs.css';
 import { useEffect, useRef, useState } from 'react';
-import { SectionBanner } from '../../components/SectionBanner/SectionBanner.tsx';
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {useFetch} from "../../hooks/useFetch.tsx";
-import {Product} from "../../types/ProductCard";
 
 // gsap.registerPlugin(ScrollTrigger);
 // const boxDOMEL = document.createElement("div");
@@ -36,8 +34,7 @@ import {Product} from "../../types/ProductCard";
 //   xPercent: "+=100"
 // })
 export const AboutUs = () => {
-	const { data, get } = useFetch(API_URL);
-	const [products, setProducts] = useState<Product[]>([]);
+	const { get } = useFetch(API_URL);
 	const cupRef = useRef(null);
 	const homeContentRef = useRef(null);
 	const [isCupAnimationComplete, setIsCupAnimationComplete] = useState(false);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useFetch } from '../../hooks/useFetch.tsx';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
-import { useAuth} from '../../context/AuthContext.tsx';
+// import { useAuth} from '../../context/AuthContext.tsx';
 import { NotShops } from '../NotShops/NotShops.tsx';
 import './Myshops.css';
 
@@ -11,7 +11,7 @@ export const MiComponente= ()=> {
   const [expandedCard, setExpandedCard] = useState(null);
   const {data, get} = useFetch(API_URL);
 
-  const {user}= useAuth();
+  // const {user}= useAuth();
   const coustomerId = 6 
 
   useEffect(() => {

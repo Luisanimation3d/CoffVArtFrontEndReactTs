@@ -73,7 +73,7 @@ export const SideBarMenuRedisignDesktop = ({
     menuItems: MenuItemsProps;
 }) => {
     const {user} = useAuth();
-    const {darkMode, setDarkMode} = useDarkMode();
+    const {darkMode, /*setDarkMode*/} = useDarkMode();
     const [toggleMenu, setToggleMenu] = useState(true);
     const [searchInput, setSearchInput] = useState('');
 

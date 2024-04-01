@@ -11,18 +11,18 @@ import {createPortal} from "react-dom";
 
 export const MyProfile = () => {
     const {user} = useAuth();
-    const [formDataRegister, setFormDataRegister] = useState({
-        documentType: undefined,
-        documentNumber: '',
-        name: '',
-        lastname: '',
-        address: '',
-        phone: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        image: ''
-    });
+    // const [formDataRegister, setFormDataRegister] = useState({
+    //     documentType: undefined,
+    //     documentNumber: '',
+    //     name: '',
+    //     lastname: '',
+    //     address: '',
+    //     phone: '',
+    //     email: '',
+    //     password: '',
+    //     confirmPassword: '',
+    //     image: ''
+    // });
     const [showModal, setShowModal] = useState(false);
     return (
         <>

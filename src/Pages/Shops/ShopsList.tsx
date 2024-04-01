@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Column } from '../../types/Table';
-import { Table } from '../../components/Table/Table.tsx';
-import { Titles } from '../../components/Titles/Titles.tsx';
 import { Container } from '../../components/Container/Container.tsx';
-import { SearchInput } from '../../components/SearchInput/SearchInput.tsx';
 import { Modal, ModalContainer } from '../../components/Modal/Modal.tsx';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { Button } from '../../components/Button/Button.tsx';
@@ -14,14 +11,13 @@ import { TableRedisign } from '../../components/TableRedisign/TableRedisign.tsx'
 import { FiShuffle } from 'react-icons/fi';
 import './ShopsCss.css';
 import burdeoFullLogo from '../../assets/BurdeoFullLogo.png';
-import { CellTower, Shop } from '@mui/icons-material';
 
 export const Shops = () => {
 	const [search, setSearch] = useState<string>('');
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [dataShopsModify, setDataShopsModify] = useState<any>([]);
-	const [dataToShow, setDataToShow] = useState<any[]>([]);
-	const { data, loading, error, get, del } = useFetch(API_URL);
+	const [_, setDataToShow] = useState<any[]>([]);
+	const { data, loading, get, del } = useFetch(API_URL);
 	const navigate = useNavigate();
 	const [page, setPage] = useState<number>(1);
 

@@ -8,7 +8,7 @@ import {Button} from "../../components/Button/Button.tsx";
 import Swal from "sweetalert2";
 
 export const ProductEditModal = ({setIsModalOpen, title = 'Editar Producto', idProduct, setIdEdit}: { setIsModalOpen: (value: boolean) => void, title?: string, idProduct: number, setIdEdit: (value: number | null) => void }) => {
-    const {data, get, put, error: errorEdit} = useFetch(API_URL)
+    const {data, put, error: errorEdit} = useFetch(API_URL)
     const {data: dataProduct, get: getProduct} = useFetch(API_URL)
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [editForm, setEditForm] = useState<{

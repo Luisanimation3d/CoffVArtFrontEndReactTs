@@ -1,8 +1,8 @@
-import {MenuItemsProps, SideBarMenuItemProps} from "../types/MenuBar";
-import {FiHome, FiCoffee, FiShoppingBag, FiShoppingCart, FiSettings, FiUsers, FiGrid, FiBarChart} from "react-icons/fi";
+import {MenuItemsProps} from "../types/MenuBar";
+import {FiHome, FiCoffee, FiShoppingBag, FiShoppingCart, FiSettings, FiUsers, FiBarChart} from "react-icons/fi";
 
 import {useAuth} from "../context/AuthContext.tsx";
-import {User} from "../types/AuthContext";
+// import {User} from "../types/AuthContext";
 
 export const useRutasAdmin = () => {
 
@@ -208,6 +208,10 @@ export const useRutasAdmin = () => {
 
     const filteredAdminToCompare: MenuItemsProps = adminToCompare.map((menuItem) => {
 
+            if (menuItem === null || menuItem === undefined) {
+                return null;
+            }
+
             if (menuItem.type === 'menu') {
                 if (permissions.some(permission => menuItem.title.toLowerCase().includes(permission.split(' ')[1].toLowerCase()))) {
                     return menuItem;
@@ -232,7 +236,8 @@ export const useRutasAdmin = () => {
                 }
             }
         }
-    ).filter((menuItem) => menuItem !== null && menuItem !== undefined);
+    // ).filter((menuItem) => menuItem !== null && menuItem !== undefined);
+    ).filter((menuItem): menuItem is MenuItemsProps[0] => menuItem !== null && menuItem !== undefined);
 
     filteredAdminToCompare.unshift({
         type: 'menu',

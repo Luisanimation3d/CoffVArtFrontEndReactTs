@@ -9,7 +9,7 @@ import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 
 export const SuppliersEditModal= ({setIsModalOpen, title = 'Editar Proveedor', idSupplier, setIdEdit}: { setIsModalOpen: (value: boolean) => void, title?: string, idSupplier: number, setIdEdit: (value: number | null) => void }) => {
-    const {data, get, put, error: errorEdit} = useFetch(API_URL)
+    const {data, put, error: errorEdit} = useFetch(API_URL)
     const {data: dataSupplier, get: getSupplier} = useFetch(API_URL)
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [editForm, setEditForm] = useState<{

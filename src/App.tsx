@@ -92,7 +92,7 @@ const OrdersCreate = lazy(() => import('./Pages/Orders/OrdersCreate.tsx'));
 const OrdersEditPrueba = lazy(() => import('./Pages/Orders/OrdersEditPrueba.tsx'));
 const ProductionRequests = lazy(() => import('./Pages/ProductionRequests/ProductionRequests.tsx'));
 const ProductionRequestsCreate = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsCreate.tsx'));
-const ProductionRequestsEdit = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsEdit.tsx'));
+// const ProductionRequestsEdit = lazy(() => import('./Pages/ProductionRequests/ProductionRequestsEdit.tsx'));
 const Processes = lazy(() => import('./Pages/Processes/Processes.tsx'));
 const ProcessesCreate = lazy(() => import('./Pages/Processes/ProcessesCreate.tsx'));
 const EjemploVistaConDetalle = lazy(() => import('./Pages/EjemploVistaConDetalle/EjemploVistaConDetalle.tsx'));

@@ -5,7 +5,7 @@ import {useFetch} from "../../hooks/useFetch.tsx";
 import {API_KEY, API_URL} from "../../utils/constantes.ts";
 import {Form} from "../../components/Form/Form.tsx";
 import {Button} from "../../components/Button/Button.tsx";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: { id: number , setIsModalOpen: (value: boolean) => void, title?: string }) => {
     const options: SelectOption[] = [
@@ -34,7 +34,7 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
         state: undefined,
     });
 
-    const handleInputChangen = (value: SelectOption | undefined, code: string | number) => {
+    const handleInputChangen = (value: SelectOption | undefined, _: string | number) => {
         setFormValues((prevValues: any) => ({
             ...prevValues,
             state: value,
@@ -111,11 +111,11 @@ export const EditOrdersModal = ({ id, setIsModalOpen, title = 'Editar Orden'}: {
         }
     }, [data]);
 
-    const validateIfNumber = (value: string) => {
-        if (value.length === 0) return true
-        const regex = new RegExp('^[0-9]+$')
-        return regex.test(value)
-    }
+    // const validateIfNumber = (value: string) => {
+    //     if (value.length === 0) return true
+    //     const regex = new RegExp('^[0-9]+$')
+    //     return regex.test(value)
+    // }
 
     const validateForm = () => {
         const errors: any = {}

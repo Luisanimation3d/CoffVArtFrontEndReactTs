@@ -1,10 +1,6 @@
 import { Column } from '../../types/Table';
-import { Table } from '../../components/Table/Table';
-import { Titles } from '../../components/Titles/Titles';
 import { Container } from '../../components/Container/Container';
 import { useState, useEffect } from 'react';
-import { SearchInput } from '../../components/SearchInput/SearchInput';
-import { Button } from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { useFetch } from '../../hooks/useFetch';
 import { API_KEY } from '../../utils/constantes.ts';
@@ -18,10 +14,10 @@ export const Products = () => {
 	const [search, setSearch] = useState<string>('');
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 	const [productToEdit, setProductToEdit] = useState<number | null>(null);
-	const { data, loading, error, get, del } = useFetch(
+	const { data, loading, get, del } = useFetch(
 		'https://coffvart-backend.onrender.com/api/'
 	);
-	const [dataToShow, setDataToShow] = useState<any[]>([]);
+	// const [dataToShow, setDataToShow] = useState<any[]>([]);
 	const navigate = useNavigate();
 	const [page, setPage] = useState<number>(1);
 

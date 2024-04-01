@@ -4,7 +4,7 @@ import {FiX, FiChevronDown} from 'react-icons/fi';
 
 import styles from './SelectInput.module.css';
 
-export const Select = ({multiple, value, options, onChange, placeholder, size}: SelectProps) => {
+export const Select = ({multiple, value, options, onChange, placeholder}: SelectProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [highLightedIndex, setHighLightedIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null)

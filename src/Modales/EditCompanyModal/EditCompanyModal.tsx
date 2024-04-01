@@ -9,7 +9,7 @@ import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 
 export const CompanysEditModal= ({setIsModalOpen, title = 'Editar Compania', idCompany, setIdEdit}: { setIsModalOpen: (value: boolean) => void, title?: string, idCompany: number, setIdEdit: (value: number | null) => void }) => {
-    const {data, get, put, error: errorEdit} = useFetch(API_URL)
+    const {data, put, error: errorEdit} = useFetch(API_URL)
     const {data: dataCompany, get: getCompany} = useFetch(API_URL)
     const [error, setError] = useState<{ [key: string]: string }>({})
     const [editForm, setEditForm] = useState<{
@@ -67,11 +67,11 @@ export const CompanysEditModal= ({setIsModalOpen, title = 'Editar Compania', idC
     // ...
 
 // ...
-const validateIfNumber = (value: string) => {
-    if (value.length === 0) return true
-    const regex = new RegExp('^[0-9]+$')
-    return regex.test(value) 
-}
+// const validateIfNumber = (value: string) => {
+//     if (value.length === 0) return true
+//     const regex = new RegExp('^[0-9]+$')
+//     return regex.test(value)
+// }
 
     const validateForm = () => {
         const errors: any = {}

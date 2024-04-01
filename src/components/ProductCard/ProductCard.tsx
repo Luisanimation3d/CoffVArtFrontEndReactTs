@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 
 import {FC, useState} from 'react';
 
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+// import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
 import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa';
 import { MiniCartProductCardProps } from '../../types/ProductCard'
@@ -15,13 +15,13 @@ export interface Product {
 	id: number;
 	name: string;
 	price: number;
-	image: string[];
+	image: string[] | string;
 	description: string;
-	category: string;
+	category?: string;
 	discount?: number;
 	new?: boolean;
     stock?: number;
-    link: string;
+    link?: string;
 }
 
 interface ProductCardProps {

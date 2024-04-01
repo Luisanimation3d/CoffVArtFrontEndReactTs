@@ -110,21 +110,21 @@ export const ProductionOrders = () => {
         }
     ]
 
-    const [productionOrdersDetails, setProductionOrdersDetails] = useState<any[]>([]);
+    const [productionOrdersDetails, _] = useState<any[]>([]);
 
-    const getProductionOrdersDetails = (productionOrder: any) => {
-        console.log(productionOrder, "esta es la compra");
-        const productionOrdersDetails= productionOrder?.productionOrdersDetails?.map((productionOrdersDetail: any) => ({
-            id: productionOrdersDetail.id,
-            productionOrderId: productionOrdersDetail.productionOrderId,
-            supplie: productionOrdersDetail.supplie.name,
-            quantity: productionOrdersDetail.quantity,
-            value: productionOrdersDetail.value,
-            total: productionOrdersDetail.quantity*productionOrdersDetail.value,
-        }));
-        setProductionOrdersDetails(productionOrdersDetails);
-        setIsModalOpen(true);
-    };
+    // const getProductionOrdersDetails = (productionOrder: any) => {
+    //     console.log(productionOrder, "esta es la compra");
+    //     const productionOrdersDetails= productionOrder?.productionOrdersDetails?.map((productionOrdersDetail: any) => ({
+    //         id: productionOrdersDetail.id,
+    //         productionOrderId: productionOrdersDetail.productionOrderId,
+    //         supplie: productionOrdersDetail.supplie.name,
+    //         quantity: productionOrdersDetail.quantity,
+    //         value: productionOrdersDetail.value,
+    //         total: productionOrdersDetail.quantity*productionOrdersDetail.value,
+    //     }));
+    //     setProductionOrdersDetails(productionOrdersDetails);
+    //     setIsModalOpen(true);
+    // };
 
     return(
         <>

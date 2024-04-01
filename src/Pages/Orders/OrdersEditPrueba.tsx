@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "../../components/Container/Container.tsx";
 import { Titles } from "../../components/Titles/Titles.tsx";
 import { Column } from "../../types/Table";
@@ -33,9 +33,9 @@ export const OrdersEditPrueba = () => {
   const [selectCliente, setSelectCliente] = useState<SelectOption | undefined>(undefined);
   const [selectProducto, setSelectProducto] = useState<SelectOption | undefined>(undefined);
   const [selectestado, setSelectEstado] = useState<SelectOption | undefined>(undefined);
-  const [nombre, setNombre] = useState('');
+  // const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
-  const [descripcion, setDescripcion] = useState('');
+  // const [descripcion, setDescripcion] = useState('');
   const [subTotal, setSubTotal] = useState(0);
   const [iva, setIva] = useState(0);
   const [precio, setPrecio] = useState(0);

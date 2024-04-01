@@ -5,7 +5,6 @@ import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useFetch } from '../../hooks/useFetch';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Modal, ModalContainer } from '../../components/Modal/Modal';
 
 export const SuppliersCreateModal = ({setIsModalOpen, title = 'Crear Proveedor'}:

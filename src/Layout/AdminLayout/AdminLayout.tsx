@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Outlet, useNavigate, Navigate } from "react-router-dom";
 import { useRutasAdmin } from "../../Routes/AdminRoutes";
 
@@ -9,7 +8,6 @@ import { FiLogOut } from "react-icons/fi";
 import { API_KEY, API_URL } from "../../utils/constantes.ts";
 import { useFetch } from "../../hooks/useFetch.tsx";
 import { useAuth } from "../../context/AuthContext.tsx";
-import { SideBarMenu } from "../../components/SideBarMenu/SideBarMenu.tsx";
 
 export const AdminLayout = () => {
     const { AdminRoutes } = useRutasAdmin();

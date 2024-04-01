@@ -1,10 +1,8 @@
 import {useEffect, useState} from "react";
-import { TableRedisign } from "../../components/TableRedisign/TableRedisign.tsx";
 import {Container} from "../../components/Container/Container.tsx";
 import {Titles} from "../../components/Titles/Titles.tsx";
 import {Column} from "../../types/Table";
 import {Table} from "../../components/Table/Table.tsx";
-import {Form} from "../../components/Form/Form.tsx";
 import {FormField, SelectOption} from "../../types/Form";
 import {Button} from "../../components/Button/Button.tsx";
 import {useFetch} from "../../hooks/useFetch.tsx";
@@ -36,10 +34,10 @@ export const ShopsCreate = () => {
     // const {data: dataRoles, loading: loadingRoles, error: errorRoles, get: getRoles} = useFetch('https://coffvart-backend.onrender.com/api/')
     const [detalles, setDetalles] = useState<any[]>([]);
     const navigate = useNavigate()
-    const [factura, setFactura] = useState<string>('');
+    // const [factura, setFactura] = useState<string>('');
     const [selectProveedor, setSelectProveedor] = useState<SelectOption | undefined>(undefined);
     const [selectInsumo, setSelectInsumo] = useState<SelectOption | undefined>(undefined);
-    const [nombre, setNombre] = useState('');
+    // const [nombre, setNombre] = useState('');
     const [invoice, setInvoice] = useState('');
     const [date, setDate] = useState('');
     const [cantidad, setCantidad] = useState('');
@@ -48,7 +46,7 @@ export const ShopsCreate = () => {
     const [iva, setIva] = useState(0);
     const [unitPrice, setUnitPrice] = useState('');
     const [precio, setPrecio] = useState(0);
-    const [options, setOptions] = useState<SelectOption[]>([]);
+    // const [options, setOptions] = useState<SelectOption[]>([]);
     const [insumos, setInsumos] = useState<SelectOption[]>([]);
     const [proveedores, setProveedores] = useState<SelectOption[]>([]);
     const darkMode= {useDarkMode}
@@ -194,7 +192,7 @@ export const ShopsCreate = () => {
         if (existingDetail) {
             // Si el producto ya está en el detalle, actualiza la cantidad
             const updatedDetalles = detalles.map(detail => {
-                if (detail.idInsumo === selectInsumo.value) {
+                if (detail.idInsumo === selectInsumo?.value) {
                     const updatedCantidad = parseInt(detail.cantidad) + parseInt(cantidad);
                     const updatedPrecioTotal = updatedCantidad * parseFloat(unitPrice);
 
@@ -318,7 +316,7 @@ export const ShopsCreate = () => {
             alert('Debe seleccionar un proveedor y agregar al menos un insumo para crear un pedido');
             return;
         }
-        let id = detalles[0]
+        // let id = detalles[0]
         //const insumoItem = dataInsumos?.supplies?.rows?.find((supply: any) => supply.id == id.idInsumo)
 
         const requestBody = {

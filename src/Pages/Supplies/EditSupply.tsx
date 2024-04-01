@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useFetch } from '../../hooks/useFetch';
-import { FormField, SelectOption } from '../../types/Form';
+import { FormField } from '../../types/Form';
 import { FormRedisign } from '../../components/FormRedisign/FormRedisign';
 import { API_KEY, API_URL } from '../../utils/constantes.ts';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ export const SuppliesEdit = () => {
 	const { id } = useParams<{ id: string }>();
 	const navigate = useNavigate();
 	const [error, setError] = useState<{}>({});
-	const [tipo, setTipo] = useState<SelectOption | undefined>();
+	// const [tipo, setTipo] = useState<SelectOption | undefined>();
 
 	const [formData, setFormData] = useState<{
 		name: string;

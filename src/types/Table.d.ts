@@ -1,6 +1,7 @@
 type Column = {
     key: string;
     header: string;
+    render?: (row: any) => JSX.Element | string;
 }
 
 type OptionButton = {
