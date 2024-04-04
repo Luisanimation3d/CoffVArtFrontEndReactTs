@@ -239,12 +239,12 @@ export const useRutasAdmin = () => {
     // ).filter((menuItem) => menuItem !== null && menuItem !== undefined);
     ).filter((menuItem): menuItem is MenuItemsProps[0] => menuItem !== null && menuItem !== undefined);
 
-    filteredAdminToCompare.unshift({
-        type: 'menu',
-        title: 'Dashboard',
-        icon: <FiBarChart/>,
-        link: 'dashboard'
-    })
+    // filteredAdminToCompare.unshift({
+    //     type: 'menu',
+    //     title: 'Dashboard',
+    //     icon: <FiBarChart/>,
+    //     link: 'dashboard'
+    // })
 
     filteredAdminToCompare.unshift({
         type: 'menu',
