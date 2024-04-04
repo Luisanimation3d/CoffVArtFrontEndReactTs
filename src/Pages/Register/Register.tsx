@@ -223,7 +223,7 @@ export const Register = () => {
                 ...registerForm,
                 documentType: registerForm.documentType?.value,
             }
-            post(`users?apikey=${API_KEY}`, {...dataToSend, roleId: 1})
+            post(`users?apikey=${API_KEY}`, {...dataToSend})
         } else {
             console.log('Formulario inválido');
             setError(mensajeError);
