@@ -197,7 +197,7 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
 
 
     useEffect(() => {
-        get(`permissions?apikey=${API_KEY}&limit=ALL1`)
+        get(`permissions?apikey=${API_KEY}&limit=ALL`)
     }, []);
 
     useEffect(() => {
