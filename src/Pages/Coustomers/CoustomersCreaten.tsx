@@ -169,10 +169,10 @@ export const CreateCoustomer = () => {
         if (!formData.documentNumber || formData.documentNumber.trim().length < 8 || formData.documentNumber.trim().length > 10) {
             mensajeError = { ...mensajeError, documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres' };
         }
-        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 15 || !/^[a-zA-Z\s]+$/.test(formData.name)) {
+        if (!formData.name || formData.name.trim().length < 3 || formData.name.trim().length > 30 || !/^[a-zA-ZÁÉÍÓÚáéíóú\s]+$/.test(formData.name)) {
             mensajeError = { ...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras y no debe contener caractres especiales' };
         }
-        if (!formData.lastname || formData.lastname.trim().length < 3 ||!/^[a-zA-Z\s]+$/.test(formData.lastname)) {
+        if (!formData.lastname || formData.lastname.trim().length < 3 ||!/^[a-zA-ZÁÉÍÓÚáéíóú\s]+$/.test(formData.lastname)) {
             mensajeError = { ...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras y no debe contener caracteres especiales' };
         }
         if (!formData.address || formData.address.trim().length < 10){

@@ -109,8 +109,8 @@ export const SuppliersCreate = () => {
         if (!formValues.nit) {
             mensajeError = {...mensajeError, nit: 'El NIT es requerido'}
         }
-        if (!formValues.coffeType || !/^[a-zA-Z\s]+$/.test(formValues.coffeType)) {
-            mensajeError = {...mensajeError, coffeType: 'El tipo de café es requerido y incluir caracteres especiales'}
+        if (!formValues.coffeType || !/^[a-zA-ZÁÉÍÓÚáéíóú\s]+$/.test(formValues.coffeType)) {
+            mensajeError = {...mensajeError, coffeType: 'El tipo de café es requerido y no incluir caracteres especiales'}
         }
         if (!formValues.address) {
             mensajeError = {...mensajeError, address: 'La dirección es requerida'}

@@ -41,49 +41,63 @@ export const Dashboard = () => {
     }, [data]);
     console.log('InfoCardRedisign - userDataSale:', userDataSale);
 
-let totalVentasMes = 0;
-  let productosVendidosTotales: any = {};
-  let productoMasVendido: string | undefined;
-  let cantidadMasVendida: number | undefined;
-  let totalVentasProductoMenosVendido: number | undefined;
-  let productoMenosVendido: string | undefined;
-  let cantidadMenosVendida: number | undefined;
-  let totalVentasProductoMasVendido: number | undefined;
-  let productoTotales: any = {};
+    let totalVentasMes = 0;
+    let productosVendidosTotales: any = {};
+    let productoMasVendido: string | undefined;
+    let cantidadMasVendida: number | undefined;
+    let totalVentasProductoMenosVendido: number | undefined;
+    let productoMenosVendido: string | undefined;
+    let cantidadMenosVendida: number | undefined;
+    let totalVentasProductoMasVendido: number | undefined;
+    let productoTotales: any = {};
+    const ventasPorMes: { [mes: number]: number } = {};
 
-  if (userDataSale.rows) {
-    userDataSale.rows.forEach((sale: any) => {
-      totalVentasMes += sale.total;
+    // Inicializar todos los meses con ventas en 0
+    for (let mes = 0; mes < 12; mes++) {
+        ventasPorMes[mes] = 0;
+    }
 
-      sale.salesdetails.forEach((detail: any) => {
-        const productName = detail.product.name;
-        const totalProducto = detail.quantity * detail.value;
+    if (userDataSale.rows) {
+        userDataSale.rows.forEach((sale: any) => {
+            totalVentasMes += sale.total;
 
-        
-        if (productosVendidosTotales[productName]) {
-          productosVendidosTotales[productName] += detail.quantity;
-        } else {
-          productosVendidosTotales[productName] = detail.quantity;
-        }
+            sale.salesdetails.forEach((detail: any) => {
+                const productName = detail.product.name;
+                const totalProducto = detail.quantity * detail.value;
 
-        productoTotales[productName] = (productoTotales[productName] || 0) + totalProducto;
-      });
-    });
+                if (productosVendidosTotales[productName]) {
+                    productosVendidosTotales[productName] += detail.quantity;
+                } else {
+                    productosVendidosTotales[productName] = detail.quantity;
+                }
 
-    const productosOrdenados = Object.keys(productosVendidosTotales).sort(
-      (a, b) => productosVendidosTotales[b] - productosVendidosTotales[a]
-    );
+                productoTotales[productName] = (productoTotales[productName] || 0) + totalProducto;
+            });
 
-    // Obtener el producto más vendido
-    productoMasVendido = productosOrdenados[0];
-    cantidadMasVendida = productosVendidosTotales[productoMasVendido];
-    totalVentasProductoMasVendido = productoTotales[productoMasVendido];
+            const mes = new Date(sale.createdAt).getMonth();
+            ventasPorMes[mes] += sale.total;
+        });
 
-    // Obtener el producto menos vendido
-    productoMenosVendido = productosOrdenados[productosOrdenados.length - 1];
-    cantidadMenosVendida = productosVendidosTotales[productoMenosVendido];
-    totalVentasProductoMenosVendido = productoTotales[productoMenosVendido];
-  }
+        const productosOrdenados = Object.keys(productosVendidosTotales).sort(
+            (a, b) => productosVendidosTotales[b] - productosVendidosTotales[a]
+        );
+
+        // Obtener el producto más vendido
+        productoMasVendido = productosOrdenados[0];
+        cantidadMasVendida = productosVendidosTotales[productoMasVendido];
+        totalVentasProductoMasVendido = productoTotales[productoMasVendido];
+
+        // Obtener el producto menos vendido
+        productoMenosVendido = productosOrdenados[productosOrdenados.length - 1];
+        cantidadMenosVendida = productosVendidosTotales[productoMenosVendido];
+        totalVentasProductoMenosVendido = productoTotales[productoMenosVendido];
+    }
+
+    const ventasPorMesOrdenadas = Object.entries(ventasPorMes)
+        .sort((a, b) => b[1] - a[1])
+        .map(([mes, ventaTotal]) => [mes, ventaTotal]);
+
+    console.log('ventasPorMesOrdenadas:', ventasPorMesOrdenadas);
 
     return (
         <Container>
@@ -106,32 +120,12 @@ let totalVentasMes = 0;
                     direction={isMobile ? 'row' : 'column'}
                     titulo="Total de ventas del mes"
                     totalVentasmes={totalVentasMes}
-                />
-                <InfoCardRedisign darkMode={darkMode} style={{
-                    // gridColumn: '2 / 4',
-                    // gridRow: '1 / 3'
-                    gridColumn: isMobile ? '1 / 4' : '2 / 4',
-                    gridRow: isMobile ? '3 / 5' : '1 / 3',
-                }}
-                direction={'row'}
-                titulo="Productos más vendidos"
-                totalVentasmes={totalVentasProductoMasVendido}
+                    ventasPorMes={ventasPorMesOrdenadas}
                 productoMasVendido={productoMasVendido}
                 cantidadMasVendida={cantidadMasVendida}
-                />
-                <InfoCardRedisign darkMode={darkMode} style={{
-                    // gridColumn: '2 / 4',
-                    // gridRow: '3 / 6'
-                    gridColumn: isMobile ? '1 / 4' : '2 / 4',
-                    gridRow: isMobile ? '5 / 6' : '3 / 6',
-                }}
-                    titulo= 'Productos menos vendidos'
-                    totalVentasmes={totalVentasProductoMenosVendido}
-                    direction={'row'}
-                    productoMenosVendido={productoMenosVendido}
+                productoMenosVendido={productoMenosVendido}
                     cantidadMenosVendida={cantidadMenosVendida}
-
-                    />
+                />
             </div>
         </Container>
     )

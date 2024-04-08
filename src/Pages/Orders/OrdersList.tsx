@@ -24,14 +24,14 @@ export const Orders = () => {
     const navigate = useNavigate()
     const [page, setPage] = useState<number>(1);
     useEffect(() => {
-        get(`orders?apikey=${API_KEY}&page=${page}`)
-    }, [page]);
+        get(`orders?apikey=${API_KEY}&limit=ALL`)
+    }, []);
 
 
 
-	useEffect(() => {
-		get(`orders?apikey=${API_KEY}`);
-	}, []);
+	// useEffect(() => {
+		//get(`orders?apikey=${API_KEY}`);
+	//}, []);
 
 	const columnsOrders: Column[] = [
 		{ key: 'id', header: 'ID' },
@@ -164,6 +164,7 @@ export const Orders = () => {
 					page={page}
 					setPage={setPage}
 					callback={handleDelete}
+					pagination={true}
 				/>
 				{isModalOpenEdit &&
 					createPortal(
