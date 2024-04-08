@@ -45,10 +45,10 @@ export const Dashboard = () => {
     let productosVendidosTotales: any = {};
     let productoMasVendido: string | undefined;
     let cantidadMasVendida: number | undefined;
-    let totalVentasProductoMenosVendido: number | undefined;
+    // let totalVentasProductoMenosVendido: number | undefined;
     let productoMenosVendido: string | undefined;
     let cantidadMenosVendida: number | undefined;
-    let totalVentasProductoMasVendido: number | undefined;
+    // let totalVentasProductoMasVendido: number | undefined;
     let productoTotales: any = {};
     const ventasPorMes: { [mes: number]: number } = {};
 
@@ -120,7 +120,7 @@ export const Dashboard = () => {
                     direction={isMobile ? 'row' : 'column'}
                     titulo="Total de ventas del mes"
                     totalVentasmes={totalVentasMes}
-                    ventasPorMes={ventasPorMesOrdenadas}
+                    ventasPorMes={ventasPorMesOrdenadas as [number | number][]}
                 productoMasVendido={productoMasVendido}
                 cantidadMasVendida={cantidadMasVendida}
                 productoMenosVendido={productoMenosVendido}
