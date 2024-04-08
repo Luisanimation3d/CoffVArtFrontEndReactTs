@@ -183,11 +183,11 @@ export const CreateUser = () => {
                 documentNumber: 'El número de documento debe tener entre 8 y 15 caracteres'
             };
         }
-        if (!formDataRegister.name || formDataRegister.name.trim().length < 3 || formDataRegister.name.trim().length > 15 ||!/^[a-zA-Z\s]+$/.test(formDataRegister.name) ) {
+        if (!formDataRegister.name || formDataRegister.name.trim().length < 3 || formDataRegister.name.trim().length > 30 ||!/^[a-zA-ZÁÉÍÓÚáéíóú\s]+$/.test(formDataRegister.name) ) {
             mensajeError = {...mensajeError, name: 'El nombre debe tener entre 3 y 15 letras y no debe contener caracteres especiales'};
         }
-        if (!formDataRegister.lastname || formDataRegister.lastname.trim().length < 3 || !/^[a-zA-Z\s]+$/.test(formDataRegister.lastname)) {
-            mensajeError = {...mensajeError, lastname: 'El apellido debe tener entre 3 y 15 letras y no debe contener caracteres especiales'};
+        if (!formDataRegister.lastname || formDataRegister.lastname.trim().length < 3 || !/^[a-zA-ZÁÉÍÓÚáéíóú\s]+$/.test(formDataRegister.lastname)) {
+            mensajeError = {...mensajeError, lastname: 'El apellido debe tener entre 3 y 30 letras y no debe contener caracteres especiales'};
         }
         if (!formDataRegister.address || formDataRegister.address.trim().length < 10) {
             mensajeError = {...mensajeError, address: 'La dirección debe tener al menos 10 caracteres'}

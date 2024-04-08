@@ -14,9 +14,10 @@ interface InfoCardProps {
     productoMenosVendido?: string;
     cantidadMenosVendida?: number;
     totalVentasmes?: number;
+    ventasPorMes?: [number, number][];
 }
 
-export const InfoCardRedisign = ({darkMode, direction = 'column', titulo, productoMasVendido, cantidadMasVendida, productoMenosVendido, cantidadMenosVendida, totalVentasmes, ...props}: InfoCardProps) => {
+export const InfoCardRedisign = ({darkMode, direction = 'column', titulo, ventasPorMes, productoMasVendido, cantidadMasVendida, productoMenosVendido, cantidadMenosVendida, totalVentasmes, ...props}: InfoCardProps) => {
 
     return (
         <div
@@ -56,44 +57,39 @@ export const InfoCardRedisign = ({darkMode, direction = 'column', titulo, produc
                     </div>
                 </div>
                 <div className={`${styles.infoCard__body__statics}`}>
-                    <InfoCardBar day={'L'}/>
-                    <InfoCardBar day={'M'}/>
-                    <InfoCardBar day={'W'}/>
-                    <InfoCardBar day={'J'}/>
-                    <InfoCardBar day={'V'}/>
-                    <InfoCardBar day={'S'}/>
-                    <InfoCardBar day={'D'}/>
+                {ventasPorMes?.map(([mes, ventaTotal]) => (
+            <InfoCardBar key={mes} month={mes} ventaTotal={ventaTotal} ventasPorMes={ventasPorMes}/>
+          ))}
                 </div>
             </div>
         </div>
     )
 }
 
-const InfoCardBar = ({day}: { day: string }) => {
-    const randomNumber = Math.floor(Math.random() * 100) + 1
-
-    const [height, setHeight] = useState<number>(0)
-
-    useEffect(() => {
-        setTimeout(() => {
-            setHeight(randomNumber)
-        }, 500)
-    }, []);
+const InfoCardBar = ({ month, ventaTotal, ventasPorMes }: { month: number; ventaTotal: number; ventasPorMes: [number, number][]; }) => {
+    const maxVentaTotal = Math.max(...ventasPorMes.map(([_, venta]) => venta));
+    const height = (ventaTotal / maxVentaTotal) * 100;
+  
 
     return (
         <div className={`${styles.infoCard__barContainer__container}`}>
-            <div className={`${styles.infoCard__barContainer}`}>
-                <span
-                    className={`${styles.infoCard__barContainer__bar} ${height > 80 ? styles.infoCard__barContainer__bar__high : height > 50 ? styles.infoCard__barContainer__bar__medium : styles.infoCard__barContainer__bar__low}`}
-                    style={{
-                        height: `${height}%`,
-                    }}
-                >
-                </span>
-            </div>
-            <span className={`${styles.infoCard__barContainer__day}`}>
-                {day}
-            </span>
+          <div className={`${styles.infoCard__barContainer}`}>
+            <span
+              className={`${styles.infoCard__barContainer__bar} ${
+                height > 80
+                  ? styles.infoCard__barContainer__bar__high
+                  : height > 50
+                  ? styles.infoCard__barContainer__bar__medium
+                  : styles.infoCard__barContainer__bar__low
+              }`}
+              style={{
+                height: `${height}%`,
+              }}
+            ></span>
+          </div>
+          <span className={`${styles.infoCard__barContainer__day}`}>
+            {new Date(0, month).toLocaleString('es-ES', { month: 'short' })}
+          </span>
         </div>
-    )
-}
+      );
+    };

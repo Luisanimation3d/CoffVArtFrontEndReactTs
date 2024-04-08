@@ -152,7 +152,7 @@ export const Sales = () => {
 					setPage={setPage}
 					dropDownOptions={options}
 					totalPages={
-						Math.ceil(data?.coustumers?.count / data?.options?.limit) || 1
+						Math.ceil(data?.sale?.count / data?.options?.limit) || 1
 					}
 					pagination={true}
 				/>
