@@ -244,6 +244,7 @@ const RolesEditStepTwo = ({changeStep, valueForm, setValueForm}: {
                 permission: permissionSelected
             }
         })
+        console.log(permissionsAlreadySelectedReduced, 'roles edit, useEffect')
         setSelectedPrivileges(permissionsAlreadySelectedReduced || [])
     }, [data])
 
