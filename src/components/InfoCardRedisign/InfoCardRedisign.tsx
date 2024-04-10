@@ -1,6 +1,6 @@
 import styles from './InfoCardRedisign.module.css'
 import {FiArrowUpCircle, FiMoreHorizontal} from "react-icons/fi";
-import {useEffect, useState} from "react";
+// import {useEffect, useState} from "react";
 // import { useFetch } from '../../hooks/useFetch';
 // import { API_URL, API_KEY } from '../../utils/constantes';
 

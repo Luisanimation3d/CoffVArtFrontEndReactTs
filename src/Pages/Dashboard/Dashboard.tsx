@@ -85,12 +85,12 @@ export const Dashboard = () => {
         // Obtener el producto más vendido
         productoMasVendido = productosOrdenados[0];
         cantidadMasVendida = productosVendidosTotales[productoMasVendido];
-        totalVentasProductoMasVendido = productoTotales[productoMasVendido];
+        // totalVentasProductoMasVendido = productoTotales[productoMasVendido];
 
         // Obtener el producto menos vendido
         productoMenosVendido = productosOrdenados[productosOrdenados.length - 1];
         cantidadMenosVendida = productosVendidosTotales[productoMenosVendido];
-        totalVentasProductoMenosVendido = productoTotales[productoMenosVendido];
+        // totalVentasProductoMenosVendido = productoTotales[productoMenosVendido];
     }
 
     const ventasPorMesOrdenadas = Object.entries(ventasPorMes)
@@ -120,7 +120,7 @@ export const Dashboard = () => {
                     direction={isMobile ? 'row' : 'column'}
                     titulo="Total de ventas del mes"
                     totalVentasmes={totalVentasMes}
-                    ventasPorMes={ventasPorMesOrdenadas as [number | number][]}
+                    ventasPorMes={ventasPorMesOrdenadas as [number, number][]}
                 productoMasVendido={productoMasVendido}
                 cantidadMasVendida={cantidadMasVendida}
                 productoMenosVendido={productoMenosVendido}
